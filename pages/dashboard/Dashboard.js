@@ -1,20 +1,19 @@
 import React from "react"
-import { render } from "react-dom";
-import {themeDecider} from '../../config/theme'
+import { useMediaQuery } from "react-responsive";
 import Header from '../../components/header/Header'
+import DashboardDesktop from "../../components/DashboardDesktop/index.js";
+import DashboardMobile from "../../components/DashboardMobile/index.js";
 
-const themeKey = "credenc-marketplace-themekey"
+
 function Dashboard(props) {
- const toggleTheme=()=> {
-        let theme1 = localStorage.getItem(themeKey)
-        const newTheme = theme1 === "light" ? "dark" : "light";
-        console.log(newTheme,"newTheme+++")
-        // props.dispatchThemeChange(newTheme);
-      }
+    const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+    const isDesktopOrLaptop = useMediaQuery({
+      query: "(min-width: 1224px)",
+    });
    
     return(
         <div className="dashboard">
-           <Header />
+        <Header />
        </div>
        )
 
