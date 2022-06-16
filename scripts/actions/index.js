@@ -1,5 +1,9 @@
-const authKey = 'credenc-marketplace-authkey';
-const bookmarkKey = 'credenc-marketplace-bookmarks';
-const compareKey = 'credenc-marketplace-compares';
+
+export const changeTheme = (theme) => {
+    return {
+      type: 'CHANGE_THEME',
+      theme
+    }
+  }
 
 

@@ -1,11 +1,14 @@
 .dashboard{
   min-width: 100vw;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   overflow: hidden;
   background-repeat: no-repeat;
   background-size: cover;
+  border-color: black;
+ 
+  // padding-left: 2.5vh;
   // background-color: black;
 }
