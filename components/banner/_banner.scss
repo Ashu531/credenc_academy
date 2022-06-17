@@ -1,0 +1,25 @@
+.banner{
+    width: 100vw;
+    min-height: 22vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(94.15deg, #FF00DD 0%, #5100FF 99.97%);
+    .text-content{
+     text-align: center;
+    }
+    .heading{
+     font-size: 24px;
+     font-weight: 500;
+     line-height: 27px;
+     color: #FFFFFF;
+    }
+    .sub-header{
+     font-size: 16px;
+     font-weight: 500;
+     line-height: 21px;
+     color: #FFFFFF;
+     margin-top: 12px;
+    }
+}

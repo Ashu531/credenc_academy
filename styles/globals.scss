@@ -29,4 +29,8 @@ body {
 }
 
 @import '../pages/dashboard/_dashboard.scss';
-@import '../components/header/_header.scss'
+@import '../components/header/_header.scss';
+@import '../components/banner/_banner.scss';
+@import '../components/categoryDropdown/_categoryDropdown.scss';
+@import '../components/categoryHeader/categoryHeader';
+@import '../components/courseCard/courseCard';

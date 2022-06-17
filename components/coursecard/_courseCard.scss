@@ -1,0 +1,124 @@
+.card-container{
+    width: 15vw;
+    box-sizing: border-box;
+
+/* Auto layout */
+
+display: flex;
+flex-direction: column;
+// align-items: center;
+padding: 12px;
+
+width: 298.67px;
+height: 424px;
+
+/* Neutral BG/Light/Default */
+
+background: #FFFFFF;
+/* Stroke/Light/Insignificant */
+
+border: 1px solid #EBEBEB;
+border-radius: 16px;
+
+.card-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .card-header-end-content{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+    }
+}
+
+.institute-name{
+    font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 18px;
+color: #717171;
+margin-top: 10px;
+}
+
+.grey-container{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+background: #F7F7F7;
+border-radius: 8px;
+padding: 8px;
+}
+.count-text{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: #222222;
+    margin-right: 10px;
+}
+.card-image-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1.5vh;
+    padding-bottom: 1.5vh;
+}
+.card-course-content{
+    padding: 0rem 1.25rem 2rem 1.25rem;
+
+    .course-name{
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        color: #000000;
+    }
+    .course-mode{
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 21px;
+        color: #717171;
+        margin-top: 12px;
+    }
+    .course-duration{
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 21px;
+        color: #717171;
+        margin-top: 4px;
+    }
+    .course-price-content{
+
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+align-items: flex-start;
+margin-top: 36px;
+
+        .course-pay{
+            font-style: normal;
+            font-weight: 500;
+            font-size: 11px;
+            line-height: 16px; 
+            color: #B0B0B0; 
+        }
+        .course-price{
+            font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    color: #000000;
+        }
+    }
+   
+}
+
+}

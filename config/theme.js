@@ -1,5 +1,6 @@
-import { connect } from 'react-redux'
+// import { connect } from 'react-redux'
 const themeKey = "credenc-marketplace-themekey"
+
 
 const darkTheme = {
     defaultBackground : "#0A0A0A",
@@ -32,7 +33,7 @@ const lightTheme = {
     inverseBackground: "#000000",
     defaultColor: "#222222",
     highContrastColor: "#000000",
-    bodyColor:"#7171717",
+    bodyColor:"#717171",
     disabledColor:"#B0B0B0",
     omniverseColor:"#FFFFFF",
     contrastStrokeColor:"#000000",
@@ -49,20 +50,13 @@ const lightTheme = {
     pinkGradientSecondaryColor:"#FF0066",
 }
 
-export function ProjectTheme(){
-    if (typeof window !== 'undefined') {
-        // Perform localStorage action
-        let theme = localStorage.getItem(themeKey)
-        if(theme === "light"){
+export function ProjectTheme(theme){
+ if(theme === "light"){
           return  lightTheme
-        }else{
+        } else {
           return  darkTheme
         }
-      }else{
-        return  lightTheme
-      }
 }
-
 
 
 

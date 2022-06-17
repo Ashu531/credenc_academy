@@ -8,7 +8,21 @@
   background-repeat: no-repeat;
   background-size: cover;
   border-color: black;
- 
-  // padding-left: 2.5vh;
-  // background-color: black;
+
+  .course-content{
+  //  padding: 1rem 2.5rem 1rem 2.5rem;
+   width: 100%;
+   position: absolute;
+   top: 38vh;
+   left: 0;
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-start;
+  //  align-items: center;
+  }
+  .card-content{
+    padding: 0rem 1.5rem 1.5rem 1.5rem;
+    width: 100%;
+  }
+
 }

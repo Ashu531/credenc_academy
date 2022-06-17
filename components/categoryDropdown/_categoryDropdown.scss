@@ -1,0 +1,24 @@
+.dropdown{
+    min-height: 40vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+   .element-content{
+    padding: 20px 86px 20px 24px;
+    width: 13vw;
+    min-height: 3.1vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+   }
+   .title{
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 19px;
+    color: #000000;
+    padding-left: 0.8rem;
+   }
+}
