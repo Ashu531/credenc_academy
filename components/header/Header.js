@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 // import projectorIcon from '../../assets/images/icons/projectorIcon.png';
 import bookmarkIcon from '../../assets/images/icons/bookmark.svg'
 import projectorIcon from '../../assets/images/icons/projector.svg';
+import credencLogo from '../../assets/images/logo/credencLogo.svg'
 import Image from "next/image";
 
 export default function Header(){
@@ -12,7 +13,7 @@ export default function Header(){
         <div className='navbar'>
          
           {/* <Link href='/' className='navbar-brand' onClick={() => Mixpanel.track(MixpanelStrings.HOME_BUTTON_CLICK)}> */}
-            <Image src={projectorIcon} objectFit="cover"/>
+            <Image src={credencLogo} objectFit="cover"/>
           {/* </Link> */}
          <div className='user-elements'>
          <div className='icon-element'>
