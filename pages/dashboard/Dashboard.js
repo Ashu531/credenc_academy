@@ -1,23 +1,40 @@
 import React from "react"
-import { useMediaQuery } from "react-responsive";
 import Header from '../../components/header/Header'
 import DashboardDesktop from "../../components/DashboardDesktop/index.js";
 import DashboardMobile from "../../components/DashboardMobile/index.js";
+import { connect } from 'react-redux'
+import {changeTheme} from '../../scripts/actions/index'
 
-
+const themeKey = "credenc-marketplace-themekey"
 function Dashboard(props) {
-    const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
-    const isDesktopOrLaptop = useMediaQuery({
-      query: "(min-width: 1224px)",
-    });
-   
-    return(
+    const toggleTheme=async()=> {
+        let updatedTheme= localStorage.getItem(themeKey)
+        let newTheme = updatedTheme === "light" ? "dark" : "light";
+        await localStorage.setItem(themeKey,newTheme)
+        props.dispatchThemeChange(newTheme);
+  }
+   return(
         <div className="dashboard">
         <Header />
+        <div onClick={()=>toggleTheme()} style={{marginTop: 500,fontSize: 14}} > 
+            Change theme
+           </div>
        </div>
        )
-
-   
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+    return {
+      theme: state.theme
+    }
+  }
+  
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      dispatchThemeChange: (theme) => {
+        dispatch(changeTheme(theme))
+      }
+    }
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
