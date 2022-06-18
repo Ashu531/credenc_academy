@@ -9,6 +9,7 @@ import Banner from '../../components/banner/Banner'
 import CategoryDropdown from "../../components/categoryDropdown/categoryDropdown";
 import CategoryHeader from '../../components/categoryHeader/CategoryHeader'
 import CourseCard from '../../components/coursecard/CourseCard'
+import Navbar from '../../components/navbar/Navbar'
 
 const themeKey = "credenc-marketplace-themekey"
 const categories = [
@@ -31,18 +32,17 @@ function Dashboard(props) {
         <div className="dashboard">
         <Header />
         <Banner />
+        <div className="course-navbar">
+        <Navbar />
+        </div>
         <div className="course-content">
         <CategoryDropdown categories={categories}/>
         <div className="card-content">
         <CategoryHeader  />
         <div className="course-card-container">
         <CourseCard />
-     
         <CourseCard />
-      
-       
         <CourseCard />
-        
         </div>
        
         </div>

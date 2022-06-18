@@ -1,0 +1,16 @@
+.goal-tab{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    gap: 10px;
+    cursor: pointer;
+
+    .subject-title-text{
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 19px;
+        color: #717171;
+    }
+}
