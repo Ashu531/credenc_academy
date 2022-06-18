@@ -35,8 +35,14 @@ function Dashboard(props) {
         <CategoryDropdown categories={categories}/>
         <div className="card-content">
         <CategoryHeader  />
-        <div style={{marginTop: 17}}>
+        <div className="course-card-container">
         <CourseCard />
+     
+        <CourseCard />
+      
+       
+        <CourseCard />
+        
         </div>
        
         </div>
