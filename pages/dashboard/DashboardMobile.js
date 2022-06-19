@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { connect } from 'react-redux'
 import {changeTheme} from '../../scripts/actions/index'
-
+import HeaderMobile from '../../components/headerMobile/HeaderMobile'
+import FooterMobile from '../../components/footerMobile/FooterMobile'
+import CourseCard from '../../components/coursecard/CourseCard'
 
 const categories = [
   {title : "Hidden Gem"},
@@ -21,7 +23,16 @@ function DashboardMobile(props) {
    
    return(
         <div className="dashboard-mobile">
-Hello Mobile
+         <HeaderMobile />
+         <div className="course-card-list">
+         {
+             Array.from({length: 4}, (x, i) => {
+                return <div style={{gap:10}}><CourseCard key={i} /></div>;
+              })
+         }
+         </div>
+         
+         <FooterMobile />
         </div>
        )
 }

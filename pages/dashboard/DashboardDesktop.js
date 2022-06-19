@@ -36,10 +36,12 @@ function DashboardDesktop(props) {
         <CategoryDropdown categories={categories}/>
         <div className="card-content">
         <CategoryHeader  />
-        <div className="course-card-container">
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
+        <div className="course-card-container" style={{gap: 10}}>
+          {
+            Array.from({length: 4}, (x, i) => {
+              return <CourseCard key={i} />;
+            })
+}
         </div>
        
         </div>

@@ -7,7 +7,7 @@
   overflow: hidden;
   background-repeat: no-repeat;
   background-size: cover;
-  border-color: black;
+  // border-color: black;
 
   .course-content{
   //  padding: 1rem 2.5rem 1rem 2.5rem;
@@ -34,6 +34,28 @@
    justify-content: flex-start;
    align-items: flex-start;
    flex-wrap: wrap;
+  }
+
+}
+
+.dashboard-mobile{
+  min-width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-repeat: no-repeat;
+  // background-size: cover;
+
+  .course-card-list{
+    display: flex;
+    flex-direction: row;
+   justify-content: flex-start;
+   align-items: center;
+   width: 35em;
+   overflow-x: auto;
+   white-space: nowrap;
   }
 
 }
