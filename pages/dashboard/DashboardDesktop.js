@@ -8,6 +8,7 @@ import CategoryDropdown from "../../components/categoryDropdown/categoryDropdown
 import CategoryHeader from '../../components/categoryHeader/CategoryHeader'
 import CourseCard from '../../components/coursecard/CourseCard'
 import Navbar from '../../components/navbar/Navbar'
+import Footer from '../../components/footer/Footer'
 
 const categories = [
   {title : "Hidden Gem"},
@@ -27,25 +28,32 @@ function DashboardDesktop(props) {
    
    return(
         <div className="dashboard">
+        <div className="dashboard-upper-section">
         <Header />
         <Banner />
         <div className="course-navbar">
         <Navbar />
         </div>
         <div className="course-content">
-        <CategoryDropdown categories={categories}/>
+        {/* <CategoryDropdown categories={categories}/> */}
         <div className="card-content">
-        <CategoryHeader  />
+        {/* <CategoryHeader  /> */}
         <div className="course-card-container" style={{gap: 10}}>
           {
             Array.from({length: 4}, (x, i) => {
               return <CourseCard key={i} />;
             })
-}
+          }
         </div>
        
         </div>
         </div>
+        </div>
+       
+        <div className="dashboard-footer">
+        <Footer />
+        </div>
+      
         {/* <div onClick={()=>toggleTheme()} style={{marginTop: 100,fontSize: 14, color:ProjectTheme(props.theme).bodyColor}} > 
             Change theme
         </div> */}

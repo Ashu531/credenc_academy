@@ -10,27 +10,27 @@ export default function FooterMobile(){
     return(
         <div className='mobile-footer'>
         <div className='mobile-footer-container'>
-        <div className='footer-element'>
+        <div className='mobile-footer-element'>
         <Image src={homeIcon} objectFit="contain"/>
-        <span className='footer-element-text'>
+        <span className='mobile-footer-text'>
             Home
         </span>
         </div>
-        <div className='footer-element'>
+        <div className='mobile-footer-element'>
         <Image src={projectorIcon} objectFit="contain"/>
-        <span className='footer-element-text'>
+        <span className='mobile-footer-text'>
             Compare
         </span>
         </div>
-        <div className='footer-element'>
+        <div className='mobile-footer-element'>
         <Image src={bookmarkIcon} objectFit="contain"/>
-        <span className='footer-element-text'>
+        <span className='mobile-footer-text'>
             Bookmark
         </span>
         </div>
-        <div className='footer-element'>
+        <div className='mobile-footer-element'>
         <Image src={loginIcon} objectFit="contain"/>
-        <span className='footer-element-text'>
+        <span className='mobile-footer-text'>
             Login
         </span>
         </div>

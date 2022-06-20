@@ -16,12 +16,13 @@
         gap: 10px; 
     }
 
-    .footer-element{
+    .mobile-footer-element{
         display: flex;
         flex-direction: column;
     }
 
-    .footer-element-text{
+    .mobile-footer-text{
+        font-family:'Poppins';
         font-style: normal;
 font-weight: 500;
 font-size: 10px;
