@@ -36,9 +36,11 @@ export default function CourseCard(){
    <span className='institute-name'>Xavier School of Management </span>
    </div>
    <div className='card-course-content'>
-<h1 className='course-name'>
-Product design form scratch with to mentors
-</h1>
+  
+<div className='course-name'>
+Product design form scratch with to mentors 
+</div>
+
 <h2 className='course-mode'>
 Online live
 </h2>

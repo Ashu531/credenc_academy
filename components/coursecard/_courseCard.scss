@@ -1,20 +1,11 @@
 .card-container{
-    width: 15vw;
-    box-sizing: border-box;
 
-/* Auto layout */
-
+box-sizing: border-box;
 display: flex;
 flex-direction: column;
-// align-items: center;
 padding: 12px;
 
-width: 23vw;
-
-/* Neutral BG/Light/Default */
-
 background: #FFFFFF;
-/* Stroke/Light/Insignificant */
 
 border: 1px solid #EBEBEB;
 border-radius: 16px;

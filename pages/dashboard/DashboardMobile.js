@@ -27,7 +27,7 @@ function DashboardMobile(props) {
          <div className="course-card-list">
          {
              Array.from({length: 4}, (x, i) => {
-                return <div style={{gap:10}}><CourseCard key={i} /></div>;
+                return <CourseCard key={i} />
               })
          }
          </div>
