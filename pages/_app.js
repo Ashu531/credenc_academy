@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from 'redux'
 import ReduxThunk from "redux-thunk";
 import rootReducer from '../scripts/reducers/index'
+import 'react-sliding-side-panel/lib/index.css';
 
 class MyApp extends App {
 static async getInitialProps({Component, ctx}) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import goUpIcon from '../../assets/images/icons/goUpIcon.svg'
+import goUpIcon from '../../assets/images/icons/caret-up-grey.svg'
 import Image from "next/image";
 
 export default function FooterMobile(){

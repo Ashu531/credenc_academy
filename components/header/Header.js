@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-// import projectorIcon from '../../assets/images/icons/projectorIcon.png';
 import bookmarkIcon from '../../assets/images/icons/bookmark.svg'
 import projectorIcon from '../../assets/images/icons/projector.svg';
 import credencLogo from '../../assets/images/logo/credencLogo.svg'

@@ -6,8 +6,8 @@ import SubjectTab from '../../components/subjectTab/SubjectTab'
 
 const golazo = ["UI UX Design","Animation Design","Fashion design","Game Design","Interior Design","Motion Graphics Design"];
 
-export default function SubjectNavbar(){
-  
+export default function SubjectNavbar(props){
+  console.log(props,"subject props+++")
     return(
         <div className='subject-navbar'>
         <div className='subject-tab'>
@@ -17,7 +17,7 @@ export default function SubjectNavbar(){
         <div className='tabs'>
         <SubjectTab title={golazo} />
         </div>
-        <div className='subject-tab'>
+        <div className='subject-tab' onClick={()=>props.toggleFilterModal()} >
         <span className='all-subject-text'>Filters</span>
         <Image src={dropdownIcon} objectFit="cover" />
         </div>
