@@ -24,7 +24,7 @@ return CompareText
 }
 
 const getSavedBookmarks =(item)=>{
-
+// console.log(item,"item++++")
   let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
 
   if(tempBookmarkData && tempBookmarkData.length > 0){
@@ -104,7 +104,6 @@ const _onAddToBookmark=(item)=>{
   localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
 }
 
-
  return(
       <>
       {
@@ -122,8 +121,8 @@ const _onAddToBookmark=(item)=>{
         <div className='card-header'>
           <Image src={courseLogo} objectFit="cover"/>
              <div className='card-header-end-content'>
-               <div className='grey-container' onClick={()=>_addToBookmark(props.data)} style={bookmarkVisible === true ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}>
-                 <Image src={ bookmarkVisible === true ? selectedBookmark : bookmarkIcon  } objectFit="cover"/>
+               <div className='grey-container' onClick={()=>_addToBookmark(props.data)} style={bookmarkVisible === true || bookmarkVisible === "true"  ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}>
+                 <Image src={ bookmarkVisible === true || bookmarkVisible === "true" ? selectedBookmark : bookmarkIcon  } objectFit="cover"/>
         </div>
         <div className='grey-container'>
          <span className='count-text'>{props.data.up_votes}</span>
