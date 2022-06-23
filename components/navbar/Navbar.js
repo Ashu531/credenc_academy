@@ -7,7 +7,6 @@ import SubjectTab from '../../components/subjectTab/SubjectTab'
 const golazo = ["UI UX Design","Animation Design","Fashion design","Game Design","Interior Design","Motion Graphics Design"];
 
 export default function SubjectNavbar(props){
-  console.log(props,"subject props+++")
     return(
         <div className='subject-navbar'>
         <div className='subject-tab'>

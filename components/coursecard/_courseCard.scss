@@ -9,6 +9,8 @@ background: #FFFFFF;
 
 border: 1px solid #EBEBEB;
 border-radius: 16px;
+width: 40em;
+cursor: pointer;
 
 .card-header{
     display: flex;
@@ -50,7 +52,7 @@ padding: 8px;
     font-size: 14px;
     line-height: 21px;
     color: #222222;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 .card-image-content{
     display: flex;
@@ -125,27 +127,27 @@ margin-top: 36px;
     padding: 12px 16px;
     gap: 8px;
     background: #F7F7F7;
-border-radius: 0px 0px 16px 16px;
-
+    border-radius: 0px 0px 16px 16px;
 }
+
 .course-compare-buttton{
     display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-padding: 12px 24px;
-gap: 10px;
-background: linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%);
-border-radius: 4px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 24px;
+    gap: 10px;
+    background: linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%);
+    border-radius: 4px;
 }
 
 .add-to-compare-text{
-    font-family:'Poppins';
+    font-family: 'Poppins';
     font-style: normal;
-font-weight: 600;
-font-size: 14px;
-line-height: 21px;
-color: #FFFFFF;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--defaultBackground);
 }
 
 .course-detail-button{
@@ -156,7 +158,56 @@ color: #FFFFFF;
     padding: 12px 24px;
     gap: 10px;
 }
+
 .course-detail-text{
+    font-family:'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #000000;
+}
+
+.course-button-content-mobile{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 8px;
+    background: #F7F7F7;
+    border-radius: 0px 0px 16px 16px;
+
+}
+.course-compare-buttton-mobile{
+    display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 12px 24px;
+gap: 10px;
+background: linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%);
+border-radius: 4px;
+}
+
+.add-to-compare-text-mobile{
+    font-family:'Poppins';
+    font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 21px;
+color: #FFFFFF;
+}
+
+.course-detail-button-mobile{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 24px;
+    gap: 10px;
+}
+.course-detail-text-mobile{
     font-family:'Poppins';
     font-style: normal;
     font-weight: 500;

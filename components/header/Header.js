@@ -4,7 +4,7 @@ import projectorIcon from '../../assets/images/icons/projector.svg';
 import credencLogo from '../../assets/images/logo/credencLogo.svg'
 import Image from "next/image";
 
-export default function Header(){
+export default function Header(props){
   
     return(
         <div className='navbar-wrapper'>
@@ -27,6 +27,9 @@ export default function Header(){
           
           <div className='signin-button'>
           <span className='signin-text'>Sign In</span>
+          </div>
+          <div onClick={()=>props.toggleTheme()} style={{cursor:"pointer",paddingLeft:10}}>
+            <span>Change Theme</span>
           </div>
           </div>
           </div>

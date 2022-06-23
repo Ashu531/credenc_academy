@@ -4,6 +4,7 @@ import {changeTheme} from '../../scripts/actions/index'
 import HeaderMobile from '../../components/headerMobile/HeaderMobile'
 import FooterMobile from '../../components/footerMobile/FooterMobile'
 import CourseCard from '../../components/coursecard/CourseCard'
+import constant from '../../config/constant.js'
 
 const categories = [
   {title : "Hidden Gem"},
@@ -12,6 +13,18 @@ const categories = [
   {title : "Get a job"},
 ]
 function DashboardMobile(props) {
+  const [filterModal, setFilterModal] = useState(false);
+  const [courseCardData,setCourseCardData]= useState([])
+
+  useEffect(()=>{
+    _getCardData()
+  },[])
+
+  const _getCardData=async()=>{
+    const response = await fetch(`${constant.API_URL.DEV}/batch/search/`)
+    const data = await response.json()
+    setCourseCardData(data.data)
+  }
 
   const toggleTheme=async()=> {
         let updatedTheme= props.theme;
@@ -26,10 +39,12 @@ function DashboardMobile(props) {
          <HeaderMobile />
          <div className="course-card-list">
          {
-             Array.from({length: 4}, (x, i) => {
-                return <CourseCard key={i} />
-              })
-         }
+            courseCardData?.map((item,index)=>{
+              return(
+                <CourseCard key={index} data={item}/>
+              )
+            })
+          }
          </div>
          
          <FooterMobile />

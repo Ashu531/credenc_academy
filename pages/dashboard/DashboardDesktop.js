@@ -13,6 +13,7 @@ import FilterModal from "../../components/filterModal/FilterModal"
 import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import constant from '../../config/constant.js'
+const compareKey = 'credenc-marketplace-compares';
 
 const categories = [
   {title : "Hidden Gem"},
@@ -24,10 +25,14 @@ function DashboardDesktop(props) {
 
   const [filterModal, setFilterModal] = useState(false);
   const [courseCardData,setCourseCardData]= useState([])
+  const [compareData,setCompareData] = useState([])
+  
 
   useEffect(()=>{
     _getCardData()
   },[])
+
+ 
 
   const _getCardData=async()=>{
     const response = await fetch(`${constant.API_URL.DEV}/batch/search/`)
@@ -42,7 +47,6 @@ function DashboardDesktop(props) {
     }
 
     const closeFilterModal = ()=>{
-      console.log(filterModal,"filterModal+++")
       setFilterModal(false)
     }
 
@@ -50,11 +54,12 @@ function DashboardDesktop(props) {
       // console.log(filterModal,"filterModal+++")
       setFilterModal(true)
     } 
-    
+
+   
  return(
         <div className="dashboard">
         <div className="dashboard-upper-section">
-        <Header />
+        <Header toggleTheme={props.toggleTheme} />
        <Banner />
         <div className="course-navbar">
         <Navbar toggleFilterModal={openFilterModal} />
@@ -68,7 +73,7 @@ function DashboardDesktop(props) {
          {
             courseCardData?.map((item,index)=>{
               return(
-                <CourseCard key={index} />
+                <CourseCard key={index} data={item}/>
               )
             })
           }

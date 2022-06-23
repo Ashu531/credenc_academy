@@ -14,13 +14,14 @@ export default function Dashboard(props) {
   useEffect(() => {
     setMounted(true);
 }, []);
+
  
    return(
       <>
       {
         mounted && 
         <>
-        {isDesktopOrLaptop && <DashboardDesktop />}
+        {isDesktopOrLaptop && <DashboardDesktop toggleTheme={props.toggleTheme} />}
         {isMobile && <DashboardMobile />}
         </>
       }
