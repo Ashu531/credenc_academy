@@ -42,6 +42,7 @@ export default function CourseCard(props){
   const [compareButtonVisible, setCompareButtonVisible] = useState({display: 'none'});
   const [bookmarkVisible,setBookmarkVisible] = useState(`${getSavedBookmarks(props.data)}`)
   const [addToCompareButtonState, setAddToCompareButtonState] = useState({...States.addToCompareButtonState.DEFAULT});
+  const [courseNameTooltip, setCourseNameTooltip] = useState(false)
   
 
   useEffect(() => {
@@ -137,9 +138,15 @@ const _onAddToBookmark=(item)=>{
    </div>
    <div className='card-course-content'>
   
-<div className='course-name'>
-{props.data.name} 
+<div className='course-name' onMouseEnter={()=>setCourseNameTooltip(true)} onMouseLeave={()=>setCourseNameTooltip(false)}>
+{props.data.name.length > 25 ? props.data.name.substring(0, 25) + '...' : props.data.name} 
 </div>
+{
+ courseNameTooltip && props.data.name.length > 25 ?  <div className="course-name-tooltip">
+<span class="course-name-tooltiptext">{props.data.name}</span>
+</div> : null
+}
+
 <div style={{display:"flex",flexDirection:"row"}}>
 {
   props.data.class_mode.map((item,index)=>{

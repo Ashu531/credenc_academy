@@ -3,8 +3,17 @@
     justify-content: center;
     align-items: center;
     padding: 12px;
-    gap: 10px;
+    // gap: 10px;
     cursor: pointer;
+    transform: scale(1);
+    min-width: 15em;
+
+    &:hover{
+        border: 1px solid #EBEBEB;
+        box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+        // margin: 0px 10px 0px 10px;
+    }
 
     .subject-title-text{
         font-family:'Poppins';

@@ -9,7 +9,7 @@ background: #FFFFFF;
 
 border: 1px solid #EBEBEB;
 border-radius: 16px;
-width: 40em;
+width: 30em;
 cursor: pointer;
 
 .card-header{
@@ -73,6 +73,27 @@ padding: 8px;
         line-height: 24px;
         color: #000000;
     }
+
+    .course-name-tooltip {
+        position: absolute;
+        display: inline-block;
+        border-bottom: 1px dotted black;
+      }
+
+       .course-name-tooltiptext {
+        // visibility: hidden;
+        min-width: 20em;
+        background-color: black;
+        font-family: "Poppins";
+        color: #fff;
+        text-align: center;
+        padding: 5px 5px;
+        border-radius: 6px;
+        position: absolute;
+        z-index: 999;
+      }
+      
+
     .course-mode{
         font-family:'Poppins';
         font-style: normal;
@@ -124,8 +145,8 @@ margin-top: 36px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 16px;
-    gap: 8px;
+    padding: 10px 8px;
+    // gap: 8px;
     background: #F7F7F7;
     border-radius: 0px 0px 16px 16px;
 }
@@ -135,7 +156,7 @@ margin-top: 36px;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 12px 24px;
+    padding: 12px 8px;
     gap: 10px;
     background: linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%);
     border-radius: 4px;
@@ -145,8 +166,8 @@ margin-top: 36px;
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 13px;
+    // line-height: 24px;
     color: var(--defaultBackground);
 }
 

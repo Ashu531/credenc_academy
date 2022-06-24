@@ -16,26 +16,29 @@ import constant from '../../config/constant.js'
 import SubjectDropdown from "../../components/subjectDropdown/SubjectDropdown"
 const compareKey = 'credenc-marketplace-compares';
 
+const subCategories = ["UI UX Design","Animation Design","Fashion design","Game Design","Interior Design","Motion Graphics Design","Motion Graphics Design","Motion Graphics Design"];
+
 const categories = [
   {title : "Hidden Gem",count: "120"},
   {title : "Quickies",count: "120"},
   {title : "Learn now pay later",count: "120"},
   {title : "Get a job",count: "120"},
 ]
+
 function DashboardDesktop(props) {
 
   const [filterModal, setFilterModal] = useState(false);
   const [courseCardData,setCourseCardData]= useState([])
   const [subjectModalVisible,setSubjectModalVisible] = useState(false)
-  
+  const [selectedCategory,setSelectedCategory] = useState(subCategories[0]);
 
   useEffect(()=>{
-    _getCardData()
+    getCardData()
   },[])
 
  
 
-  const _getCardData=async()=>{
+  const getCardData=async()=>{
     const response = await fetch(`${constant.API_URL.DEV}/batch/search/`)
     const data = await response.json()
     setCourseCardData(data.data)
@@ -63,14 +66,18 @@ function DashboardDesktop(props) {
       setSubjectModalVisible(false)
     }
 
-   
+    const setSubCategoriesData=(item)=>{
+      setSelectedCategory(item)
+    }
+
+   console.log(selectedCategory)
  return(
         <div className="dashboard">
         <div className="dashboard-upper-section">
         <Header toggleTheme={props.toggleTheme} />
         <Banner />
         <div className="course-navbar">
-        <Navbar toggleFilterModal={openFilterModal} openSubjectModal={openSubjectModal} closeSubjectModal={closeSubjectModal} />
+        <Navbar toggleFilterModal={openFilterModal} openSubjectModal={openSubjectModal} closeSubjectModal={closeSubjectModal} golazo={subCategories} selectedCategory={selectedCategory} setSubCategoriesData={setSubCategoriesData}/>
         </div>
         {/* <FilterModal filterModal={filterModal} toggleFilterModal={closeFilterModal}/> */}
         <div className="course-content">
