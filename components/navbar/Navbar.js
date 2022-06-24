@@ -9,7 +9,7 @@ const golazo = ["UI UX Design","Animation Design","Fashion design","Game Design"
 export default function SubjectNavbar(props){
     return(
         <div className='subject-navbar'>
-        <div className='subject-tab'>
+        <div className='subject-tab' onMouseEnter={()=> props.openSubjectModal()} onMouseLeave={()=>props.closeSubjectModal()}>
         <span className='all-subject-text'>All Subjects</span>
         <Image src={dropdownIcon} objectFit="cover" />
         </div>

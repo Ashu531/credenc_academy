@@ -13,11 +13,13 @@ html{
 :root {
     --defaultBackground : #FFFFFF;
     --subduedBackground: #F7F7F7;
+    --primaryColor:#222222;
+    --bodyColor:#717171;
     --disabledBackground: "#DDDDDD",
     --inverseBackground: "#000000",
     --defaultColor: "#222222",
     --highContrastColor: "#000000",
-    --bodyColor:"#717171",
+    
     --disabledColor:"#B0B0B0",
     --omniverseColor:"#FFFFFF",
     --contrastStrokeColor:"#000000",
@@ -32,16 +34,19 @@ html{
     --greenGradientSecondaryColor:"#FFCC00",
     --pinkGradientPrimaryColor:"#9900FF",
     --pinkGradientSecondaryColor:"#FF0066",
+    
 }
 
 [data-theme='dark'] {
     --defaultBackground : #0A0A0A;
     --subduedBackground: #141414;
+    --primaryColor:#DEDEDE;
+    --bodyColor:#8F8F8F;
     --disabledBackground: "#141414",
     --inverseBackground: "#FFFFFF",
     --defaultColor: "#DEDEDE",
     --highContrastColor: "#FFFFFF",
-    --bodyColor:"#8F8F8F",
+   
     --disabledColor:"#4F4F4F",
     --omniverseColor:"#4F4F4F",
     --contrastStrokeColor:"#FFFFFF",
@@ -89,3 +94,4 @@ body {
 @import '../components/footerMobile/footerMobile';
 @import '../components/footer/footer';
 @import '../components/filterModal/filterModal';
+@import '../components/subjectDropdown/subjectDropdown';

@@ -13,19 +13,20 @@ import FilterModal from "../../components/filterModal/FilterModal"
 import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import constant from '../../config/constant.js'
+import SubjectDropdown from "../../components/subjectDropdown/SubjectDropdown"
 const compareKey = 'credenc-marketplace-compares';
 
 const categories = [
-  {title : "Hidden Gem"},
-  {title : "Quickies"},
-  {title : "Learn now pay later"},
-  {title : "Get a job"},
+  {title : "Hidden Gem",count: "120"},
+  {title : "Quickies",count: "120"},
+  {title : "Learn now pay later",count: "120"},
+  {title : "Get a job",count: "120"},
 ]
 function DashboardDesktop(props) {
 
   const [filterModal, setFilterModal] = useState(false);
   const [courseCardData,setCourseCardData]= useState([])
-  const [compareData,setCompareData] = useState([])
+  const [subjectModalVisible,setSubjectModalVisible] = useState(false)
   
 
   useEffect(()=>{
@@ -51,18 +52,25 @@ function DashboardDesktop(props) {
     }
 
     const openFilterModal = async()=>{
-      // console.log(filterModal,"filterModal+++")
       setFilterModal(true)
     } 
+
+    const openSubjectModal = ()=>{
+      setSubjectModalVisible(true)
+    } 
+
+    const closeSubjectModal = ()=>{
+      setSubjectModalVisible(false)
+    }
 
    
  return(
         <div className="dashboard">
         <div className="dashboard-upper-section">
         <Header toggleTheme={props.toggleTheme} />
-       <Banner />
+        <Banner />
         <div className="course-navbar">
-        <Navbar toggleFilterModal={openFilterModal} />
+        <Navbar toggleFilterModal={openFilterModal} openSubjectModal={openSubjectModal} closeSubjectModal={closeSubjectModal} />
         </div>
         {/* <FilterModal filterModal={filterModal} toggleFilterModal={closeFilterModal}/> */}
         <div className="course-content">
@@ -86,7 +94,13 @@ function DashboardDesktop(props) {
         <div className="dashboard-footer">
         <Footer />
         </div>
-
+        {
+          subjectModalVisible ?  <div className="dashboard-subject-modal">
+          <SubjectDropdown  categories={categories}/>
+          </div> : null
+        }
+       
+       
         <SlidingPanel
         type={'left'}
         isOpen={filterModal}
@@ -98,9 +112,6 @@ function DashboardDesktop(props) {
         </div>
       </SlidingPanel>
       
-        {/* <div onClick={()=>toggleTheme()} style={{marginTop: 100,fontSize: 14, color:ProjectTheme(props.theme).bodyColor}} > 
-            Change theme
-        </div> */}
         
       </div>
        )
