@@ -4,11 +4,25 @@ import dropdownIcon from '../../assets/images/icons/dropdown.svg'
 import Image from "next/image";
 import SubjectTab from '../../components/subjectTab/SubjectTab'
 import caretRight from '../../assets/images/icons/caretRight.svg'
-
+import SubjectDropdown from '../subjectDropdown/SubjectDropdown';
+const subjectKey = 'credenc-edtech-subject';
 
 export default function SubjectNavbar(props){
-    const ref = useRef(null);
+   
     const [leftScrollView,setLeftScrollView] = useState(false)
+    const [subjectModalVisible,setSubjectModalVisible] = useState(false)
+    const [selectedSubject,setSelectedSubject] = useState({})
+    const ref = useRef(null);
+
+    useEffect(()=>{
+       let subjectdata = JSON.parse(localStorage.getItem(subjectKey))
+       console.log("coming+++");
+       if(subjectdata){
+        setSelectedSubject(subjectdata)
+       }else{
+        setSelectedSubject(props?.subjectData[0])
+       }
+    },[])
 
     useEffect(()=>{
         manageLeftScrollView()
@@ -26,12 +40,24 @@ export default function SubjectNavbar(props){
         ref.current.scrollLeft += scrollOffset;
         manageLeftScrollView()
     }
+
+    const selectSubject=(item)=>{
+        localStorage.setItem(subjectKey,JSON.stringify(item))
+        setSelectedSubject(item)
+    }
    
     return(
-        <div className='subject-navbar'>
-        <div className='subject-tab' onMouseEnter={()=> props.openSubjectModal()} onMouseLeave={()=>props.closeSubjectModal()}>
+        <div className='subject-navbar'> 
+        <div className='subject-tab' onMouseEnter={()=> setSubjectModalVisible(true)} >
         <span className='all-subject-text'>All Subjects</span>
-        <Image src={dropdownIcon} objectFit="cover" />
+         <Image src={dropdownIcon} objectFit="cover" />
+
+         {
+            subjectModalVisible ? 
+             <div className="dashboard-subject-modal" onMouseEnter={()=> setSubjectModalVisible(true)} onMouseLeave={()=> setSubjectModalVisible(false)}>
+            <SubjectDropdown  categories={props?.subjectData} selectedSubject={selectedSubject} selectSubject={selectSubject}/>
+            </div> : null
+         }
         </div>
         {
             leftScrollView === true ?  <div className="navbar-arrow-container" onClick={() => scroll(-20)}>

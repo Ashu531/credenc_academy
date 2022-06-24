@@ -11,6 +11,7 @@
         align-items: center;
         overflow-x: auto;
         max-width: 70vw;
+        overflow-x: hidden;
        }
 
        .navbar-arrow-container{
@@ -19,8 +20,8 @@
 flex-direction: row;
 justify-content: center;
 align-items: center;
-padding: 10px;
-gap: 10px;
+// padding: 10px;
+// gap: 10px;
 border: 1px solid #DDDDDD;
 border-radius: 100px;
 width: 32px;
@@ -48,6 +49,16 @@ cursor: pointer;
             color: #222222;
             padding-right: 12px;
         }
+    }
+
+    .dashboard-subject-modal{
+width: 252px;
+height: 320px;
+background: var(--defaultBackground);
+box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.15);
+backdrop-filter: blur(60px);
+border-radius: 12px;
+z-index: 999;
     }
    
 }

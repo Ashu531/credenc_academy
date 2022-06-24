@@ -14,41 +14,54 @@ import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import constant from '../../config/constant.js'
 import SubjectDropdown from "../../components/subjectDropdown/SubjectDropdown"
-const compareKey = 'credenc-marketplace-compares';
+const compareKey = 'credenc-edtech-compares';
+const subjectKey = 'credenc-edtech-subject';
+const subCategories = ["UI UX Design","Animation Design","Fashion design","Game Design","Interior Design","Motion Graphics Design"];
 
-const subCategories = ["UI UX Design","Animation Design","Fashion design","Game Design","Interior Design","Motion Graphics Design","Motion Graphics Design","Motion Graphics Design"];
-
-const categories = [
-  {title : "Hidden Gem",count: "120"},
-  {title : "Quickies",count: "120"},
-  {title : "Learn now pay later",count: "120"},
-  {title : "Get a job",count: "120"},
-]
 
 function DashboardDesktop(props) {
 
   const [filterModal, setFilterModal] = useState(false);
   const [courseCardData,setCourseCardData]= useState([])
-  const [subjectModalVisible,setSubjectModalVisible] = useState(false)
   const [selectedCategory,setSelectedCategory] = useState(subCategories[0]);
+  const [subjectData,setSubjectData] = useState([])
 
   useEffect(()=>{
     getCardData()
+    getSubjectData()
   },[])
 
- 
+  const getSubjectData=async()=>{
+    const response = await fetch(`${constant.API_URL.DEV}/subject/search/`)
+    const data = await response.json()
+    let totalSubjectCount = 0;
+    data.data.forEach(item=>{
+      totalSubjectCount += item.count
+    })
+    let totalSubjectData = data?.data;
+  
+    totalSubjectData.unshift(
+    {
+        "id": 0,
+        "name": "All",
+        "count": totalSubjectCount
+    }
+    )
+    localStorage.setItem(subjectKey,JSON.stringify(totalSubjectData[0]))
+    setSubjectData(totalSubjectData)
+  }
 
   const getCardData=async()=>{
     const response = await fetch(`${constant.API_URL.DEV}/batch/search/`)
     const data = await response.json()
-    setCourseCardData(data.data)
+    setCourseCardData(data?.data)
   }
 
   const toggleTheme=async()=> {
         let updatedTheme= props.theme;
         let newTheme = updatedTheme === "light" ? "dark" : "light";
         props.dispatchThemeChange(newTheme);
-    }
+  }
 
     const closeFilterModal = ()=>{
       setFilterModal(false)
@@ -70,14 +83,22 @@ function DashboardDesktop(props) {
       setSelectedCategory(item)
     }
 
-   console.log(selectedCategory)
+  
  return(
         <div className="dashboard">
         <div className="dashboard-upper-section">
         <Header toggleTheme={props.toggleTheme} />
         <Banner />
         <div className="course-navbar">
-        <Navbar toggleFilterModal={openFilterModal} openSubjectModal={openSubjectModal} closeSubjectModal={closeSubjectModal} golazo={subCategories} selectedCategory={selectedCategory} setSubCategoriesData={setSubCategoriesData}/>
+        <Navbar 
+        toggleFilterModal={openFilterModal} 
+        openSubjectModal={openSubjectModal} 
+        closeSubjectModal={closeSubjectModal} 
+        golazo={subCategories} 
+        selectedCategory={selectedCategory} 
+        setSubCategoriesData={setSubCategoriesData} 
+        subjectData={subjectData}
+        />
         </div>
         {/* <FilterModal filterModal={filterModal} toggleFilterModal={closeFilterModal}/> */}
         <div className="course-content">
@@ -101,12 +122,6 @@ function DashboardDesktop(props) {
         <div className="dashboard-footer">
         <Footer />
         </div>
-        {
-          subjectModalVisible ?  <div className="dashboard-subject-modal">
-          <SubjectDropdown  categories={categories}/>
-          </div> : null
-        }
-       
        
         <SlidingPanel
         type={'left'}
