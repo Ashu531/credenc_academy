@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function SubjectDropdown(props){
-  console.log(props?.categories,props?.selectedSubject,"selectedSubject++")
     return(
         <div className='subject-dropdown-container'>
             {props?.categories.map(item=>{

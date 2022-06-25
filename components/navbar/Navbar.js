@@ -48,13 +48,13 @@ export default function SubjectNavbar(props){
    
     return(
         <div className='subject-navbar'> 
-        <div className='subject-tab' onMouseEnter={()=> setSubjectModalVisible(true)} >
+        <div className='subject-tab' onMouseEnter={()=> setSubjectModalVisible(true)} onMouseLeave={()=> setSubjectModalVisible(false)}>
         <span className='all-subject-text'>All Subjects</span>
          <Image src={dropdownIcon} objectFit="cover" />
 
          {
             subjectModalVisible ? 
-             <div className="dashboard-subject-modal" onMouseEnter={()=> setSubjectModalVisible(true)} onMouseLeave={()=> setSubjectModalVisible(false)}>
+             <div className="dashboard-subject-modal" >
             <SubjectDropdown  categories={props?.subjectData} selectedSubject={selectedSubject} selectSubject={selectSubject}/>
             </div> : null
          }
