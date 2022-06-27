@@ -11,18 +11,9 @@ export default function SubjectNavbar(props){
    
     const [leftScrollView,setLeftScrollView] = useState(false)
     const [subjectModalVisible,setSubjectModalVisible] = useState(false)
-    const [selectedSubject,setSelectedSubject] = useState({})
+    
     const ref = useRef(null);
 
-    useEffect(()=>{
-       let subjectdata = JSON.parse(localStorage.getItem(subjectKey))
-       console.log("coming+++");
-       if(subjectdata){
-        setSelectedSubject(subjectdata)
-       }else{
-        setSelectedSubject(props?.subjectData[0])
-       }
-    },[])
 
     useEffect(()=>{
         manageLeftScrollView()
@@ -41,10 +32,7 @@ export default function SubjectNavbar(props){
         manageLeftScrollView()
     }
 
-    const selectSubject=(item)=>{
-        localStorage.setItem(subjectKey,JSON.stringify(item))
-        setSelectedSubject(item)
-    }
+
    
     return(
         <div className='subject-navbar'> 
@@ -55,7 +43,11 @@ export default function SubjectNavbar(props){
          {
             subjectModalVisible ? 
              <div className="dashboard-subject-modal" >
-            <SubjectDropdown  categories={props?.subjectData} selectedSubject={selectedSubject} selectSubject={selectSubject}/>
+            <SubjectDropdown  
+            categories={props?.subjectData} 
+            selectedSubject={props?.selectedSubject} 
+            selectSubject={props?.selectSubject}
+            />
             </div> : null
          }
         </div>

@@ -44,6 +44,7 @@ export default function CourseCard(props){
   const [addToCompareButtonState, setAddToCompareButtonState] = useState({...States.addToCompareButtonState.DEFAULT});
   const [courseNameTooltip, setCourseNameTooltip] = useState(false)
   
+  const [isCardOpen,setIsCardOpen] = useState(false)
 
   useEffect(() => {
     setMounted(true);
@@ -110,16 +111,19 @@ const _onAddToBookmark=(item)=>{
       {
         mounted && 
         <div 
-        className='card-container' 
-        style={window.innerWidth <= 500 ? {width: "90%"} : null} 
+        className = {!isCardOpen ? "card-container" : "card-container card-container-open"}
+        style={window.innerWidth <= 500 ? {width: "90%"} : !isCardOpen ? null : {padding:0} }
+       
         onMouseEnter={e => {
           setCompareButtonVisible({display: 'flex',flexDirection:"row"});
+          setIsCardOpen(true)
           }} 
         onMouseLeave={e => {
           setCompareButtonVisible({display: 'none'})
+          setIsCardOpen(false)
         }}  
           >
-        <div className='card-header'>
+        <div className='card-header' style={!isCardOpen ? null : {paddingLeft:12,paddingRight: 12}}>
           <Image src={courseLogo} objectFit="cover"/>
              <div className='card-header-end-content'>
                <div className='grey-container' onClick={()=>_addToBookmark(props.data)} style={bookmarkVisible === true || bookmarkVisible === "true"  ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}>
@@ -132,18 +136,18 @@ const _onAddToBookmark=(item)=>{
    
    </div>
    </div>
-   <div className='card-image-content'>
-   <Image src={instituteLogo} objectFit="cover"/>
+   <div  className = {!isCardOpen ? "card-image-content" : "card-image-content card-image-content-open"} >
+   <Image src={instituteLogo} objectFit="cover"  height={!isCardOpen ? 82 : 60} width={!isCardOpen ? 82 : 60}/>
    <span className='institute-name'>Xavier School of Management </span>
    </div>
-   <div className='card-course-content'>
+   <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} >
   
 <div className='course-name' onMouseEnter={()=>setCourseNameTooltip(true)} onMouseLeave={()=>setCourseNameTooltip(false)}>
 {props.data.name.length > 25 ? props.data.name.substring(0, 25) + '...' : props.data.name} 
 </div>
 {
  courseNameTooltip && props.data.name.length > 25 ?  <div className="course-name-tooltip">
-<span class="course-name-tooltiptext">{props.data.name}</span>
+<span className="course-name-tooltiptext">{props.data.name}</span>
 </div> : null
 }
 
@@ -151,7 +155,7 @@ const _onAddToBookmark=(item)=>{
 {
   props.data.class_mode.map((item,index)=>{
   return (
-    <h2 className='course-mode'>
+    <h2 className='course-mode' key={index}>
        { index > 0 ? ", "+ item : item}
     </h2>
  )
@@ -162,13 +166,15 @@ const _onAddToBookmark=(item)=>{
 <h2 className='course-duration'>
 {props.data.duration}
 </h2>
-<span className='course-price-content'>
+<span className='course-price-content' style={!isCardOpen ? null : {marginTop: 22,marginBottom: 14}}>
 <span className='course-pay'>{props.data.finance_display[0]}</span>
 <span className='course-price'>{props.data.price === "Free" ? "Free" : ` ₹${props.data.price}` }</span>
 </span>
    </div>
 
- {  window.innerWidth > 500 ? <div className='course-button-content' style={{...compareButtonVisible,marginLeft:0}}>
+ {  window.innerWidth > 500 ? 
+ <div 
+ className='course-button-content' style={{...compareButtonVisible,marginLeft:0}}>
 <div className='course-compare-buttton' onClick={()=>_addToCompare(props.data)}>
 <span className='add-to-compare-text'>
   {compareTextVisible}

@@ -14,6 +14,8 @@ import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import constant from '../../config/constant.js'
 import SubjectDropdown from "../../components/subjectDropdown/SubjectDropdown"
+import { useRouter } from 'next/router'
+import {getCardData} from '../api/store'
 const compareKey = 'credenc-edtech-compares';
 const subjectKey = 'credenc-edtech-subject';
 const subCategories = ["UI UX Design","Animation Design","Fashion design","Game Design","Interior Design","Motion Graphics Design"];
@@ -25,11 +27,29 @@ function DashboardDesktop(props) {
   const [courseCardData,setCourseCardData]= useState([])
   const [selectedCategory,setSelectedCategory] = useState(subCategories[0]);
   const [subjectData,setSubjectData] = useState([])
+  const [selectedSubject,setSelectedSubject] = useState({})
+
+  const router = useRouter();
+  
 
   useEffect(()=>{
+    getDataFromBaseUrl()
     getCardData()
     getSubjectData()
+    getSelectedSubject()
   },[])
+
+ const getDataFromBaseUrl=()=>{
+    console.log(router,"router")
+    if(router.query.subject !== null){
+     let data={
+        name: router.query.subject
+      }
+      getCardData(data)
+    }else{
+      getCardData()
+    }
+  }
 
   const getSubjectData=async()=>{
     const response = await fetch(`${constant.API_URL.DEV}/subject/search/`)
@@ -51,10 +71,44 @@ function DashboardDesktop(props) {
     setSubjectData(totalSubjectData)
   }
 
-  const getCardData=async()=>{
-    const response = await fetch(`${constant.API_URL.DEV}/batch/search/`)
+  const getSelectedSubject =()=>{
+    let subjectdata = JSON.parse(localStorage.getItem(subjectKey))
+    if(subjectdata){
+     setSelectedSubject(subjectdata)
+    }else{
+     setSelectedSubject(props?.subjectData[0])
+    }
+  }
+
+  const getCardData=async(item)=>{
+    let URL = `${constant.API_URL.DEV}/batch/search/`
+    let subjectQuery="";
+    if(item !== null && item?.name && item?.name !== "All"){
+      console.log("inside item",item)
+      subjectQuery = `?subject=${item?.name}`
+      URL=URL.concat(subjectQuery)
+    }
+   console.log(URL,"coming+++++")
+    const response = await fetch(URL)
     const data = await response.json()
     setCourseCardData(data?.data)
+  }
+
+
+  const _getSubjectDetails=(item)=>{
+    if(item.name === "All"){
+      router.push({
+        pathname: "/dashboard",
+        // query: {subject: item.name}
+      })
+    }else{
+      router.push({
+        pathname: "/dashboard",
+        query: {subject: item.name}
+      })
+    }
+    
+    getCardData(item)
   }
 
   const toggleTheme=async()=> {
@@ -83,7 +137,12 @@ function DashboardDesktop(props) {
       setSelectedCategory(item)
     }
 
-  
+    const selectSubject=(item)=>{
+      // localStorage.setItem(subjectKey,JSON.stringify(item))
+      setSelectedSubject(item)
+      _getSubjectDetails(item)
+  }
+
  return(
         <div className="dashboard">
         <div className="dashboard-upper-section">
@@ -98,6 +157,8 @@ function DashboardDesktop(props) {
         selectedCategory={selectedCategory} 
         setSubCategoriesData={setSubCategoriesData} 
         subjectData={subjectData}
+        selectedSubject={selectedSubject} 
+        selectSubject={selectSubject}
         />
         </div>
         {/* <FilterModal filterModal={filterModal} toggleFilterModal={closeFilterModal}/> */}
@@ -105,7 +166,9 @@ function DashboardDesktop(props) {
         {/* <CategoryDropdown categories={categories}/> */}
         <div className="card-content">
         {/* <CategoryHeader  /> */}
-        <div className="course-card-container" style={{gap: 10}}>
+        <div className="course-card-container" 
+        style={{gap: 10}}
+        >
          {
             courseCardData?.map((item,index)=>{
               return(

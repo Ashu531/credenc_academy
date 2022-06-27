@@ -3,9 +3,9 @@ import React from 'react';
 export default function SubjectDropdown(props){
     return(
         <div className='subject-dropdown-container'>
-            {props?.categories.map(item=>{
+            {props?.categories.map((item,index)=>{
                 return (
-                    <div className='subject-tab-element'>
+                    <div className='subject-tab-element' key={index}>
                     <div className='subject-element' onClick={()=>props.selectSubject(item)}>
                     <div className='subject-element-start'>
                         {/* <Image /> */}
