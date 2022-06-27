@@ -4,6 +4,22 @@ const constant= {
       PROD: "https://edtechbackend.credenc.com",
       DEV: "http://0.0.0.0:1337"
     },
+    COURSES:{
+     SUB_CATEGORIES : [
+       {
+        id:1,
+        title: "UI UX Design"
+       },
+       {
+        id:1,
+        title: "Marketing"
+       },
+       {
+        id:1,
+        title: "Ram"
+       },
+     ]
+    }
 }
 
 

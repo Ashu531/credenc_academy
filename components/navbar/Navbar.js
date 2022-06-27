@@ -10,6 +10,7 @@ const subjectKey = 'credenc-edtech-subject';
 export default function SubjectNavbar(props){
    
     const [leftScrollView,setLeftScrollView] = useState(false)
+    const [rightScrollView,setRightScrollView] = useState(false)
     const [subjectModalVisible,setSubjectModalVisible] = useState(false)
     
     const ref = useRef(null);
@@ -17,7 +18,8 @@ export default function SubjectNavbar(props){
 
     useEffect(()=>{
         manageLeftScrollView()
-    },[leftScrollView])
+        manageRightScrollView
+    },[leftScrollView,rightScrollView])
 
     const manageLeftScrollView=()=>{
         if(ref.current?.scrollLeft === 0){
@@ -27,17 +29,25 @@ export default function SubjectNavbar(props){
           }
     }
 
+    const manageRightScrollView=()=>{
+        if(ref.current?.scrollRight === 0){
+            setRightScrollView(false)
+          }else{
+            setRightScrollView(true)
+          }
+    }
+
     const scroll = (scrollOffset) => {
         ref.current.scrollLeft += scrollOffset;
         manageLeftScrollView()
     }
 
 
-   
+   console.log(props?.selectedSubject,"props?.selectedSubject=++")
     return(
         <div className='subject-navbar'> 
         <div className='subject-tab' onMouseEnter={()=> setSubjectModalVisible(true)} onMouseLeave={()=> setSubjectModalVisible(false)}>
-        <span className='all-subject-text'>All Subjects</span>
+        <span className='all-subject-text'> {props?.selectedSubject.name && props?.selectedSubject.name !== "All" ? props?.selectedSubject.name : "All Subjects"}</span>
          <Image src={dropdownIcon} objectFit="cover" />
 
          {
@@ -58,11 +68,14 @@ export default function SubjectNavbar(props){
         }
        
         <div className='tabs' ref={ref}>
-        <SubjectTab title={props.golazo} selectedCategory={props.selectedCategory} setSubCategoriesData={props.setSubCategoriesData}/>
+        <SubjectTab title={props.subCategories} selectedCategory={props.selectedCategory} setSubCategoriesData={props.setSubCategoriesData}/>
        </div>
-        <div className="navbar-arrow-container" onClick={() => scroll(20)}>
+       {
+        rightScrollView === true ? <div className="navbar-arrow-container" onClick={() => scroll(20)}>
         <Image src={caretRight} objectFit="cover" height={14} width={14} />
-        </div>
+        </div> : null
+       }
+        
         <div className='subject-tab' onClick={()=>props.toggleFilterModal()} >
         <span className='all-subject-text'>Filters</span>
         <Image src={dropdownIcon} objectFit="cover" />

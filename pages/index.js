@@ -9,14 +9,14 @@ export default function Home() {
 
   const router = useRouter()
 
-  let defaultRoute = "";
-  if (typeof window !== "undefined") {
-    if(localStorage.getItem("token")){
-      // defaultRoute = <SignIn toggleTheme={toggleTheme} />
-    }else{
-      defaultRoute = <Dashboard toggleTheme={toggleTheme} />
-    }
-  }
+  // let defaultRoute = "";
+  // if (typeof window !== "undefined") {
+  //   if(localStorage.getItem("token")){
+  //     // defaultRoute = <SignIn toggleTheme={toggleTheme} />
+  //   }else{
+  //     defaultRoute = <Dashboard toggleTheme={toggleTheme} />
+  //   }
+  // }
 
   const toggleTheme=()=>{
     let newTheme = theme === "light" ? "dark" : "light";

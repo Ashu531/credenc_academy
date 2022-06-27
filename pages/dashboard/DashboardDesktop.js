@@ -25,7 +25,7 @@ function DashboardDesktop(props) {
 
   const [filterModal, setFilterModal] = useState(false);
   const [courseCardData,setCourseCardData]= useState([])
-  const [selectedCategory,setSelectedCategory] = useState(subCategories[0]);
+  const [selectedCategory,setSelectedCategory] = useState(constant.COURSES.SUB_CATEGORIES[0].title);
   const [subjectData,setSubjectData] = useState([])
   const [selectedSubject,setSelectedSubject] = useState({})
 
@@ -34,19 +34,21 @@ function DashboardDesktop(props) {
 
   useEffect(()=>{
     getDataFromBaseUrl()
-    getCardData()
     getSubjectData()
-    getSelectedSubject()
   },[])
 
  const getDataFromBaseUrl=()=>{
-    console.log(router,"router")
-    if(router.query.subject !== null){
+    if(router.query.hasOwnProperty('subject') ){
      let data={
         name: router.query.subject
       }
+      setSelectedSubject(data)
       getCardData(data)
     }else{
+      let data={
+        name: "All"
+      }
+      setSelectedSubject(data)
       getCardData()
     }
   }
@@ -71,24 +73,20 @@ function DashboardDesktop(props) {
     setSubjectData(totalSubjectData)
   }
 
-  const getSelectedSubject =()=>{
-    let subjectdata = JSON.parse(localStorage.getItem(subjectKey))
-    if(subjectdata){
-     setSelectedSubject(subjectdata)
-    }else{
-     setSelectedSubject(props?.subjectData[0])
-    }
-  }
-
-  const getCardData=async(item)=>{
+  const getCardData=(item)=>{
     let URL = `${constant.API_URL.DEV}/batch/search/`
     let subjectQuery="";
     if(item !== null && item?.name && item?.name !== "All"){
-      console.log("inside item",item)
       subjectQuery = `?subject=${item?.name}`
       URL=URL.concat(subjectQuery)
     }
-   console.log(URL,"coming+++++")
+    // let subCategory = `?sub_category=${item?.title}`
+    // URL=URL.concat(subCategory)
+    fetchCardData(URL)
+   
+  }
+
+  const fetchCardData=async(URL)=>{
     const response = await fetch(URL)
     const data = await response.json()
     setCourseCardData(data?.data)
@@ -96,6 +94,7 @@ function DashboardDesktop(props) {
 
 
   const _getSubjectDetails=(item)=>{
+    
     if(item.name === "All"){
       router.push({
         pathname: "/dashboard",
@@ -108,6 +107,16 @@ function DashboardDesktop(props) {
       })
     }
     
+    getCardData(item)
+  }
+
+  const _getSubCategoryDetails=(item)=>{
+  
+    console.log(item,"item+++")
+    console.log(router,"router+++")
+    router.push({
+      query: {sub_category: item.title}
+    })
     getCardData(item)
   }
 
@@ -134,10 +143,12 @@ function DashboardDesktop(props) {
     }
 
     const setSubCategoriesData=(item)=>{
-      setSelectedCategory(item)
+      setSelectedCategory(item.title)
+      // _getSubCategoryDetails(item)
     }
 
     const selectSubject=(item)=>{
+      console.log(item,"item+++")
       // localStorage.setItem(subjectKey,JSON.stringify(item))
       setSelectedSubject(item)
       _getSubjectDetails(item)
@@ -153,7 +164,7 @@ function DashboardDesktop(props) {
         toggleFilterModal={openFilterModal} 
         openSubjectModal={openSubjectModal} 
         closeSubjectModal={closeSubjectModal} 
-        golazo={subCategories} 
+        subCategories={constant.COURSES.SUB_CATEGORIES} 
         selectedCategory={selectedCategory} 
         setSubCategoriesData={setSubCategoriesData} 
         subjectData={subjectData}
@@ -184,6 +195,7 @@ function DashboardDesktop(props) {
        
         <div className="dashboard-footer">
         <Footer />
+        {/* <FooterModal /> */}
         </div>
        
         <SlidingPanel
