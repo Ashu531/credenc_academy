@@ -19,14 +19,12 @@ export default function Home() {
     let newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme)
   }
-  
-   
   }
 
   return (
     <>
     {
-    mounted &&  <div data-theme={theme}>
+    mounted &&  <div data-theme={theme} >
     <Dashboard toggleTheme={toggleTheme} />
    </div>
   }

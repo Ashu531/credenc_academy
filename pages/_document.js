@@ -17,14 +17,14 @@ class CustomDocument extends Document {
         {/* <title>Ed-Tech</title> */}
         <meta name="ed-tech" content="Ed-Tech Credenc" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap"
           rel="stylesheet"
         />
         <link rel="icon" href="/favicon.ico" />
         </Head>
-        <body style={{ fontFamily: "Roboto" }}>
+        <body style={{ fontFamily: "Poppins"}} >
           <Main />
           <NextScript />
         </body>

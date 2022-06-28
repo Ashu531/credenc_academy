@@ -1,8 +1,8 @@
 .mobile-header{
   width: 100vw;
-  background-color: #ffffff;
+  background-color: var(--defaultBackground);
   z-index: 99;
-  position: sticky;
+  position: fixed;
   top: 0;
   box-sizing: border-box;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
@@ -24,7 +24,7 @@ align-items: center;
 
   .mobile-header-element{
     box-sizing: border-box;
-    border: 1px solid #DDDDDD;
+    border: 1px solid var(--subduedStrokeColor);
     padding: 14px;
     gap: 10px;
     border-radius: 6px;
@@ -39,7 +39,7 @@ align-items: center;
     font-weight: 500;
     font-size: 14px;
     line-height: 19px;
-    color: #222222;
+    color: var(--primaryColor);
     padding-right: 12px;
 }
 }

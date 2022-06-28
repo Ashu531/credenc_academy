@@ -5,9 +5,9 @@ display: flex;
 flex-direction: column;
 padding: 12px;
 
-background: #FFFFFF;
+background: var(--defaultBackground);
 
-border: 1px solid #EBEBEB;
+border: 1px solid var(--insignificantStrokeColor);
 border-radius: 16px;
 width: 30em;
 cursor: pointer;
@@ -32,7 +32,7 @@ cursor: pointer;
 font-weight: 500;
 font-size: 12px;
 line-height: 18px;
-color: #717171;
+color: var(--bodyColor);
 margin-top: 10px;
 }
 
@@ -41,9 +41,14 @@ display: flex;
 flex-direction: row;
 justify-content: center;
 align-items: center;
-background: #F7F7F7;
+background: var(--subduedBackground);
 border-radius: 8px;
 padding: 8px;
+
+&:hover{
+    background: var(--defaultBackground) ;
+}
+
 }
 .count-text{
     font-family: 'Poppins';
@@ -51,7 +56,7 @@ padding: 8px;
     font-weight: 400;
     font-size: 14px;
     line-height: 21px;
-    color: #222222;
+    color: var(--defaultColor);
     margin-right: 5px;
 }
 .card-image-content{
@@ -76,21 +81,21 @@ padding: 8px;
         font-weight: 500;
         font-size: 16px;
         line-height: 24px;
-        color: #000000;
+        color: var(--contrastStrokeColor);
     }
 
     .course-name-tooltip {
         position: absolute;
         display: inline-block;
-        border-bottom: 1px dotted black;
+        border-bottom: 1px dotted var(--primaryColor);
       }
 
        .course-name-tooltiptext {
         // visibility: hidden;
         min-width: 20em;
-        background-color: black;
+        background-color: var(--primaryColor);
         font-family: "Poppins";
-        color: #fff;
+        color: var(--defaultBackground);
         text-align: center;
         padding: 5px 5px;
         border-radius: 6px;
@@ -105,7 +110,7 @@ padding: 8px;
         font-weight: 500;
         font-size: 14px;
         line-height: 21px;
-        color: #717171;
+        color: var(--bodyColor);
         margin-top: 12px;
     }
     .course-duration{
@@ -114,7 +119,7 @@ padding: 8px;
         font-weight: 500;
         font-size: 14px;
         line-height: 21px;
-        color: #717171;
+        color: var(--bodyColor);
         margin-top: 4px;
     }
     .course-price-content{
@@ -131,7 +136,7 @@ margin-top: 36px;
             font-weight: 500;
             font-size: 11px;
             line-height: 16px; 
-            color: #B0B0B0; 
+            color: var(--disabledColor); 
         }
         .course-price{
             font-family:'Poppins';
@@ -139,7 +144,7 @@ margin-top: 36px;
     font-weight: 600;
     font-size: 18px;
     line-height: 27px;
-    color: #000000;
+    color: var(--inverseBackground);
         }
     }
    
@@ -156,7 +161,7 @@ margin-top: 36px;
     align-items: center;
     padding: 10px 8px;
     // gap: 8px;
-    background: #F7F7F7;
+    background: var(--subduedBackground);
     border-radius: 0px 0px 16px 16px;
 }
 
@@ -195,7 +200,7 @@ margin-top: 36px;
     font-weight: 500;
     font-size: 14px;
     line-height: 21px;
-    color: #000000;
+    color: var(--inverseBackground);
 }
 
 .course-button-content-mobile{
@@ -205,7 +210,7 @@ margin-top: 36px;
     align-items: center;
     padding: 12px 16px;
     gap: 8px;
-    background: #F7F7F7;
+    background: var(--subduedBackground);
     border-radius: 0px 0px 16px 16px;
 
 }
@@ -226,7 +231,7 @@ border-radius: 4px;
 font-weight: 600;
 font-size: 14px;
 line-height: 21px;
-color: #FFFFFF;
+color: var(--defaultBackground);
 }
 
 .course-detail-button-mobile{
@@ -243,7 +248,7 @@ color: #FFFFFF;
     font-weight: 500;
     font-size: 14px;
     line-height: 21px;
-    color: #000000;
+    color: var(--inverseBackground);
 }
 
 }

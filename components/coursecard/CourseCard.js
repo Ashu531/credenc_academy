@@ -124,20 +124,20 @@ const _onAddToBookmark=(item)=>{
         }}  
           >
         <div className='card-header' style={!isCardOpen ? null : {paddingLeft:12,paddingRight: 12}}>
-          <Image src={courseLogo} objectFit="cover"/>
+          <Image src={courseLogo} objectFit="cover" alt='courseLogo' />
              <div className='card-header-end-content'>
                <div className='grey-container' onClick={()=>_addToBookmark(props.data)} style={bookmarkVisible === true || bookmarkVisible === "true"  ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}>
-                 <Image src={ bookmarkVisible === true || bookmarkVisible === "true" ? selectedBookmark : bookmarkIcon  } objectFit="cover"/>
+                 <Image src={ bookmarkVisible === true || bookmarkVisible === "true" ? selectedBookmark : bookmarkIcon  } objectFit="cover" alt='selectedBookmark' width={12} height={17} />
         </div>
         <div className='grey-container'>
          <span className='count-text'>{props.data.up_votes}</span>
-          <Image src={upvoteLogo} objectFit="cover"/>
+          <Image src={upvoteLogo} objectFit="cover" alt='upvoteLogo'/>
      </div>
    
    </div>
    </div>
    <div  className = {!isCardOpen ? "card-image-content" : "card-image-content card-image-content-open"} >
-   <Image src={instituteLogo} objectFit="cover"  height={!isCardOpen ? 82 : 60} width={!isCardOpen ? 82 : 60}/>
+   <Image src={instituteLogo} objectFit="cover"  height={!isCardOpen ? 82 : 60} width={!isCardOpen ? 82 : 60} alt='instituteLogo'/>
    <span className='institute-name'>Xavier School of Management </span>
    </div>
    <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} >
@@ -184,7 +184,7 @@ const _onAddToBookmark=(item)=>{
 <span className='course-detail-text'>
   Details
   </span>
-  <Image src={arrowRight} objectFit="contain" />
+  <Image src={arrowRight} objectFit="contain" alt='arrowRight'/>
 </  div>
    </div> : null}
 
@@ -202,7 +202,7 @@ const _onAddToBookmark=(item)=>{
 <span className='course-detail-text-mobile'>
   Details
   </span>
-  <Image src={arrowRight} objectFit="contain" />
+  <Image src={arrowRight} objectFit="contain" height={18} width={18} alt='arrowRight'/>
 </div>
    </div> : null}
     </div>

@@ -34,7 +34,7 @@ export default function FooterMobile(){
         <span className='footer-disclaimer-text'>
         Disclaimer
         </span>
-        <Image src={goUpIcon} objectFit="cover" />
+        <Image src={goUpIcon} objectFit="cover" alt='goUpIcon'/>
         </div>
         </div>
     )

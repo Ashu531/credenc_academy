@@ -6,12 +6,6 @@ import FooterMobile from '../../components/footerMobile/FooterMobile'
 import CourseCard from '../../components/coursecard/CourseCard'
 import constant from '../../config/constant.js'
 
-const categories = [
-  {title : "Hidden Gem"},
-  {title : "Quickies"},
-  {title : "Learn now pay later"},
-  {title : "Get a job"},
-]
 function DashboardMobile(props) {
   const [filterModal, setFilterModal] = useState(false);
   const [courseCardData,setCourseCardData]= useState([])
@@ -25,15 +19,7 @@ function DashboardMobile(props) {
     const data = await response.json()
     setCourseCardData(data.data)
   }
-
-  const toggleTheme=async()=> {
-        let updatedTheme= props.theme;
-        let newTheme = updatedTheme === "light" ? "dark" : "light";
-        props.dispatchThemeChange(newTheme);
-    }
-
-
-   
+  
    return(
         <div className="dashboard-mobile">
          <HeaderMobile />

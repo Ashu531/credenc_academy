@@ -8,9 +8,9 @@ export default function CategoryDropdown(props){
     return(
         <div className='dropdown'>
             {
-                props.categories.map(item=>{
+                props.categories.map((item,index)=>{
                     return (
-                        <div className='element-content'>
+                        <div className='element-content' key={index}>
                         <Image src={bookmarkIcon} objectFit="cover" />
                         <span className='title'>{item.title}</span>
                         </div>

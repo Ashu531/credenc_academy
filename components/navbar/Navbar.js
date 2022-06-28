@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-// import projectorIcon from '../../assets/images/icons/projectorIcon.png';
+import filterIcon from '../../assets/images/icons/filterIcon.svg';
 import dropdownIcon from '../../assets/images/icons/dropdown.svg'
 import Image from "next/image";
 import SubjectTab from '../../components/subjectTab/SubjectTab'
@@ -46,7 +46,7 @@ export default function SubjectNavbar(props){
         <div className='subject-navbar'> 
         <div className='subject-tab' onMouseEnter={()=> setSubjectModalVisible(true)} onMouseLeave={()=> setSubjectModalVisible(false)}>
         <span className='all-subject-text'> {props?.selectedSubject.name && props?.selectedSubject.name !== "All" ? props?.selectedSubject.name : "All Subjects"}</span>
-         <Image src={dropdownIcon} objectFit="cover" />
+         <Image src={dropdownIcon} objectFit="cover" alt='dropdownIcon' />
 
          {
             subjectModalVisible ? 
@@ -61,7 +61,7 @@ export default function SubjectNavbar(props){
         </div>
         {
             leftScrollView === true ?  <div className="navbar-arrow-container" onClick={() => scroll(-20)}>
-            <Image src={caretRight} objectFit="cover" style={{transform: "rotate(180deg)"}} height={14} width={14}/>
+            <Image src={caretRight} objectFit="cover" style={{transform: "rotate(180deg)"}} height={14} width={14} alt='caretRight' />
             </div> : null
         }
        
@@ -69,14 +69,14 @@ export default function SubjectNavbar(props){
         <SubjectTab title={props.subCategories} selectedCategory={props.selectedCategory} setSubCategoriesData={props.setSubCategoriesData}/>
        </div>
        {
-        rightScrollView === true ? <div className="navbar-arrow-container" onClick={() => scroll(20)}>
-        <Image src={caretRight} objectFit="cover" height={14} width={14} />
+        rightScrollView === true ? <div className="navbar-arrow-container" onClick={() => scroll(20)} >
+        <Image src={caretRight} objectFit="cover" height={14} width={14} alt='caretRight'/>
         </div> : null
        }
         
         <div className='subject-tab' onClick={()=>props.toggleFilterModal()} >
         <span className='all-subject-text'>Filters</span>
-        <Image src={dropdownIcon} objectFit="cover" />
+        <Image src={filterIcon} objectFit="cover" alt='filterIcon' />
         </div>
         </div>
     )

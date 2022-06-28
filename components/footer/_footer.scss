@@ -4,7 +4,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background: #F7F7F7;
+    background: var(--subduedBackground);
     height: 44px;
     position: fixed;
     bottom: 0px;
@@ -14,7 +14,7 @@
         font-style: normal;
         font-weight: 500;
         font-size: 14px;
-        color: #717171;
+        color: var(--bodyColor);
 
     }
 
@@ -36,7 +36,7 @@
 /* identical to box height */
 
 text-align: right;
-color: #717171;
+color: var(--bodyColor);
 padding-right: 10px;
     }
 
@@ -53,7 +53,7 @@ padding-right: 10px;
 font-weight: 400;
 font-size: 14px;
 line-height: 19px;
-color: #717171;
+color: var(--bodyColor);
 padding-right: 24px;
 cursor: pointer;
     }

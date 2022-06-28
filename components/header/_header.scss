@@ -1,10 +1,9 @@
 .navbar-wrapper {
     width: 100vw;
-    background-color: white;
     z-index: 99;
     position: sticky;
     top: 0;
-   background-color: #F7F7F7;;
+   background-color: var(--subduedBackground);
   
     .navbar{
     //   width: 100%;
@@ -39,7 +38,7 @@
 padding-right: 2rem;
         }
       .signin-button{
-        border: 1px solid #2D31D2;
+        border: 1px solid var(--defaultPrimaryColor);
         border-radius: 4px;
         min-height: 4.5vh;
         padding-left: 1vh;
@@ -53,6 +52,7 @@ padding-right: 2rem;
         font-weight: 500;
         font-size: 14px;
         line-height: 19px;
+        color: var(--primaryColor);
     }
       }
 

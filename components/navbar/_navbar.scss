@@ -22,7 +22,7 @@ justify-content: center;
 align-items: center;
 // padding: 10px;
 // gap: 10px;
-border: 1px solid #DDDDDD;
+border: 1px solid var(--subduedStrokeColor);
 border-radius: 100px;
 width: 32px;
 height: 32px;
@@ -35,7 +35,7 @@ cursor: pointer;
         justify-content:center;
         align-items: center;
         box-sizing: border-box;
-        border: 1px solid #DDDDDD;
+        border: 1px solid var(--subduedStrokeColor);
         border-radius: 12px;
         padding: 1rem 1.5rem 1rem 1.5rem;
         cursor: pointer;
@@ -46,7 +46,7 @@ cursor: pointer;
             font-weight: 500;
             font-size: 14px;
             line-height: 19px;
-            color: #222222;
+            color: var(--primaryColor);
             padding-right: 12px;
         }
     }

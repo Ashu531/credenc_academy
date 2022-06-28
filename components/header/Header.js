@@ -12,15 +12,15 @@ export default function Header(props){
         <div className='navbar'>
          
           {/* <Link href='/' className='navbar-brand' onClick={() => Mixpanel.track(MixpanelStrings.HOME_BUTTON_CLICK)}> */}
-            <Image src={credencLogo} objectFit="cover"/>
+            <Image src={credencLogo} objectFit="cover" alt='credencLogo' />
           {/* </Link> */}
          <div className='user-elements'>
          <div className='icon-element'>
-           <Image src={projectorIcon} objectFit="cover"/>
+           <Image src={projectorIcon} objectFit="cover" alt='projectorIcon' />
            </div>
           {/* <Link href='bookmarks' className='nav-item bookmark' onClick={() => Mixpanel.track(MixpanelStrings.NAV_BOOKMARK_CLICKED)}> */}
            <div className='icon-element'>
-           <Image src={bookmarkIcon} objectFit="cover"/>
+           <Image src={bookmarkIcon} objectFit="cover" alt='bookmarkIcon' />
            </div>
             
           {/* </Link> */}

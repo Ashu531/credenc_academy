@@ -15,6 +15,8 @@ export default function Dashboard(props) {
     setMounted(true);
 }, []);
 
+console.log(props,"props++++")
+
    return(
       <>
       {
