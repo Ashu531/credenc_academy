@@ -5,7 +5,7 @@ import credencLogo from '../../assets/images/logo/credencLogo.svg'
 import Image from "next/image";
 
 export default function Header(props){
-  console.log(props,"rposp+++")
+
     return(
         <div className='navbar-wrapper'>
         

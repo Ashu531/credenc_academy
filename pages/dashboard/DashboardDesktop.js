@@ -42,12 +42,14 @@ function DashboardDesktop(props) {
      let data={
         name: router.query.subject
       }
+      setSelectedCategory(router.query.sub_category)
       setSelectedSubject(data)
       getCardData(data)
     }else{
       let data={
         name: "All"
       }
+      setSelectedCategory(router.query.sub_category)
       setSelectedSubject(data)
       getCardData()
     }
@@ -74,14 +76,14 @@ function DashboardDesktop(props) {
   }
 
   const getCardData=(item)=>{
-    let URL = `${constant.API_URL.DEV}/batch/search/`
+    let URL = `${constant.API_URL.DEV}/batch/search`
     let subjectQuery="";
     if(item !== null && item?.name && item?.name !== "All"){
-      subjectQuery = `?subject=${item?.name}`
+      subjectQuery = `/?subject=${item?.name}`
       URL=URL.concat(subjectQuery)
     }
-    // let subCategory = `?sub_category=${item?.title}`
-    // URL=URL.concat(subCategory)
+    let subCategory = `/?sub_category=${selectedCategory}`
+    URL=URL.concat(subCategory)
     fetchCardData(URL)
    
   }
@@ -98,12 +100,17 @@ function DashboardDesktop(props) {
     if(item.name === "All"){
       router.push({
         pathname: "/dashboard",
-        // query: {subject: item.name}
+        query: {
+          sub_category: selectedCategory
+        }
       })
     }else{
       router.push({
         pathname: "/dashboard",
-        query: {subject: item.name}
+        query: {
+          subject: item.name,
+          sub_category: selectedCategory
+        }
       })
     }
     
@@ -111,12 +118,25 @@ function DashboardDesktop(props) {
   }
 
   const _getSubCategoryDetails=(item)=>{
+
+    if(selectedSubject.name === "All"){
+      router.push({
+        pathname: "/dashboard",
+        query: {
+        sub_category: item.title,
+       }
+     })
+    }else{
+      router.push({
+        pathname: "/dashboard",
+        query: {
+          subject: selectedSubject.name,
+          sub_category: item.title
+        }
+      })
+    }
   
-    console.log(item,"item+++")
-    console.log(router,"router+++")
-    router.push({
-      query: {sub_category: item.title}
-    })
+    
     getCardData(item)
   }
 
@@ -144,11 +164,11 @@ function DashboardDesktop(props) {
 
     const setSubCategoriesData=(item)=>{
       setSelectedCategory(item.title)
-      // _getSubCategoryDetails(item)
+      _getSubCategoryDetails(item)
     }
 
     const selectSubject=(item)=>{
-      console.log(item,"item+++")
+     
       // localStorage.setItem(subjectKey,JSON.stringify(item))
       setSelectedSubject(item)
       _getSubjectDetails(item)
