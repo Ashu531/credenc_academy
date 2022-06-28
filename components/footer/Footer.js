@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import goUpIcon from '../../assets/images/icons/caret-up-grey.svg'
 import Image from "next/image";
 
-export default function FooterMobile(){
+export default function Footer(props){
   
     return(
         <div className='footer'>
@@ -30,7 +30,7 @@ export default function FooterMobile(){
                 </span>
             </div>
        
-        <div className='footer-disclaimer'>
+        <div className='footer-disclaimer' onClick={()=>props.toggleFooterModal()}>
         <span className='footer-disclaimer-text'>
         Disclaimer
         </span>

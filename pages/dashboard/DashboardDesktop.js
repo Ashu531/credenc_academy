@@ -16,6 +16,7 @@ import constant from '../../config/constant.js'
 import SubjectDropdown from "../../components/subjectDropdown/SubjectDropdown"
 import { useRouter } from 'next/router'
 import {getCardData} from '../api/store'
+import FooterModal from '../../components/footerModal/FooterModal'
 const compareKey = 'credenc-edtech-compares';
 const subjectKey = 'credenc-edtech-subject';
 const subCategories = ["UI UX Design","Animation Design","Fashion design","Game Design","Interior Design","Motion Graphics Design"];
@@ -28,13 +29,14 @@ function DashboardDesktop(props) {
   const [selectedCategory,setSelectedCategory] = useState(constant.COURSES.SUB_CATEGORIES[0].title);
   const [subjectData,setSubjectData] = useState([])
   const [selectedSubject,setSelectedSubject] = useState({})
+  const [footerModal,setFooterModal] = useState(false)
 
   const router = useRouter();
   
 
   useEffect(()=>{
-    getDataFromBaseUrl()
-    getSubjectData()
+    // getDataFromBaseUrl()
+    // getSubjectData()
   },[])
 
  const getDataFromBaseUrl=()=>{
@@ -179,6 +181,11 @@ function DashboardDesktop(props) {
       _getSubjectDetails(item)
   }
 
+  const toggleFooterModal = ()=>{
+    console.log("coming++")
+    setFooterModal(!footerModal)
+  }
+
  return(
         <div className="dashboard">
         <div className="dashboard-upper-section">
@@ -219,8 +226,12 @@ function DashboardDesktop(props) {
         </div>
        
         <div className="dashboard-footer">
-        <Footer />
-        {/* <FooterModal /> */}
+        <Footer toggleFooterModal={toggleFooterModal}/>
+        {
+         footerModal ? 
+          <FooterModal toggleFooterModal={toggleFooterModal}/> 
+           : null
+        }
         </div>
        
         <SlidingPanel

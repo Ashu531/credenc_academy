@@ -1,3 +1,9 @@
 .footer-modal{
-
+  width: 100%;
+  background: var(--subduedBackground);
+  position: fixed;
+  bottom: 0px;
+  height: 40vh;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
