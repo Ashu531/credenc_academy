@@ -49,7 +49,12 @@ function DashboardDesktop(props) {
       let data={
         name: "All"
       }
-      setSelectedCategory(router.query.sub_category)
+      if(router.query.hasOwnProperty('sub_category')){
+        setSelectedCategory(router.query.sub_category)
+      }else{
+        setSelectedCategory(constant.COURSES.SUB_CATEGORIES[0].title)
+      }
+     
       setSelectedSubject(data)
       getCardData()
     }
