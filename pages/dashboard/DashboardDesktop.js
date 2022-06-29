@@ -229,9 +229,17 @@ function DashboardDesktop(props) {
         <Footer toggleFooterModal={toggleFooterModal}/>
         {
          footerModal ? 
-          <FooterModal toggleFooterModal={toggleFooterModal}/> 
+         <SlidingPanel
+         type={'bottom'}
+         isOpen={footerModal}
+         backdropClicked={() => setFooterModal(false)}
+         size={30}
+       >
+        <FooterModal toggleFooterModal={toggleFooterModal}/> 
+       </SlidingPanel>
            : null
         }
+       
         </div>
        
         <SlidingPanel

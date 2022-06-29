@@ -124,8 +124,8 @@ const _onAddToBookmark=(item)=>{
         }}  
           >
         <div className='card-header' style={!isCardOpen ? null : {paddingLeft:12,paddingRight: 12}}>
-          <Image src={courseLogo} objectFit="cover" alt='courseLogo' />
-             <div className='card-header-end-content'>
+          <Image src={courseLogo} objectFit="cover" alt='courseLogo' style={{borderRadius: 6}} />
+        <div className='card-header-end-content'>
                <div className='grey-container' onClick={()=>_addToBookmark(props.data)} style={bookmarkVisible === true || bookmarkVisible === "true"  ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}>
                  <Image src={ bookmarkVisible === true || bookmarkVisible === "true" ? selectedBookmark : bookmarkIcon  } objectFit="cover" alt='selectedBookmark' width={12} height={17} />
         </div>

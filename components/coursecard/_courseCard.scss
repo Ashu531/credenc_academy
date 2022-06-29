@@ -12,6 +12,10 @@ border-radius: 16px;
 width: 30em;
 cursor: pointer;
 
+&:hover{
+    transform: translateY(0);
+}
+
 .card-header{
     display: flex;
     flex-direction: row;
@@ -41,12 +45,12 @@ display: flex;
 flex-direction: row;
 justify-content: center;
 align-items: center;
-background: var(--subduedBackground);
+background: var(--defaultBackground) ;
 border-radius: 8px;
 padding: 8px;
 
 &:hover{
-    background: var(--defaultBackground) ;
+  background: var(--subduedBackground);
 }
 
 }
@@ -74,6 +78,8 @@ padding: 8px;
 }
 .card-course-content{
     padding: 0rem 1.25rem 1rem 1.25rem;
+    transition: 0.5s;
+    transform: translateY(0%);
 
     .course-name{
         font-family:'Poppins';
@@ -162,7 +168,7 @@ margin-top: 36px;
     padding: 10px 8px;
     // gap: 8px;
     background: var(--subduedBackground);
-    border-radius: 0px 0px 16px 16px;
+    border-radius: 0px 0px 16px 16px; 
 }
 
 .course-compare-buttton{
@@ -174,6 +180,7 @@ margin-top: 36px;
     gap: 10px;
     background: linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%);
     border-radius: 4px;
+    width: 60%;
 }
 
 .add-to-compare-text{
