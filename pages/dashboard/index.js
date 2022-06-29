@@ -15,8 +15,6 @@ export default function Dashboard({toggleTheme}) {
     setMounted(true);
 }, []);
 
-console.log(toggleTheme,"props++++")
-
    return(
       <>
       {

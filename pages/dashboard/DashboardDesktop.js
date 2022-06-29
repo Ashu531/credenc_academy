@@ -186,8 +186,6 @@ function DashboardDesktop(props) {
     setFooterModal(!footerModal)
   }
 
-  console.log(router,"router++++")
-
  return(
         <div className="dashboard">
         <div className="dashboard-upper-section">
