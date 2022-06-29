@@ -24,9 +24,13 @@ export default function Home() {
   return (
     <>
     {
-    mounted &&  <div data-theme={theme} >
+    mounted &&  
+    <React.StrictMode>
+    <div data-theme={theme} >
     <Dashboard toggleTheme={toggleTheme} />
    </div>
+   </React.StrictMode>
+
   }
    </>
   )

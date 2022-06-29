@@ -35,8 +35,8 @@ function DashboardDesktop(props) {
   
 
   useEffect(()=>{
-    // getDataFromBaseUrl()
-    // getSubjectData()
+    getDataFromBaseUrl()
+    getSubjectData()
   },[])
 
  const getDataFromBaseUrl=()=>{
@@ -106,14 +106,14 @@ function DashboardDesktop(props) {
     
     if(item.name === "All"){
       router.push({
-        pathname: "/dashboard",
+        pathname: "/",
         query: {
           sub_category: selectedCategory
         }
       })
     }else{
       router.push({
-        pathname: "/dashboard",
+        pathname: "/",
         query: {
           subject: item.name,
           sub_category: selectedCategory
@@ -128,14 +128,14 @@ function DashboardDesktop(props) {
 
     if(selectedSubject.name === "All"){
       router.push({
-        pathname: "/dashboard",
+        pathname: "/",
         query: {
         sub_category: item.title,
        }
      })
     }else{
       router.push({
-        pathname: "/dashboard",
+        pathname: "/",
         query: {
           subject: selectedSubject.name,
           sub_category: item.title
@@ -185,6 +185,8 @@ function DashboardDesktop(props) {
     console.log("coming++")
     setFooterModal(!footerModal)
   }
+
+  console.log(router,"router++++")
 
  return(
         <div className="dashboard">
