@@ -9,9 +9,16 @@
     flex-direction: column;
     width: 100%;
     &:hover{
-        background : var(--subduedBackground)
+        background : var(--subduedBackground);
+        border-radius: 6px;
     }
    
+    .subject-tab-element-content{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+    }
 
     .subject-element{
         display: flex;
@@ -19,10 +26,31 @@
         justify-content: space-between;
         align-items: center;
         height: 53px;
-        width: 90%;
+        width: 80%;
         align-self: center;
-        
+        padding-left: 20px;
     }
+
+    .subject-element-dot-content{
+        width:20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        // position: absolute;
+    }
+
+    .subject-element-dot{
+        height: 6px;
+        width: 6px;
+        border-radius: 4px;
+        background: var(--successPrimaryColor);
+        // width:20%;
+    }
+
+    .subject-white-element{
+        width:20%;
+    }
+
    .subject-element-start{
     display: flex;
     flex-direction: row;

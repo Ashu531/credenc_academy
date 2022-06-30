@@ -46,7 +46,7 @@ export default function SubjectNavbar(props){
         <div className='subject-navbar'> 
         <div className='subject-tab' onMouseEnter={()=> setSubjectModalVisible(true)} onMouseLeave={()=> setSubjectModalVisible(false)}>
         <span className='all-subject-text'> {props?.selectedSubject.name && props?.selectedSubject.name !== "All" ? props?.selectedSubject.name : "All Subjects"}</span>
-         <Image src={dropdownIcon} objectFit="cover" alt='dropdownIcon' />
+         <Image src={dropdownIcon} objectFit="cover" alt='dropdownIcon' style={subjectModalVisible ? {transform: "rotate(180deg)"} : null}/>
 
          {
             subjectModalVisible ? 

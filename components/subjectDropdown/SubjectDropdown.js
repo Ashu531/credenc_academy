@@ -6,6 +6,8 @@ export default function SubjectDropdown(props){
             {props?.categories.map((item,index)=>{
                 return (
                     <div className='subject-tab-element' key={index}>
+                        <div className='subject-tab-element-content'>
+
                     <div className='subject-element' onClick={()=>props.selectSubject(item)}>
                     <div className='subject-element-start'>
                         {/* <Image /> */}
@@ -15,6 +17,15 @@ export default function SubjectDropdown(props){
                      {item?.count}
                     </div>    
                      </div>  
+                     {
+                        props?.selectedSubject?.name === item?.name ?  
+                        <div className='subject-element-dot-content' > 
+                        <div className='subject-element-dot' />
+                        </div>
+                        : <div className='subject-white-element' />
+                     }
+                    
+                         </div>
                      </div> 
                 )
             })}

@@ -182,7 +182,6 @@ function DashboardDesktop(props) {
   }
 
   const toggleFooterModal = ()=>{
-    console.log("coming++")
     setFooterModal(!footerModal)
   }
 
@@ -227,20 +226,7 @@ function DashboardDesktop(props) {
        
         <div className="dashboard-footer">
         <Footer toggleFooterModal={toggleFooterModal}/>
-        {
-         footerModal ? 
-         <SlidingPanel
-         type={'bottom'}
-         isOpen={footerModal}
-         backdropClicked={() => setFooterModal(false)}
-         size={30}
-       >
-        <FooterModal toggleFooterModal={toggleFooterModal}/> 
-       </SlidingPanel>
-           : null
-        }
-       
-        </div>
+       </div>
        
         <SlidingPanel
         type={'left'}
@@ -252,6 +238,15 @@ function DashboardDesktop(props) {
           <div>My Panel Content</div>
         </div>
       </SlidingPanel>
+
+      <SlidingPanel
+         type={'bottom'}
+         isOpen={footerModal}
+         backdropClicked={() => setFooterModal(false)}
+         size={30}
+       >
+        <FooterModal toggleFooterModal={toggleFooterModal}/> 
+       </SlidingPanel>
       
         
       </div>
