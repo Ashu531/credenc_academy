@@ -4,8 +4,8 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 class CustomDocument extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx);
-    // initialProps.head.forEach((value, index) => {
-    // });
+    initialProps.head.forEach((value, index) => {
+    });
 
     return { ...initialProps };
   }

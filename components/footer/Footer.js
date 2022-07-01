@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import goUpIcon from '../../assets/images/icons/caret-up-grey.svg'
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer(props){
-  
+
     return(
         <div className='footer'>
             <div style={{paddingLeft: 23}}>
@@ -13,12 +14,14 @@ export default function Footer(props){
             </div>
 
             <div className='footer-elemental-content'>
-                <span className='footer-elemental-content-text'>
+                <Link href="https://www.credenc.com/" >
+                <a className='footer-elemental-content-text' target="_blank">
                 About
-                </span>
-                <span className='footer-elemental-content-text'>
+                </a>
+                </Link>
+                {/* <span className='footer-elemental-content-text'>
                 Sitemap
-                </span>
+                </span> */}
                 <span className='footer-elemental-content-text'>
                 Privacy Policy
                 </span>

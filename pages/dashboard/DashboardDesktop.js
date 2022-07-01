@@ -208,9 +208,7 @@ function DashboardDesktop(props) {
         {/* <CategoryDropdown categories={categories}/> */}
         <div className="card-content">
         {/* <CategoryHeader  /> */}
-        <div className="course-card-container" 
-        style={{gap: 10}}
-        >
+        <div className="course-card-container" >
          {
             courseCardData?.map((item,index)=>{
               return(
@@ -269,15 +267,15 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardDesktop);
 
-// export async function getServerSideProps(context) {
+export async function getServerSideProps(context) {
 
-//   const response = await fetch(`${constant.API_URL.DEV}/batch/search/`)
-//   const data = await response.json()
-//   console.log("getServerSideProps coming++++")
+  const response = await fetch(`${constant.API_URL.DEV}/batch/search/`)
+  const data = await response.json()
+  console.log("getServerSideProps coming++++",data)
 
-//   return {
-//     props: {
-//       courseCardData: data
-//     },
-//   }
-// }
+  // return {
+  //   props: {
+  //     courseCardData: data
+  //   },
+  // }
+}

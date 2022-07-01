@@ -127,11 +127,11 @@ const _onAddToBookmark=(item)=>{
           <Image src={courseLogo} objectFit="cover" alt='courseLogo' style={{borderRadius: 6}} />
         <div className='card-header-end-content'>
                <div className='grey-container' onClick={()=>_addToBookmark(props.data)} style={bookmarkVisible === true || bookmarkVisible === "true"  ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}>
-                 <Image src={ bookmarkVisible === true || bookmarkVisible === "true" ? selectedBookmark : bookmarkIcon  } objectFit="cover" alt='selectedBookmark' width={12} height={17} />
+                 <Image src={ bookmarkVisible === true || bookmarkVisible === "true" ? selectedBookmark : bookmarkIcon  } objectFit="cover" alt='selectedBookmark' height={20} width={20}/>
         </div>
         <div className='grey-container'>
          <span className='count-text'>{props.data.up_votes}</span>
-          <Image src={upvoteLogo} objectFit="cover" alt='upvoteLogo'/>
+          <Image src={upvoteLogo} objectFit="cover" alt='upvoteLogo' height={20} width={20} />
      </div>
    
    </div>

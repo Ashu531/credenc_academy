@@ -11,7 +11,8 @@
     // max-width: 50em;
 
     &:hover{
-        border: 1px solid var(--insignificantStrokeColor);
+        border: 1px solid var(--insignificantStrokeColor) ;
+        background: var(--defaultBackground) !important;
         box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1);
         border-radius: 6px;
         margin: 0px 11px 0px 11px;
