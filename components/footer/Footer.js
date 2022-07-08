@@ -2,8 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import goUpIcon from '../../assets/images/icons/caret-up-grey.svg'
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from 'next/router'
 
 export default function Footer(props){
+
+    const router = useRouter();
+
+    const _openPrivacyPolicy=()=>{
+        router.push('/privacy');
+    }
 
     return(
         <div className='footer'>
@@ -22,7 +29,7 @@ export default function Footer(props){
                 {/* <span className='footer-elemental-content-text'>
                 Sitemap
                 </span> */}
-                <span className='footer-elemental-content-text'>
+                <span className='footer-elemental-content-text' onClick={()=>_openPrivacyPolicy()}>
                 Privacy Policy
                 </span>
                 <span className='footer-elemental-content-text'>

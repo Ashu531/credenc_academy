@@ -1,9 +1,9 @@
 .navbar-wrapper {
     width: 100vw;
     z-index: 99;
-    position: sticky;
+    position: fixed;
     top: 0;
-   background-color: var(--subduedBackground);
+    background-color: var(--subduedBackground);
   
     .navbar{
     //   width: 100%;

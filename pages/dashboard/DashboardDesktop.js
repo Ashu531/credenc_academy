@@ -29,7 +29,7 @@ function DashboardDesktop(props) {
   const [selectedCategory,setSelectedCategory] = useState(constant.COURSES.SUB_CATEGORIES[0].title);
   const [subjectData,setSubjectData] = useState([])
   const [selectedSubject,setSelectedSubject] = useState({})
-  const [footerModal,setFooterModal] = useState(false)
+  // const [footerModal,setFooterModal] = useState(false)
 
   const router = useRouter();
   
@@ -188,7 +188,7 @@ function DashboardDesktop(props) {
  return(
         <div className="dashboard">
         <div className="dashboard-upper-section">
-        <Header toggleTheme={props.toggleTheme} />
+       
         <Banner />
         <div className="course-navbar">
         <Navbar 
@@ -222,31 +222,17 @@ function DashboardDesktop(props) {
         </div>
         </div>
        
-        <div className="dashboard-footer">
-        <Footer toggleFooterModal={toggleFooterModal}/>
-       </div>
-       
         <SlidingPanel
         type={'left'}
         isOpen={filterModal}
         backdropClicked={() => setFilterModal(false)}
         size={30}
-      >
+        >
         <div>
           <div>My Panel Content</div>
         </div>
       </SlidingPanel>
-
-      <SlidingPanel
-         type={'bottom'}
-         isOpen={footerModal}
-         backdropClicked={() => setFooterModal(false)}
-         size={30}
-       >
-        <FooterModal toggleFooterModal={toggleFooterModal}/> 
-       </SlidingPanel>
-      
-        
+   
       </div>
        )
 }

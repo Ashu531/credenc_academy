@@ -6,4 +6,31 @@
   height: 40vh;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
+
+  .footer-modal-section{
+    display: flex;
+    flex-direction: column;
+    // margin: 0rem 2rem 0rem 2rem;
+  
+    .footer-modal-header{
+      height: 6vh;
+    }
+    
+    .footer-modal-content{
+      height: 30vh;
+    }
+    .footer-modal-footer{
+      height: 6vh;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  
 }
+
+
+
+
+

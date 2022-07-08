@@ -20,7 +20,9 @@ export default function Dashboard({toggleTheme}) {
       {
         mounted && 
         <>
-        {isDesktopOrLaptop && <DashboardDesktop toggleTheme={toggleTheme} />}
+        {isDesktopOrLaptop && <DashboardDesktop 
+        // toggleTheme={toggleTheme} 
+        />}
         {isMobile && <DashboardMobile />}
         </>
       }

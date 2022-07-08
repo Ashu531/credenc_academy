@@ -1,0 +1,127 @@
+.privacy-policy {
+    // min-width: 100vw;
+    flex-grow: 1;
+    // background: #0f0f0f;
+    padding: 0rem 2.5rem 0rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 8rem;
+
+    // color: #C5C7CA;
+    // padding: 2rem 20%;
+    .heading {
+        font-weight: 600;
+        font-size: 2.8rem;
+        line-height: 3rem;
+        text-transform: uppercase;
+        margin-bottom: 1rem
+    }
+    .date {
+        align-self: flex-end;
+        font-style: italic;
+        font-weight: 40rem;
+        font-size: 1.2rem;
+        line-height: 1.8rem;
+        margin-bottom: 1.6rem;
+    }
+    .para {
+        font-weight: 400;
+        font-size: 1.6rem;
+        line-height: 2.8rem;
+        margin-bottom: 1rem;
+        width: 100%;
+    }
+    .bold {
+        font-weight: 700;
+    }
+    .italic {
+        font-style: italic;
+    }
+    .underline {
+        width: 100%;
+        border-bottom: 1px solid #C5C7CA;
+        margin-top: 1rem;
+        margin-bottom: 1.6rem;
+    }
+    .para-heading {
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 1.6rem;
+        line-height: 2.8rem;
+        margin-bottom: 1rem;
+        align-self: flex-start;
+    }
+    .pointer-para {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        img {
+            height: 1.6rem;
+            margin-right: 1rem;
+            margin-top: 0.6rem;
+        }
+    }
+    .signature {
+        width: 100%;
+        font-weight: 400;
+        font-size: 1.6rem;
+        line-height: 2.8rem;
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+    }
+    .email {
+        // text-decoration: none;
+        color: white;
+        font-style: italic;
+    }
+    .copyright {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 1.6rem;
+        line-height: 2.8rem;
+        margin-bottom: 1rem;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .privacy-policy {
+        padding: 2rem 6%;
+        margin-bottom: 6rem;
+        .heading {
+            font-size: 2rem;
+        }
+        .date {
+            font-size: 1rem;
+            line-height: 2rem;
+        }
+        .para {
+            font-size: 1.1rem;
+            line-height: 2.4rem;
+        }
+        .para-heading {
+            font-size: 1.1rem;
+            line-height: 2.4rem;
+        }
+        .pointer-para {
+            img {
+                height: 1rem;
+                margin-right: 0.6rem;
+                margin-top: 0.8rem;
+            }
+        }
+        .signature {
+            font-size: 1.1rem;
+            line-height: 2.4rem;
+        }
+        .copyright {
+            font-size: 1.1rem;
+            line-height: 2.4rem;
+        }
+    }
+}
