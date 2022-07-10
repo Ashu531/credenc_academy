@@ -35,8 +35,8 @@ function DashboardDesktop(props) {
   
 
   useEffect(()=>{
-    getDataFromBaseUrl()
-    getSubjectData()
+    // getDataFromBaseUrl()
+    // getSubjectData()
   },[])
 
  const getDataFromBaseUrl=()=>{

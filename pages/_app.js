@@ -6,22 +6,91 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import ReduxThunk from "redux-thunk";
 import rootReducer from '../scripts/reducers/index'
 import 'react-sliding-side-panel/lib/index.css';
+import Header from '../components/header/Header';
+import Footer from '../components/footer/Footer';
+import FooterModal from '../components/footerModal/FooterModal';
+import SlidingPanel from 'react-sliding-side-panel';
+const EdtechTheme = 'credenc-edtech-theme';
 
 class MyApp extends App {
-static async getInitialProps({Component, ctx}) {
-    const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
 
-    //Anything returned here can be access by the client
-    return {pageProps: pageProps};
-}
+  constructor(props) {
+    super(props);
+    this.state = {
+     theme: "",
+     footerModal: false,
+    };
+   
+  }
 
+  componentDidMount() {
+    this._retrieveData();
+  }
+
+  _retrieveData=()=>{
+   let localTheme = localStorage.getItem("EdtechTheme");
+   if(localTheme && localTheme.length > 0){
+    this.setState({
+     theme: localTheme
+    })
+   }else{
+    this.setState({
+      theme: "light"
+    })
+   }
+  }
+
+
+  toggleTheme=()=>{
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      // dark mode
+      this.setState({
+        theme: "dark"
+      },()=>{
+        localStorage.setItem("EdtechTheme",this.state.theme)
+      })
+     
+  }else{
+    let newTheme = this.state.theme === "light" ? "dark" : "light";
+    this.setState({
+      theme: newTheme
+    },()=>{
+      localStorage.setItem("EdtechTheme",this.state.theme)
+    })
+    
+  }
+  }
+
+  toggleFooterModal = ()=>{
+    this.setState({
+      footerModal: !this.state.footerModal
+    })
+  }
+
+  
 
   render(){
     const {Component, pageProps} = this.props;
     let store = createStore(rootReducer, compose(applyMiddleware(ReduxThunk)))
     return <>
     <Provider store={store}>
+    <div data-theme={this.state.theme} >
+    <Header toggleTheme={this.toggleTheme} />
      <Component {...pageProps} />
+     <Footer 
+     toggleFooterModal={this.toggleFooterModal} 
+     title="©Credenc2022"/>
+      <SlidingPanel
+         type={'bottom'}
+         isOpen={this.state.footerModal}
+         backdropClicked={() => this.setState({
+          footerModal:false
+         })}
+         size={30}
+       >
+        <FooterModal toggleFooterModal={this.toggleFooterModal}/> 
+       </SlidingPanel>
+     </div>
    </Provider>
    </>
   }

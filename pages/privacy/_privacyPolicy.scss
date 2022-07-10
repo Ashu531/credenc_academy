@@ -2,12 +2,11 @@
     // min-width: 100vw;
     flex-grow: 1;
     // background: #0f0f0f;
-    padding: 0rem 2.5rem 0rem 2.5rem;
+    padding: 8rem 2.5rem 8rem 2.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 8rem;
-
+    background-color: var(--defaultBackground);
     // color: #C5C7CA;
     // padding: 2rem 20%;
     .heading {
@@ -15,7 +14,8 @@
         font-size: 2.8rem;
         line-height: 3rem;
         text-transform: uppercase;
-        margin-bottom: 1rem
+        margin-bottom: 1rem;
+        color: var(--primaryColor)
     }
     .date {
         align-self: flex-end;
@@ -24,6 +24,7 @@
         font-size: 1.2rem;
         line-height: 1.8rem;
         margin-bottom: 1.6rem;
+        color: var(--primaryColor)
     }
     .para {
         font-weight: 400;
@@ -31,6 +32,7 @@
         line-height: 2.8rem;
         margin-bottom: 1rem;
         width: 100%;
+        color: var(--primaryColor)
     }
     .bold {
         font-weight: 700;
@@ -51,6 +53,7 @@
         line-height: 2.8rem;
         margin-bottom: 1rem;
         align-self: flex-start;
+        color: var(--primaryColor)
     }
     .pointer-para {
         width: 100%;
@@ -74,8 +77,9 @@
     }
     .email {
         // text-decoration: none;
-        color: white;
+        // color: white;
         font-style: italic;
+        color: var(--primaryColor)
     }
     .copyright {
         width: 100%;
@@ -86,6 +90,7 @@
         font-size: 1.6rem;
         line-height: 2.8rem;
         margin-bottom: 1rem;
+        color: var(--primaryColor)
     }
 }
 
