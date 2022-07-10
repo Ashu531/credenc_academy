@@ -16,7 +16,7 @@ export default function Footer(props){
         <div className='footer'>
             <div style={{paddingLeft: 23}}>
             <h1 className='footer-credence-text'>
-         ©Credenc2022
+         {props.title}
           </h1>
             </div>
 

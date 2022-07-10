@@ -38,7 +38,7 @@ export default function Home() {
     <div data-theme={theme} >
     <Header toggleTheme={toggleTheme} />
     <Dashboard />
-    <Footer toggleFooterModal={toggleFooterModal}/>
+    <Footer toggleFooterModal={toggleFooterModal} title="©Credenc2022"/>
     <SlidingPanel
          type={'bottom'}
          isOpen={footerModal}
