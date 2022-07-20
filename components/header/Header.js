@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import bookmarkIcon from '../../assets/images/icons/bookmark.svg'
+import bookmarkIconDark from '../../assets/images/icons/bookmark-dark.svg'
 import projectorIcon from '../../assets/images/icons/projector.svg';
 import credencLogo from '../../assets/images/logo/credencLogo.svg'
 import Image from "next/image";
@@ -26,7 +27,7 @@ export default function Header(props){
            </div>
           {/* <Link href='bookmarks' className='nav-item bookmark' onClick={() => Mixpanel.track(MixpanelStrings.NAV_BOOKMARK_CLICKED)}> */}
            <div className='icon-element'>
-           <Image src={bookmarkIcon} objectFit="cover" alt='bookmarkIcon' />
+           <Image src={ props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon} objectFit="cover" alt='bookmarkIcon' />
            </div>
             
           {/* </Link> */}

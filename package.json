@@ -28,7 +28,6 @@
   },
   "devDependencies": {
     "@svgr/webpack": "^6.2.1",
-    "babel-plugin-inline-react-svg": "^2.0.1",
     "eslint": "8.17.0",
     "eslint-config-next": "12.1.6"
   }

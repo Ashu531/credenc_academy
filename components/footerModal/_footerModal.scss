@@ -14,7 +14,7 @@
   
     .footer-modal-header{
       height: 5vh;
-      background-color: var(--defaultBackground);
+      background-color: var(--subduedBackground);
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -52,9 +52,9 @@
     .socialMediaDiv2{
       font-family: 'Poppins';
       font-style: normal;
-      width: 233px;
+      width: 75%;
       display: inline;
-      font-size: 10px;
+      font-size: 14px;
 line-height: 17px;
 margin: 16px 0;
 color: var(--bodyColor)
@@ -91,11 +91,13 @@ color: var(--defaultBackground);
 
     .paraHeading{
       font-family: 'Poppins';
-      font-weight: bolder;
+      font-size: 14px;
+      font-weight: 500;
       margin-bottom: 15px;
-      color: var(--bodyColor)
+      color: var(--highContrastColor)
     }
     .para{
+      font-size: 14px;
       margin: 5px 0;
       color: var(--bodyColor)
     }

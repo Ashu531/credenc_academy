@@ -42,7 +42,7 @@ class MyApp extends App {
 
 
   toggleTheme=()=>{
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !this.state.theme) {
       // dark mode
       this.setState({
         theme: "dark"
@@ -55,8 +55,9 @@ class MyApp extends App {
     this.setState({
       theme: newTheme
     },()=>{
-      localStorage.setItem("EdtechTheme",this.state.theme)
+      localStorage.setItem("EdtechTheme",newTheme)
     })
+   
     
   }
   }
@@ -75,8 +76,8 @@ class MyApp extends App {
     return <>
     <Provider store={store}>
     <div data-theme={this.state.theme} >
-    <Header toggleTheme={this.toggleTheme} />
-     <Component {...pageProps} />
+    <Header toggleTheme={this.toggleTheme} theme={this.state.theme}/>
+     <Component {...pageProps} theme={this.state.theme} />
      <Footer 
      toggleFooterModal={this.toggleFooterModal} 
      title="©Credenc2022"/>

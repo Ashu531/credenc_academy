@@ -4,7 +4,7 @@ import DashboardMobile from "./DashboardMobile";
 import { useMediaQuery } from "react-responsive";
 
 
-export default function Dashboard({toggleTheme}) {
+export default function Dashboard(props) {
   const [mounted, setMounted] = useState(false);
   const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
   const isDesktopOrLaptop = useMediaQuery({
@@ -20,8 +20,9 @@ export default function Dashboard({toggleTheme}) {
       {
         mounted && 
         <>
-        {isDesktopOrLaptop && <DashboardDesktop 
+        {isDesktopOrLaptop && <DashboardDesktop
         // toggleTheme={toggleTheme} 
+        newTheme={props.theme}
         />}
         {isMobile && <DashboardMobile />}
         </>

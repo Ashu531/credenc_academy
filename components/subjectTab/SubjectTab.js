@@ -6,7 +6,25 @@ export default function SubjectTab(props){
             {
                 props.title.map((item,index)=>{
                     return(
-                        <div className='goal-tab' key={index} style={props.selectedCategory === item.title ? {background: "#F7F7F7",borderRadius: 6 }:{ background: "#FFFFFF",borderRadius: 6}} onClick={()=>props.setSubCategoriesData(item)}>
+                        <div className='goal-tab' 
+                        key={index} 
+                        style={
+                            props.theme === 'light' ? 
+                            props.selectedCategory === item.title 
+                            ? 
+                            {background: "#F7F7F7",borderRadius: 6 }
+                            :
+                            { background: "#FFFFFF",borderRadius: 6}
+                            :
+                            props.selectedCategory === item.title 
+                            ? 
+                            {background: "#141414",borderRadius: 6 }
+                            :
+                            { background: "#0A0A0A",borderRadius: 6}
+                        } 
+
+                        onClick={()=>props.setSubCategoriesData(item)}
+                        >
                         <span className='subject-title-text'>{item.title}</span>
                         </div>
                     )

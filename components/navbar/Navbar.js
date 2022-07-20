@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import filterIcon from '../../assets/images/icons/filterIcon.svg';
+import filterIconDark from '../../assets/images/icons/filter-icon-dark.svg'
 import dropdownIcon from '../../assets/images/icons/dropdown.svg'
+import dropdownIconDark from '../../assets/images/icons/caret-down-dark.svg'
 import Image from "next/image";
 import SubjectTab from '../../components/subjectTab/SubjectTab'
 import caretRight from '../../assets/images/icons/caretRight.svg'
@@ -45,8 +47,8 @@ export default function SubjectNavbar(props){
     return(
         <div className='subject-navbar'> 
         <div className='subject-tab' onMouseEnter={()=> setSubjectModalVisible(true)} onMouseLeave={()=> setSubjectModalVisible(false)}>
-        <span className='all-subject-text'> {props?.selectedSubject.name && props?.selectedSubject.name !== "All" ? props?.selectedSubject.name : "All Subjects"}</span>
-         <Image src={dropdownIcon} objectFit="cover" alt='dropdownIcon' style={subjectModalVisible ? {transform: "rotate(180deg)"} : null}/>
+        <span className='all-subject-text'> {props?.selectedSubject.name && props?.selectedSubject.name !== "All" ? props?.selectedSubject.name.length > 10 ? props?.selectedSubject.name.substring(0,10) + '...' : props?.selectedSubject.name : "All Subjects"}</span>
+         <Image src={ props.theme === 'dark' ? dropdownIconDark : dropdownIcon} objectFit="cover" alt='dropdownIcon' style={subjectModalVisible ? {transform: "rotate(180deg)"} : null}/>
 
          {
             subjectModalVisible ? 
@@ -66,7 +68,7 @@ export default function SubjectNavbar(props){
         }
        
         <div className='tabs' ref={ref}>
-        <SubjectTab title={props.subCategories} selectedCategory={props.selectedCategory} setSubCategoriesData={props.setSubCategoriesData}/>
+        <SubjectTab title={props.subCategories} selectedCategory={props.selectedCategory} setSubCategoriesData={props.setSubCategoriesData} theme={props.theme}/>
        </div>
        {
         rightScrollView === true ? <div className="navbar-arrow-container" onClick={() => scroll(20)} >
@@ -76,7 +78,7 @@ export default function SubjectNavbar(props){
         
         <div className='subject-tab' onClick={()=>props.toggleFilterModal()} >
         <span className='all-subject-text'>Filters</span>
-        <Image src={filterIcon} objectFit="cover" alt='filterIcon' />
+        <Image src={props.theme === 'dark' ? filterIconDark : filterIcon} objectFit="cover" alt='filterIcon' />
         </div>
         </div>
     )

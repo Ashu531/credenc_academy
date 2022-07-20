@@ -17,6 +17,8 @@ import SubjectDropdown from "../../components/subjectDropdown/SubjectDropdown"
 import { useRouter } from 'next/router'
 import {getCardData} from '../api/store'
 import FooterModal from '../../components/footerModal/FooterModal'
+import useLocalStorage from "use-local-storage"
+import theme from "../../scripts/reducers/theme"
 const compareKey = 'credenc-edtech-compares';
 const subjectKey = 'credenc-edtech-subject';
 const subCategories = ["UI UX Design","Animation Design","Fashion design","Game Design","Interior Design","Motion Graphics Design"];
@@ -35,8 +37,8 @@ function DashboardDesktop(props) {
   
 
   useEffect(()=>{
-    // getDataFromBaseUrl()
-    // getSubjectData()
+    getDataFromBaseUrl()
+    getSubjectData()
   },[])
 
  const getDataFromBaseUrl=()=>{
@@ -92,7 +94,6 @@ function DashboardDesktop(props) {
     let subCategory = `/?sub_category=${selectedCategory}`
     URL=URL.concat(subCategory)
     fetchCardData(URL)
-   
   }
 
   const fetchCardData=async(URL)=>{
@@ -147,16 +148,6 @@ function DashboardDesktop(props) {
     getCardData(item)
   }
 
-  const toggleTheme=async()=> {
-        let updatedTheme= props.theme;
-        let newTheme = updatedTheme === "light" ? "dark" : "light";
-        props.dispatchThemeChange(newTheme);
-  }
-
-    const closeFilterModal = ()=>{
-      setFilterModal(false)
-    }
-
     const openFilterModal = async()=>{
       setFilterModal(true)
     } 
@@ -181,10 +172,6 @@ function DashboardDesktop(props) {
       _getSubjectDetails(item)
   }
 
-  const toggleFooterModal = ()=>{
-    setFooterModal(!footerModal)
-  }
-
  return(
         <div className="dashboard">
         <div className="dashboard-upper-section">
@@ -201,6 +188,7 @@ function DashboardDesktop(props) {
         subjectData={subjectData}
         selectedSubject={selectedSubject} 
         selectSubject={selectSubject}
+        theme={props.newTheme}
         />
         </div>
         {/* <FilterModal filterModal={filterModal} toggleFilterModal={closeFilterModal}/> */}
@@ -212,7 +200,7 @@ function DashboardDesktop(props) {
          {
             courseCardData?.map((item,index)=>{
               return(
-                <CourseCard key={index} data={item}/>
+                <CourseCard key={index} data={item} theme={props.newTheme} />
               )
             })
           }

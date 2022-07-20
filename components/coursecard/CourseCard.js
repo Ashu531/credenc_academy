@@ -2,11 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from "next/image";
 import courseLogo from '../../assets/images/logo/courseLogo.svg';
 import bookmarkIcon from '../../assets/images/icons/bookmark.svg'
+import bookmarkIconDark from '../../assets/images/icons/bookmark-dark.svg'
 import instituteLogo from '../../assets/images/logo/instituteLogo.svg'
 import upvoteLogo from '../../assets/images/icons/upvote.svg'
+import upvoteLogoDark from '../../assets/images/icons/thumbs-up-dark.svg'
 import arrowRight from '../../assets/images/icons/arrowRight.svg'
+import arrowRightDark from '../../assets/images/icons/arrow-right-dark.svg'
 import States from '../../values/states';
 import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
+// import theme from '../../scripts/reducers/theme';
 const compareKey = 'credenc-marketplace-compares';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 
@@ -24,7 +28,6 @@ return CompareText
 }
 
 const getSavedBookmarks =(item)=>{
-// console.log(item,"item++++")
   let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
 
   if(tempBookmarkData && tempBookmarkData.length > 0){
@@ -127,11 +130,11 @@ const _onAddToBookmark=(item)=>{
           <Image src={courseLogo} objectFit="cover" alt='courseLogo' style={{borderRadius: 6}} />
         <div className='card-header-end-content'>
                <div className='grey-container' onClick={()=>_addToBookmark(props.data)} style={bookmarkVisible === true || bookmarkVisible === "true"  ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}>
-                 <Image src={ bookmarkVisible === true || bookmarkVisible === "true" ? selectedBookmark : bookmarkIcon  } objectFit="cover" alt='selectedBookmark' height={20} width={20}/>
+                 <Image src={ bookmarkVisible === true || bookmarkVisible === "true" ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={20} width={20}/>
         </div>
         <div className='grey-container'>
          <span className='count-text'>{props.data.up_votes}</span>
-          <Image src={upvoteLogo} objectFit="cover" alt='upvoteLogo' height={20} width={20} />
+          <Image src={ props.theme === 'dark' ? upvoteLogoDark : upvoteLogo} objectFit="cover" alt='upvoteLogo' height={20} width={20} />
      </div>
    
    </div>
@@ -184,7 +187,7 @@ const _onAddToBookmark=(item)=>{
 <span className='course-detail-text'>
   Details
   </span>
-  <Image src={arrowRight} objectFit="contain" alt='arrowRight'/>
+  <Image src={ props.theme === 'dark' ? arrowRightDark : arrowRight} objectFit="contain" alt='arrowRight'/>
 </  div>
    </div> : null}
 
