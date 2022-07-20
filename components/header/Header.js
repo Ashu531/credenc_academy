@@ -22,9 +22,11 @@ export default function Header(props){
         
           </Link>
          <div className='user-elements'>
+           <Link href='/courses'>
          <div className='icon-element'>
            <Image src={projectorIcon} objectFit="cover" alt='projectorIcon' />
-           </div>
+         </div>
+         </Link>
           {/* <Link href='bookmarks' className='nav-item bookmark' onClick={() => Mixpanel.track(MixpanelStrings.NAV_BOOKMARK_CLICKED)}> */}
            <div className='icon-element'>
            <Image src={ props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon} objectFit="cover" alt='bookmarkIcon' />

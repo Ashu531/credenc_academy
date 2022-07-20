@@ -1,0 +1,18 @@
+.chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2rem 1.5rem;
+    background: #1C1F21;
+    border-radius: 1rem;
+    margin: 1rem 1rem 0 0;
+    img {
+        height: 3rem;
+    }
+    span {
+        font-size: 1.4rem;
+        line-height: 2.1rem;
+        color: #768089;
+        padding: 0 1.2rem;
+    }
+}

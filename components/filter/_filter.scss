@@ -1,0 +1,62 @@
+.filter-component{
+    width: 100%;
+    box-sizing: border-box;
+    // padding: 1.2rem 1.6rem;
+    border-bottom: 1px solid #25292C;
+    font-weight: 500;
+    // font-size: 1.4rem;
+    line-height: 2.1rem;
+    color: #C5C7CA;
+    cursor: pointer;
+
+    .filter-button{
+        padding: 1.2rem 1.6rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        img{
+            width: 2rem;
+        }
+        font-size: 1.4rem;
+
+        .applied{
+            margin: 0 1rem 0 auto;
+            width: 0.8rem;
+            height: 0.8rem;
+            border-radius: 0.8rem;
+            background: #5FAE3A;
+        }
+    }
+
+    .filters{
+        width: 100%;
+        box-sizing: border-box;
+        padding: 2rem 1.6rem 3.2rem 1.6rem;
+        // padding: 2rem 0;
+
+        .course-pace-container{
+            width: 100%;
+            box-sizing: border-box;
+
+            .hrs{
+                margin: 2rem 0 1rem 0;
+                font-style: italic;
+                font-size: 1.2rem;
+                line-height: 1.8rem;
+                text-transform: uppercase;
+                color: #4B5359;
+            }
+
+        }
+
+        .cost-container{
+            width: 100%;
+            box-sizing: border-box;
+        }
+    }
+
+    .hide{
+        display: none;
+    }
+
+}

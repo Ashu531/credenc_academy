@@ -1,0 +1,238 @@
+.float-action-secondary{
+    min-width: 12rem;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+    display: inline-block;
+    cursor: pointer;
+    height: auto;
+    background: #fff;
+    border-radius: 2rem;
+    transition: all 1s ease-out;
+    z-index: 2;
+}
+
+.float-sort-action-secondary {
+    // position: relative;
+    .dropdown-content-mobile {
+        display: block;
+        position: fixed;
+        width: 100vw;
+        max-height: 60vh;
+        left: 0;
+        padding: 1.2rem 0;
+        // background-color: #151515;
+        background-color: #1E1F22;
+        min-width: 100%;
+        box-sizing: border-box;
+        border-radius: 3.2rem 3.2rem 0 0;
+        box-shadow: 8px 8px 32px rgba(0, 0, 0, 0.3);
+        z-index: 5;
+        transition: all 0.3s ease-out;
+        overflow-y: scroll;
+
+        .search-container{
+            padding: 0 1rem 1rem;
+        }
+
+        .drop-items {
+            font-size: 1.6rem;
+            font-weight: 500;
+            line-height: 2.4rem;
+            color: #94989E;
+            padding: 0.8rem 1.6rem 0.8rem 3.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &:hover{
+                background-color: #0A0A0B;
+            }
+
+            .applied-container {
+                width: 0.8rem;
+                height: 0.8rem;
+                border-radius: 50%;
+                background-color: #5FAE3A;
+                margin-right: 1.6rem;
+            }
+        }
+
+        .green-text {
+            color: #5FAE3A;
+        }
+
+        .bottom-sheet-holder{
+            background: none;
+            height: fit-content;
+            margin: 0.5rem 0;
+            span {
+                width: 6rem;
+                height: 0.3rem;
+                background: #61656B;
+                border-radius: 5px;
+                justify-self: center;
+            }
+        }
+    }
+}
+
+.float-action-secondary{
+    min-width: 12rem;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+    display: inline-block;
+    cursor: pointer;
+    height: auto;
+    background: #fff;
+    border-radius: 2rem;
+    transition: all 1s ease-out;
+    z-index: 2;
+
+    .dropbtn {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 0 1.2rem;
+        border-radius: 10rem;
+        font-weight: 700;
+        font-size: 1.2rem;
+        line-height: 1.8rem;
+        color: #313235;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-transform: uppercase;
+
+        // span{
+        //     padding: 0 0 0 0.8rem;
+        //     cursor: pointer;
+        //     border-radius: 3.2rem;
+        //     display: flex;
+        //     justify-content: center;
+        //     align-items: center;
+            
+        //     img{
+        //         width: 1.6rem;
+        //     }
+        // }
+
+        .caret {
+            transform: rotate(-90deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            font-size: 1.6rem;
+            font-weight: 400;
+        }
+    }
+
+    .position-left{
+        right: 0;
+    }
+
+    .content-wrapper{
+        flex-direction: column-reverse;
+    
+        .drop-item {
+            width: 100%;
+            padding: 0 1.6rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-transform: uppercase;
+
+            &:hover{
+                background-color: #0A0A0B;
+            }
+
+            .selected-text {
+                color: #313235;
+                font-weight: 700;
+            }
+
+            .faded-text {
+                color: #7B7D84;
+            }
+
+            .check {
+                transform: scaleX(-1) rotateZ(-45deg); 
+            }
+
+            div {
+                display: flex;
+                span{
+                    display: inline-block;
+                    align-self: flex-end;
+                    text-align: end;
+                }
+                .applied-container {
+                    // margin: 0 1rem 0 auto;
+                    margin-left: 1rem;
+                    width: 0.8rem;
+                    height: 0.8rem;
+                    border-radius: 0.8rem;
+                    align-self: center;
+                }
+                .applied{
+                    background: #5FAE3A;
+                }
+            }
+        }
+
+        .dropdown-content-mobile {
+            height: 0;
+        }
+
+        .content-sort{
+            background: #16181a;
+            border-radius: 0.8rem;
+            border: 1px solid rgb(49, 49, 49);
+
+            @supports ((backdrop-filter: blur(60px)) or (-webkit-backdrop-filter: blur(60px)) or (-ms-backdrop-filter: blur(60px)) or (-o-backdrop-filter: blur(60px))) {
+                background: #16181a4d;
+                backdrop-filter: blur(60px);
+                -webkit-backdrop-filter: blur(60px);
+                -moz-backdrop-filter: blur(60px);
+                -ms-backdrop-filter: blur(60px);
+                -o-backdrop-filter: blur(60px);
+              }
+        }
+    }
+
+    .no-padding{
+        padding: 0.2rem 0 0 0 !important;
+    }
+}
+
+.blur {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    // height: calc(var(--vh, 1vh) * 100);
+    height: 100vh;
+    z-index: 0;
+    background: rgba(0, 0, 0, 0.75);
+    @supports ((backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px)) or (-ms-backdrop-filter: blur(20px)) or (-o-backdrop-filter: blur(20px))) {
+        background: none;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        -moz-backdrop-filter: blur(4px);
+        -ms-backdrop-filter: blur(4px);
+        -o-backdrop-filter: blur(4px);
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .blur {
+        height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
+    }
+}
