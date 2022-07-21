@@ -6,7 +6,7 @@
 
     .checkBox {
         cursor: pointer;
-        border: 2px solid #E4E5E7;
+        border: 2px solid var(--defaultColor);
         box-sizing: border-box;
         border-radius: 3px;
         text-align: center;
@@ -21,6 +21,6 @@
         font-size: 1.4rem;
         font-weight: 400;
         line-height: 2.1rem;
-        color: #E4E5E7;
+        color: var(--defaultColor);
     }
 }

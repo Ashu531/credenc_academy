@@ -71,6 +71,7 @@ const CoursePage = ({
   token,
   handleSignInClick,
   changeNavbarVisibility,
+  theme,
 }) => {
 
   const isMount = useIsMount();
@@ -717,11 +718,13 @@ const CoursePage = ({
             item={{ name: 'Class Mode', type: filterList.CLASS_MODE }}
             filterState={classModeList}
             updateFilterState={updateFilterState}
+            theme={theme}
           />
           <Filter
             item={{ name: 'Course Pace', type: filterList.COURSE_PACE }}
             filterState={[...coursePaceList]}
             updateFilterState={updateFilterState}
+            theme={theme}
           />
           <Filter
             item={{ name: 'Cost', type: filterList.COST }}
@@ -732,26 +735,31 @@ const CoursePage = ({
             getRange={handleCostRange}
             updateCostSlider={updateCostSlider}
             setIsAppliedCostSlider={() => setIsAppliedCostSlider(true)}
+            theme={theme}
           />
           <Filter
             item={{ name: 'Difficulty Level', type: filterList.DIFFICULTY_LEVEL }}
             filterState={difficultyList}
             updateFilterState={updateFilterState}
+            theme={theme}
           />
           <Filter
             item={{ name: 'Work Experience', type: filterList.WORK_EXPERIENCE }}
             filterState={workExperienceList}
             updateFilterState={updateFilterState}
+            theme={theme}
           />
           <Filter
             item={{ name: 'Finance Options', type: filterList.FINANCE_OPTIONS }}
             filterState={financeOptionList}
             updateFilterState={updateFilterState}
+            theme={theme}
           />
           <Filter
             item={{ name: 'Course Language', type: filterList.COURSE_LANGUAGE }}
             filterState={languageList}
             updateFilterState={updateFilterState}
+            theme={theme}
           />
         </div>
         <div className="filter-footer">
@@ -786,7 +794,8 @@ const CoursePage = ({
                 ontSize: '1.1rem',
                 lineHeight: '1.6rem',
               }}
-              bgColor='#16181A'
+              theme={theme}
+              // bgColor='#16181A'
               handleTabNumber={(i) => {
                 setCourseType(i)
                 // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypes[i])
@@ -797,14 +806,22 @@ const CoursePage = ({
           </div>
           <SecondaryDropdown
             heading={Lists.sortByList[sortState]['name']}
-            style={{
-              background: '#16181A',
+            style={theme === 'dark' ? {
+              background: '#141414',
               padding: '1.4rem',
               borderRadius: '0.8rem',
               fontWeight: 600,
               fontSize: '1.1rem',
               lineHeight: '1.6rem',
-              color: '#C5C7CA'
+              color: '#FFFFFF'
+            }: {
+              background: '#F7F7F7',
+              padding: '1.4rem',
+              borderRadius: '0.8rem',
+              fontWeight: 600,
+              fontSize: '1.1rem',
+              lineHeight: '1.6rem',
+              color: '#000000'
             }}
             classes={{ wrapper: 'no-padding', content: 'content-sort' }}
             dropList={[...Lists.sortByList]}

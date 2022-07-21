@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import States from '../../config/states';
 import caretDownIcon from '../../assets/images/icons/caret-down-grey.svg';
 import { Skeleton } from '@mui/material';
+import Image from "next/image";
 
 export default function SecondaryDropdown({
     heading='Pick one',
@@ -32,9 +33,9 @@ export default function SecondaryDropdown({
     <div className={`dropdown-${dropdownType}`}>
         {!icon && <div className="dropbtn" style={style}>
             {selected === 0 ? heading : (dropList[selected].name || dropList[selected].value)}
-            <span><img src={caretDownIcon} /></span>
+            <span><Image src={caretDownIcon} objectFit="cover" /></span>
         </div>}
-        {icon && <img src={icon}/>}
+        {icon && <Image src={icon}/>}
         <div className={getWrapperClasses()}>
             <div className={getContentClasses()}>
                 {dropList.map((item, i) => (

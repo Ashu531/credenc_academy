@@ -64,7 +64,7 @@ const SegmentedBar = forwardRef((props, ref) => {
                   className={`${
                     type == "default" ? styles.label : styles.labelNav
                   }`}
-                  style={isActive ? { color: "#1E1F22" } : null}
+                  style={isActive ? props.theme === 'dark' ? { color: "#0A0A0A" } : { color: "#FFFFFF" } : null}
                 >
                   {item}
                 </span>

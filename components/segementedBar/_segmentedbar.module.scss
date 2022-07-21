@@ -6,7 +6,7 @@
   justify-content: space-between;
   margin: 0;
   list-style: none;
-  background-color: #313235;
+  background-color: var(--subduedBackground);
   border-radius: 8px;
   padding: 0.4rem;
 
@@ -37,7 +37,7 @@
   position: relative;
   margin: 0;
   padding: 1.2rem 1.6rem;
-  color: #C5C7CA;
+  color: var(--bodyColor);
   background: transparent;
   border: none;
   outline: none;
@@ -68,7 +68,7 @@
   left: 0;
   z-index: 2;
   padding: 1rem;
-  background-color: white;
+  background-color: var(--primaryColor);
   border-radius: 8px;
   // -webkit-box-shadow: 0 8px 6px -6px var(--text-disabled);
   // -moz-box-shadow: 0 8px 6px -6px var(--text-disabled);

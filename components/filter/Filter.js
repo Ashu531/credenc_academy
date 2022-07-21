@@ -5,9 +5,10 @@ import Lists from '../../config/list';
 import States from '../../config/states';
 import ButtonGroup from '../button/ButtonGroup';
 import RangeInput from '../input/RangeInput';
-import List from '../list/List';
+import List from '../list/List'; 
+import Image from "next/image";
 
-export default function Filter({ item, filterState, updateFilterState, min, max, getRange, updateCostSlider, setIsAppliedCostSlider }) {
+export default function Filter({ item, filterState, updateFilterState, min, max, getRange, updateCostSlider, setIsAppliedCostSlider,theme }) {
 
     const [expanded, setExpanded] = useState(false);
     
@@ -96,11 +97,11 @@ export default function Filter({ item, filterState, updateFilterState, min, max,
     }
 
   return (
-    <div className='filter-component' style={{background: expanded ? '#1C1F21' : ''}}>
+    <div className='filter-component' style={{background: expanded ? theme === 'dark' ? '#222222' : '#FFFFFF' : ''}}>
         <div className={`filter-button`} onClick={() => setExpanded(!expanded)}>
             <div>{item.name}</div>
             {selectedItems(filterState) && <div className='applied'></div>}
-            <img src={expanded ? caretUp : caretDown}/>
+            <Image src={expanded ? caretUp : caretDown} objectFit="cover"/>
         </div>
         <div className={`filters ${expanded ? '' : 'hide'}`}>
             {renderFilter(item.type)}

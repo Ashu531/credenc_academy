@@ -7,7 +7,7 @@
     .dropbtn {
         width: 100%;
         box-sizing: border-box;
-        background-color: #151515;
+        background-color: var(--defaultBackground);
         padding: 1rem 1rem 1rem 2.4rem;
         border-radius: 3.2rem;
         font-size: 16px;
@@ -19,7 +19,7 @@
 
         span{
             padding: 0.8rem;
-            background-color: #212123;
+            background-color: var(--defaultBackground);
             cursor: pointer;
             border-radius: 3.2rem;
             display: flex;
@@ -40,7 +40,7 @@
         margin: 0.5rem 0 0 0;
         padding: 1.2rem 0;
         position: absolute;
-        background-color: #151515;
+        background-color: var(--defaultBackground);
         min-width: 100%;
         box-sizing: border-box;
         border-radius: 1.6rem;
@@ -55,12 +55,12 @@
             font-size: 1.6rem;
             font-weight: 500;
             line-height: 2.4rem;
-            color: #94989E;
+            color: var(--bodyColor);
             padding: 0.8rem 1.6rem 0.8rem 3.2rem;
             cursor: pointer;
 
             &:hover{
-                background-color: #0A0A0B;
+                background-color: var(--defaultBackground);
             }
         }
     }
@@ -124,7 +124,7 @@
 
         .dropdown-content {
             padding: 1.2rem 0;
-            background-color: #151515;
+            background-color: var(--defaultBackground);
             min-width: 20rem;
             box-sizing: border-box;
             border-radius: 1.6rem;
@@ -132,7 +132,7 @@
             font-size: 1.6rem;
             font-weight: 500;
             line-height: 2.4rem;
-            color: #C8CCD0;
+            color: var(--primaryColor);
     
             .drop-item {
                 width: 100%;
@@ -143,11 +143,11 @@
                 align-items: center;
     
                 &:hover{
-                    background-color: #0A0A0B;
+                    background-color: var(--defaultBackground);
                 }
 
                 .green-text {
-                    color: #5FAE3A;
+                    color: var(--successPrimaryColor);
                 }
 
                 div {
