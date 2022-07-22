@@ -1,6 +1,6 @@
 .course-page{
-    position: relative;
-    top: 8vh;
+    // position: relative;
+    // top: 8vh;
     // left: 9.2rem;
     // min-width: 100vw;
     flex-grow: 1;
@@ -8,6 +8,8 @@
     background: var(--defaultBackground);
     padding: 1.2rem 1.2rem 1.2rem 1.2rem;
     z-index: 99;
+    margin-top: 6vh;
+    height: 87vh;
   
     .filter-column{
       position: relative;
@@ -85,7 +87,7 @@
     .list-column{
       position: absolute;
       left: 24%;
-      top: 1.2rem;
+      top: 7.2vh;
       margin: 0 1rem;
       min-width: 74.5%;
       min-height: 100%;
@@ -128,6 +130,9 @@
         padding: 2.4rem;
         width: 100%;
         box-sizing: border-box;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
       }
     }
   }

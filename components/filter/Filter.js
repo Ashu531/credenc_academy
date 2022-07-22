@@ -22,7 +22,9 @@ export default function Filter({ item, filterState, updateFilterState, min, max,
           <List 
             type={States.listTypes.CHECKBOXES} 
             list={filterState} 
-            onItemClick={(value, i) => updateFilterState(filterType, value, i)}
+            onItemClick={(value, i) => {
+              updateFilterState(filterType, value, i)
+            }}
           />
         );
       }

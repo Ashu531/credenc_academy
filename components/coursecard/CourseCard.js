@@ -19,7 +19,7 @@ let CompareText = ""
   let tempCompareData = JSON.parse(localStorage.getItem(compareKey));
 
   if(tempCompareData && tempCompareData.length > 0){
-    if (tempCompareData.includes(item.id)) return "Go To Compare";
+    if (tempCompareData.includes(item?.id)) return "Go To Compare";
     else return "Add to Compare";
   }else{
     return CompareText = "Add To Compare"
@@ -31,7 +31,7 @@ const getSavedBookmarks =(item)=>{
   let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
 
   if(tempBookmarkData && tempBookmarkData.length > 0){
-    if (tempBookmarkData.includes(item.id)) return true;
+    if (tempBookmarkData.includes(item?.id)) return true;
     else return false;
   }else{
     return false
@@ -133,7 +133,7 @@ const _onAddToBookmark=(item)=>{
                  <Image src={ bookmarkVisible === true || bookmarkVisible === "true" ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={20} width={20}/>
         </div>
         <div className='grey-container'>
-         <span className='count-text'>{props.data.up_votes}</span>
+         <span className='count-text'>{props?.data?.up_votes}</span>
           <Image src={ props.theme === 'dark' ? upvoteLogoDark : upvoteLogo} objectFit="cover" alt='upvoteLogo' height={20} width={20} />
      </div>
    
@@ -146,17 +146,17 @@ const _onAddToBookmark=(item)=>{
    <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} >
   
 <div className='course-name' onMouseEnter={()=>setCourseNameTooltip(true)} onMouseLeave={()=>setCourseNameTooltip(false)}>
-{props.data.name.length > 25 ? props.data.name.substring(0, 25) + '...' : props.data.name} 
+{props?.data?.name.length > 25 ? props?.data?.name.substring(0, 25) + '...' : props?.data?.name} 
 </div>
 {
- courseNameTooltip && props.data.name.length > 25 ?  <div className="course-name-tooltip">
-<span className="course-name-tooltiptext">{props.data.name}</span>
+ courseNameTooltip && props?.data?.name.length > 25 ?  <div className="course-name-tooltip">
+<span className="course-name-tooltiptext">{props?.data?.name}</span>
 </div> : null
 }
 
 <div style={{display:"flex",flexDirection:"row"}}>
 {
-  props.data.class_mode.map((item,index)=>{
+  props?.data?.class_mode.map((item,index)=>{
   return (
     <h2 className='course-mode' key={index}>
        { index > 0 ? ", "+ item : item}
@@ -167,18 +167,18 @@ const _onAddToBookmark=(item)=>{
 </div>
 
 <h2 className='course-duration'>
-{props.data.duration}
+{props?.data?.duration}
 </h2>
 <span className='course-price-content' style={!isCardOpen ? null : {marginTop: 22,marginBottom: 14}}>
-<span className='course-pay'>{props.data.finance_display[0]}</span>
-<span className='course-price'>{props.data.price === "Free" ? "Free" : ` ₹${props.data.price}` }</span>
+<span className='course-pay'>{props?.data?.finance_display[0]}</span>
+<span className='course-price'>{props?.data?.price === "Free" ? "Free" : ` ₹${props?.data?.price}` }</span>
 </span>
    </div>
 
  {  window.innerWidth > 500 ? 
  <div 
  className='course-button-content' style={{...compareButtonVisible,marginLeft:0}}>
-<div className='course-compare-buttton' onClick={()=>_addToCompare(props.data)}>
+<div className='course-compare-buttton' onClick={()=>_addToCompare(props?.data)}>
 <span className='add-to-compare-text'>
   {compareTextVisible}
 </span>
@@ -196,7 +196,7 @@ const _onAddToBookmark=(item)=>{
 
    { window.innerWidth<=500 ? 
    <div className='course-button-content-mobile'>
-<div className='course-compare-buttton-mobile' onClick={()=>_addToCompare(props.data)}>
+<div className='course-compare-buttton-mobile' onClick={()=>_addToCompare(props?.data)}>
   <span className='add-to-compare-text-mobile'>
   {compareTextVisible}
   </span>

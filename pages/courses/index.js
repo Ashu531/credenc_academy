@@ -76,7 +76,7 @@ const CoursePage = ({
 
   const isMount = useIsMount();
   let location = useRouter();
-  let urlService = useRef(new UrlService(location.pathname));
+  let urlService = useRef(new UrlService(location.basePath));
 
   // const navigate = useNavigate();
 
@@ -111,6 +111,7 @@ const CoursePage = ({
   const [courseTypesFloatState, setCourseTypesFloatState] = useState(4)
 
   const [mobileFiltersState, setMobileFiltersState] = useState(false)
+  const [cardData, setCardData] = useState([])
 
   let appliedFiltersCount = useRef(0);
 
@@ -131,16 +132,6 @@ const CoursePage = ({
     setMounted(true);
 }, []);
 
-  const updateAppliedFiltersCount = (filter, isApplied, mixpanelFilterOblect) => {
-    if (isApplied !== false) {
-      appliedFiltersCount.current++;
-      // Mixpanel.track(MixpanelStrings.FILTER_SELECTED, mixpanelFilterOblect);
-    } else {
-      appliedFiltersCount.current--;
-      // Mixpanel.track(MixpanelStrings.FILTER_DESELECTED, mixpanelFilterOblect);
-    }
-  }
-
   const updateQueryString = (i, filter, list) => {
 
     urlService.current.removeEntry(filter);
@@ -151,6 +142,30 @@ const CoursePage = ({
       }
     });
 
+  }
+
+  const _fetchData= async (value)=>{
+
+    let URL = `${constant.API_URL.DEV}/batch/search`
+
+    let response = await axios.get(`${constant.API_URL.DEV}/batch/search/`)
+        .then(res => {
+          setCardData(res?.data?.data)
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+  }
+
+  const updateAppliedFiltersCount = (filter, isApplied, mixpanelFilterOblect) => {
+    if (isApplied !== false) {
+      appliedFiltersCount.current++;
+      // Mixpanel.track(MixpanelStrings.FILTER_SELECTED, mixpanelFilterOblect);
+    } else {
+      appliedFiltersCount.current--;
+      // Mixpanel.track(MixpanelStrings.FILTER_DESELECTED, mixpanelFilterOblect);
+    }
   }
 
 
@@ -346,7 +361,7 @@ const CoursePage = ({
     // await delay(5000);
     let res;
 
-    if (token === null) {
+    if (token === null || !token) {
       res = await axios.get(`${constant.API_URL.DEV}/batch/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
         .then(res => {
           coursesApiStatus.current.success();
@@ -390,7 +405,7 @@ const CoursePage = ({
     let res = await handleSearchClicked();
     // if (forcePageNumber === 1) setForcePageNumber(0);
     if (pageNumber <= 1 || updatePageNumber === false) {
-      // setCourses([...res.data]);
+      setCourses([...res.data]);
     } else {
       setCourses([...courses, ...res.data]);
     }
@@ -605,6 +620,9 @@ const CoursePage = ({
     }
   }
 
+  
+
+
   useEffect(() => {
     if (maxPrice !== 0 && costRange.max === 0) {
       setCostRange({ ...costRange, max: maxPrice });
@@ -620,9 +638,9 @@ const CoursePage = ({
   }, [pageNumber]);
 
   useEffect(async () => {
-    if (location.state) {
+    if (location.query) {
       resetFilters(false);
-      urlService.current.changeEntry('subject', `${location.state}`);
+      // urlService.current.changeEntry('subject', `${location.query}`);
 
       if (pageNumber > 1) {
         setPageNumber(1);
@@ -630,7 +648,7 @@ const CoursePage = ({
         handleFilteredData(false);
       }
     }
-  }, [location.state]);
+  }, [location.query]);
 
   // useEffect(() => {
   //   const currentElement = lastCourse;
@@ -689,18 +707,24 @@ const CoursePage = ({
     setCourseType(courseTypesFloatState);
   }, [courseTypesFloatState])
 
-  useEffect(async () => {
-    // changeNavbarVisibility(shouldNavbarVisible());
-    if (token) {
-      let res = await getDataFromUrl(`${constant.API_URL.DEV}/userupvotes/`, token);
-      setUserUpvoteList(res);
-    }
-    setPageLoadSortState(getSortStateFromUrl());
+  // useEffect(async () => {
+  //   // changeNavbarVisibility(shouldNavbarVisible());
+  //   // if (token) {
+  //   //   let res = await getDataFromUrl(`${constant.API_URL.DEV}/userupvotes/`, token);
+  //   //   setUserUpvoteList(res);
+  //   // }
+  //   // setPageLoadSortState(getSortStateFromUrl());
 
-    // change tab number
-    let tabNumber = getTabNumber(queries.COURSE_TYPE, urlService)
-    // courseTypeRef.current.changeActiveTab(tabNumber);
-  }, []);
+  //   // change tab number
+  //   let tabNumber = getTabNumber(queries.COURSE_TYPE, urlService)
+  //   console.log(tabNumber,"courseTypeRef+++")
+  //   // courseTypeRef.current.changeActiveTab(tabNumber);
+  // }, []);
+
+  
+
+  
+
 
   return (
     <>
@@ -823,7 +847,10 @@ const CoursePage = ({
               lineHeight: '1.6rem',
               color: '#000000'
             }}
-            classes={{ wrapper: 'no-padding', content: 'content-sort' }}
+            classes={{ 
+              wrapper: 'no-padding', 
+              content: 'content-sort' 
+            }}
             dropList={[...Lists.sortByList]}
             selected={pageLoadSortState || sortState}
             onSelect={(item, i) => {
@@ -839,14 +866,14 @@ const CoursePage = ({
           <List
             type={listTypes.HORIZONTAL_CARDS}
             list={courses}
-            onItemClick={navigateToDetailPage}
+            // onItemClick={navigateToDetailPage}
             listApiStatus={coursesApiStatus}
-            handleAddItemToBookmark={(item) => handleAddItemToBookmark(item.id)}
-            handleRemoveItemFromBookmark={(item) => handleRemoveItemFromBookmark(item.id)}
-            handleAddItemToCompare={(item) => dispatchAddToCompare(item.id)}
-            handleRemoveItemFromCompare={(item) => dispatchRemoveFromCompare(item.id)}
-            setLastElement={setLastCourse}
-            upvoteList={userUpvoteList}
+            // handleAddItemToBookmark={(item) => handleAddItemToBookmark(item.id)}
+            // handleRemoveItemFromBookmark={(item) => handleRemoveItemFromBookmark(item.id)}
+            // handleAddItemToCompare={(item) => dispatchAddToCompare(item.id)}
+            // handleRemoveItemFromCompare={(item) => dispatchRemoveFromCompare(item.id)}
+            // setLastElement={setLastCourse}
+            // upvoteList={userUpvoteList}
             handleSignInClick={handleSignInClick}
           />
         </div>

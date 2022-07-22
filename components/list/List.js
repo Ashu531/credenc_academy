@@ -12,6 +12,7 @@ import Error from '../error/Error';
 import Lists from '../../config/list';
 import Button from '../button/Button';
 import { Skeleton } from '@mui/material';
+import CourseCard from '../coursecard/CourseCard';
 
 function List({
     list,
@@ -47,10 +48,12 @@ function List({
     if(listApiStatus.current.isPending()){
       return (
         Array(3).fill(null).map((item, i) => (
-          <div>
-
-          </div>
-          // <CourseCardContainer item={item} key={`dummy${i}`}/>
+          console.log(item,"item++++")
+          // <div></div>
+          // <CourseCard 
+          // item={item} 
+          // key={i}
+          // />
         ))
       );
     } 
@@ -59,8 +62,10 @@ function List({
       if(list && list.length > 0){
         return (
           list.map((item, i) => {
+            {console.log(item,"item+++")}
             return i === list.length - 1 ? 
             <div key={`${item.id}:${i}`} ref={setLastElement}>
+              { console.log(item,"item++++")}
               {/* <CourseCardContainer 
                 item={item}
                 handleClick={onItemClick}
@@ -73,6 +78,11 @@ function List({
               /> */}
             </div>
             : 
+
+            <CourseCard 
+             data={item} 
+             key={`${item.id}:${i}`} 
+            />
             // <CourseCardContainer 
             //     item={item} 
             //     key={`${item.id}:${i}`} 
