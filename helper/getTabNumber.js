@@ -2,9 +2,7 @@ export const getTabNumber = (type, urlService) => {
 
     // let urlService = 
     if (type === 'course_type') {
-        
         let tabName = urlService.current.getValueFromEntry(type);
-
         switch (tabName) {
             case 'Certificate':
                 return 0;

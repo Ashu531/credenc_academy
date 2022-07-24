@@ -170,7 +170,7 @@ const _onAddToBookmark=(item)=>{
 {props?.data?.duration}
 </h2>
 <span className='course-price-content' style={!isCardOpen ? null : {marginTop: 22,marginBottom: 14}}>
-<span className='course-pay'>{props?.data?.finance_display[0]}</span>
+{/* <span className='course-pay'>{props?.data?.finance_display[0]}</span> */}
 <span className='course-price'>{props?.data?.price === "Free" ? "Free" : ` ₹${props?.data?.price}` }</span>
 </span>
    </div>

@@ -25,7 +25,8 @@ function List({
     listApiStatus,
     setLastElement,
     upvoteList,
-    handleSignInClick
+    handleSignInClick,
+    theme
 }) {
   
 
@@ -164,6 +165,7 @@ function List({
           color='#7A7E85' 
           isChecked={item.isApplied} 
           setChecked={(value) => onItemClick(value, i)} key={i}
+          theme={theme}
         />
       ))
     );

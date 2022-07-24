@@ -170,10 +170,13 @@ margin-top: 36px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 8px;
+    padding: 12px 8px;
     // gap: 8px;
     background: var(--subduedBackground);
     border-radius: 0px 0px 16px 16px; 
+    position: relative;
+    bottom: 0px;
+
 }
 
 .course-compare-buttton{

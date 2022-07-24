@@ -6,8 +6,8 @@
     align-items: center;
     background: var(--subduedBackground);
     height: 44px;
-    position: fixed;
-    bottom: 0px;
+    position: relative;
+    bottom: -82px ;
 
     .footer-credence-text{
         font-family:'Poppins';

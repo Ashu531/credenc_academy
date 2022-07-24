@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import styles from "./_segmentedbar.module.scss";
 
 const SegmentedBar = forwardRef((props, ref) => {
+  console.log(ref,"ref+++")
   const { items, handleTabNumber, selected, type = "default", style={}, bgColor='' } = props;
   const [activeItem, setActiveitem] = useState(selected || 0);
 
@@ -17,7 +18,7 @@ const SegmentedBar = forwardRef((props, ref) => {
     setActiveitem(i);
     handleTabNumber(i);
   };
-
+console.log(activeItem,"activeItem")
   return (
     <AnimateSharedLayout>
       <ol
