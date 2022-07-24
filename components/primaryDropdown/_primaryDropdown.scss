@@ -135,7 +135,7 @@
             color: var(--primaryColor);
     
             .drop-item {
-                width: 100%;
+                // width: 100%;
                 padding: 0.8rem 1.6rem 0.8rem 1.6rem;
                 cursor: pointer;
                 display: flex;
@@ -177,12 +177,12 @@
         }
 
         .content-sort{
-            background: #16181a;
+            background: var(--primaryColor);
             border-radius: 0.8rem;
-            border: 1px solid rgb(49, 49, 49);
+            border: 0.1px solid rgb(49, 49, 49);
 
             @supports ((backdrop-filter: blur(60px)) or (-webkit-backdrop-filter: blur(60px)) or (-ms-backdrop-filter: blur(60px)) or (-o-backdrop-filter: blur(60px))) {
-                background: #16181a4d;
+                background: var(--insignificantStrokeColor);
                 backdrop-filter: blur(60px);
                 -webkit-backdrop-filter: blur(60px);
                 -moz-backdrop-filter: blur(60px);

@@ -48,8 +48,8 @@ function List({
     if(listApiStatus.current.isPending()){
       return (
         Array(3).fill(null).map((item, i) => (
-          console.log(item,"item++++")
-          // <div></div>
+         
+          <div></div>
           // <CourseCard 
           // item={item} 
           // key={i}
@@ -62,10 +62,9 @@ function List({
       if(list && list.length > 0){
         return (
           list.map((item, i) => {
-            {console.log(item,"item+++")}
+
             return i === list.length - 1 ? 
             <div key={`${item.id}:${i}`} ref={setLastElement}>
-              { console.log(item,"item++++")}
               {/* <CourseCardContainer 
                 item={item}
                 handleClick={onItemClick}

@@ -111,7 +111,6 @@ const CoursePage = ({
   const [courseTypesFloatState, setCourseTypesFloatState] = useState(4)
 
   const [mobileFiltersState, setMobileFiltersState] = useState(false)
-  const [cardData, setCardData] = useState([])
 
   let appliedFiltersCount = useRef(0);
 
@@ -144,19 +143,6 @@ const CoursePage = ({
 
   }
 
-  const _fetchData= async (value)=>{
-
-    let URL = `${constant.API_URL.DEV}/batch/search`
-
-    let response = await axios.get(`${constant.API_URL.DEV}/batch/search/`)
-        .then(res => {
-          setCardData(res?.data?.data)
-        })
-        .catch(err => {
-          console.log(err);
-        });
-
-  }
 
   const updateAppliedFiltersCount = (filter, isApplied, mixpanelFilterOblect) => {
     if (isApplied !== false) {
@@ -415,6 +401,7 @@ const CoursePage = ({
   }
 
   const setFiltersFromQuery = (indices, filterState, setFilter, reset) => {
+    console.log(indices,"data++++++++++")
     let newState = [...filterState];
     newState.forEach(filter => {
       filter['isApplied'] = false;
@@ -428,6 +415,7 @@ const CoursePage = ({
     setFilter([...newState]);
   }
   const getAppliedIndices = (filters, type) => {
+    
     let appliedIndices = [];
     filters.forEach((mode, i) => {
       const { filterValue } = mode;
@@ -436,16 +424,18 @@ const CoursePage = ({
         updateAppliedFiltersCount(type, true);
       }
     });
+    console.log(appliedIndices,"appliedIndices++++")
 
     return appliedIndices;
   }
-  const applyFilters = (reset = false) => {
+  const applyFilters =(reset = false) => {
 
     if (isAppliedCostSlider) {
       appliedFiltersCount.current = 1;
     } else appliedFiltersCount.current = 0;
 
     const classModeFilterIndices = getAppliedIndices(Lists.classModes, Lists.filters.CLASS_MODE);
+    console.log(classModeFilterIndices,"classModeFilterIndices+++")
     setFiltersFromQuery(classModeFilterIndices, classModeList, setClassModeList, reset);
 
     const coursePaceFilterIndices = getAppliedIndices(Lists.coursePaceList, Lists.filters.COURSE_PACE);
@@ -631,24 +621,25 @@ const CoursePage = ({
 
   useEffect(() => {
     coursesApiStatus.current.start();
+    console.log(pageNumber,"coming++++")
     handleFilteredData();
     if (pageNumber === 1) {
       applyFilters();
     }
   }, [pageNumber]);
 
-  useEffect(async () => {
-    if (location.query) {
-      resetFilters(false);
-      // urlService.current.changeEntry('subject', `${location.query}`);
+  // useEffect(async () => {
+  //   if (location.query) {
+  //     resetFilters(false);
+  //     // urlService.current.changeEntry('subject', `${location.query}`);
 
-      if (pageNumber > 1) {
-        setPageNumber(1);
-      } else {
-        handleFilteredData(false);
-      }
-    }
-  }, [location.query]);
+  //     if (pageNumber > 1) {
+  //       setPageNumber(1);
+  //     } else {
+  //       handleFilteredData(false);
+  //     }
+  //   }
+  // }, [location.query]);
 
   // useEffect(() => {
   //   const currentElement = lastCourse;
@@ -667,6 +658,7 @@ const CoursePage = ({
 
   useEffect(() => {
     if (!isMount) {
+     
       urlService.current.removeEntry('course_type_sub');
       urlService.current.changeEntry(queries.COURSE_TYPE, Lists.courseTypes[courseType]);
       updateBrowserUrl();
@@ -692,6 +684,7 @@ const CoursePage = ({
       if (pageNumber > 1) {
         setPageNumber(1);
       } else {
+       
         handleFilteredData(false);
       }
     }
@@ -717,13 +710,8 @@ const CoursePage = ({
 
   //   // change tab number
   //   let tabNumber = getTabNumber(queries.COURSE_TYPE, urlService)
-  //   console.log(tabNumber,"courseTypeRef+++")
   //   // courseTypeRef.current.changeActiveTab(tabNumber);
   // }, []);
-
-  
-
-  
 
 
   return (
