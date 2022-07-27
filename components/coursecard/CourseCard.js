@@ -11,103 +11,21 @@ import arrowRightDark from '../../assets/images/icons/arrow-right-dark.svg'
 import States from '../../values/states';
 import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
 // import theme from '../../scripts/reducers/theme';
-const compareKey = 'credenc-marketplace-compares';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 
-const getCompareText =(item)=>{
-let CompareText = ""
-  let tempCompareData = JSON.parse(localStorage.getItem(compareKey));
 
-  if(tempCompareData && tempCompareData.length > 0){
-    if (tempCompareData.includes(item?.id)) return "Go To Compare";
-    else return "Add to Compare";
-  }else{
-    return CompareText = "Add To Compare"
-  }
-return CompareText
-}
+  
 
-const getSavedBookmarks =(item)=>{
-  let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
-
-  if(tempBookmarkData && tempBookmarkData.length > 0){
-    if (tempBookmarkData.includes(item?.id)) return true;
-    else return false;
-  }else{
-    return false
-  }
-
-}
 
 export default function CourseCard(props){
   const [mounted, setMounted] = useState(false);
-  const [compareTextVisible,setCompareTextVisible] = useState(`${getCompareText(props.data)}`);
   const [compareButtonVisible, setCompareButtonVisible] = useState({display: 'none'});
-  const [bookmarkVisible,setBookmarkVisible] = useState(`${getSavedBookmarks(props.data)}`)
-  const [addToCompareButtonState, setAddToCompareButtonState] = useState({...States.addToCompareButtonState.DEFAULT});
   const [courseNameTooltip, setCourseNameTooltip] = useState(false)
-  
   const [isCardOpen,setIsCardOpen] = useState(false)
 
   useEffect(() => {
     setMounted(true);
    }, []);
-
-const onAddToCompare=(item)=>{
- let compareArray = [];
- let compareItem = JSON.parse(localStorage.getItem(compareKey)) 
- if(compareItem && compareItem.length > 0){
-  compareArray.push(...compareItem)
- }
- compareArray.push(item.id)
- localStorage.setItem(compareKey,JSON.stringify(compareArray));
-}
-
-
-
-
-const _addToCompare=(item)=>{
-  if(addToCompareButtonState.id === States.addToCompareButtonState.DEFAULT.id){
-    setAddToCompareButtonState({...States.addToCompareButtonState.APPLIED});
-    onAddToCompare(item);
-    setCompareTextVisible("Go To Compare")
-}
-else {
-    setAddToCompareButtonState({...States.addToCompareButtonState.DEFAULT});
-    // onRemoveFromCompare(item);
-}
-
-return;
-}
-
-const _addToBookmark=(item)=>{
-  if(bookmarkVisible === true){
-    _onremoveToBookmark(item);
-    setBookmarkVisible(false)
-  }else{
-    _onAddToBookmark(item);
-    setBookmarkVisible(true)
-  }
-}
-
-const _onremoveToBookmark=(item)=>{
-  let bookmarkArray = [];
-  let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
-  if(bookmarkItem && bookmarkItem.length > 0){
-    bookmarkArray =  bookmarkItem.filter(data => data !== item.id )
-  }
-  localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
-}
-
-const _onAddToBookmark=(item)=>{
-  let bookmarkArray = [];
-  let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
-  if(bookmarkItem && bookmarkItem.length > 0){
-    bookmarkArray.push(...bookmarkItem)
-  }
-  bookmarkArray.push(item.id)
-  localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
-}
 
  return(
       <>
@@ -124,13 +42,14 @@ const _onAddToBookmark=(item)=>{
         onMouseLeave={e => {
           setCompareButtonVisible({display: 'none'})
           setIsCardOpen(false)
-        }}  
+        }} 
+        onClick={()=> props.openDetailModal() } 
           >
         <div className='card-header' style={!isCardOpen ? null : {paddingLeft:12,paddingRight: 12}}>
           <Image src={courseLogo} objectFit="cover" alt='courseLogo' style={{borderRadius: 6}} />
         <div className='card-header-end-content'>
-               <div className='grey-container' onClick={()=>_addToBookmark(props.data)} style={bookmarkVisible === true || bookmarkVisible === "true"  ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}>
-                 <Image src={ bookmarkVisible === true || bookmarkVisible === "true" ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={20} width={20}/>
+               <div className='grey-container' onClick={()=>props.addToBookmark(props.data)} style={props.bookmarkVisible === true || props.bookmarkVisible === 'true' ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}>
+                 <Image src={ props.bookmarkVisible === true || props.bookmarkVisible === 'true'  ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={20} width={20}/>
         </div>
         <div className='grey-container'>
          <span className='count-text'>{props?.data?.up_votes}</span>
@@ -154,7 +73,7 @@ const _onAddToBookmark=(item)=>{
 </div> : null
 }
 
-<div style={{display:"flex",flexDirection:"row"}}>
+{/* <div style={{display:"flex",flexDirection:"row"}}>
 {
   props?.data?.class_mode.map((item,index)=>{
   return (
@@ -164,7 +83,7 @@ const _onAddToBookmark=(item)=>{
  )
   })
 }
-</div>
+</div> */}
 
 <h2 className='course-duration'>
 {props?.data?.duration}
@@ -178,9 +97,9 @@ const _onAddToBookmark=(item)=>{
  {  window.innerWidth > 500 ? 
  <div 
  className='course-button-content' style={{...compareButtonVisible,marginLeft:0}}>
-<div className='course-compare-buttton' onClick={()=>_addToCompare(props?.data)}>
+<div className='course-compare-buttton' onClick={()=>props.addToCompare(props?.data)}>
 <span className='add-to-compare-text'>
-  {compareTextVisible}
+  {props.compareTextVisible}
 </span>
 </div>
 <div className='course-detail-button'>
@@ -196,9 +115,9 @@ const _onAddToBookmark=(item)=>{
 
    { window.innerWidth<=500 ? 
    <div className='course-button-content-mobile'>
-<div className='course-compare-buttton-mobile' onClick={()=>_addToCompare(props?.data)}>
+<div className='course-compare-buttton-mobile' onClick={()=>props.addToCompare(props?.data)}>
   <span className='add-to-compare-text-mobile'>
-  {compareTextVisible}
+  {props.compareTextVisible}
   </span>
 </div>
 <div className='course-detail-button-mobile'>

@@ -13,20 +13,19 @@ import Lists from '../../config/list';
 import Button from '../button/Button';
 import { Skeleton } from '@mui/material';
 import CourseCard from '../coursecard/CourseCard';
+const bookmarkKey = 'credenc-marketplace-bookmarks';
 
 function List({
     list,
     type=States.listTypes.FILTERS,
     onItemClick,
-    handleAddItemToBookmark,
-    handleRemoveItemFromBookmark,
-    handleAddItemToCompare,
-    handleRemoveItemFromCompare,
     listApiStatus,
     setLastElement,
-    upvoteList,
-    handleSignInClick,
-    theme
+    theme,
+    openDetailModal,
+    addToCompare,
+    addToBookmark,
+    compareTextVisible
 }) {
   
 
@@ -63,8 +62,15 @@ function List({
       if(list && list.length > 0){
         return (
           list.map((item, i) => {
-
-            return i === list.length - 1 ? 
+            let bookmarkVisible = false;
+            let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
+            if(tempBookmarkData && tempBookmarkData.length > 0){
+              if (tempBookmarkData.includes(item?.id))
+              bookmarkVisible = true
+              else
+              bookmarkVisible = false
+            }
+             return i === list.length - 1 ? 
             <div key={`${item.id}:${i}`} ref={setLastElement}>
               {/* <CourseCardContainer 
                 item={item}
@@ -82,18 +88,12 @@ function List({
             <CourseCard 
              data={item} 
              key={`${item.id}:${i}`} 
+             openDetailModal={()=>openDetailModal(item)}
+             addToCompare={()=>addToCompare(item)} 
+             addToBookmark={()=>addToBookmark(item)}
+             compareTextVisible={compareTextVisible} 
+             bookmarkVisible={bookmarkVisible}
             />
-            // <CourseCardContainer 
-            //     item={item} 
-            //     key={`${item.id}:${i}`} 
-            //     handleClick={onItemClick}
-            //     onAddToBookmark={handleAddItemToBookmark}
-            //     onRemoveFromBookmark={handleRemoveItemFromBookmark}
-            //     onAddToCompare={handleAddItemToCompare}
-            //     onRemoveFromCompare={handleRemoveItemFromCompare}
-            //     upvoteList={upvoteList}
-            //     handleSignInClick={handleSignInClick}
-            //   />
             null
           })
         );

@@ -3,22 +3,26 @@ import { motion, AnimateSharedLayout } from "framer-motion";
 import PropTypes from "prop-types";
 import styles from "./_segmentedbar.module.scss";
 
-const SegmentedBar = forwardRef((props, ref) => {
-  console.log(ref,"ref+++")
+const SegmentedBar = React.forwardRef((props, ref) => {
   const { items, handleTabNumber, selected, type = "default", style={}, bgColor='' } = props;
   const [activeItem, setActiveitem] = useState(selected || 0);
 
+ 
+
   useImperativeHandle(ref, () => ({
-    changeActiveTab(i) {
-      setActiveitem(i);
-    },
+    changeTab
   }))
+
+  const changeTab=(i)=>{
+    setActiveitem(i);
+  }
 
   const handleClick = (i) => {
     setActiveitem(i);
     handleTabNumber(i);
   };
-console.log(activeItem,"activeItem")
+
+
   return (
     <AnimateSharedLayout>
       <ol

@@ -1,9 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   images: {
     loader: "akamai",
-    path: "..",
+    path: "",
+    domains: ['https://credenc-neo-bank.com']
   },
   trailingSlash: true,
  

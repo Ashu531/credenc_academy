@@ -21,9 +21,11 @@ import filterIcon from '../../assets/images/icons/filter-icon-dark.svg';
 import closeIcon from '../../assets/images/icons/close-icon-grey.svg';
 import FloatActionButton from "../../components/floatActionButton/floatActionButton";
 import constant from '../../config/constant'
+import SlidingPanel from 'react-sliding-side-panel';
+import DetailModal from "../../components/detailModal/DetailModal";
 
+const compareKey = 'credenc-marketplace-compares';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
-const authKey = 'credenc-marketplace-authkey';
 
 const queries = {
   PROFESSION: 'profession',
@@ -111,11 +113,15 @@ const CoursePage = ({
   const [courseTypesFloatState, setCourseTypesFloatState] = useState(4)
 
   const [mobileFiltersState, setMobileFiltersState] = useState(false)
-
+  const [detailData,setDetailData] = useState({});
+  const [detailModal, setDetailModal] = useState(false);
   let appliedFiltersCount = useRef(0);
 
   const [lastCourse, setLastCourse] = useState(null);
   const courseTypeRef = useRef(null);
+  const [compareTextVisible,setCompareTextVisible] = useState('');
+  const [addToCompareButtonState, setAddToCompareButtonState] = useState({...States.addToCompareButtonState.DEFAULT});
+
   // let observer = useRef(
   //   new IntersectionObserver(
   //     (entries) => {
@@ -347,7 +353,7 @@ const CoursePage = ({
     let res;
 
     if (token === null || !token) {
-      res = await axios.get(`${constant.API_URL.PROD}/batch/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
+      res = await axios.get(`${constant.API_URL.DEV}/batch/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
         .then(res => {
           coursesApiStatus.current.success();
           return res.data;
@@ -705,8 +711,107 @@ const CoursePage = ({
     setPageLoadSortState(getSortStateFromUrl());
     // change tab number
     let tabNumber = getTabNumber(queries.COURSE_TYPE, urlService)
-    courseTypeRef?.current?.useImperativeHandle.changeActiveTab(tabNumber);
+    courseTypeRef?.current?.changeTab(tabNumber);
   }, []);
+
+  useEffect(()=>{
+    getCompareText()
+  },[])
+
+  const getCompareText =()=>{
+ 
+      let tempCompareData = JSON.parse(localStorage.getItem(compareKey));
+      if(tempCompareData && tempCompareData.length > 0){
+        if (tempCompareData.includes(detailData?.id)) 
+        {
+          setCompareTextVisible("Go to Compare")
+        }
+        else {
+          setCompareTextVisible("Add to Compare")
+        } 
+      }else{
+        return setCompareTextVisible("Add to Compare")
+      }
+    
+    }
+    
+
+  const openDetailModal = (data)=>{
+    setDetailModal(true);
+    setDetailData(data);
+  }
+
+  const _addToBookmark=(item)=>{
+    let bookmark = JSON.parse(localStorage.getItem(bookmarkKey)) 
+    let bookmarkAvailable = false;
+    if(bookmark && bookmark.length > 0){
+      bookmark.forEach(data=>{
+        if(data === item.id){
+          bookmarkAvailable= true
+          return 0;
+        }
+     })
+     if(bookmarkAvailable === true){
+      _onremoveToBookmark(item);
+     }else{
+      _onAddToBookmark(item);
+     }
+     
+    }
+    else{
+      _onAddToBookmark(item);
+    }
+ 
+  }
+  
+  const _onremoveToBookmark=(item)=>{
+    let bookmarkArray = [];
+    let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
+    if(bookmarkItem && bookmarkItem.length > 0){
+      bookmarkArray =  bookmarkItem.filter(data => data !== item.id )
+    }
+    localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+  }
+  
+  const _onAddToBookmark=(item)=>{
+    let bookmarkArray = [];
+    let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
+    if(bookmarkItem && bookmarkItem.length > 0){
+      bookmarkArray.push(...bookmarkItem)
+    }
+    bookmarkArray.push(item.id)
+    localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+  }
+
+  const onAddToCompare=(item)=>{
+    let compareArray = [];
+    let compareItem = JSON.parse(localStorage.getItem(compareKey)) 
+    if(compareItem && compareItem.length > 0){
+        compareItem.forEach(data=>{
+            if(data.id === item.id)
+            return;
+        })
+     compareArray.push(...compareItem)
+    }
+    compareArray.push(item.id)
+    localStorage.setItem(compareKey,JSON.stringify(compareArray));
+    
+   }
+   
+   
+   const _addToCompare=(item)=>{
+     if(addToCompareButtonState.id === States.addToCompareButtonState.DEFAULT.id){
+       setAddToCompareButtonState({...States.addToCompareButtonState.APPLIED});
+       onAddToCompare(item);
+       setCompareTextVisible("Go To Compare")
+   }
+   else {
+       setAddToCompareButtonState({...States.addToCompareButtonState.DEFAULT});
+       // onRemoveFromCompare(item);
+   }
+   
+   return;
+   }
 
 
   return (
@@ -796,6 +901,7 @@ const CoursePage = ({
           <div className="segment-container">
             <SegmentedBar
               items={Lists.courseTypes}
+              ref={courseTypeRef}
               style={{
                 fontWeight: 600,
                 ontSize: '1.1rem',
@@ -808,7 +914,6 @@ const CoursePage = ({
                 // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypes[i])
               }}
               selected={courseType}
-              ref={courseTypeRef}
             />
           </div>
           <SecondaryDropdown
@@ -849,15 +954,12 @@ const CoursePage = ({
           <List
             type={listTypes.HORIZONTAL_CARDS}
             list={courses}
-            // onItemClick={navigateToDetailPage}
             listApiStatus={coursesApiStatus}
-            // handleAddItemToBookmark={(item) => handleAddItemToBookmark(item.id)}
-            // handleRemoveItemFromBookmark={(item) => handleRemoveItemFromBookmark(item.id)}
-            // handleAddItemToCompare={(item) => dispatchAddToCompare(item.id)}
-            // handleRemoveItemFromCompare={(item) => dispatchRemoveFromCompare(item.id)}
-            // setLastElement={setLastCourse}
-            // upvoteList={userUpvoteList}
             handleSignInClick={handleSignInClick}
+            openDetailModal={(item)=>openDetailModal(item)} 
+            addToCompare={(item)=>_addToCompare(item)} 
+            addToBookmark={(item)=>_addToBookmark(item)}
+            compareTextVisible={compareTextVisible} 
           />
         </div>
       </div>
@@ -900,7 +1002,21 @@ const CoursePage = ({
           }}
         />
       </div>}
-    </div>
+      <SlidingPanel
+        type={'right'}
+        isOpen={detailModal}
+        backdropClicked={() => setDetailModal(false)}
+        size={30}
+        >
+        <DetailModal
+        detailData={detailData} 
+        addToCompare={()=>_addToCompare(detailData)} 
+        compareTextVisible={compareTextVisible} 
+        addToBookmark={()=>_addToBookmark(detailData)}
+        theme={theme}
+        />
+      </SlidingPanel>
+      </div>
         }
         </>
   );
