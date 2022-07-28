@@ -99,7 +99,7 @@ export default function CourseCard(props){
  className='course-button-content' style={{...compareButtonVisible,marginLeft:0}}>
 <div className='course-compare-buttton' onClick={()=>props.addToCompare(props?.data)}>
 <span className='add-to-compare-text'>
-  {props.compareTextVisible}
+  {props.compareText}
 </span>
 </div>
 <div className='course-detail-button'>
@@ -117,7 +117,7 @@ export default function CourseCard(props){
    <div className='course-button-content-mobile'>
 <div className='course-compare-buttton-mobile' onClick={()=>props.addToCompare(props?.data)}>
   <span className='add-to-compare-text-mobile'>
-  {props.compareTextVisible}
+  {props.compareText}
   </span>
 </div>
 <div className='course-detail-button-mobile'>

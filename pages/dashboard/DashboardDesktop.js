@@ -48,30 +48,7 @@ function DashboardDesktop(props) {
     getDataFromBaseUrl()
     getSubjectData()
   },[])
-
-  useEffect(()=>{
-    getCompareText()
-  },[detailData])
-
-  const getCompareText =()=>{
- 
-      let tempCompareData = JSON.parse(localStorage.getItem(compareKey));
-      if(tempCompareData && tempCompareData.length > 0){
-        if (tempCompareData.includes(detailData?.id)) 
-        {
-          setCompareTextVisible("Go to Compare")
-        }
-        else {
-          setCompareTextVisible("Add to Compare")
-        } 
-      }else{
-        return setCompareTextVisible("Add to Compare")
-      }
     
-    }
-    
-
-
  const getDataFromBaseUrl=()=>{
     if(router.query.hasOwnProperty('subject') ){
      let data={
@@ -248,7 +225,7 @@ function DashboardDesktop(props) {
     localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
   }
 
-  const onAddToCompare=(item)=>{
+  const _onAddToCompare=(item)=>{
     let compareArray = [];
     let compareItem = JSON.parse(localStorage.getItem(compareKey)) 
     if(compareItem && compareItem.length > 0){
@@ -265,17 +242,46 @@ function DashboardDesktop(props) {
    
    
    const _addToCompare=(item)=>{
-     if(addToCompareButtonState.id === States.addToCompareButtonState.DEFAULT.id){
-       setAddToCompareButtonState({...States.addToCompareButtonState.APPLIED});
-       onAddToCompare(item);
-       setCompareTextVisible("Go To Compare")
+   let compare = JSON.parse(localStorage.getItem(compareKey)) 
+   let compareAvailable = false;
+   if(compare && compare.length > 0){
+    compare.forEach(data=>{
+       if(data === item.id){
+        compareAvailable= true
+         return 0;
+       }
+    })
+    if(compareAvailable === false){
+      _onAddToCompare(item);
+    }
    }
-   else {
-       setAddToCompareButtonState({...States.addToCompareButtonState.DEFAULT});
-       // onRemoveFromCompare(item);
+   else{
+    _onAddToCompare(item);
    }
-   
-   return;
+}
+
+   const _checkBookmarks=(item)=>{
+    let bookmarkVisible = false;
+    let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
+    if(tempBookmarkData && tempBookmarkData.length > 0){
+      if (tempBookmarkData.includes(item?.id))
+      bookmarkVisible = true
+      else
+      bookmarkVisible = false
+    }
+    return bookmarkVisible;
+   }
+
+   const _checkCompareText=(item)=>{
+    let compareText = 'Add to Compare';
+    let tempCompareData = JSON.parse(localStorage.getItem(compareKey));
+    if(tempCompareData && tempCompareData.length > 0){
+      if (tempCompareData.includes(item?.id))
+      compareText = 'Go to Compare'
+      else
+      compareText = 'Add to Compare'
+    }
+    return compareText;
    }
 
 
@@ -306,14 +312,6 @@ function DashboardDesktop(props) {
         <div className="course-card-container" >
          {
             courseCardData?.map((item,index)=>{
-              let bookmarkVisible = false;
-              let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
-              if(tempBookmarkData && tempBookmarkData.length > 0){
-                if (tempBookmarkData.includes(item?.id))
-                bookmarkVisible = true
-                else
-                bookmarkVisible = false
-              }
              return(
                 <CourseCard 
                   key={index} 
@@ -322,8 +320,8 @@ function DashboardDesktop(props) {
                   openDetailModal={()=>openDetailModal(item)} 
                   addToCompare={()=>_addToCompare(item)} 
                   addToBookmark={()=>_addToBookmark(item)}
-                  compareTextVisible={compareTextVisible} 
-                  bookmarkVisible={bookmarkVisible}
+                  compareText={_checkCompareText(item)}
+                  bookmarkVisible={_checkBookmarks(item)}
                 />
               )
             })
@@ -353,7 +351,6 @@ function DashboardDesktop(props) {
         <DetailModal 
         detailData={detailData} 
         addToCompare={()=>_addToCompare(detailData)} 
-        compareTextVisible={compareTextVisible} 
         addToBookmark={()=>_addToBookmark(detailData)}
         theme={props.theme} 
         />

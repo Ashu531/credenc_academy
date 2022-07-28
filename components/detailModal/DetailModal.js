@@ -16,19 +16,28 @@ import clockIcon from '../../assets/images/icons/clockIcon.svg';
 import starIcon from '../../assets/images/icons/greenStarIcon.svg'
 import instructorIcon from '../../assets/images/icons/instructorIcon.svg'
 import goUpIcon from '../../assets/images/icons/caret-up-grey.svg'
+import closeIcon from '../../assets/images/icons/close-icon-grey.svg'
 import States from '../../values/states';
 import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
+import { width } from 'dom-helpers';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
-
+const compareKey = 'credenc-marketplace-compares';
 
 
 export default function DetailModal(props){
-    console.log(props,"props")
+
+    const [mounted, setMounted] = useState(false);
     const [detailFooter,setFooterModal] = useState(false);
     const[bookmarkVisible,setBookmarkVisible] = useState(false)
+    const[compareText,setCompareText] = useState('Add to Compare')
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(()=>{
         _getBookmarks()
+        _getCompareItems()
     },[])
 
     const _getBookmarks=()=>{
@@ -38,6 +47,16 @@ export default function DetailModal(props){
           setBookmarkVisible(true)
           else
           setBookmarkVisible(false)
+        }
+    }
+
+    const _getCompareItems=()=>{
+        let tempCompareData = JSON.parse(localStorage.getItem(compareKey));
+        if(tempCompareData && tempCompareData.length > 0){
+          if (tempCompareData.includes(props?.detailData?.id))
+          setCompareText('Go to Compare')
+          else
+          setCompareText('Add to Compare')
         }
     }
 
@@ -51,7 +70,10 @@ export default function DetailModal(props){
     }
 
     return(
-       <div className='detail-modal-container'>
+        <>
+        {
+            mounted && 
+       <div className='detail-modal-container' style={ window.innerWidth<=500 ? {width:'100%',height:'90vh'} : null }>
          <div className='detail-modal-content'>
             <div className='detail-modal-header'>
                 <div className='header-school-content'>
@@ -73,16 +95,18 @@ export default function DetailModal(props){
                         >
                         <Image src={ bookmarkVisible === true ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon}  
                         objectFit="cover" 
-                        height={20} width={20}
+                        width={ window.innerWidth <= 500 ? 25 : 20 }
+                        height={window.innerWidth <= 500 ? 25 : 20 }
+                        objectFit="cover" 
                         />
                         </div>
                     <div className='header-action-container' style={{marginLeft:8}}>
                         <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-                        <span className='upvote-text'>{props?.detailData?.up_votes}</span>
+                        <span className='upvote-text' style={window.innerWidth <= 500 ? {marginTop:1}: null} >{props?.detailData?.up_votes}</span>
                         <Image 
                         src={upvoteLogo}  
-                        width={18}
-                        height={18}
+                        width={ window.innerWidth <= 500 ? 30 : 18 }
+                        height={window.innerWidth <= 500 ? 30 : 18 }
                         objectFit="cover" 
                         />
                         </div>
@@ -90,12 +114,14 @@ export default function DetailModal(props){
                         <div className='header-action-container' style={{marginLeft:8}}>
                         <Image 
                         src={globeIcon}  
+                        width={ window.innerWidth <= 500 ? 25 : 18 }
+                        height={window.innerWidth <= 500 ? 25 : 18 }
                         objectFit="cover" 
                         />
                         </div>
                 </div>
             </div>
-            <div className='detail-modal-banner'>
+            <div className='detail-modal-banner'  style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
                 <span className='banner-text'>
                 Next batch starts on June 12th, 2022
                 </span>
@@ -196,7 +222,10 @@ export default function DetailModal(props){
                  
             </div>
             </div>
-            <div className='content-footer'>
+            <div 
+            className='content-footer'
+            style={!detailFooter ? {paddingBottom: '18%'} : null}
+            >
               <span className='content-date-text' style={{paddingLeft: 24}}>
               Last updated on: <span style={{fontWeight: 600}}>12 JAN 2020</span>
               </span>
@@ -208,8 +237,10 @@ export default function DetailModal(props){
               </span>
             </div>
             {
-                detailFooter ?  
-                <div className='disclaimer-footer-content'>
+               detailFooter ?  
+                <div className='disclaimer-footer-content' 
+                style={window.innerWidth <= 500 ? detailFooter ? {marginBottom: '18%'} : null : null}
+                >
                     <span className='footer-text'>
                     The information provided on our Platform is for general information purpose only and such informations are not investigated, monitored, or checked for accuracy, validity, and reliability by us. Your use of the Platform is solely at your own risk and we in no way shall have any liability whatsoever.
                     </span>
@@ -217,16 +248,34 @@ export default function DetailModal(props){
             }
            
          </div>
-         <div className='detail-modal-footer'>
+         <div 
+         className='detail-modal-footer'  
+         style={ 
+             window.innerWidth<=500 
+             ? 
+             {width:'100%',
+             display:"flex",
+             flexDirection:"column",
+             justifyContent:'flex-start',
+             alignItems:'flex-start',
+             background: '#F7F7F7',
+            } 
+             : null 
+            }
+         >
             <div className='detail-modal-footer-section-left'>
                 <span className='price-text'>
                 {props?.detailData?.price}
                 </span>
             </div>
-            <div className='detail-modal-footer-section-right'>
-                <span className='compare-button' onClick={()=>props.addToCompare(props?.detailData)} > 
+            <div className='detail-modal-footer-section-right' 
+            style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
+                <span className='compare-button' onClick={()=>{
+                    props.addToCompare(props?.detailData)
+                    setCompareText('Go to Compare')
+                    }} > 
                     <span className='compare-button-text'>
-                    {props.compareTextVisible}
+                    {props.compareTextVisible || compareText}
                     </span>
                 </span>
                 <span className='apply-now-button'>
@@ -236,6 +285,15 @@ export default function DetailModal(props){
                 </span>
              </div>
          </div>
+         {
+             window.innerWidth <= 500 ? 
+             <span className='detail-modal-close-icon' onClick={()=>props.openDetailModal()}>
+                 <Image src={closeIcon} objectFit='cover' height={20} width={20} />
+             </span>
+             : null
+         }
         </div>
+        }
+        </>
     )
 }

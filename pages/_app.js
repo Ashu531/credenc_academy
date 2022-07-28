@@ -19,12 +19,20 @@ class MyApp extends App {
     this.state = {
      theme: "",
      footerModal: false,
+     mounted: false,
     };
    
   }
 
   componentDidMount() {
     this._retrieveData();
+    this._mountComponent();
+  }
+
+  _mountComponent=()=>{
+    this.setState({
+      mounted: true
+    })
   }
 
   _retrieveData=()=>{
@@ -75,23 +83,29 @@ class MyApp extends App {
     let store = createStore(rootReducer, compose(applyMiddleware(ReduxThunk)))
     return <>
     <Provider store={store}>
-    <div data-theme={this.state.theme} >
-    <Header toggleTheme={this.toggleTheme} theme={this.state.theme}/>
-     <Component {...pageProps} theme={this.state.theme} />
-     <Footer 
-     toggleFooterModal={this.toggleFooterModal} 
-     title="©Credenc2022"/>
-      <SlidingPanel
-         type={'bottom'}
-         isOpen={this.state.footerModal}
-         backdropClicked={() => this.setState({
-          footerModal:false
-         })}
-         size={30}
-       >
-        <FooterModal toggleFooterModal={this.toggleFooterModal}/> 
-       </SlidingPanel>
-     </div>
+      {
+        this.state.mounted && <div data-theme={this.state.theme} >
+        <Header toggleTheme={this.toggleTheme} theme={this.state.theme}/>
+         <Component {...pageProps} theme={this.state.theme} />
+         {
+            window.innerWidth > 500 ? 
+            <Footer 
+            toggleFooterModal={this.toggleFooterModal} 
+            title="©Credenc2022"/> : null
+         }
+        <SlidingPanel
+             type={'bottom'}
+             isOpen={this.state.footerModal}
+             backdropClicked={() => this.setState({
+              footerModal:false
+             })}
+             size={30}
+           >
+            <FooterModal toggleFooterModal={this.toggleFooterModal}/> 
+           </SlidingPanel>
+         </div>
+      }
+    
    </Provider>
    </>
   }
