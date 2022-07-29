@@ -13,7 +13,7 @@ export default function Home(props) {
     <>
     {
     mounted &&  
-    <Dashboard theme={props.theme} />
+    <Dashboard theme={props.theme} filterExpandedStage={props.filterExpandedStage} openFilterExpandedStage={props.openFilterExpandedStage} />
     }
    </>
   )

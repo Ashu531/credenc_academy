@@ -43,7 +43,6 @@ export default function CourseCard(props){
           setCompareButtonVisible({display: 'none'})
           setIsCardOpen(false)
         }} 
-        onClick={()=> props.openDetailModal() } 
           >
         <div className='card-header' style={!isCardOpen ? null : {paddingLeft:12,paddingRight: 12}}>
           <Image src={courseLogo} objectFit="cover" alt='courseLogo' style={{borderRadius: 6}} />
@@ -58,11 +57,11 @@ export default function CourseCard(props){
    
    </div>
    </div>
-   <div  className = {!isCardOpen ? "card-image-content" : "card-image-content card-image-content-open"} >
+   <div  className = {!isCardOpen ? "card-image-content" : "card-image-content card-image-content-open"}  onClick={()=> props.openDetailModal() } >
    <Image src={instituteLogo} objectFit="cover"  height={!isCardOpen ? 82 : 60} width={!isCardOpen ? 82 : 60} alt='instituteLogo'/>
    <span className='institute-name'>Xavier School of Management </span>
    </div>
-   <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} >
+   <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} onClick={()=> props.openDetailModal() } >
   
 <div className='course-name' onMouseEnter={()=>setCourseNameTooltip(true)} onMouseLeave={()=>setCourseNameTooltip(false)}>
 {props?.data?.name.length > 25 ? props?.data?.name.substring(0, 25) + '...' : props?.data?.name} 
@@ -102,7 +101,7 @@ export default function CourseCard(props){
   {props.compareText}
 </span>
 </div>
-<div className='course-detail-button'>
+<div className='course-detail-button' onClick={()=> props.openDetailModal() } >
 <span className='course-detail-text'>
   Details
   </span>
@@ -120,7 +119,7 @@ export default function CourseCard(props){
   {props.compareText}
   </span>
 </div>
-<div className='course-detail-button-mobile'>
+<div className='course-detail-button-mobile' onClick={()=> props.openDetailModal()}>
 <span className='course-detail-text-mobile'>
   Details
   </span>

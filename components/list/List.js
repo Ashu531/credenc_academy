@@ -25,12 +25,11 @@ function List({
     openDetailModal,
     addToCompare,
     addToBookmark,
-    compareTextVisible
+    compareText,
 }) {
   
 
   const listTypes = States.listTypes;
-
   const renderListType = (listType) => {
     return type === listType;
   }
@@ -44,7 +43,6 @@ function List({
   }
 
   if(renderListType(listTypes.HORIZONTAL_CARDS)){
-
     if(listApiStatus.current.isPending()){
       return (
         Array(3).fill(null).map((item, i) => (
@@ -91,7 +89,7 @@ function List({
              openDetailModal={()=>openDetailModal(item)}
              addToCompare={()=>addToCompare(item)} 
              addToBookmark={()=>addToBookmark(item)}
-             compareTextVisible={compareTextVisible} 
+             compareText={compareText(item)}
              bookmarkVisible={bookmarkVisible}
             />
             null

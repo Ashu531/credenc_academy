@@ -20,6 +20,7 @@ class MyApp extends App {
      theme: "",
      footerModal: false,
      mounted: false,
+     filterExpandedStage: false,
     };
    
   }
@@ -65,9 +66,7 @@ class MyApp extends App {
     },()=>{
       localStorage.setItem("EdtechTheme",newTheme)
     })
-   
-    
-  }
+   }
   }
 
   toggleFooterModal = ()=>{
@@ -76,7 +75,17 @@ class MyApp extends App {
     })
   }
 
-  
+  toggleFilterExpandedStage=()=>{
+    this.setState({
+      filterExpandedStage: !this.state.filterExpandedStage
+    })
+  }
+
+  closeFilterExpandedStage=()=>{
+    this.setState({
+      filterExpandedStage: false
+    })
+  }
 
   render(){
     const {Component, pageProps} = this.props;
@@ -85,8 +94,17 @@ class MyApp extends App {
     <Provider store={store}>
       {
         this.state.mounted && <div data-theme={this.state.theme} >
-        <Header toggleTheme={this.toggleTheme} theme={this.state.theme}/>
-         <Component {...pageProps} theme={this.state.theme} />
+        <Header 
+        toggleTheme={this.toggleTheme} 
+        theme={this.state.theme} 
+        openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
+        />
+         <Component 
+         {...pageProps} 
+         theme={this.state.theme} 
+         filterExpandedStage={this.state.filterExpandedStage} 
+         openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
+         />
          {
             window.innerWidth > 500 ? 
             <Footer 

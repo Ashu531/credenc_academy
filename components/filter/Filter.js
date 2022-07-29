@@ -13,7 +13,7 @@ export default function Filter({ item, filterState, updateFilterState, min, max,
     const [expanded, setExpanded] = useState(false);
     
     const selectedItems = (list) => {
-      return list.filter((item) => item['isApplied'] === true).length > 0;
+      return list?.filter((item) => item['isApplied'] === true).length > 0;
     }
 
     const renderFilter = (filterType) => {

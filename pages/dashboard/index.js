@@ -13,7 +13,7 @@ export default function Dashboard(props) {
 
   useEffect(() => {
     setMounted(true);
-}, []);
+  }, []);
 
    return(
       <>
@@ -23,6 +23,8 @@ export default function Dashboard(props) {
         {isDesktopOrLaptop && <DashboardDesktop
         // toggleTheme={toggleTheme} 
         newTheme={props.theme}
+        openFilterExpandedStage={props.openFilterExpandedStage}
+        filterExpandedStage={props.filterExpandedStage}
         />}
         {isMobile && <DashboardMobile />}
         </>
