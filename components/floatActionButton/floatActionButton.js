@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import States from '../../config/states';
 import sortingIcon from '../../assets/images/icons/sorting-icon.svg';
 import { Skeleton } from '@mui/material';
+import Image from "next/image";
 
 export default function FloatActionButton({
     type = 'course type',
@@ -35,7 +36,7 @@ export default function FloatActionButton({
                         {selected === 0 ? heading : (floatList[selected].name || floatList[selected].value)}
                         <span className='caret'>{'<'}</span>
                     </div>}
-                    {icon && <img src={icon} />}
+                    {icon && <Image src={icon} objectFit="cover" />}
                     {displayContent && <div className='content-wrapper'>
                         {floatList.map((item, i) => (
                             <div key={item.id} className='drop-item' onClick={() => { setDisplayContent(false); onSelect(item, i); }}>
@@ -53,7 +54,7 @@ export default function FloatActionButton({
     if (type === 'sort type') {
         return <>
             <div className={`float-sort-action-${floatType}`}>
-                <span onClick={() => setDisplayContent(true)} className='sort'><img src={sortingIcon} alt='Sorting' /></span>
+                <span onClick={() => setDisplayContent(true)} className='sort'><Image src={sortingIcon} alt='Sorting' objectFit='cover' /></span>
                 {(window.innerWidth <= 500) &&
                     <div
                         className={`dropdown-content-mobile`}

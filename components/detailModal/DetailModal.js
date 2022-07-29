@@ -97,7 +97,6 @@ export default function DetailModal(props){
                         objectFit="cover" 
                         width={ window.innerWidth <= 500 ? 25 : 20 }
                         height={window.innerWidth <= 500 ? 25 : 20 }
-                        objectFit="cover" 
                         />
                         </div>
                     <div className='header-action-container' style={{marginLeft:8}}>

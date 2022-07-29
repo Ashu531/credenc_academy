@@ -52,7 +52,7 @@ export default function FooterModal(props){
        <div className='footerDiv'>
                 <div className='socialMediaDiv'>
                     <div className='socialMediaDiv1'><button className='socialMediaDiv1Button'>A product by Credenc</button></div>
-                    <div className='socialMediaDiv2'>With SkillRush, you don't just compare Courses. You understand it. Narrow down choices. 
+                    <div className='socialMediaDiv2'>With SkillRush, you don&apos;t just compare Courses. You understand it. Narrow down choices. 
                      Avoid pitfalls and make better decisions
                      </div>
                      <div>

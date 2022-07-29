@@ -7,6 +7,7 @@ import ReduxThunk from "redux-thunk";
 import rootReducer from '../scripts/reducers/index'
 import 'react-sliding-side-panel/lib/index.css';
 import Header from '../components/header/Header';
+import HeaderMobile from '../components/headerMobile/HeaderMobile';
 import Footer from '../components/footer/Footer';
 import FooterModal from '../components/footerModal/FooterModal';
 import SlidingPanel from 'react-sliding-side-panel';
@@ -94,11 +95,20 @@ class MyApp extends App {
     <Provider store={store}>
       {
         this.state.mounted && <div data-theme={this.state.theme} >
-        <Header 
-        toggleTheme={this.toggleTheme} 
-        theme={this.state.theme} 
-        openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
-        />
+          {
+            window.innerWidth > 500 ? 
+            <Header 
+            toggleTheme={this.toggleTheme} 
+            theme={this.state.theme} 
+            openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
+        /> : 
+            <HeaderMobile
+            // toggleTheme={this.toggleTheme} 
+            // theme={this.state.theme} 
+            openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
+            />
+          }
+        
          <Component 
          {...pageProps} 
          theme={this.state.theme} 

@@ -311,6 +311,7 @@ function DashboardDesktop(props) {
   }
 
   const _onAddToCompare=(item)=>{
+    console.log(item,"item++")
     let compareArray = [];
     let compareItem = JSON.parse(localStorage.getItem(compareKey)) 
     if(compareItem && compareItem.length > 0){
@@ -816,7 +817,7 @@ let token = null;
   props.filterExpandedStage ? 
       <div className="course-page"> 
       {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`}>
-        <div className="filter-head">{appliedFiltersCount.current === 0 ? 'No Filters Applied' : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}
+        <div className="filter-head">{appliedFiltersCount.current === 0 ? '' : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}
           {appliedFiltersCount.current !== 0 && <span style={window.innerWidth > 500 ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>}
           {window.innerWidth <= 500 && <span className='cross' onClick={() => setMobileFiltersState(false)}><img src={closeIcon} /></span>}
         </div>
@@ -1026,6 +1027,15 @@ let token = null;
        <div className="course-card-container" >
         {
            courseCardData?.map((item,index)=>{
+            let bookmarkVisible = false;
+            let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
+            if(tempBookmarkData && tempBookmarkData.length > 0){
+              if (tempBookmarkData.includes(item?.id)){
+                bookmarkVisible = true
+              }
+             else
+              bookmarkVisible = false
+            }
             return(
                <CourseCard 
                  key={index} 
@@ -1035,7 +1045,7 @@ let token = null;
                  addToCompare={()=>_addToCompare(item)} 
                  addToBookmark={()=>_addToBookmark(item)}
                  compareText={_checkCompareText(item)}
-                 bookmarkVisible={_checkBookmarks(item)}
+                 bookmarkVisible={bookmarkVisible}
                />
              )
            })
@@ -1092,14 +1102,14 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardDesktop);
 
-export async function getServerSideProps(context) {
+// export async function getServerSideProps(context) {
 
-  const response = await fetch(`${constant.API_URL.DEV}/batch/search/`)
-  const data = await response.json()
+//   const response = await fetch(`${constant.API_URL.DEV}/batch/search/`)
+//   const data = await response.json()
 
-  // return {
-  //   props: {
-  //     courseCardData: data
-  //   },
-  // }
-}
+//   // return {
+//   //   props: {
+//   //     courseCardData: data
+//   //   },
+//   // }
+// }

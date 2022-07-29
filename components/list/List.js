@@ -47,7 +47,7 @@ function List({
       return (
         Array(3).fill(null).map((item, i) => (
          
-          <div></div>
+          <div key={i}></div>
           // <CourseCard 
           // item={item} 
           // key={i}
@@ -114,7 +114,7 @@ function List({
     if(listApiStatus.current.isPending()){
       return (
         Array(5).fill(null).map((item, i) => (
-          <div>
+          <div key={i}>
 
           </div>
           // <CourseCardContainer item={item} key={`dummy${i}`} showActions={false}/>
@@ -126,7 +126,7 @@ function List({
       if(list && list.length > 0){
         return (
           list.map((item, i) => (
-            <div>
+            <div key={i}>
 
             </div>
             // <CourseCardContainer 
@@ -162,7 +162,8 @@ function List({
           label={item.name} 
           color='#7A7E85' 
           isChecked={item.isApplied} 
-          setChecked={(value) => onItemClick(value, i)} key={i}
+          setChecked={(value) => onItemClick(value, i)} 
+          key={i}
           theme={theme}
         />
       ))
@@ -187,7 +188,7 @@ function List({
     return (
       list.map((item, i) => (
         // <BatchCard item={item} handleClick={onItemClick} key={i}/>
-        <div>
+        <div key={i}>
 
         </div>
       ))
@@ -197,7 +198,7 @@ function List({
   if(renderListType(listTypes.NOTIFICATION_CARDS)){
     return (
       list.map((item, i) => (
-        <div className='card'>
+        <div className='card' key={i}>
           <div className='logos'>
             <div className='partner'>
               <div className='icon' style={{backgroundImage: `url(${dribbleLogo})`}}></div>
@@ -231,7 +232,7 @@ function List({
       if(list && list.length > 0){
         return (
           list.map((item, i) => (
-            <div className='card' onClick={() => onItemClick(item, i)}>
+            <div className='card' onClick={() => onItemClick(item, i)} key={i}>
               <div className='header'>
                 <div className='logo' style={{backgroundImage: `url(${item['logo']})`}}></div>
                 <div className='rating'>{!!item['ratings'] ? item['ratings'] : 0}/5</div>
@@ -260,7 +261,7 @@ function List({
     if(listApiStatus.current.isPending()){
       return (
         list.map((item, i) => (
-          <div className='card'>
+          <div className='card' key={i}>
             <div className='logo'></div>
             <div className='title'><Skeleton variant='text' width={10} sx={{bgcolor: '#555555'}}/></div>
           </div>
@@ -272,7 +273,7 @@ function List({
       if(list && list.length > 0){
         return (
           list.map((item, i) => (
-            <div className='card' onClick={() => onItemClick(item, i)}>
+            <div className='card' onClick={() => onItemClick(item, i)} key={i}>
               <div className='logo' style={{backgroundImage: `url(${item['logo']})`}}></div>
               <div className='title'>{item['name']}</div>
               <Button 

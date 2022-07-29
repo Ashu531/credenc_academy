@@ -5,7 +5,7 @@ import Image from "next/image";
 import dropdownIcon from '../../assets/images/icons/dropdown.svg'
 import searchIcon from '../../assets/images/icons/searchIcon.svg'
 
-export default function HeaderMobile(){
+export default function HeaderMobile(props){
   
     return(
         <div className='mobile-header'>
@@ -19,7 +19,7 @@ export default function HeaderMobile(){
         <div className='mobile-header-element' style={{marginRight: 10}}>
         <Image src={searchIcon} objectFit="cover" alt='searchIcon' />
         </div>
-        <div className='mobile-header-element'>
+        <div className='mobile-header-element' onClick={()=>props.openFilterExpandedStage()}>
         <Image src={filterIcon} objectFit="cover" alt='filterIcon' />
         </div>
         </div>

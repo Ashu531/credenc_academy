@@ -13,19 +13,21 @@ import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
 // import theme from '../../scripts/reducers/theme';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 
-
-  
-
-
 export default function CourseCard(props){
   const [mounted, setMounted] = useState(false);
   const [compareButtonVisible, setCompareButtonVisible] = useState({display: 'none'});
   const [courseNameTooltip, setCourseNameTooltip] = useState(false)
   const [isCardOpen,setIsCardOpen] = useState(false)
+  const [bookmarkVisible, setBookmarkVisible] = useState(false)
+  const [compareTextVisible, setCompareTextVisible] = useState('Add to Compare')
 
   useEffect(() => {
     setMounted(true);
    }, []);
+
+   useEffect(()=>{
+    setCompareTextVisible(props?.compareText)
+   },[])
 
  return(
       <>
@@ -33,7 +35,7 @@ export default function CourseCard(props){
         mounted && 
         <div 
         className = {!isCardOpen ? "card-container" : "card-container card-container-open"}
-        style={window.innerWidth <= 500 ? {width: "90%"} : !isCardOpen ? null : {padding:0} }
+        style={window.innerWidth <= 500 ? {width: "100%"} : !isCardOpen ? null : {padding:0} }
        
         onMouseEnter={e => {
           setCompareButtonVisible({display: 'flex',flexDirection:"row"});
@@ -47,8 +49,11 @@ export default function CourseCard(props){
         <div className='card-header' style={!isCardOpen ? null : {paddingLeft:12,paddingRight: 12}}>
           <Image src={courseLogo} objectFit="cover" alt='courseLogo' style={{borderRadius: 6}} />
         <div className='card-header-end-content'>
-               <div className='grey-container' onClick={()=>props.addToBookmark(props.data)} style={props.bookmarkVisible === true || props.bookmarkVisible === 'true' ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}>
-                 <Image src={ props.bookmarkVisible === true || props.bookmarkVisible === 'true'  ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={20} width={20}/>
+               <div className='grey-container' onClick={()=>{
+                 props.addToBookmark(props.data)
+                 setBookmarkVisible(!bookmarkVisible)
+                 }} style={props.bookmarkVisible === true || bookmarkVisible === true ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}>
+                 <Image src={ props.bookmarkVisible === true || bookmarkVisible === true  ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={20} width={20}/>
         </div>
         <div className='grey-container'>
          <span className='count-text'>{props?.data?.up_votes}</span>
@@ -96,9 +101,15 @@ export default function CourseCard(props){
  {  window.innerWidth > 500 ? 
  <div 
  className='course-button-content' style={{...compareButtonVisible,marginLeft:0}}>
-<div className='course-compare-buttton' onClick={()=>props.addToCompare(props?.data)}>
+<div 
+className='course-compare-buttton' 
+onClick={()=>{
+  props.addToCompare(props?.data)
+  setCompareTextVisible('Go to Compare')
+  }}
+>
 <span className='add-to-compare-text'>
-  {props.compareText}
+  {compareTextVisible}
 </span>
 </div>
 <div className='course-detail-button' onClick={()=> props.openDetailModal() } >
@@ -114,9 +125,12 @@ export default function CourseCard(props){
 
    { window.innerWidth<=500 ? 
    <div className='course-button-content-mobile'>
-<div className='course-compare-buttton-mobile' onClick={()=>props.addToCompare(props?.data)}>
+<div className='course-compare-buttton-mobile' onClick={()=>{
+  props.addToCompare(props?.data)
+  setCompareTextVisible('Go to Compare')
+  }}>
   <span className='add-to-compare-text-mobile'>
-  {props.compareText}
+  {compareTextVisible}
   </span>
 </div>
 <div className='course-detail-button-mobile' onClick={()=> props.openDetailModal()}>

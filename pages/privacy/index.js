@@ -124,7 +124,7 @@ export default function PrivacyPolicy({changeNavbarVisibility}) {
             serving the best version of our Service and Platform. We may collect the 
             below mentioned information:    
         </span>
-        {renderPointerPara('Personal Information: ', `We may collect Personal Information including, but
+        {renderPointerPara(`Personal Information: `, `We may collect Personal Information including, but
             not limited to name, e-mail address, mobile number, account login 
             information, photographs, work experience level, and any other 
             information we consider necessary to enhance your experience on the 

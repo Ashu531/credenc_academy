@@ -223,7 +223,7 @@
             max-height: 60vh;
             left: 0;
             padding: 1.2rem 0;
-            background-color: #151515;
+            background-color: var(--defaultBackground);
             min-width: 100%;
             box-sizing: border-box;
             border-radius: 3.2rem 3.2rem 0 0;
@@ -240,12 +240,12 @@
                 font-size: 1.6rem;
                 font-weight: 500;
                 line-height: 2.4rem;
-                color: #94989E;
+                color: var(--defaultColor);
                 padding: 0.8rem 1.6rem 0.8rem 3.2rem;
                 cursor: pointer;
     
                 &:hover{
-                    background-color: #0A0A0B;
+                    background-color: var(--defaultBackground);
                 }
             }
         }

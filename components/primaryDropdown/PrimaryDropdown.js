@@ -69,7 +69,7 @@ export default function PrimaryDropdown({
     }, [selected]);
 
   return (
-    <div className={`dropdown-${dropdownType} ${(isNext || dropdownState.id === dropdownStates.OPEN.id) ? 'small-wrapper-colored' : ''} ${disabled ? 'disable' : ''}`} ref={dropRef}>
+    <div className={`dropdown-${dropdownType} ${(isNext || dropdownState.id === dropdownStates.OPEN.id) ? 'small-wrapper-colored' : ''} ${disabled ? 'disable' : ''}`} ref={dropRef} style={{zIndex:99999}}>
         <div className="dropbtn" style={selected.style || dropdownState.style} onClick={() => handleDropdownState(false)}>
             {placeholder}
             <span className={(isNext || dropdownState.id === dropdownStates.OPEN.id) ? 'small-wrapper-colored' : ''} onClick={(e) => {e.stopPropagation(); handleDropdownState(true)}}><img src={selected.icon || dropdownState.icon} /></span>
@@ -94,7 +94,7 @@ export default function PrimaryDropdown({
         {(window.innerWidth <= 500) && 
         <div 
             className={`dropdown-content-mobile`}
-            style={renderDropdownState(dropdownStates.OPEN.id) ? {bottom: 0} : {bottom: '-100%'}}
+            style={renderDropdownState(dropdownStates.OPEN.id) ? {bottom: 0,zIndex: 999} : {bottom: '-100%',zIndex: 999}}
         >
             {includeSearchBar && 
             <div className='search-container'>

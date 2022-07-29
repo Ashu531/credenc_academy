@@ -26,7 +26,10 @@ export default function Dashboard(props) {
         openFilterExpandedStage={props.openFilterExpandedStage}
         filterExpandedStage={props.filterExpandedStage}
         />}
-        {isMobile && <DashboardMobile />}
+        {isMobile && <DashboardMobile
+        openFilterExpandedStage={props.openFilterExpandedStage}
+        filterExpandedStage={props.filterExpandedStage}
+        />}
         </>
       }
       </>

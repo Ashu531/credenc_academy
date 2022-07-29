@@ -3,7 +3,7 @@ import { motion, AnimateSharedLayout } from "framer-motion";
 import PropTypes from "prop-types";
 import styles from "./_segmentedbar.module.scss";
 
-const SegmentedBar = React.forwardRef((props, ref) => {
+const SegmentedBar = forwardRef((props, ref) => {
   const { items, handleTabNumber, selected, type = "default", style={}, bgColor='' } = props;
   const [activeItem, setActiveitem] = useState(selected || 0);
 
@@ -88,5 +88,7 @@ SegmentedBar.propTypes = {
   selected: PropTypes.number,
   // variant: PropTypes.string
 };
+
+SegmentedBar.displayName = 'SegmentedBar';
 
 export default SegmentedBar;
