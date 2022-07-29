@@ -82,9 +82,9 @@ class MyApp extends App {
     })
   }
 
-  closeFilterExpandedStage=()=>{
+  openFilterExpandedStage=()=>{
     this.setState({
-      filterExpandedStage: false
+      filterExpandedStage: true
     })
   }
 
@@ -100,7 +100,8 @@ class MyApp extends App {
             <Header 
             toggleTheme={this.toggleTheme} 
             theme={this.state.theme} 
-            openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
+            toggleFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
+            openFilterExpandedStage={()=>this.openFilterExpandedStage()}
         /> : 
             <HeaderMobile
             // toggleTheme={this.toggleTheme} 

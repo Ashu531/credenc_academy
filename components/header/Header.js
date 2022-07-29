@@ -25,7 +25,7 @@ export default function Header(props){
            {/* <Link> */}
          <div 
          className='icon-element' 
-         onClick={()=>props.openFilterExpandedStage()}
+         onClick={()=>props.toggleFilterExpandedStage()}
          >
            <Image src={projectorIcon} objectFit="cover" alt='projectorIcon' />
          </div>
