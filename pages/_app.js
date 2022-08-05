@@ -11,6 +11,7 @@ import HeaderMobile from '../components/headerMobile/HeaderMobile';
 import Footer from '../components/footer/Footer';
 import FooterModal from '../components/footerModal/FooterModal';
 import SlidingPanel from 'react-sliding-side-panel';
+import FooterMobile from '../components/footerMobile/FooterMobile'
 const EdtechTheme = 'credenc-edtech-theme';
 
 class MyApp extends App {
@@ -22,6 +23,11 @@ class MyApp extends App {
      footerModal: false,
      mounted: false,
      filterExpandedStage: false,
+     subjectDropdownMobile: false,
+     subjectName: 'All Subjects',
+     loggedIn: false,
+     loginModal: false,
+     forgotPasswordModal:false,
     };
    
   }
@@ -38,6 +44,8 @@ class MyApp extends App {
   }
 
   _retrieveData=()=>{
+
+
    let localTheme = localStorage.getItem("EdtechTheme");
    if(localTheme && localTheme.length > 0){
     this.setState({
@@ -48,6 +56,14 @@ class MyApp extends App {
       theme: "light"
     })
    }
+
+   let token = localStorage.getItem("EdtechToken")
+   if(token && token.length > 0){
+     this.setState({
+       loggedIn: true
+     })
+   }
+
   }
 
 
@@ -88,6 +104,46 @@ class MyApp extends App {
     })
   }
 
+  toggleSubjectDropdown=()=>{
+    this.setState({
+      subjectDropdownMobile: !this.state.subjectDropdownMobile
+    })
+  }
+
+  openLoginModal=()=>{
+    this.setState({
+      loginModal: true
+    })
+  }
+
+  closeLoginModal=()=>{
+    this.setState({
+      loginModal: false
+    })
+  }
+
+  openForgotPasswordModal=()=>{
+    this.setState({
+      loginModal: false,
+      forgotPasswordModal: true
+    })
+  }
+
+  handleForgotPasswordEnd=()=>{
+    this.setState({
+      forgotPasswordModal: false,
+      loginModal: true,
+    })
+  }
+
+  closeForgotPasswordModal=()=>{
+    this.setState({
+      forgotPasswordModal: false,
+    })
+  }
+
+ 
+
   render(){
     const {Component, pageProps} = this.props;
     let store = createStore(rootReducer, compose(applyMiddleware(ReduxThunk)))
@@ -102,11 +158,15 @@ class MyApp extends App {
             theme={this.state.theme} 
             toggleFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
             openFilterExpandedStage={()=>this.openFilterExpandedStage()}
+            loggedIn={this.state.loggedIn}
+            openLoginModal={()=>this.openLoginModal()}
+            
         /> : 
             <HeaderMobile
             // toggleTheme={this.toggleTheme} 
             // theme={this.state.theme} 
             openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
+            toggleSubjectDropdown={()=>this.toggleSubjectDropdown()}
             />
           }
         
@@ -115,12 +175,21 @@ class MyApp extends App {
          theme={this.state.theme} 
          filterExpandedStage={this.state.filterExpandedStage} 
          openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
+         subjectDropdownMobile={this.state.subjectDropdownMobile}
+         loginModal={this.state.loginModal}
+         closeLoginModal={()=>this.closeLoginModal()}
+         openForgotPasswordModal={()=>this.openForgotPasswordModal()}
+         forgotPasswordModal={this.state.forgotPasswordModal}
+         handleForgotPasswordEnd={()=>this.handleForgotPasswordEnd()}
          />
          {
             window.innerWidth > 500 ? 
             <Footer 
             toggleFooterModal={this.toggleFooterModal} 
-            title="©Credenc2022"/> : null
+            title="©Credenc2022"/> : 
+            <FooterMobile
+            openLoginModal={()=>this.openLoginModal()}
+            />
          }
         <SlidingPanel
              type={'bottom'}

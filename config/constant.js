@@ -19,7 +19,15 @@ const constant= {
         title: "Ram"
        },
      ]
-    }
+    },
+    GOOGLE_CLIENT_ID: '285634072201-v2q013h1k89t67i0auhjmj4lr3rn0jur.apps.googleusercontent.com',
+    LINKEDIN_API: {
+      clientId: '78exnrgmc9bd3d',
+      redirectUrl: 'http://localhost:3000',
+      authUrl: 'https://www.linkedin.com/oauth/v2/authorization?response_type=code',
+      scope: 'r_liteprofile%20r_emailaddress',
+      state: '123456'
+    },
 }
 
 

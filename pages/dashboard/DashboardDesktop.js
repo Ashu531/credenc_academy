@@ -25,8 +25,8 @@ import { getTabNumber } from "../../helper/getTabNumber";
 import filterIcon from '../../assets/images/icons/filter-icon-dark.svg';
 import closeIcon from '../../assets/images/icons/close-icon-grey.svg';
 import FloatActionButton from "../../components/floatActionButton/floatActionButton";
-import { unstable_composeClasses } from "@mui/utils"
-
+import LoginModalContainer from '../../components/loginModal/LoginModalContainer'
+import ForgotPasswordModal from '../../components/forgotPasswordModal/ForgotPasswordModal'
 
 
 const subjectKey = 'credenc-edtech-subject';
@@ -811,6 +811,7 @@ let token = null;
     courseTypeRef?.current?.changeTab(tabNumber);
   }, []);
 
+
  return(
         <div>      
 {
@@ -1081,6 +1082,24 @@ let token = null;
         theme={props.theme} 
         />
       </SlidingPanel>
+      {
+        props?.loginModal ? 
+        <div style={{width: '100%',height: '100%'}}>
+        <LoginModalContainer
+         closeLoginModal={()=>props?.closeLoginModal()}
+         openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
+         forgotPasswordModal={props?.forgotPasswordModal}
+        /> 
+        </div>
+        : null
+      }
+      {
+        props?.forgotPasswordModal ? 
+        <ForgotPasswordModal
+        handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
+        />
+        : null
+      }
    
       </div>
        )

@@ -22,13 +22,24 @@ export default function Dashboard(props) {
         <>
         {isDesktopOrLaptop && <DashboardDesktop
         // toggleTheme={toggleTheme} 
-        newTheme={props.theme}
-        openFilterExpandedStage={props.openFilterExpandedStage}
-        filterExpandedStage={props.filterExpandedStage}
+        newTheme={props?.theme}
+        openFilterExpandedStage={props?.openFilterExpandedStage}
+        filterExpandedStage={props?.filterExpandedStage}
+        loginModal={props?.loginModal}
+        closeLoginModal={()=>props?.closeLoginModal()}
+        openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
+        forgotPasswordModal={props?.forgotPasswordModal}
+        handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
         />}
         {isMobile && <DashboardMobile
-        openFilterExpandedStage={props.openFilterExpandedStage}
-        filterExpandedStage={props.filterExpandedStage}
+        openFilterExpandedStage={props?.openFilterExpandedStage}
+        filterExpandedStage={props?.filterExpandedStage}
+        subjectDropdownMobile={props?.subjectDropdownMobile}
+        loginModal={props?.loginModal}
+        closeLoginModal={()=>props?.closeLoginModal()}
+        openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
+        forgotPasswordModal={props?.forgotPasswordModal}
+        handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
         />}
         </>
       }

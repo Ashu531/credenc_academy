@@ -37,7 +37,7 @@ export default function Header(props){
             
           {/* </Link> */}
           
-          <div className='signin-button'>
+          <div className='signin-button' onClick={()=>props.openLoginModal()}>
           <span className='signin-text'>Sign In</span>
           </div>
           <div onClick={()=>props.toggleTheme()} style={{cursor:"pointer",paddingLeft:10}}>

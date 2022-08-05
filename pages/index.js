@@ -13,7 +13,17 @@ export default function Home(props) {
     <>
     {
     mounted &&  
-    <Dashboard theme={props.theme} filterExpandedStage={props.filterExpandedStage} openFilterExpandedStage={props.openFilterExpandedStage} />
+    <Dashboard 
+      theme={props?.theme} 
+      filterExpandedStage={props?.filterExpandedStage} 
+      openFilterExpandedStage={props?.openFilterExpandedStage} 
+      subjectDropdownMobile={props?.subjectDropdownMobile}
+      loginModal={props?.loginModal}
+      closeLoginModal={()=>props?.closeLoginModal()}
+      openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
+      forgotPasswordModal={props?.forgotPasswordModal}
+      handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
+    />
     }
    </>
   )

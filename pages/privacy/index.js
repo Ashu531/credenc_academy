@@ -75,8 +75,8 @@ export default function PrivacyPolicy({changeNavbarVisibility}) {
     }, [])
 
   return (
-    <div>
-    <div className='privacy-policy'>
+    
+    <div className='privacy-policy' style={{display: 'block'}}>
         <h3 className='heading'>Privacy Policy</h3>
         <span className='date'>This Privacy Policy was last revised on 11 April, 2022</span>
         <span className='para'>
@@ -441,6 +441,6 @@ export default function PrivacyPolicy({changeNavbarVisibility}) {
              other related policies of the third-party websites linked through our Platform.
         </span>
     </div>
-    </div>
+    
   )
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import States from '../../config/states';
 import sortingIcon from '../../assets/images/icons/sorting-icon.svg';
 import { Skeleton } from '@mui/material';
@@ -16,7 +16,15 @@ export default function FloatActionButton({
     activeState = true
 }) {
 
+    
+
     const [displayContent, setDisplayContent] = useState(false);
+
+    useEffect(()=>{
+      if(type === 'subject type'){
+        setDisplayContent(true)
+      }
+    },[])
 
     const checkIfActive = (id1, id2) => {
         if (id1 === id2 && activeState) return true;
@@ -66,6 +74,29 @@ export default function FloatActionButton({
                                 <div className={`drop-items ${checkIfActive(floatList[selected].id, (item.id)) ? 'green-text' : ''}`} key={i} onClick={() => handleSelect(item, i)}>
                                     {item.course_types || item.name}
                                     {checkIfActive(floatList[selected].id, (item.id)) && <span className={`applied-container ${checkIfActive(floatList[selected].id, (item.id)) && 'applied'}`}></span>}
+                                </div>
+                            </>
+                        ))}
+                        {floatList.length === 0 &&
+                            Array(3).fill(null).map((it, i) => <Skeleton key={i} variant='text' width='70%' height='2.4rem' sx={{ bgcolor: '#303030', margin: '0 2rem' }} />)}
+                    </div>}
+            </div>
+            {displayContent && <div onClick={() => setDisplayContent(false)} className='blur'></div>}
+        </>
+    }
+    if (type === 'subject type') {
+        return <>
+            <div className={`float-sort-action-${floatType}`}>
+                {(window.innerWidth <= 500) &&
+                    <div
+                        className={`dropdown-content-mobile`}
+                        style={displayContent ? { bottom: 0,zIndex:9999 } : { bottom: '-100%', }}
+                    >
+                        <span className='bottom-sheet-holder'><span></span></span>
+                        {floatList.map((item, i) => (
+                            <>
+                                <div className={`drop-items`} key={i} onClick={() => handleSelect(item, i)}>
+                                    {item?.name}
                                 </div>
                             </>
                         ))}

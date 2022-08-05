@@ -1,8 +1,6 @@
 import React, { useEffect, useState,useRef } from "react"
 import { connect } from 'react-redux'
 import {changeTheme} from '../../scripts/actions/index'
-import HeaderMobile from '../../components/headerMobile/HeaderMobile'
-import FooterMobile from '../../components/footerMobile/FooterMobile'
 import CourseCard from '../../components/coursecard/CourseCard'
 import constant from '../../config/constant.js'
 import SlidingPanel from 'react-sliding-side-panel';
@@ -26,8 +24,11 @@ import filterIcon from '../../assets/images/icons/filterIcon.svg';
 import closeIcon from '../../assets/images/icons/close-icon-grey.svg';
 import FloatActionButton from "../../components/floatActionButton/floatActionButton";
 import Image from "next/image";
+import LoginModalContainer from '../../components/loginModal/LoginModalContainer'
+import ForgotPasswordModal from "../../components/forgotPasswordModal/ForgotPasswordModal"
 const compareKey = 'credenc-marketplace-compares';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
+const subjectKey = 'credenc-edtech-subject';
 
 const queries = {
   PROFESSION: 'profession',
@@ -699,11 +700,104 @@ useEffect(() => {
   courseTypeRef?.current?.changeTab(tabNumber);
 }, []);
 
+useEffect(()=>{
+ getSubjectData()
+},[])
+
+const getSubjectData=async()=>{
+  const response = await fetch(`${constant.API_URL.DEV}/subject/search/`)
+  const data = await response.json()
+  let totalSubjectCount = 0;
+  data.data.forEach(item=>{
+    totalSubjectCount += item.count
+  })
+  let totalSubjectData = data?.data;
+
+  totalSubjectData.unshift(
+  {
+      "id": 0,
+      "name": "All",
+      "count": totalSubjectCount
+  }
+  )
+  localStorage.setItem(subjectKey,JSON.stringify(totalSubjectData[0]))
+  setSubjectData(totalSubjectData)
+  getDataFromBaseUrl(totalSubjectData)
+}
+
+const getDataFromBaseUrl=(totalSubjectData)=>{
+  if(location?.query?.hasOwnProperty('subject') ){
+    let data = totalSubjectData?.filter(item=> {
+      if(item.name === location?.query?.subject){
+        return item
+      }
+     })
+    setSelectedSubject(data)
+    // getCardData(data)
+  }else{
+
+    let data = totalSubjectData?.filter(item=> {
+     if(item.id === 0){
+       return item
+     }
+    })
+    setSelectedSubject(data)
+    // getCardData()
+  }
+}
+
+const selectSubject=(item)=>{
+  setSelectedSubject(item)
+  _getSubjectDetails(item)
+}
+
+const _getSubjectDetails=(item)=>{
+   
+  if(item.name === "All"){
+    location.push({
+      pathname: "/",
+    })
+  }else{
+    location.push({
+      pathname: "/",
+      query: {
+        subject: item.name,
+      }
+    })
+  }
+  
+  getCardDetails(item)
+}
+
+const getCardDetails=(item)=>{
+  console.log(item,"item+++")
+  let URL = `${constant.API_URL.DEV}/batch/search/`
+  let subjectQuery="";
+  if(item !== null && item?.name && item?.name !== "All"){
+    subjectQuery = `?subject=${item?.name}`
+    URL=URL.concat(subjectQuery)
+  }
+  fetchCardData(URL)
+}
+
+const fetchCardData=async(URL)=>{
+  const response = await fetch(URL)
+  const data = await response.json()
+  setCourseCardData(data?.data)
+}
+
+useEffect(()=>{
+   
+},[courseCardData])
+
    return(
         <div className="dashboard-mobile">
           {
             props.filterExpandedStage ? 
-              <div className="course-page" style={{zIndex:0}}> 
+              <div 
+              className="course-page" 
+              // style={{zIndex:0}}
+              > 
               {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={window.innerWidth <= 500 ? {background: props.theme ==='dark' ? '#222222' : '#DEDEDE'} : null}>
                 <div 
                 className="filter-head" 
@@ -836,8 +930,8 @@ useEffect(() => {
                       // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
                     }}
                   />
-                  <div style={{ flexGrow: 1 }}></div>
-                  <div className="text-container">Showing {totalCourses} Course{totalCourses === 1 ? '' : 's'}</div>
+                  {/* <div style={{ flexGrow: 1 }}></div> */}
+                  {/* <div className="text-container">Showing {totalCourses} Course{totalCourses === 1 ? '' : 's'}</div> */}
                 </div>
                 <div className="list-container" >
                   <List
@@ -913,7 +1007,7 @@ useEffect(() => {
                   }
                 </div>
            }  
-         <FooterMobile />
+         
          <SlidingPanel
           type={'right'}
           isOpen={detailModal}
@@ -930,6 +1024,48 @@ useEffect(() => {
            openDetailModal={()=>_openDetailModal()}
            />
          </SlidingPanel>
+         {
+           props?.subjectDropdownMobile ? 
+           <FloatActionButton
+                  type='subject type'
+                  heading={null}
+                  style={{
+                    borderRadius: '10rem',
+                    fontWeight: 600,
+                    fontSize: '1.1rem',
+                    lineHeight: '1.6rem',
+                    color: '#313235',
+                  }}
+                  floatList={subjectData}
+                  selected={selectedSubject}
+                  onSelect={(item, i) => {
+                    // setPageLoadSortState(null)
+                    // setSortState(i)
+                    // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
+                    selectSubject(item)
+                  }}
+                />
+           : null
+         }
+         {
+        props?.loginModal ? 
+        <div style={{width: '100%',height: '100%'}}>
+        <LoginModalContainer
+         closeLoginModal={()=>props?.closeLoginModal()}
+         openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
+         forgotPasswordModal={props?.forgotPasswordModal}
+        /> 
+        </div>
+        : null
+      }
+      {
+        props?.forgotPasswordModal ? 
+        <ForgotPasswordModal
+        handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
+        />
+        : null
+      }
+         
         </div>
        )
 }

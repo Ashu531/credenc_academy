@@ -23,7 +23,7 @@
         left: 0;
         padding: 1.2rem 0;
         // background-color: #151515;
-        background-color: #1E1F22;
+        background-color: var(--defaultBackground);
         min-width: 100%;
         box-sizing: border-box;
         border-radius: 3.2rem 3.2rem 0 0;
@@ -40,7 +40,7 @@
             font-size: 1.6rem;
             font-weight: 500;
             line-height: 2.4rem;
-            color: #94989E;
+            color: var(--inverseBackground);
             padding: 0.8rem 1.6rem 0.8rem 3.2rem;
             cursor: pointer;
             display: flex;
@@ -191,7 +191,7 @@
         }
 
         .content-sort{
-            background: #16181a;
+            background: var(--defaultBackground);
             border-radius: 0.8rem;
             border: 1px solid rgb(49, 49, 49);
 

@@ -5,7 +5,7 @@ import loginIcon from '../../assets/images/icons/loginIcon.svg';
 import homeIcon from '../../assets/images/icons/home.svg';
 import Image from "next/image";
 
-export default function FooterMobile(){ 
+export default function FooterMobile(props){ 
   
     return(
         <div className='mobile-footer'>
@@ -28,7 +28,7 @@ export default function FooterMobile(){
             Bookmark
         </span>
         </div>
-        <div className='mobile-footer-element'>
+        <div className='mobile-footer-element' onClick={()=>props.openLoginModal()}>
         <Image src={loginIcon} objectFit="contain" alt='loginIcon' />
         <span className='mobile-footer-text'>
             Login

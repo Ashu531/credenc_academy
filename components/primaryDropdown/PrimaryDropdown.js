@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import States from '../../../../values/states';
+import States from '../../config/states';
 import Input from '../input/Input';
-import searchIcon from '../../../../assets/search-icon-white.svg';
+// import searchIcon from '../../../../assets/search-icon-white.svg';
 import { Skeleton } from '@mui/material';
 
 export default function PrimaryDropdown({
@@ -79,7 +79,7 @@ export default function PrimaryDropdown({
             <div className='search-container'>
                 <Input
                     placeholder="Search"
-                    trailingIcon={searchIcon}
+                    // trailingIcon={searchIcon}
                     type='search'
                     handleInput={handleSearch}
                     value={searchValue}
@@ -100,7 +100,7 @@ export default function PrimaryDropdown({
             <div className='search-container'>
                 <Input
                     placeholder="Search"
-                    trailingIcon={searchIcon}
+                    // trailingIcon={searchIcon}
                     type='search'
                     handleInput={handleSearch}
                     value={searchValue}
