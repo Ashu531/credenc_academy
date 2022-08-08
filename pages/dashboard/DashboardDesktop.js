@@ -9,6 +9,7 @@ import 'react-sliding-side-panel/lib/index.css';
 import constant from '../../config/constant.js'
 import { useRouter } from 'next/router'
 import DetailModal from '../../components/detailModal/DetailModal'
+import { getDataFromUrl } from "../../helper/userService";
 import theme from "../../scripts/reducers/theme"
 import States from '../../config/states';
 import SegmentedBar from "../../components/segementedBar/SegmentedBar";
@@ -32,6 +33,7 @@ import ForgotPasswordModal from '../../components/forgotPasswordModal/ForgotPass
 const subjectKey = 'credenc-edtech-subject';
 const compareKey = 'credenc-marketplace-compares';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
+const upvoteKey = 'credenc-edtech-upvote'
 
 const queries = {
   PROFESSION: 'profession',
@@ -105,14 +107,13 @@ function DashboardDesktop(props) {
   const [workExperienceList, setWorkExperienceList] = useState([...Lists.workExperiences]);
   const [financeOptionList, setFinanceOptionList] = useState([...Lists.financeOptions]);
   const [languageList, setLanguageList] = useState([...Lists.languages]);
-
+  const [userUpvoteList, setUserUpvoteList] = useState([]);
   const [updateCostSlider, setUpdateCostSlider] = useState(false)
   const [isAppliedCostSlider, setIsAppliedCostSlider] = useState(false);
   const [sortState, setSortState] = useState(0);
   const [pageLoadSortState, setPageLoadSortState] = useState(null);
 
   const [courseTypesFloatState, setCourseTypesFloatState] = useState(4)
-
   const [mobileFiltersState, setMobileFiltersState] = useState(false)
   let appliedFiltersCount = useRef(0);
 
@@ -125,14 +126,11 @@ function DashboardDesktop(props) {
     setMounted(true);
 }, []);
 
-  
 
   useEffect(()=>{
     getDataFromBaseUrl()
     getSubjectData()
   },[])
-
-
     
  const getDataFromBaseUrl=()=>{
     if(location?.query?.hasOwnProperty('subject') ){
@@ -311,7 +309,6 @@ function DashboardDesktop(props) {
   }
 
   const _onAddToCompare=(item)=>{
-    console.log(item,"item++")
     let compareArray = [];
     let compareItem = JSON.parse(localStorage.getItem(compareKey)) 
     if(compareItem && compareItem.length > 0){
@@ -751,8 +748,10 @@ let token = null;
       } else {
         handleFilteredData(false);
       }
-      props.openFilterExpandedStage();
-    }
+      if(!location.query.hasOwnProperty('subject') && !location.query.hasOwnProperty('sub_category')){
+        props.openFilterExpandedStage();
+      }
+  }
   }, [location?.query]);
 
   useEffect(() => {
@@ -800,17 +799,87 @@ let token = null;
   }, [courseTypesFloatState])
 
   useEffect(() => {
-    // changeNavbarVisibility(shouldNavbarVisible());
-    // if (token) {
-    //   let res = await getDataFromUrl(`${constant.API_URL.DEV}/userupvotes/`, token);
-    //   setUserUpvoteList(res);
-    // }
     setPageLoadSortState(getSortStateFromUrl());
+
     // change tab number
     let tabNumber = getTabNumber(queries.COURSE_TYPE, urlService)
     courseTypeRef?.current?.changeTab(tabNumber);
   }, []);
 
+
+  const setUpvoteCount=(item)=>{
+  //  let cardData = courseCardData.map((data)=>{
+  //     if(item?.id === data.id){
+  //       data.up_votes = data.up_votes+1
+  //     }
+  //     return data
+  //   })
+  if(props?.token && props?.token.length > 0){
+    upvote(item)
+  }else{
+    console.log("User not signed in");
+  }
+    
+  }
+
+  
+
+  const removeUpvoteCount=(item)=>{
+   if(props?.token && props?.token.length > 0){
+    removeUpvote(item)
+    }else{
+      console.log("User not signed in");
+    }
+  }
+
+  const upvote = async (item) => {
+
+    await axios.post(`${constant.API_URL.DEV}/batch/upvote/add`, {
+        "batch_id": item.id,
+        "is_up_vote": "true"
+    }, {
+        headers: {
+            'Authorization': `Bearer ${props.token}`
+        },
+    })
+    .then(res => {
+        if (res?.data?.success)
+        //  Mixpanel.track(MixpanelStrings.COURSE_UPVOTED, {triggered_from: 'Course Card', ...item})
+        return res;
+    })
+    .catch(err => {
+        // setUpvoteButtonState({...States.upvoteButtonState.DEFAULT});
+        // setUpvotes(item['up_votes'] || 0);
+        console.log(err);
+    })
+}
+
+const removeUpvote = async (item) => {
+  let token = {
+    accessToken: props?.token,
+    refreshToken: null
+  }
+  await axios.post(`${constant.API_URL.DEV}/batch/upvote/remove/`, {
+      "batch_id": item.id,
+      "is_up_vote": "false"
+  }, {
+      headers: {
+          'Authorization': `Bearer ${token}`
+      },
+  })
+  .then(res => {
+      if (res?.data?.success) 
+      // Mixpanel.track(MixpanelStrings.COURSE_UPVOTE_REMOVED, {triggered_from: 'Course Card', ...item})
+      return res;
+  })
+  .catch(err => {
+      // setUpvoteButtonState({...States.upvoteButtonState.UPVOTED});
+      // setUpvotes(item['up_votes'] || 0);
+      console.log(err);
+  })
+}
+
+ 
 
  return(
         <div>      
@@ -958,6 +1027,7 @@ let token = null;
             addToCompare={(item)=>_addToCompare(item)} 
             addToBookmark={(item)=>_addToBookmark(item)}
             compareText={(item)=>_checkCompareText(item)}
+            upvoteList={userUpvoteList}
             // compareTextVisible={compareTextVisible} 
           />
         </div>
@@ -1047,6 +1117,8 @@ let token = null;
                  addToBookmark={()=>_addToBookmark(item)}
                  compareText={_checkCompareText(item)}
                  bookmarkVisible={bookmarkVisible}
+                 setUpvoteCount={()=> setUpvoteCount(item)}
+                 removeUpvoteCount={()=> removeUpvoteCount(item)}
                />
              )
            })
@@ -1080,6 +1152,8 @@ let token = null;
         addToCompare={()=>_addToCompare(detailData)} 
         addToBookmark={()=>_addToBookmark(detailData)}
         theme={props.theme} 
+        setUpvoteCount={()=>setUpvoteCount(detailData)}
+        removeUpvoteCount={()=>removeUpvoteCount(detailData)}
         />
       </SlidingPanel>
       {

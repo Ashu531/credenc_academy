@@ -5,8 +5,99 @@ import projectorIcon from '../../assets/images/icons/projector.svg';
 import credencLogo from '../../assets/images/logo/credencLogo.svg'
 import Image from "next/image";
 import Link from "next/link";
+import SecondaryDropdown from '../primaryDropdown/SecondaryDropdown';
+import Button from '../button/Button';
+import profileIcon from '../../assets/images/icons/profile-icon.svg';
+import Lists from '../../config/list'
+const EdtechToken = 'credenc-edtech-authkey';
 
 export default function Header(props){
+
+  const [token,setToken] = useState('')
+
+  useEffect(()=>{
+    _getAuthKey()
+  },[localStorage.getItem(EdtechToken)])
+
+  const _getAuthKey=()=>{
+    let authKey = localStorage.getItem(EdtechToken);
+    setToken(authKey)
+  }
+
+  const renderProfile=()=>{
+    if(token && token.length > 0){
+      return (
+        // <img src={profileIcon} style={{width: '3.2rem', height: '3.2rem'}}/>
+        <SecondaryDropdown
+            heading='Profile'
+            icon={profileIcon}
+            onSelect={(item, i) => handleProfileDropdownItemSelect(item, i)}
+            classes={{wrapper: 'position-left', content: 'content-sort'}}
+            dropList={Lists.ProfileDropList}
+            activeState= {false}
+        />
+      );
+    } else {
+      return (
+        <Button
+          // disabled={true} 
+          onClick={() => {
+            props.openLoginModal(); 
+            // Mixpanel.track(MixpanelStrings.NAV_SIGNIN_BUTTON_CLICK)
+          }}
+          text='Sign In'
+          classes='btn-tertiary'
+        />
+      );
+    }
+  }
+
+  const handleProfileDropdownItemSelect = (item, i) => {
+    if(window !== undefined){
+
+    
+    if(item.id === 0){
+      // Mixpanel.track(MixpanelStrings.PROFILE_SETTINGS_TRIGGERED);
+      navigateToProfilePage('edit');
+      return;
+    }
+
+    if(item.id === 1){
+      Mixpanel.track("Invite selected in profile dropdown!");
+      navigateToProfilePage('invite');
+      return;
+    }
+
+    if(item.id === 2){
+      // Mixpanel.track(MixpanelStrings.PRIVACY_POLICY_TRIGGERED);
+      try {
+        window.open(`${SKILLRUSH_URL}privacy`, '_blank');
+      } catch (err) {
+        console.log(err, "PRIVACY ERROR")
+      }
+      return;
+    }
+
+    if(item.id === 3){
+      // Mixpanel.track(MixpanelStrings.MY_REVIEWS_TRIGGERED);
+      navigateToProfilePage('reviews');
+      return;
+    }
+
+    if(item.id === 4){
+      // Mixpanel.track(MixpanelStrings.MY_UPVOTES_TRIGGERED);
+      navigateToProfilePage('upvotes');
+      return;
+    }
+
+    if(item.id === 5){
+      // Mixpanel.track(MixpanelStrings.LOGOUT_TRIGGERED);
+      dispatchLogout();
+      window.location.reload();
+      return;
+    }
+  }
+  }
 
     return(
         <div className='navbar-wrapper'>
@@ -34,15 +125,14 @@ export default function Header(props){
            <div className='icon-element'>
            <Image src={ props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon} objectFit="cover" alt='bookmarkIcon' />
            </div>
-            
-          {/* </Link> */}
-          
-          <div className='signin-button' onClick={()=>props.openLoginModal()}>
-          <span className='signin-text'>Sign In</span>
-          </div>
-          <div onClick={()=>props.toggleTheme()} style={{cursor:"pointer",paddingLeft:10}}>
+ 
+           <div onClick={()=>props.toggleTheme()} style={{cursor:"pointer",paddingLeft:10}}>
             <span>Change Theme</span>
           </div>
+          <div className='profile-item'>
+          {renderProfile()}
+          </div>
+         
           </div>
           </div>
       

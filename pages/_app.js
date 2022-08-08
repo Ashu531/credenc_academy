@@ -6,13 +6,16 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import ReduxThunk from "redux-thunk";
 import rootReducer from '../scripts/reducers/index'
 import 'react-sliding-side-panel/lib/index.css';
-import Header from '../components/header/Header';
+import HeaderContainer from '../components/header/HeaderContainer';
+// import HomeHeader from '../components/homeHeader/NavbarContainer'
 import HeaderMobile from '../components/headerMobile/HeaderMobile';
 import Footer from '../components/footer/Footer';
 import FooterModal from '../components/footerModal/FooterModal';
 import SlidingPanel from 'react-sliding-side-panel';
 import FooterMobile from '../components/footerMobile/FooterMobile'
+import Header from '../components/header/Header';
 const EdtechTheme = 'credenc-edtech-theme';
+const EdtechToken = 'credenc-edtech-authkey';
 
 class MyApp extends App {
 
@@ -44,9 +47,7 @@ class MyApp extends App {
   }
 
   _retrieveData=()=>{
-
-
-   let localTheme = localStorage.getItem("EdtechTheme");
+  let localTheme = localStorage.getItem("EdtechTheme");
    if(localTheme && localTheme.length > 0){
     this.setState({
      theme: localTheme
@@ -57,7 +58,7 @@ class MyApp extends App {
     })
    }
 
-   let token = localStorage.getItem("EdtechToken")
+   let token = localStorage.getItem(EdtechToken)
    if(token && token.length > 0){
      this.setState({
        loggedIn: true
@@ -153,7 +154,7 @@ class MyApp extends App {
         this.state.mounted && <div data-theme={this.state.theme} >
           {
             window.innerWidth > 500 ? 
-            <Header 
+            <HeaderContainer 
             toggleTheme={this.toggleTheme} 
             theme={this.state.theme} 
             toggleFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 

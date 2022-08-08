@@ -99,7 +99,13 @@ export default function DetailModal(props){
                         height={window.innerWidth <= 500 ? 25 : 20 }
                         />
                         </div>
-                    <div className='header-action-container' style={{marginLeft:8}}>
+                    <div 
+                    className='header-action-container' 
+                    style={{marginLeft:8}}  
+                    onClick={()=>{
+                        props?.data?.upvoted === false ? props?.setUpvoteCount() : props?.removeUpvoteCount()
+                      }}
+                    >
                         <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
                         <span className='upvote-text' style={window.innerWidth <= 500 ? {marginTop:1}: null} >{props?.detailData?.up_votes}</span>
                         <Image 

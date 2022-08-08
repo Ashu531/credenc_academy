@@ -29,6 +29,8 @@ export default function CourseCard(props){
     setCompareTextVisible(props?.compareText)
    },[])
 
+console.log(props?.data,"data+++")
+
  return(
       <>
       {
@@ -55,10 +57,15 @@ export default function CourseCard(props){
                  }} style={props.bookmarkVisible === true || bookmarkVisible === true ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}>
                  <Image src={ props.bookmarkVisible === true || bookmarkVisible === true  ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={20} width={20}/>
         </div>
-        <div className='grey-container'>
-         <span className='count-text'>{props?.data?.up_votes}</span>
-          <Image src={ props.theme === 'dark' ? upvoteLogoDark : upvoteLogo} objectFit="cover" alt='upvoteLogo' height={20} width={20} />
-     </div>
+        <div 
+        className='grey-container' 
+        onClick={()=>{
+          props?.data?.upvoted === false ? props?.setUpvoteCount() : props?.removeUpvoteCount()
+        }}
+        >
+             <span className='count-text'>{ props?.upvoteVisible === true ? props?.data?.up_votes+1 : props?.data?.up_votes}</span>
+             <Image src={ props.theme === 'dark' ? upvoteLogoDark : upvoteLogo} objectFit="cover" alt='upvoteLogo' height={20} width={20} />
+         </div>
    
    </div>
    </div>

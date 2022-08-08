@@ -1,4 +1,4 @@
-const authKey = 'credenc-marketplace-authkey';
+const authKey = 'credenc-edtech-authkey';
 
 export const changeTheme = (theme) => {
     return {

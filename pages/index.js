@@ -1,13 +1,23 @@
 import Dashboard from './dashboard'
 import React,{useState,useEffect} from "react"
-
+const EdtechToken = 'credenc-edtech-authkey';
 
 export default function Home(props) {
   const [mounted, setMounted] = useState(false);
+  const [token,setToken] = useState('')
 
   useEffect(() => {
     setMounted(true);
-}, []);
+  }, []);
+
+  useEffect(()=>{
+    _getAuthKey()
+  },[localStorage.getItem(EdtechToken)])
+
+  const _getAuthKey=()=>{
+    let authKey = localStorage.getItem(EdtechToken);
+    setToken(authKey)
+  }
 
   return (
     <>
@@ -23,6 +33,7 @@ export default function Home(props) {
       openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
       forgotPasswordModal={props?.forgotPasswordModal}
       handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
+      token={token}
     />
     }
    </>

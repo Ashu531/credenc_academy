@@ -35,7 +35,7 @@
 
        
         .icon-element{
-padding-right: 2rem;
+          padding-right: 2rem;
         }
       .signin-button{
         border: 1px solid var(--defaultPrimaryColor);
@@ -53,6 +53,9 @@ padding-right: 2rem;
         font-size: 14px;
         line-height: 19px;
         color: var(--primaryColor);
+    }
+    .profile-item{
+      padding-left: 20px;
     }
       }
 

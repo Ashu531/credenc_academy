@@ -30,6 +30,7 @@ export default function Dashboard(props) {
         openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
         forgotPasswordModal={props?.forgotPasswordModal}
         handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
+        token={props?.token}
         />}
         {isMobile && <DashboardMobile
         openFilterExpandedStage={props?.openFilterExpandedStage}
@@ -40,6 +41,7 @@ export default function Dashboard(props) {
         openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
         forgotPasswordModal={props?.forgotPasswordModal}
         handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
+        token={props?.token}
         />}
         </>
       }
