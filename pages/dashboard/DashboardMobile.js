@@ -790,6 +790,74 @@ useEffect(()=>{
    
 },[courseCardData])
 
+
+
+const setUpvoteCount=(item)=>{
+  if(props?.token && props?.token.length > 0){
+    upvote(item)
+  }else{
+    console.log("User not signed in");
+  }
+    
+  }
+
+  
+
+  const removeUpvoteCount=(item)=>{
+   if(props?.token && props?.token.length > 0){
+    removeUpvote(item)
+    }else{
+      console.log("User not signed in");
+    }
+  }
+
+  const upvote = async (item) => {
+
+    await axios.post(`${constant.API_URL.DEV}/batch/upvote/add`, {
+        "batch_id": item.id,
+        "is_up_vote": "true"
+    }, {
+        headers: {
+            'Authorization': `Bearer ${props.token}`
+        },
+    })
+    .then(res => {
+        if (res?.data?.success)
+        //  Mixpanel.track(MixpanelStrings.COURSE_UPVOTED, {triggered_from: 'Course Card', ...item})
+        return res;
+    })
+    .catch(err => {
+        // setUpvoteButtonState({...States.upvoteButtonState.DEFAULT});
+        // setUpvotes(item['up_votes'] || 0);
+        console.log(err);
+    })
+}
+
+const removeUpvote = async (item) => {
+  let token = {
+    accessToken: props?.token,
+    refreshToken: null
+  }
+  await axios.post(`${constant.API_URL.DEV}/batch/upvote/remove/`, {
+      "batch_id": item.id,
+      "is_up_vote": "false"
+  }, {
+      headers: {
+          'Authorization': `Bearer ${token}`
+      },
+  })
+  .then(res => {
+      if (res?.data?.success) 
+      // Mixpanel.track(MixpanelStrings.COURSE_UPVOTE_REMOVED, {triggered_from: 'Course Card', ...item})
+      return res;
+  })
+  .catch(err => {
+      // setUpvoteButtonState({...States.upvoteButtonState.UPVOTED});
+      // setUpvotes(item['up_votes'] || 0);
+      console.log(err);
+  })
+}
+
    return(
         <div className="dashboard-mobile">
           {
@@ -943,6 +1011,8 @@ useEffect(()=>{
                     addToCompare={(item)=>_addToCompare(item)} 
                     addToBookmark={(item)=>_addToBookmark(item)}
                     compareText={(item)=>_checkCompareText(item)}
+                    setUpvoteCount={()=> setUpvoteCount(item)}
+                    removeUpvoteCount={()=> removeUpvoteCount(item)}
                     // compareTextVisible={compareTextVisible}  
                   />
                 </div>
@@ -1001,6 +1071,8 @@ useEffect(()=>{
                         addToBookmark={()=>_addToBookmark(item)}
                         bookmarkVisible={_checkBookmarks(item)}
                         compareText={_checkCompareText(item)}
+                        setUpvoteCount={()=> setUpvoteCount(item)}
+                        removeUpvoteCount={()=> removeUpvoteCount(item)}
                         />
                       )
                     })
@@ -1022,6 +1094,8 @@ useEffect(()=>{
            addToBookmark={()=>_addToBookmark(detailData)}
            theme={props.theme} 
            openDetailModal={()=>_openDetailModal()}
+           setUpvoteCount={()=> setUpvoteCount(detailData)}
+           removeUpvoteCount={()=> removeUpvoteCount(detailData)}
            />
          </SlidingPanel>
          {

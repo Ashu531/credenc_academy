@@ -149,9 +149,9 @@ class MyApp extends App {
     const {Component, pageProps} = this.props;
     let store = createStore(rootReducer, compose(applyMiddleware(ReduxThunk)))
     return <>
-    <Provider store={store}>
+    <Provider store={store} >
       {
-        this.state.mounted && <div data-theme={this.state.theme} >
+        this.state.mounted && <div data-theme={this.state.theme} style={{height: 'calc(var(--vh, 1vh) * 100)'}}>
           {
             window.innerWidth > 500 ? 
             <HeaderContainer 

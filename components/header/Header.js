@@ -9,11 +9,13 @@ import SecondaryDropdown from '../primaryDropdown/SecondaryDropdown';
 import Button from '../button/Button';
 import profileIcon from '../../assets/images/icons/profile-icon.svg';
 import Lists from '../../config/list'
+import { useRouter } from 'next/router'
 const EdtechToken = 'credenc-edtech-authkey';
 
 export default function Header(props){
 
   const [token,setToken] = useState('')
+  let location = useRouter();
 
   useEffect(()=>{
     _getAuthKey()
@@ -98,6 +100,14 @@ export default function Header(props){
     }
   }
   }
+
+  const navigateToProfilePage=(item)=>{
+    location.push({
+      pathname: `/profile`,
+      state: item
+    })
+  }
+
 
     return(
         <div className='navbar-wrapper'>

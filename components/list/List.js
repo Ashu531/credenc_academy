@@ -26,6 +26,8 @@ function List({
     addToCompare,
     addToBookmark,
     compareText,
+    setUpvoteCount,
+    removeUpvoteCount
 }) {
   
 
@@ -91,6 +93,8 @@ function List({
              addToBookmark={()=>addToBookmark(item)}
              compareText={compareText(item)}
              bookmarkVisible={bookmarkVisible}
+             setUpvoteCount={()=> setUpvoteCount(item)}
+             removeUpvoteCount={()=> removeUpvoteCount(item)}
             />
             null
           })

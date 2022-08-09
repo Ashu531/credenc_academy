@@ -24,7 +24,7 @@ class CustomDocument extends Document {
         />
         <link rel="icon" href="/favicon.ico" />
         </Head>
-        <body style={{ fontFamily: "Poppins"}} >
+        <body style={{ fontFamily: "Poppins" }} >
           <Main />
           <NextScript />
         </body>

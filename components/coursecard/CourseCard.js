@@ -29,7 +29,6 @@ export default function CourseCard(props){
     setCompareTextVisible(props?.compareText)
    },[])
 
-console.log(props?.data,"data+++")
 
  return(
       <>

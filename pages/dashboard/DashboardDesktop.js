@@ -808,21 +808,14 @@ let token = null;
 
 
   const setUpvoteCount=(item)=>{
-  //  let cardData = courseCardData.map((data)=>{
-  //     if(item?.id === data.id){
-  //       data.up_votes = data.up_votes+1
-  //     }
-  //     return data
-  //   })
-  if(props?.token && props?.token.length > 0){
-    upvote(item)
-  }else{
-    console.log("User not signed in");
-  }
+    if(props?.token && props?.token.length > 0){
+      upvote(item)
+    }
+    else{
+      console.log("User not signed in");
+    }
     
   }
-
-  
 
   const removeUpvoteCount=(item)=>{
    if(props?.token && props?.token.length > 0){
@@ -1028,6 +1021,8 @@ const removeUpvote = async (item) => {
             addToBookmark={(item)=>_addToBookmark(item)}
             compareText={(item)=>_checkCompareText(item)}
             upvoteList={userUpvoteList}
+            setUpvoteCount={(item)=> setUpvoteCount(item)}
+            removeUpvoteCount={(item)=> removeUpvoteCount(item)}
             // compareTextVisible={compareTextVisible} 
           />
         </div>

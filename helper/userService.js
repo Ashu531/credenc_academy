@@ -14,6 +14,7 @@ const getDataFromUrl = async (url, token, apiStatus) => {
             apiStatus.current.success();
         }
         return res;
+        
     })
     .catch(err => {
         if(apiStatus){

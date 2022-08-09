@@ -44,7 +44,7 @@ const rightsPointer = [
     `Right to object to the processing of personal data`,
 ]
 
-export default function PrivacyPolicy({changeNavbarVisibility}) {
+export default function PrivacyPolicy(props) {
 
     let disclaimerRef = useRef();
 
@@ -76,8 +76,8 @@ export default function PrivacyPolicy({changeNavbarVisibility}) {
 
   return (
     
-    <div className='privacy-policy' style={{display: 'block'}}>
-        <h3 className='heading'>Privacy Policy</h3>
+    <div className='privacy-policy' style={props.profilePage === true ? {display: 'block', paddingTop:'2rem'} : {display: 'block'}} >
+        <h3 className='heading' style={{textAlign:"center"}}>Privacy Policy</h3>
         <span className='date'>This Privacy Policy was last revised on 11 April, 2022</span>
         <span className='para'>
             This Privacy Policy <b>(“Policy”)</b> explains how {getWebsiteLink('https://skillrush.credenc.com/')}, also 
