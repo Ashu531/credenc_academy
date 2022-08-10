@@ -49,6 +49,7 @@ export default function Header(props){
           }}
           text='Sign In'
           classes='btn-tertiary'
+          theme={props?.theme}
         />
       );
     }
@@ -65,36 +66,37 @@ export default function Header(props){
     }
 
     if(item.id === 1){
-      Mixpanel.track("Invite selected in profile dropdown!");
-      navigateToProfilePage('invite');
-      return;
+      // Mixpanel.track("Invite selected in profile dropdown!");
+      // navigateToProfilePage('invite');
+      // return;
     }
 
-    if(item.id === 2){
-      // Mixpanel.track(MixpanelStrings.PRIVACY_POLICY_TRIGGERED);
-      try {
-        window.open(`${SKILLRUSH_URL}privacy`, '_blank');
-      } catch (err) {
-        console.log(err, "PRIVACY ERROR")
-      }
-      return;
-    }
+    // if(item.id === 2){
+    //   // Mixpanel.track(MixpanelStrings.PRIVACY_POLICY_TRIGGERED);
+    //   try {
+    //     window.open(`/privacy`, '_blank');
+    //   } catch (err) {
+    //     console.log(err, "PRIVACY ERROR")
+    //   }
+    //   return;
+    // }
 
-    if(item.id === 3){
-      // Mixpanel.track(MixpanelStrings.MY_REVIEWS_TRIGGERED);
-      navigateToProfilePage('reviews');
-      return;
-    }
+    // if(item.id === 3){
+    //   // Mixpanel.track(MixpanelStrings.MY_REVIEWS_TRIGGERED);
+    //   // navigateToProfilePage('reviews');
+    //   return;
+    // }
 
-    if(item.id === 4){
-      // Mixpanel.track(MixpanelStrings.MY_UPVOTES_TRIGGERED);
-      navigateToProfilePage('upvotes');
-      return;
-    }
+    // if(item.id === 4){
+    //   // Mixpanel.track(MixpanelStrings.MY_UPVOTES_TRIGGERED);
+    //   // navigateToProfilePage('upvotes');
+    //   return;
+    // }
 
-    if(item.id === 5){
+    if(item.id === 1){
       // Mixpanel.track(MixpanelStrings.LOGOUT_TRIGGERED);
-      dispatchLogout();
+      props?.logoutUser()
+      // dispatchLogout();
       window.location.reload();
       return;
     }

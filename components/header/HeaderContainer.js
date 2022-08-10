@@ -5,16 +5,16 @@ import Header from "./Header";
 
 const mapStateToProps = (state) => {
   return {
-    theme: state.theme,
+    // theme: state.theme,
     tokens: state.auth,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    dispatchThemeChange: (theme) => {
-      dispatch(changeTheme(theme));
-    },
+    // dispatchThemeChange: (theme) => {
+    //   dispatch(changeTheme(theme));
+    // },
     dispatchLogin: (tokens) => {
       dispatch(login(tokens));
     },

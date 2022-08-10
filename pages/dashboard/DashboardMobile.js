@@ -948,14 +948,17 @@ const removeUpvote = async (item) => {
                 </div>
               </div>}
               <div className="list-column">
-                <div className="filter-container" style={{ opacity: 1,marginTop:10}}>
+                <div
+                  className="filter-container" 
+                  style={{ opacity: 1,marginTop:10}}
+                >
                   <div className="segment-container">
                     <SegmentedBar
                       items={Lists.courseTypes}
                       ref={courseTypeRef}
                       style={{
                         fontWeight: 600,
-                        ontSize: '1.1rem',
+                        fontSize: '1.1rem',
                         lineHeight: '1.6rem',
                       }}
                       theme={theme}
@@ -1136,6 +1139,7 @@ const removeUpvote = async (item) => {
         props?.forgotPasswordModal ? 
         <ForgotPasswordModal
         handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
+        theme={props?.theme}
         />
         : null
       }

@@ -156,6 +156,9 @@ class MyApp extends App {
     })
   }
 
+  logoutUser=()=>{
+    localStorage.setItem(EdtechToken,'');
+  }
  
 
   render(){
@@ -174,6 +177,7 @@ class MyApp extends App {
             openFilterExpandedStage={()=>this.openFilterExpandedStage()}
             loggedIn={this.state.loggedIn}
             openLoginModal={()=>this.openLoginModal()}
+            logoutUser={()=>this.logoutUser()}
             
         /> : 
             <HeaderMobile
@@ -197,6 +201,7 @@ class MyApp extends App {
          handleForgotPasswordEnd={()=>this.handleForgotPasswordEnd()}
          mobileLoginNavigation={this.state.navigation}
          setMobileLoginNaviagtion={()=>this.setMobileLoginNaviagtion()}
+         logoutUser={()=>this.logoutUser()}
          />
          {
             window.innerWidth > 500 ? 

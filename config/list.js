@@ -13,11 +13,11 @@ export default class Lists {
 
     static ProfileDropList = [
         {id: 0, value: Strings.PROFILE_SETTINGS},
-        // {id: 1, value: Strings.INVITE_FRIEND},
-        {id: 3, value: Strings.MY_REVIEWS},
-        {id: 4, value: Strings.MY_UPVOTES},
-        {id: 2, value: Strings.PRIVACY_POLICY},
-        {id: 5, value: Strings.LOGOUT},
+        // // {id: 1, value: Strings.INVITE_FRIEND},
+        // {id: 3, value: Strings.MY_REVIEWS},
+        // {id: 4, value: Strings.MY_UPVOTES},
+        // {id: 2, value: Strings.PRIVACY_POLICY},
+        {id: 1, value: Strings.LOGOUT},
     ]
 
     static classModes = [

@@ -4,9 +4,10 @@ import bookmarkIcon from '../../assets/images/icons/bookmark.svg';
 import loginIcon from '../../assets/images/icons/loginIcon.svg';
 import homeIcon from '../../assets/images/icons/home.svg';
 import Image from "next/image";
-import userIcon from "../../assets/images/icons/user.svg";
+import userIcon from "../../assets/images/icons/loginIcon.svg";
 import profileIcon from '../../assets/images/icons/profile-icon.svg';
 import { useRouter } from 'next/router'
+import Link from "next/link";
 const EdtechToken = 'credenc-edtech-authkey';
 
 export default function FooterMobile(props){ 
@@ -44,7 +45,7 @@ export default function FooterMobile(props){
                 alt='profile icon'
                 objectFit='cover'
                 onClick={() => {
-                    props.openLoginModal()();
+                    props?.openLoginModal();
                 //    Mixpanel.track(MixpanelStrings.NAV_SIGNIN_BUTTON_CLICK)
                     }}
                 />
@@ -60,12 +61,14 @@ export default function FooterMobile(props){
     return(
         <div className='mobile-footer'>
         <div className='mobile-footer-container'>
+        <Link href='/'>
         <div className='mobile-footer-element'>
         <Image src={homeIcon} objectFit="contain" alt='homeIcon' />
         <span className='mobile-footer-text'>
             Home
         </span>
         </div>
+        </Link>
         <div className='mobile-footer-element'>
         <Image src={projectorIcon} objectFit="contain" alt='projectorIcon'/>
         <span className='mobile-footer-text'>

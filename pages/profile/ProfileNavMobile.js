@@ -16,7 +16,8 @@ export default function ProfileNavMobile({
     dispatchLogout,
     openForgotPasswordModal,
     mobileLoginNavigation,
-    setMobileLoginNavigation
+    setMobileLoginNavigation,
+    logoutUser
 }) {
 
     let location = useRouter();
@@ -186,6 +187,13 @@ export default function ProfileNavMobile({
                         {provider === 'email' && <> <div onClick={() => _openResetPasswordPage()} className='menu-item'>Reset Password<span className={`arrow-right`}>{'>'}</span></div>
                         <div className='hr'></div> </>}
                         <div onClick={() => _openPrivacyPolicyPage()} className='menu-item'>Privacy Policy<span className={`arrow-right`}>{'>'}</span></div>
+                        <div className='hr'></div>
+                        <div 
+                        onClick={() => {
+                            logoutUser()
+                            location.push('/')
+                            }} 
+                            className='menu-item'>Logout<span className={`arrow-right`}>{'>'}</span></div>
                         <div className='hr'></div>
                     </div>
                 </div> 

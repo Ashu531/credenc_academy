@@ -13,7 +13,8 @@ export default function ProfilePage({
   forgotPasswordModal,
   handleForgotPasswordEnd,
   mobileLoginNavigation,
-  setMobileLoginNaviagtion
+  setMobileLoginNaviagtion,
+  logoutUser
 }) {
   let location = useRouter();
 
@@ -201,6 +202,7 @@ export default function ProfilePage({
                 token={token} 
                 mobileLoginNavigation={mobileLoginNavigation} 
                 setMobileLoginNavigation={()=>setMobileLoginNaviagtion()}
+                logoutUser={()=>logoutUser()}
                 />}
               </div>
             </div>

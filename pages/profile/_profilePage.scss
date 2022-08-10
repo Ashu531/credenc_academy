@@ -10,7 +10,7 @@
   .profile-container{
       width: 72%;
       height: 55rem;
-      background: var(--subduedBackground);
+      background: var(--defaultBackground);
       border-radius: 1.2rem ;
       display: flex;
       justify-content: flex-start;
@@ -41,6 +41,7 @@
             justify-content: flex-start;
             align-items: center;
             border-bottom: 1px solid var(--disabledBackground);
+            cursor: pointer;
 
             .border-left{
                 display: inline-block;
@@ -59,7 +60,7 @@
       .content-column{
         width: 75%;
         height: 100%;
-        border: 1px solid var(--defaultStrokeColor);
+        border: 1px solid var(--subduedBackground);
         border-radius: 0 1.2rem 1.2rem 0;
         overflow: scroll;
 
@@ -151,7 +152,7 @@
                 font-weight: 400;
                 font-size: 1.4rem;
                 line-height: 2.1rem;
-                color: #94989E;
+                color: var(--defaultColor);
               }
 
               .input-container{
@@ -194,7 +195,7 @@
               font-weight: 400;
               font-size: 1.4rem;
               line-height: 2.1rem;
-              color: #94989E;
+              color: var(--defaultColor);
               overflow: hidden;
             }
 
@@ -215,7 +216,7 @@
               font-weight: 600;
               font-size: 1.4rem;
               line-height: 2.1rem;
-              color: #C8CCD0;
+              color: var(--disabledColor);
             }
           }
         }

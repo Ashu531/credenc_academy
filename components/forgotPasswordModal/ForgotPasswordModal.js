@@ -7,6 +7,7 @@ import passVisibleIcon from "../../assets/images/icons/eye.svg";
 import passNotVisibleIcon from "../../assets/images/icons/eye-close.svg";
 import backIcon from '../../assets/images/icons/caret-left-grey.svg';
 import credencLogo from '../../assets/images/icons/credenc-logo.svg';
+import credencLogoLight from '../../assets/images/logo/credencLogo.svg'
 import Link from "next/link";
 import States from "../../config/states";
 import Strings from "../../config/states";
@@ -19,7 +20,8 @@ import constant from "../../config/constant";
 export default function ForgotPasswordModal({
   handleClose,
   handleBack,
-  handleForgotPasswordEnd
+  handleForgotPasswordEnd,
+  theme
 }) {
   
   const modalStates = States.forgotPasswordModalStates;
@@ -213,7 +215,7 @@ export default function ForgotPasswordModal({
         className='login-modal-brand' 
         // onClick={() => Mixpanel.track(MixpanelStrings.HOME_BUTTON_CLICK)}
         >
-          <Image src={credencLogo} objectFit="cover" />
+          <Image src={ theme === 'dark' ? credencLogo : credencLogoLight} objectFit="cover" />
           {/* <div style={{textDecoration: 'none', color: '#FFFFFF', fontSize: '21px'}}>BETA</div> */}
         </Link>
         <div className="header-container" >
@@ -229,7 +231,7 @@ export default function ForgotPasswordModal({
             handleInput={(value) => setEmailInputState(value)}
           />
           <div style={{height: '1.6rem'}}></div>
-          <Button text="Send OTP" classes="btn-secondary small-wrapper-colored" onClick={handleSendOTP} />
+          <Button text="Send OTP" linearGradient='green' classes="btn-secondary small-wrapper-colored" onClick={handleSendOTP} />
         </div>}
         {renderState(modalStates.ENTER_OTP) && <div className='otp-auth-container'>
           <OtpField
@@ -237,7 +239,7 @@ export default function ForgotPasswordModal({
             handleChange={handleOtp}
           />
           <div style={{height: '1.6rem'}}></div>
-          <Button text="Submit" classes="btn-secondary small-wrapper-colored" onClick={verifyOtp} />
+          <Button text="Submit" linearGradient='green' classes="btn-secondary small-wrapper-colored" onClick={verifyOtp} />
         </div>}
         {renderState(modalStates.NEW_PASSWORD) && <div className='reset-password-container'>
           <Input
@@ -255,7 +257,7 @@ export default function ForgotPasswordModal({
             handleInput={(value) => setConfirmPassInputState({ ...confirmPassInputState, value: value })}
           />
           <div style={{height: '1.6rem'}}></div>
-          <Button text="Set New Password" classes="btn-secondary small-wrapper-colored" onClick={setNewPassword} />
+          <Button text="Set New Password" linearGradient='green' classes="btn-secondary small-wrapper-colored" onClick={setNewPassword} />
         </div>}
       </div>
     </div>

@@ -18,7 +18,7 @@
     .input-field{
         width: 100%;
         padding: 1.6rem 0;
-        background: #313235;
+        background: var(--subduedBackground);
         border-radius: 0.8rem;
         text-align: center;
         border: none;
@@ -27,7 +27,7 @@
         font-weight: 500;
         font-size: 2rem;
         line-height: 2rem;
-        color: #FFFFFF;
+        color: var(--highContrastColor);
     }
     .input-field:focus{
         outline: none;
