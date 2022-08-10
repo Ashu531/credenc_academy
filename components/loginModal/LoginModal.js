@@ -19,9 +19,6 @@ import GoogleLogin from "react-google-login";
 import constant from '../../config/constant'
 import Image from "next/image";
 import { useRouter } from 'next/router'
-// import {Mixpanel} from "../../../services/Mixpanel";
-// import MixpanelStrings from "../../../../values/mixpanelStrings";
-// import { shouldNavbarVisible } from "../../../services/shouldNavbarVisible";
 
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 
@@ -349,29 +346,13 @@ export default function LoginModal({
   }, [authApiStatus]);
 
   useEffect(() => {
-    // changeNavbarVisibility(shouldNavbarVisible(true))
+    
     const code = getCodeFromWindowURL(window.location.href);
     if (window.opener && window.opener !== window) {
       console.log("code", code)
       window.opener.postMessage({'type': 'code', 'code': code}, '*')
       // window.close();
-    }else{
-      console.log("code++++++",code)
-      // window.opener.postMessage({'type': 'code', 'code': code}, '*')
     }
-    console.log("coming+++++++")
-    //   window.addEventListener('message', handlePostMessage);
-
-    //   document.addEventListener('keydown', (event) => {
-    //   if (event.key === 'Escape') {
-    //     handleModalClose();
-    //   }
-    // })
-
-  //   return () => {
-  //     window.removeEventListener('message', null);
-  //     document.removeEventListener('keydown',null);
-  // }
   }, []);
 
   return (

@@ -1,19 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react'
-// import { div, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useRouter } from 'next/router';
 import Link from "next/link";
-// import MixpanelStrings from '../../../values/mixpanelStrings';
-// import { Mixpanel } from '../../services/Mixpanel';
-import credencLogo from '../../assets/images/icons/credenc-logo.svg';
+import credencLogo from '../../assets/images/logo/credencLogo.svg';
 import profileIcon from '../../assets/images/icons/profile-icon.svg';
 import ApiStatus from '../../config/apiStatus';
 import axios from 'axios';
+import Image from "next/image";
+import constant from '../../config/constant';
+import EditProfile from './EditProfile'
+import ResetPassword from './ResetPassword'
+import PrivacyPolicy from '../privacy'
 
-export default function ProfileNavMobile({token, dispatchLogout}) {
+export default function ProfileNavMobile({
+    token, 
+    dispatchLogout,
+    openForgotPasswordModal,
+    mobileLoginNavigation,
+    setMobileLoginNavigation
+}) {
 
     let location = useRouter();
-
-    // let navigate = useNavigate();
 
     const userApiStatus = useRef(new ApiStatus());
 
@@ -22,6 +28,12 @@ export default function ProfileNavMobile({token, dispatchLogout}) {
     const [email, setEmail] = useState('');
     const [profileImage, setProfileImage] = useState('');
     const [provider, setProvider] = useState('');
+    const [profilePages, setProfilePages] = useState({
+        editProfile: false,
+        privacyPolicy: false,
+        recommendation: false,
+        resetPassword: false,
+      })
 
     const routes = {
         EDIT: 'edit',
@@ -38,19 +50,19 @@ export default function ProfileNavMobile({token, dispatchLogout}) {
         let eventText;
         switch (type) {
             case ('edit'):
-                eventText = MixpanelStrings.PROFILE_SETTINGS
+                // eventText = MixpanelStrings.PROFILE_SETTINGS
                 break;
             case ('reset password'):
-                eventText = MixpanelStrings.RESET_PASSWORD
+                // eventText = MixpanelStrings.RESET_PASSWORD
                 break;
             case ('policies'):
-                eventText = MixpanelStrings.POLICIES
+                // eventText = MixpanelStrings.POLICIES
                 break;
             case ('reviews'):
-                eventText = MixpanelStrings.REVIEWS
+                // eventText = MixpanelStrings.REVIEWS
                 break;
             case ('upvotes'):
-                eventText = MixpanelStrings.UPVOTES
+                // eventText = MixpanelStrings.UPVOTES
                 break;
             default:
                 eventText = 'Nothing is triggered!'
@@ -100,54 +112,91 @@ export default function ProfileNavMobile({token, dispatchLogout}) {
         return res ? res.data : [];
     }
 
-    const getProfileDetails = async () => {
-        userApiStatus.current.start();
-        let res = await getDataFromUrl(`${API_URL}/profiles/`, token, userApiStatus)
-        .then(res => {
-            setEmail(res.email);
-            setName(res.full_name);
-            setInputName(res.full_name);
-            setProfileImage(res.profile_image);
-            setProvider(res.auth_provider);
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    }
-
-    useEffect(async () => {
-        await getProfileDetails();
+    useEffect(() => {
+        async function getProfileDetails(){
+            userApiStatus.current.start();
+            let res = await getDataFromUrl(`${constant.API_URL.PROD}/profiles/`, token, userApiStatus)
+            .then(res => {
+                setEmail(res.email);
+                setName(res.full_name);
+                setInputName(res.full_name);
+                setProfileImage(res.profile_image);
+                setProvider(res.auth_provider);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
+        getProfileDetails()
     }, [])
 
+    const _openResetPasswordPage=()=>{
+        setProfilePages({
+          editProfile: false,
+          privacyPolicy: false,
+          recommendation: false,
+          resetPassword: true,
+        })
+        setMobileLoginNavigation()
+      }
+    
+      const _openEditProfilePage=()=>{
+        setProfilePages({
+          editProfile: true,
+          privacyPolicy: false,
+          recommendation: false,
+          resetPassword: false,
+        })
+        setMobileLoginNavigation()
+      }
+    
+      const _openPrivacyPolicyPage=()=>{
+        setProfilePages({
+          editProfile: false,
+          privacyPolicy: true,
+          recommendation: false,
+          resetPassword: false,
+        })
+        setMobileLoginNavigation()
+      }
+
+
     return (
-        <div className='profile-nav-mobile'>
-            <div className='header'>
-                <Link to='/' className='navbar-brand' onClick={() => Mixpanel.track(MixpanelStrings.HOME_BUTTON_CLICK)}>
-                    <img src={credencLogo}/>
+            <>
+            {
+                mobileLoginNavigation ?  
+                <>
+                <div className='header'>
+                <Link 
+                href='/' 
+                className='navbar-brand' 
+                // onClick={() => Mixpanel.track(MixpanelStrings.HOME_BUTTON_CLICK)}
+                >
+                    <Image src={credencLogo} objectFit='cover' alt='credenc'/>
                 </Link>
-                <div className='profile-info'>
+                <div className='profile-info' style={{display:"flex",alignItems:"center"}}>
                     <span className='user-name'>{name}</span>
-                    <img className='avatar' alt='user image' src={profileIcon} ></img>
+                    <Image className='avatar' src={profileIcon} objectFit='contain' alt='user'/>
                 </div>
-            </div>
-            <div className='menu-column'>
-                <div onClick={() => handleNavClick('edit', routes.EDIT)} className='menu-item'>Edit Profile<span className={`arrow-right`}>{'>'}</span></div>
-                <div className='hr'></div>
-                {provider === 'email' && <> <div onClick={() => handleNavClick('reset password', routes.RESET_PASSWORD)} className='menu-item'>Reset Password<span className={`arrow-right`}>{'>'}</span></div>
-                <div className='hr'></div> </>}
-                {/* <div to={routes.NOTIFICATIONS} onClick={triggerMixpanel('edit')} className='menu-item'><span className={`arrow-right ${isActiveTab(routes.NOTIFICATIONS)}`}>{'>'}</span>Notifications</div>
-                <div className='hr'></div>
-                <div to={routes.INVITE} onClick={triggerMixpanel('edit')} className='menu-item'><span className={`arrow-right ${isActiveTab(routes.INVITE)}`}>{'>'}</span>Invite a Friend</div>
-                <div className='hr'></div>*/}
-                <div onClick={() => handleNavClick('policies', routes.POLICIES)} className='menu-item'>Privacy Policy<span className={`arrow-right`}>{'>'}</span></div>
-                <div className='hr'></div>
-                <div onClick={() => handleNavClick('reviews', routes.REVIEWS)} className='menu-item'>My Reviews<span className={`arrow-right`}>{'>'}</span></div>
-                <div className='hr'></div>
-                <div onClick={() => handleNavClick('upvotes', routes.UPVOTES)} className='menu-item'>My Upvotes<span className={`arrow-right`}>{'>'}</span></div>
-                <div className='hr'></div>
-                <div onClick={() => handleNavClick('logout', 'logout')} className='menu-item'>Logout</div>
-                <div className='hr'></div>
-            </div>
-        </div>
+                </div>
+                <div className='profile-nav-mobile'>
+                    <div className='menu-column'  style={{padding: 0}}>
+                        <div onClick={() => _openEditProfilePage()} className='menu-item'>Edit Profile<span className={`arrow-right`}>{'>'}</span></div>
+                        <div className='hr'></div>
+                        {provider === 'email' && <> <div onClick={() => _openResetPasswordPage()} className='menu-item'>Reset Password<span className={`arrow-right`}>{'>'}</span></div>
+                        <div className='hr'></div> </>}
+                        <div onClick={() => _openPrivacyPolicyPage()} className='menu-item'>Privacy Policy<span className={`arrow-right`}>{'>'}</span></div>
+                        <div className='hr'></div>
+                    </div>
+                </div> 
+                </>
+                : 
+                <>
+                    {profilePages.editProfile === true && <EditProfile token={token} setMobileLoginNavigation={()=>setMobileLoginNavigation()} />}
+                    {profilePages.resetPassword === true && <ResetPassword token={token} openForgotPasswordModal={()=>openForgotPasswordModal()} setMobileLoginNavigation={()=>setMobileLoginNavigation()}/>}
+                    {profilePages.privacyPolicy === true && <PrivacyPolicy profilePage={true} setMobileLoginNavigation={()=>setMobileLoginNavigation()}/>}
+                </>
+            }
+       </>
     )
 }

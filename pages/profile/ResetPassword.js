@@ -11,7 +11,7 @@ import { validateConfirmPassword, validatePassword } from '../../helper/validati
 import ProfileHeader from './ProfileHeader';
 import constant from '../../config/constant';
 
-export default function ResetPassword({token, handleForgotPassword,openForgotPasswordModal}) {
+export default function ResetPassword({token, handleForgotPassword,openForgotPasswordModal,setMobileLoginNavigation}) {
 
   const passwordInputInitialState = States.passwordInputInitialState;
   const [oldPasswordInputState, setOldPasswordInputState] = useState({ ...passwordInputInitialState });
@@ -139,7 +139,7 @@ export default function ResetPassword({token, handleForgotPassword,openForgotPas
   
   return (
     <div className='reset-password'>
-      <ProfileHeader heading='Reset Password' />
+      <ProfileHeader heading='Reset Password' setMobileLoginNavigation={()=>setMobileLoginNavigation()} />
       <div className='row'>
           <div className='label'>Old Password:</div>
           <div className='input-container'>
@@ -182,7 +182,7 @@ export default function ResetPassword({token, handleForgotPassword,openForgotPas
         <div className='button-container'>
           <div className='text-button' onClick={()=>openForgotPasswordModal()}>Forgot Password?</div>
           <div className="auth-container">
-            {isApiInProgress() ? <CircularProgress /> : <Button style={{maxHeight: '4rem', maxWidth: `${window.innerWidth > 500 ? '15rem' : 'auto'}`, background: buttonState.color}} onClick={handleResetPassword} text={buttonState.text} classes='btn-secondary small-wrapper-colored'/>}
+            {isApiInProgress() ? <CircularProgress /> : <Button style={{maxHeight: '4rem', maxWidth: `${window.innerWidth > 500 ? '15rem' : 'auto'}`, background: buttonState.color}} linearGradient='green' onClick={handleResetPassword} text={buttonState.text} classes='btn-secondary small-wrapper-colored'/>}
           </div>
         </div>
       </div>

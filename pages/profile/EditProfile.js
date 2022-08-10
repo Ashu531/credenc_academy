@@ -101,7 +101,7 @@ export default function EditProfile(props) {
 
   return (
     <div className='edit-profile'>
-        <ProfileHeader heading='Edit Profile' />
+        <ProfileHeader heading='Edit Profile' setMobileLoginNavigation={()=>props.setMobileLoginNavigation()} />
         <div className='row'>
             <div className='profile-image'>
                 {/* <img src={profileImage} alt="Profile Image"></img> */}
@@ -137,7 +137,7 @@ export default function EditProfile(props) {
         </div> */}
         <div className='row margin-35'>
             <div className='button-container'>
-                <Button onClick={handleMakeChanges} text='Make Changes' classes='btn-secondary small-wrapper-colored' style={{maxHeight: '4rem', paddingLeft: '2rem', paddingRight: '2rem'}}/>
+                <Button onClick={handleMakeChanges} linearGradient='green' text='Make Changes' classes='btn-secondary small-wrapper-colored' style={{maxHeight: '4rem', paddingLeft: '2rem', paddingRight: '2rem'}}/>
             </div>
         </div>
     </div>

@@ -4,10 +4,28 @@ import ResetPassword from './ResetPassword'
 import { useRouter } from 'next/router'
 import PrivacyPolicy from '../privacy'
 import ForgotPasswordModal from '../../components/forgotPasswordModal/ForgotPasswordModal'
+import { useMediaQuery } from "react-responsive";
+import ProfileMobilePage from './ProfileNavMobile'
 const EdtechToken = 'credenc-edtech-authkey';
 
-export default function ProfilePage({openForgotPasswordModal,forgotPasswordModal,handleForgotPasswordEnd }) {
+export default function ProfilePage({
+  openForgotPasswordModal,
+  forgotPasswordModal,
+  handleForgotPasswordEnd,
+  mobileLoginNavigation,
+  setMobileLoginNaviagtion
+}) {
   let location = useRouter();
+
+  const [mounted, setMounted] = useState(false);
+  const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 500px)",
+  });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   
   const [profilePages, setProfilePages] = useState({
     editProfile: false,
@@ -131,57 +149,72 @@ export default function ProfilePage({openForgotPasswordModal,forgotPasswordModal
   }
   
   return (
-    <div className='profile-page'>
-      <div className='profile-container'>
-        <div className='menu-column'>
-            <div 
-            className='menu-item'
-            onClick={() => {
-              _openEditProfilePage()
-              // triggerMixpanel('edit profile')
-            }}
-            >
-            <span className={`border-left ${isActiveTab(routes.EDIT)}`}></span>
-            Edit Profile
+    <>
+    {
+        mounted && 
+        <>
+        
+          <div className='profile-page'>
+            <div className='profile-container'>
+              <div className='menu-column'>
+                  <div 
+                  className='menu-item'
+                  onClick={() => {
+                    _openEditProfilePage()
+                    // triggerMixpanel('edit profile')
+                  }}
+                  >
+                  <span className={`border-left ${isActiveTab(routes.EDIT)}`}></span>
+                  Edit Profile
+                  </div>
+                <div className='hr'></div>
+                <div 
+                  className='menu-item'
+                  onClick={() => {
+                    _openResetPasswordPage()
+                    // triggerMixpanel('reset password')
+                  }}
+                  >
+                  <span className={`border-left ${isActiveTab(routes.RESET_PASSWORD)}`}></span>
+                  Reset Password
+                  </div>
+                <div className='hr'></div>
+                
+                <div 
+                className='menu-item'
+                onClick={() => {
+                  _openPrivacyPolicyPage()
+                  // triggerMixpanel('privacy policy')
+                }}
+                >
+                  <span className={`border-left ${isActiveTab(routes.POLICIES)}`}></span>
+                  Privacy Policy
+                  </div>
+                <div className='hr'></div>
+              </div>
+              <div className='content-column'>
+                {window.innerWidth > 500 && profilePages.editProfile === true && <EditProfile token={token} />}
+                {window.innerWidth > 500 && profilePages.resetPassword === true && <ResetPassword token={token} openForgotPasswordModal={()=>openForgotPasswordModal()} />}
+                {window.innerWidth > 500 && profilePages.privacyPolicy === true && <PrivacyPolicy profilePage={true} />}
+                {window.innerWidth <= 500 && 
+                <ProfileMobilePage 
+                token={token} 
+                mobileLoginNavigation={mobileLoginNavigation} 
+                setMobileLoginNavigation={()=>setMobileLoginNaviagtion()}
+                />}
+              </div>
             </div>
-          <div className='hr'></div>
-           <div 
-             className='menu-item'
-             onClick={() => {
-              _openResetPasswordPage()
-              // triggerMixpanel('reset password')
-            }}
-             >
-            <span className={`border-left ${isActiveTab(routes.RESET_PASSWORD)}`}></span>
-            Reset Password
-            </div>
-          <div className='hr'></div>
+            {
+              forgotPasswordModal ? 
+              <ForgotPasswordModal
+              handleForgotPasswordEnd={()=>handleForgotPasswordEnd()}
+              />
+              : null
+            }
+          </div>
            
-           <div 
-           className='menu-item'
-           onClick={() => {
-            _openPrivacyPolicyPage()
-            // triggerMixpanel('privacy policy')
-          }}
-           >
-            <span className={`border-left ${isActiveTab(routes.POLICIES)}`}></span>
-            Privacy Policy
-            </div>
-          <div className='hr'></div>
-        </div>
-        <div className='content-column'>
-          {profilePages.editProfile === true && <EditProfile token={token} />}
-          {profilePages.resetPassword === true && <ResetPassword token={token} openForgotPasswordModal={()=>openForgotPasswordModal()} />}
-          {profilePages.privacyPolicy === true && <PrivacyPolicy profilePage={true} />}
-        </div>
-      </div>
-      {
-        forgotPasswordModal ? 
-        <ForgotPasswordModal
-        handleForgotPasswordEnd={()=>handleForgotPasswordEnd()}
-        />
-        : null
-      }
-    </div>
+          </>
+    }
+    </>
   )
 }

@@ -31,6 +31,7 @@ class MyApp extends App {
      loggedIn: false,
      loginModal: false,
      forgotPasswordModal:false,
+     navigation: false,
     };
    
   }
@@ -143,6 +144,18 @@ class MyApp extends App {
     })
   }
 
+  setMobileLoginNaviagtion=()=>{
+    this.setState({
+      navigation: !this.state.navigation
+    })
+  }
+
+  openMobileLoginNaviagtion=()=>{
+    this.setState({
+      navigation: true
+    })
+  }
+
  
 
   render(){
@@ -182,6 +195,8 @@ class MyApp extends App {
          openForgotPasswordModal={()=>this.openForgotPasswordModal()}
          forgotPasswordModal={this.state.forgotPasswordModal}
          handleForgotPasswordEnd={()=>this.handleForgotPasswordEnd()}
+         mobileLoginNavigation={this.state.navigation}
+         setMobileLoginNaviagtion={()=>this.setMobileLoginNaviagtion()}
          />
          {
             window.innerWidth > 500 ? 
@@ -190,6 +205,7 @@ class MyApp extends App {
             title="©Credenc2022"/> : 
             <FooterMobile
             openLoginModal={()=>this.openLoginModal()}
+            setMobileLoginNaviagtion={()=>this.openMobileLoginNaviagtion()}
             />
          }
         <SlidingPanel

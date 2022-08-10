@@ -9,7 +9,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 0.6rem 0.6rem 0.4rem 2rem;
-        background: #313235;
+        background: var(--subduedBackground);
         border-radius: 3.2rem;
 
         input{
@@ -21,7 +21,7 @@
             font-size: 1.4rem;
             line-height: 2.1rem;
             font-weight: normal;
-            color: #C5C7CA;
+            color: var(--bodyColor);
         }
 
         ::placeholder {
@@ -50,7 +50,7 @@
             align-items: center;
 
             &:hover{
-                background-color: #27282A;
+                background-color: var(--subduedBackground);
             }
 
             img{
@@ -213,7 +213,7 @@
         .input-container {
             border-radius: 0.4rem;
             input {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
                 line-height: 1.8rem;
             }
         }
