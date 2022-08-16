@@ -5,6 +5,7 @@ import Image from "next/image";
 import dropdownIcon from '../../assets/images/icons/dropdown.svg'
 import searchIcon from '../../assets/images/icons/searchIcon.svg'
 import { useRouter } from 'next/router'
+import credencLogoLight from '../../assets/images/icons/credenc-logo.svg'
 
 export default function HeaderMobile(props){
 
@@ -22,11 +23,12 @@ export default function HeaderMobile(props){
                 setSelectedSubject('All Subjects')
             }
         }
+        console.log(props?.theme,"props.themeprops.theme+")
 
     return(
         <div className='mobile-header'>
         <div className='mobile-header_container'>
-        <Image src={credencLogo} objectFit="cover" alt='credencLogo' />
+        <Image src={props.theme === 'dark' ? credencLogoLight : credencLogo} objectFit="cover" alt='credencLogo' />
         <div className='mobile-header-content'>
         <div className='mobile-header-element' style={{marginRight: 10}} onClick={()=>props.toggleSubjectDropdown()}>
           <span className='all-subject-text'>{selectedSubject}</span>

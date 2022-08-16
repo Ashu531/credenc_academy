@@ -3,6 +3,7 @@ import bookmarkIcon from '../../assets/images/icons/bookmark.svg'
 import bookmarkIconDark from '../../assets/images/icons/bookmark-dark.svg'
 import projectorIcon from '../../assets/images/icons/projector.svg';
 import credencLogo from '../../assets/images/logo/credencLogo.svg'
+import credencLogoLight from '../../assets/images/icons/credenc-logo.svg'
 import Image from "next/image";
 import Link from "next/link";
 import SecondaryDropdown from '../primaryDropdown/SecondaryDropdown';
@@ -110,17 +111,17 @@ export default function Header(props){
     })
   }
 
-
     return(
         <div className='navbar-wrapper'>
         
         <div className='navbar'>
          
-          <Link href='/' 
-          // onClick={() => Mixpanel.track(MixpanelStrings.HOME_BUTTON_CLICK)}
-         >
+          <Link 
+           href='/' 
+           // onClick={() => Mixpanel.track(MixpanelStrings.HOME_BUTTON_CLICK)}
+          >
             <div  style={{cursor:"pointer"}}>
-            <Image src={credencLogo} objectFit="cover" alt='credencLogo'/>
+            <Image src={ props.theme === 'dark' ? credencLogoLight : credencLogo } objectFit="cover" alt='credencLogo'/>
             </div>
         
           </Link>

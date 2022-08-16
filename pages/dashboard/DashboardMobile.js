@@ -1095,7 +1095,7 @@ const removeUpvote = async (item) => {
            bookmarkVisible={ ()=> _checkBookmarks(item)}
            compareText={()=> _checkCompareText(item)} 
            addToBookmark={()=>_addToBookmark(detailData)}
-           theme={props.theme} 
+           theme={props?.theme} 
            openDetailModal={()=>_openDetailModal()}
            setUpvoteCount={()=> setUpvoteCount(detailData)}
            removeUpvoteCount={()=> removeUpvoteCount(detailData)}

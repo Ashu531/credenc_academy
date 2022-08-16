@@ -182,26 +182,25 @@ class MyApp extends App {
         /> : 
             <HeaderMobile
             // toggleTheme={this.toggleTheme} 
-            // theme={this.state.theme} 
+            theme={this.state.theme} 
             openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
             toggleSubjectDropdown={()=>this.toggleSubjectDropdown()}
             />
           }
-        
          <Component 
-         {...pageProps} 
-         theme={this.state.theme} 
-         filterExpandedStage={this.state.filterExpandedStage} 
-         openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
-         subjectDropdownMobile={this.state.subjectDropdownMobile}
-         loginModal={this.state.loginModal}
-         closeLoginModal={()=>this.closeLoginModal()}
-         openForgotPasswordModal={()=>this.openForgotPasswordModal()}
-         forgotPasswordModal={this.state.forgotPasswordModal}
-         handleForgotPasswordEnd={()=>this.handleForgotPasswordEnd()}
-         mobileLoginNavigation={this.state.navigation}
-         setMobileLoginNaviagtion={()=>this.setMobileLoginNaviagtion()}
-         logoutUser={()=>this.logoutUser()}
+          {...pageProps} 
+          theme={this.state.theme} 
+          filterExpandedStage={this.state.filterExpandedStage} 
+          openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
+          subjectDropdownMobile={this.state.subjectDropdownMobile}
+          loginModal={this.state.loginModal}
+          closeLoginModal={()=>this.closeLoginModal()}
+          openForgotPasswordModal={()=>this.openForgotPasswordModal()}
+          forgotPasswordModal={this.state.forgotPasswordModal}
+          handleForgotPasswordEnd={()=>this.handleForgotPasswordEnd()}
+          mobileLoginNavigation={this.state.navigation}
+          setMobileLoginNaviagtion={()=>this.setMobileLoginNaviagtion()}
+          logoutUser={()=>this.logoutUser()}
          />
          {
             window.innerWidth > 500 ? 
@@ -211,6 +210,7 @@ class MyApp extends App {
             <FooterMobile
             openLoginModal={()=>this.openLoginModal()}
             setMobileLoginNaviagtion={()=>this.openMobileLoginNaviagtion()}
+            theme={this.state.theme} 
             />
          }
         <SlidingPanel

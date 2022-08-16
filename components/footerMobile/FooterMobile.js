@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import projectorIcon from '../../assets/images/icons/projector.svg';
+import projectorIconLight from '../../assets/images/icons/projector-light.svg'
 import bookmarkIcon from '../../assets/images/icons/bookmark.svg';
+import bookmarkIconLight from '../../assets/images/icons/bookmark-dark.svg';
 import loginIcon from '../../assets/images/icons/loginIcon.svg';
 import homeIcon from '../../assets/images/icons/home.svg';
+import homeIconLight from '../../assets/images/icons/home-light.svg';
 import Image from "next/image";
 import userIcon from "../../assets/images/icons/loginIcon.svg";
 import profileIcon from '../../assets/images/icons/profile-icon.svg';
@@ -32,6 +35,8 @@ export default function FooterMobile(props){
                 src={profileIcon}
                 alt='user icon'
                 objectFit='cover'
+                height={18} 
+                width={18}
                 onClick={() => { 
                     openProfilePage();
                     // Mixpanel.track(MixpanelStrings.NAV_SIGNIN_BUTTON_CLICK) 
@@ -44,6 +49,8 @@ export default function FooterMobile(props){
                 src={userIcon}
                 alt='profile icon'
                 objectFit='cover'
+                height={18} 
+                width={18}
                 onClick={() => {
                     props?.openLoginModal();
                 //    Mixpanel.track(MixpanelStrings.NAV_SIGNIN_BUTTON_CLICK)
@@ -63,20 +70,20 @@ export default function FooterMobile(props){
         <div className='mobile-footer-container'>
         <Link href='/'>
         <div className='mobile-footer-element'>
-        <Image src={homeIcon} objectFit="contain" alt='homeIcon' />
+        <Image src={props?.theme === 'dark' ? homeIconLight : homeIcon} objectFit="contain" alt='homeIcon' style={{alignSelf:"flex-end"}} />
         <span className='mobile-footer-text'>
             Home
         </span>
         </div>
         </Link>
         <div className='mobile-footer-element'>
-        <Image src={projectorIcon} objectFit="contain" alt='projectorIcon'/>
+        <Image src={ props?.theme === 'dark' ? projectorIconLight : projectorIcon} objectFit="contain" alt='projectorIcon' height={18} width={18}/>
         <span className='mobile-footer-text'>
             Compare
         </span>
         </div>
         <div className='mobile-footer-element'>
-        <Image src={bookmarkIcon} objectFit="contain" alt='bookmarkIcon' />
+        <Image src={ props?.theme === 'dark' ? bookmarkIconLight : bookmarkIcon} objectFit="contain" alt='bookmarkIcon' height={18} width={18}/>
         <span className='mobile-footer-text'>
             Bookmark
         </span>

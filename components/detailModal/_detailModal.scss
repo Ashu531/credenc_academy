@@ -242,7 +242,7 @@
             padding: 6px 8px;
             gap: 10px;
             margin: 5px;
-            background: #FFFFFF;
+            background: var(--defaultBackground);
             border: 1px solid rgba(2, 202, 158, 0.3);
             border-radius: 3px;
         }
@@ -347,7 +347,7 @@
        }
 
        .avatar-content{
-        border: 2px solid #FFFFFF;
+        border: 2px solid var(--defaultBackground);
         border-radius: 40%;
         margin: -4px;
        }

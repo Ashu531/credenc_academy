@@ -22,7 +22,7 @@ import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
 import { width } from 'dom-helpers';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const compareKey = 'credenc-marketplace-compares';
-
+const EdtechTheme = 'EdtechTheme';
 
 export default function DetailModal(props){
 
@@ -30,6 +30,7 @@ export default function DetailModal(props){
     const [detailFooter,setFooterModal] = useState(false);
     const[bookmarkVisible,setBookmarkVisible] = useState(false)
     const[compareText,setCompareText] = useState('Add to Compare')
+    const [theme,setTheme] = useState('')
 
     useEffect(() => {
         setMounted(true);
@@ -39,6 +40,15 @@ export default function DetailModal(props){
         _getBookmarks()
         _getCompareItems()
     },[])
+
+    useEffect(()=>{
+        _retrieveData()
+    },[])
+
+    const _retrieveData=()=>{
+        let localTheme = localStorage.getItem(EdtechTheme)
+        setTheme(localTheme)
+    }
 
     const _getBookmarks=()=>{
         let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
@@ -68,7 +78,7 @@ export default function DetailModal(props){
         props.addToBookmark(props?.detailData)
         setBookmarkVisible(!bookmarkVisible)
     }
-
+    console.log(theme,"theme++++")
     return(
         <>
         {
@@ -93,8 +103,8 @@ export default function DetailModal(props){
                         onClick={()=> _handleBookmarksTrigger()} 
                         style={ bookmarkVisible === true  ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)",cursor:"pointer"} : {cursor:"pointer"}}
                         >
-                        <Image src={ bookmarkVisible === true ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon}  
-                        objectFit="cover" 
+                        <Image src={ bookmarkVisible === true ? selectedBookmark : theme === 'dark' ? bookmarkIconDark : bookmarkIcon}  
+                        objectFit="contain" 
                         width={ window.innerWidth <= 500 ? 25 : 20 }
                         height={window.innerWidth <= 500 ? 25 : 20 }
                         />
@@ -217,7 +227,7 @@ export default function DetailModal(props){
                    props?.detailData?.tutor && props?.detailData?.tutor.map((item,index)=>{
                        return( 
                        <span key={index} className="avatar-content" >
-                            <Image src={item?.profile_photo} height={30} width={30} alt='avatar' style={{borderRadius: '50%'}}/>
+                            <Image src={item?.profile_photo} height={30} width={30} alt='avatar' style={{borderRadius: '50%'}} objectFit='contain'/>
                         </span>
                         )
                     })
