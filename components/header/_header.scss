@@ -15,50 +15,52 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-    .nav-item{
-        // position: relative;
-        padding: 0 1rem;
-        img{
-          height: 2.4rem;
-          cursor: pointer;
+      .nav-item{
+          // position: relative;
+          padding: 0 1rem;
+          img{
+            height: 2.4rem;
+            cursor: pointer;
+          }
         }
-      }
   
-      .back {
-        margin-right: 1rem;
-      }
-      .user-elements{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-
-       
-        .icon-element{
-          padding-right: 2rem;
+        .back {
+          margin-right: 1rem;
         }
-      .signin-button{
-        border: 1px solid var(--defaultPrimaryColor);
-        border-radius: 4px;
-        min-height: 4.5vh;
-        padding-left: 1vh;
-        padding-right: 1vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .signin-text{
-      font-family:'Poppins';
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 19px;
-        color: var(--primaryColor);
-    }
-    .profile-item{
-      padding-left: 20px;
-    }
-      }
+        .user-elements{
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
 
+        
+          .icon-element{
+            padding-right: 2rem;
+          }
+          .signin-button{
+            border: 1px solid var(--defaultPrimaryColor);
+            border-radius: 4px;
+            min-height: 4.5vh;
+            padding-left: 1vh;
+            padding-right: 1vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+         }
+          .signin-text{
+            font-family:'Poppins';
+              font-weight: 500;
+              font-size: 14px;
+              line-height: 19px;
+              color: var(--primaryColor);
+          }
+          .profile-item{
+            padding-left: 20px;
+          }
+        }
+        .change-theme-text{
+          color: var(--defaultPrimaryColor);
+        }
     }
   }
 

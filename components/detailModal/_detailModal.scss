@@ -434,7 +434,7 @@
             font-weight: 600;
             font-size: 15px;
             line-height: 22px;
-            color: #000000;
+            color: var(--primaryColor);
         }
 
         .compare-button-text{
@@ -443,7 +443,7 @@
             font-weight: 500;
             font-size: 13px;
             line-height: 20px;
-            color: #000000;
+            color: var(--primaryColor);
         }
 
         .apply-now-button-text{

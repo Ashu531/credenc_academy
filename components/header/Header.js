@@ -140,7 +140,7 @@ export default function Header(props){
            </div>
  
            <div onClick={()=>props.toggleTheme()} style={{cursor:"pointer",paddingLeft:10}}>
-            <span>Change Theme</span>
+            <span className='change-theme-text'>Change Theme</span>
           </div>
           <div className='profile-item'>
           {renderProfile()}
