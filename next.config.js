@@ -24,7 +24,7 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     // the following are experimental features, and may cause breaking changes
   },
-  trailingSlash: true,
+  // trailingSlash: true,
  
 }
 

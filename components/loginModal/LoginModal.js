@@ -433,7 +433,7 @@ export default function LoginModal({
             className="link" 
             href={`/privacy`} 
             target='_blank' 
-            rel='noreferer noopener' 
+            rel="noreferrer"
             // onClick={() => Mixpanel.track(MixpanelStrings.SIGNIN_MODAL_PRIVACY)}
              >
               {" "}Privacy Policy and Disclaimer

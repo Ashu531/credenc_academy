@@ -808,6 +808,7 @@ let token = null;
 
 
   const setUpvoteCount=(item)=>{
+    console.log(item,"item+++")
     if(props?.token && props?.token.length > 0){
       upvote(item)
     }
@@ -827,12 +828,12 @@ let token = null;
 
   const upvote = async (item) => {
 
-    await axios.post(`${constant.API_URL.DEV}/batch/upvote/add`, {
+    await axios.post(`${constant.API_URL.PROD}/batch/upvote/add`, {
         "batch_id": item.id,
         "is_up_vote": "true"
     }, {
         headers: {
-            'Authorization': `Bearer ${props.token}`
+            'Authorization': `Bearer ${props?.token}`
         },
     })
     .then(res => {
@@ -848,16 +849,12 @@ let token = null;
 }
 
 const removeUpvote = async (item) => {
-  let token = {
-    accessToken: props?.token,
-    refreshToken: null
-  }
-  await axios.post(`${constant.API_URL.DEV}/batch/upvote/remove/`, {
+  await axios.post(`${constant.API_URL.PROD}/batch/upvote/remove/`, {
       "batch_id": item.id,
       "is_up_vote": "false"
   }, {
       headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${props?.token}`
       },
   })
   .then(res => {
