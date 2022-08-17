@@ -217,7 +217,7 @@ function DashboardDesktop(props) {
   }
 
   const _getSubCategoryDetails=(item)=>{
-
+    console.log(item,"item")
     if(selectedSubject.name === "All"){
       location.push({
         pathname: "/",
@@ -235,7 +235,6 @@ function DashboardDesktop(props) {
       })
     }
   
-    
     getCardData(item)
   }
 
@@ -373,6 +372,7 @@ function DashboardDesktop(props) {
 
     list.forEach(item => {
       if (item['isApplied']) {
+        console.log(filter,item['filterValue'],"item['filterValue']+++")
         urlService.current.addEntry(filter, item['filterValue']);
       }
     });
@@ -617,8 +617,10 @@ let token = null;
     // if (forcePageNumber === 1) setForcePageNumber(0);
     if (pageNumber <= 1 || updatePageNumber === false) {
       setCourses([...res.data]);
+      setCourseCardData([...res.data])
     } else {
       setCourses([...courses, ...res.data]);
+      // setCourseCardData([...res.data])
     }
     setMaxPrice(Math.floor(parseFloat(res.max_price)));
     setTotalCourses(res.count);
@@ -808,7 +810,6 @@ let token = null;
 
 
   const setUpvoteCount=(item)=>{
-    console.log(item,"item+++")
     if(props?.token && props?.token.length > 0){
       upvote(item)
     }
@@ -1128,8 +1129,85 @@ const removeUpvote = async (item) => {
         backdropClicked={() => setFilterModal(false)}
         size={30}
         >
-            <div>
-              <div>My Panel Content</div>
+          <div className='filter-sidebar-content'>
+                {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`}>
+                    <div className="filter-head">
+                      <span>{appliedFiltersCount.current === 0 ? '' : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}</span>
+                      {appliedFiltersCount.current !== 0 && <span style={window.innerWidth > 500 ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>}
+                      {window.innerWidth <= 500 && <span className='cross' onClick={() => setMobileFiltersState(false)}><img src={closeIcon} /></span>}
+                    </div>
+                    <div className='filters'>
+
+                      <Filter
+                        item={{ name: 'Class Mode', type: filterList.CLASS_MODE }}
+                        filterState={classModeList}
+                        updateFilterState={updateFilterState}
+                        theme={theme}
+                      />
+                      <Filter
+                        item={{ name: 'Course Pace', type: filterList.COURSE_PACE }}
+                        filterState={[...coursePaceList]}
+                        updateFilterState={updateFilterState}
+                        theme={theme}
+                      />
+                      <Filter
+                        item={{ name: 'Cost', type: filterList.COST }}
+                        filterState={costList}
+                        updateFilterState={updateFilterState}
+                        max={maxPrice}
+                        min={0}
+                        getRange={handleCostRange}
+                        updateCostSlider={updateCostSlider}
+                        setIsAppliedCostSlider={() => setIsAppliedCostSlider(true)}
+                        theme={theme}
+                      />
+                      <Filter
+                        item={{ name: 'Difficulty Level', type: filterList.DIFFICULTY_LEVEL }}
+                        filterState={difficultyList}
+                        updateFilterState={updateFilterState}
+                        theme={theme}
+                      />
+                      <Filter
+                        item={{ name: 'Work Experience', type: filterList.WORK_EXPERIENCE }}
+                        filterState={workExperienceList}
+                        updateFilterState={updateFilterState}
+                        theme={theme}
+                      />
+                      <Filter
+                        item={{ name: 'Finance Options', type: filterList.FINANCE_OPTIONS }}
+                        filterState={financeOptionList}
+                        updateFilterState={updateFilterState}
+                        theme={theme}
+                      />
+                      <Filter
+                        item={{ name: 'Course Language', type: filterList.COURSE_LANGUAGE }}
+                        filterState={languageList}
+                        updateFilterState={updateFilterState}
+                        theme={theme}
+                      />
+                    </div>
+                    <div className="filter-footer" style={{textAlign:"center", marginTop: 20}}>
+                    <Link className='link' href={`/privacy`} target='_blank' rel='noopener noreferer'>Privacy policy & disclaimer</Link>
+                    <div className='mobile-actions-container'>
+                      <div className='btn-container reset-button-wrapper'>
+                        <Button
+                          // disabled={true} 
+                          onClick={resetFilters}
+                          mobileButtonText='Reset'
+                          classes='btn-reset'
+                        />
+                      </div>
+                      <div className='btn-container'>
+                        <Button
+                          // disabled={true} 
+                          onClick={handleApplyButton}
+                          mobileButtonText='Apply'
+                          classes='btn-apply'
+                        />
+                      </div>
+                    </div>
+                  </div>
+            </div>}
             </div>
         </SlidingPanel>
 

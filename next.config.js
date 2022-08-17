@@ -9,9 +9,9 @@ const nextConfig = {
     // limit of 50 domains values
     domains: ['credenc-neo-bank.s3.amazonaws.com'],
     // path prefix for Image Optimization API, useful with `loader`
-    path: '/_next/image',
+    path: '',
     // loader can be 'default', 'imgix', 'cloudinary', 'akamai', or 'custom'
-    loader: 'default',
+    loader: 'akamai',
     // disable static imports for image files
     disableStaticImages: false,
     // minimumCacheTTL is in seconds, must be integer 0 or more
@@ -24,7 +24,7 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     // the following are experimental features, and may cause breaking changes
   },
-  // trailingSlash: true,
+  trailingSlash: true,
  
 }
 
