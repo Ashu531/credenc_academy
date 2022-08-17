@@ -133,19 +133,28 @@ function DashboardDesktop(props) {
   },[])
     
  const getDataFromBaseUrl=()=>{
-    if(location?.query?.hasOwnProperty('subject') ){
+
+  let urlSubjectQuery = urlService.current.getValueFromEntry('subject')
+  let urlSubCategoryQuery = urlService.current.getValueFromEntry('sub_category')
+
+    if(urlSubjectQuery && Object.keys(urlSubjectQuery).length !== 0){
      let data={
-        name: location?.query?.subject
+        name: urlSubjectQuery
       }
-      setSelectedCategory(location?.query?.sub_category)
+      if(urlSubCategoryQuery  && Object.keys(urlSubCategoryQuery).length !== 0){
+        setSelectedCategory(urlSubCategoryQuery)
+      }else{
+        setSelectedCategory(constant.COURSES.SUB_CATEGORIES[0].title)
+      }
       setSelectedSubject(data)
       getCardData(data)
     }else{
       let data={
         name: "All"
       }
-      if(location.query.hasOwnProperty('sub_category')){
-        setSelectedCategory(location?.query?.sub_category)
+
+      if(urlSubCategoryQuery  && Object.keys(urlSubCategoryQuery).length !== 0){
+        setSelectedCategory(urlSubCategoryQuery)
       }else{
         setSelectedCategory(constant.COURSES.SUB_CATEGORIES[0].title)
       }
@@ -175,64 +184,39 @@ function DashboardDesktop(props) {
     setSubjectData(totalSubjectData)
   }
 
-  const getCardData=(item)=>{
-    let URL = `${constant.API_URL.DEV}/batch/search`
-    let subjectQuery="";
-    if(item !== null && item?.name && item?.name !== "All"){
-      subjectQuery = `/?subject=${item?.name}`
-      URL=URL.concat(subjectQuery)
+  const getCardData=()=>{
+
+    updateBrowserUrl()
+
+    if (pageNumber > 1) {
+      setPageNumber(1);
+    } else {
+      coursesApiStatus.current.start();
+      handleFilteredData();
     }
-    let subCategory = `/?sub_category=${selectedCategory}`
-    URL=URL.concat(subCategory)
-    fetchCardData(URL)
   }
-
-  const fetchCardData=async(URL)=>{
-    const response = await fetch(URL)
-    const data = await response.json()
-    setCourseCardData(data?.data)
-  }
-
 
   const _getSubjectDetails=(item)=>{
+
+    urlService.current.removeEntry('subject')
     
     if(item.name === "All"){
-      location.push({
-        pathname: "/",
-        query: {
-          sub_category: selectedCategory
-        }
-      })
+      // urlService.current.addEntry('subject', 'All');
     }else{
-      location.push({
-        pathname: "/",
-        query: {
-          subject: item.name,
-          sub_category: selectedCategory
-        }
-      })
+      urlService.current.addEntry('subject', item.name);
     }
     
     getCardData(item)
   }
 
   const _getSubCategoryDetails=(item)=>{
-    console.log(item,"item")
+
+    urlService.current.removeEntry('sub_category')
+
     if(selectedSubject.name === "All"){
-      location.push({
-        pathname: "/",
-        query: {
-        sub_category: item.title,
-       }
-     })
+      urlService.current.addEntry('sub_category', item.title);
     }else{
-      location.push({
-        pathname: "/",
-        query: {
-          subject: selectedSubject.name,
-          sub_category: item.title
-        }
-      })
+      urlService.current.addEntry('sub_category', item.title);
     }
   
     getCardData(item)
@@ -372,7 +356,6 @@ function DashboardDesktop(props) {
 
     list.forEach(item => {
       if (item['isApplied']) {
-        console.log(filter,item['filterValue'],"item['filterValue']+++")
         urlService.current.addEntry(filter, item['filterValue']);
       }
     });
@@ -1071,16 +1054,16 @@ const removeUpvote = async (item) => {
        <Banner />
        <div className="course-navbar">
        <Navbar 
-       toggleFilterModal={openFilterModal} 
-       openSubjectModal={openSubjectModal} 
-       closeSubjectModal={closeSubjectModal} 
-       subCategories={constant.COURSES.SUB_CATEGORIES} 
-       selectedCategory={selectedCategory} 
-       setSubCategoriesData={setSubCategoriesData} 
-       subjectData={subjectData}
-       selectedSubject={selectedSubject} 
-       selectSubject={selectSubject}
-       theme={props.newTheme}
+        toggleFilterModal={openFilterModal} 
+        openSubjectModal={openSubjectModal} 
+        closeSubjectModal={closeSubjectModal} 
+        subCategories={constant.COURSES.SUB_CATEGORIES} 
+        selectedCategory={selectedCategory} 
+        setSubCategoriesData={setSubCategoriesData} 
+        subjectData={subjectData}
+        selectedSubject={selectedSubject} 
+        selectSubject={selectSubject}
+        theme={props.newTheme}
        />
        </div>
        {/* <FilterModal filterModal={filterModal} toggleFilterModal={closeFilterModal}/> */}
