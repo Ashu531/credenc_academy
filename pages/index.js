@@ -34,6 +34,8 @@ export default function Home(props) {
       forgotPasswordModal={props?.forgotPasswordModal}
       handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
       token={token}
+      selectedSubject= {(item)=>props?.selectedSubject(item)}
+      toggleSubjectDropdown={()=>props?.toggleSubjectDropdown()}
     />
     }
    </>

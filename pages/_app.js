@@ -159,6 +159,12 @@ class MyApp extends App {
   logoutUser=()=>{
     localStorage.setItem(EdtechToken,'');
   }
+
+  selectedSubject=(item)=>{
+    this.setState({
+      subjectName: item.name
+    })
+  }
  
 
   render(){
@@ -185,7 +191,7 @@ class MyApp extends App {
             theme={this.state.theme} 
             openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
             toggleSubjectDropdown={()=>this.toggleSubjectDropdown()}
-            subjectDropdownMobile={this.state.subjectDropdownMobile}
+            subjectName={this.state.subjectName}
             />
           }
          <Component 
@@ -202,6 +208,8 @@ class MyApp extends App {
           mobileLoginNavigation={this.state.navigation}
           setMobileLoginNaviagtion={()=>this.setMobileLoginNaviagtion()}
           logoutUser={()=>this.logoutUser()}
+          selectedSubject= {(item)=>this.selectedSubject(item)}
+          toggleSubjectDropdown={()=>this.toggleSubjectDropdown()}
          />
          {
             window.innerWidth > 500 ? 

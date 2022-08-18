@@ -509,6 +509,7 @@ const handleFilteredData = async (updatePageNumber = true) => {
   // if (forcePageNumber === 1) setForcePageNumber(0);
   if (pageNumber <= 1 || updatePageNumber === false) {
     setCourses([...res.data]);
+    setCourseCardData([...res.data])
   } else {
     setCourses([...courses, ...res.data]);
   }
@@ -1013,7 +1014,7 @@ const removeUpvote = async (item) => {
                     list={courses}
                     listApiStatus={coursesApiStatus}
                     // handleSignInClick={handleSignInClick}
-                    openDetailModal={(item)=>openDetailModal(item)} 
+                    openDetailModal={(item)=>_openDetailModal(item)} 
                     addToCompare={(item)=>_addToCompare(item)} 
                     addToBookmark={(item)=>_addToBookmark(item)}
                     compareText={(item)=>_checkCompareText(item)}
@@ -1123,6 +1124,8 @@ const removeUpvote = async (item) => {
                     // setSortState(i)
                     // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
                     selectSubject(item)
+                    props.selectedSubject(item)
+                    props.toggleSubjectDropdown()
                   }}
                 />
            : null
