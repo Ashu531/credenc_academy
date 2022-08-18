@@ -185,6 +185,7 @@ class MyApp extends App {
             theme={this.state.theme} 
             openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
             toggleSubjectDropdown={()=>this.toggleSubjectDropdown()}
+            subjectDropdownMobile={this.state.subjectDropdownMobile}
             />
           }
          <Component 

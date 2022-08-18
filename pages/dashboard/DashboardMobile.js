@@ -88,7 +88,7 @@ function DashboardMobile(props) {
   const coursesApiStatus = useRef(new ApiStatus());
   const [mounted, setMounted] = useState(false);
   const [courseType, setCourseType] = useState(getTabNumber(queries.COURSE_TYPE, urlService) || 4);
-
+   
   const [courses, setCourses] = useState([]);
   const [maxPrice, setMaxPrice] = useState(0);
   const [totalCourses, setTotalCourses] = useState(0);
@@ -108,7 +108,7 @@ function DashboardMobile(props) {
   const [pageLoadSortState, setPageLoadSortState] = useState(null);
 
   const [courseTypesFloatState, setCourseTypesFloatState] = useState(4)
-
+  const [mobileFilter, setMobileFilter] = useState(false)
   const [mobileFiltersState, setMobileFiltersState] = useState(false)
   let appliedFiltersCount = useRef(0);
 
@@ -752,32 +752,35 @@ const selectSubject=(item)=>{
 }
 
 const _getSubjectDetails=(item)=>{
+
+  urlService.current.removeEntry('subject')
    
   if(item.name === "All"){
-    location.push({
-      pathname: "/",
-    })
+  
   }else{
-    location.push({
-      pathname: "/",
-      query: {
-        subject: item.name,
-      }
-    })
+    urlService.current.addEntry('subject', item.name);
   }
   
   getCardDetails(item)
 }
 
 const getCardDetails=(item)=>{
-  console.log(item,"item+++")
-  let URL = `${constant.API_URL.DEV}/batch/search/`
-  let subjectQuery="";
-  if(item !== null && item?.name && item?.name !== "All"){
-    subjectQuery = `?subject=${item?.name}`
-    URL=URL.concat(subjectQuery)
-  }
-  fetchCardData(URL)
+  // let URL = `${constant.API_URL.DEV}/batch/search/`
+  // let subjectQuery="";
+  // if(item !== null && item?.name && item?.name !== "All"){
+  //   subjectQuery = `?subject=${item?.name}`
+  //   URL=URL.concat(subjectQuery)
+  // }
+  // fetchCardData(URL)
+
+  updateBrowserUrl()
+
+    if (pageNumber > 1) {
+      setPageNumber(1);
+    } else {
+      coursesApiStatus.current.start();
+      handleFilteredData();
+    }
 }
 
 const fetchCardData=async(URL)=>{
@@ -864,7 +867,7 @@ const removeUpvote = async (item) => {
             props.filterExpandedStage ? 
               <div 
               className="course-page" 
-              // style={{zIndex:0}}
+              style={  mobileFiltersState ? {zIndex : 99999} : window.innerWidth <= 500 ? { marginTop : '2rem' } : null }
               > 
               {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={window.innerWidth <= 500 ? {background: props.theme ==='dark' ? '#222222' : '#DEDEDE'} : null}>
                 <div 
@@ -950,7 +953,7 @@ const removeUpvote = async (item) => {
               <div className="list-column">
                 <div
                   className="filter-container" 
-                  style={{ opacity: 1,marginTop:10}}
+                  style={{ opacity: 1,zIndex: -1}}
                 >
                   <div className="segment-container">
                     <SegmentedBar

@@ -6,24 +6,30 @@ import dropdownIcon from '../../assets/images/icons/dropdown.svg'
 import searchIcon from '../../assets/images/icons/searchIcon.svg'
 import { useRouter } from 'next/router'
 import credencLogoLight from '../../assets/images/icons/credenc-logo.svg'
+import UrlService from "../../helper/urlService";
 
 export default function HeaderMobile(props){
 
        const [selectedSubject,setSelectedSubject] = useState('All Subjects');
        let location = useRouter();
+       let nextURL=location?.asPath?.substring(2,location?.asPath?.length)
+       let urlService = useRef(new UrlService(nextURL));
+       
 
         useEffect(()=>{
             _getDataFromUrl()
-        },[location?.query?.subject])
+        },[])
 
         const _getDataFromUrl=()=>{
-            if(location?.query?.hasOwnProperty('subject')){
-                setSelectedSubject(location?.query?.subject)
+            let urlSubjectQuery = urlService.current.getValueFromEntry('subject')
+
+            if(urlSubjectQuery && Object.keys(urlSubjectQuery).length !== 0){
+                setSelectedSubject(urlSubjectQuery)
             }else{
                 setSelectedSubject('All Subjects')
             }
         }
-        console.log(props?.theme,"props.themeprops.theme+")
+
 
     return(
         <div className='mobile-header'>
