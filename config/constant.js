@@ -2,7 +2,7 @@ const constant= {
      ENV: 1, // DEV:1, STAGE:2, PROD:3 
     API_URL:{
       PROD: "https://edtechbackend.credenc.com",
-      DEV: "http://localhost:1337"
+      DEV: "http://0.0.0.0:1338"
     },
     COURSES:{
      SUB_CATEGORIES : [

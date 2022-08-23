@@ -36,6 +36,11 @@ export default function Home(props) {
       token={token}
       selectedSubject= {(item)=>props?.selectedSubject(item)}
       toggleSubjectDropdown={()=>props?.toggleSubjectDropdown()}
+      toggleFilterVisible={()=>props?.toggleFilterVisible()}
+      filterModalVisible={props?.filterModalVisible}
+      showSearchBar={props?.showSearchBar}
+      _showSearchBar={props?._showSearchBar}
+      hideSearchBar={props?.hideSearchBar}
     />
     }
    </>

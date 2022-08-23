@@ -4,6 +4,7 @@ import passNotVisibleIcon from "../../assets/images/icons/eye-close.svg";
 import googleIcon from "../../assets/images/icons/google-icon.svg";
 import linkedinIcon from "../../assets/images/icons/linkedin-icon.svg";
 import closeIcon from '../../assets/images/icons/close-icon-white.svg';
+import closeIconLight from '../../assets/images/icons/crossIcon.svg';
 import credencLogo from '../../assets/images/icons/credenc-logo.svg';
 import Input from "../input/Input";
 import Button from "../button/Button";
@@ -19,6 +20,7 @@ import GoogleLogin from "react-google-login";
 import constant from '../../config/constant'
 import Image from "next/image";
 import { useRouter } from 'next/router'
+import { useTheme } from "@emotion/react";
 
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 
@@ -29,7 +31,8 @@ export default function LoginModal({
   handleForgotPassword,
   changeNavbarVisibility,
   closeLoginModal,
-  openForgotPasswordModal
+  openForgotPasswordModal,
+  // theme
 }) {
 
   const modalStates = States.loginModalStates;
@@ -44,7 +47,7 @@ export default function LoginModal({
   const passwordInputInitialState = States.passwordInputInitialState;
   const [passwordInputState, setPasswordInputState] = useState({ ...passwordInputInitialState });
   const [confirmPassInputState, setConfirmPassInputState] = useState({ ...passwordInputInitialState });
-
+  const [theme,setTheme] = useState('')
   const [buttonState, setButtonState] = useState({});
 
   const [authApiStatus, setAuthApiStatus] = useState(ApiStatus.NOT_STARTED);
@@ -355,13 +358,22 @@ export default function LoginModal({
     }
   }, []);
 
+  useEffect(() => {
+    _retrieveData()
+  }, [])
+  
+  const _retrieveData=()=>{
+    let theme = localStorage.getItem('EdtechTheme')
+    setTheme(theme)
+  }
+
   return (
     <div className="login-modal" onClick={handleModalClose}>
       <div 
         className={`wrapper modal-container`} 
         onClick={(e) => e.stopPropagation()}>
         <div className="close-button" onClick={handleModalClose}>
-          <Image src={closeIcon} objectFit="cover" height={25} width={25} />
+          <Image src={ theme === 'dark' ? closeIcon : closeIconLight} objectFit="cover" height={25} width={25} />
         </div>
         <Link 
         to='/' 
@@ -375,6 +387,7 @@ export default function LoginModal({
           <SegmentedBar
             items={['Sign In', 'Sign Up']}
             handleTabNumber={(i) => setFormSegment(i)}
+            theme={theme}
           />
         </div>
         <div className="header-container">
@@ -439,7 +452,7 @@ export default function LoginModal({
               {" "}Privacy Policy and Disclaimer
             </a>
           </span>
-          {!isApiInProgress() && <Button text={buttonState.text} classes="btn-secondary small-wrapper-colored" onClick={handleSubmit} />}
+          {!isApiInProgress() && <Button text={buttonState.text} linearGradient='green' classes="btn-secondary small-wrapper-colored" onClick={handleSubmit} />}
           {isApiInProgress() && <CircularProgress />}
           <div className="or-divider">
             <div className="divider"></div>
@@ -465,12 +478,12 @@ export default function LoginModal({
                 )}
               />
             </div>
-            <div 
+            {/* <div 
             className='social-icon' 
             style={{ display:"flex",justifyContent:"center",alignItems:'center' }} 
             onClick={showPopup}>
                   <Image src={linkedinIcon} objectFit="cover" />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

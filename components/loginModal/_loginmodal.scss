@@ -1,5 +1,5 @@
 .login-modal{
-  z-index: 999;
+  z-index: 9999;
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -8,9 +8,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
+  
   // fallback background for unsupported browsers.
-  background: rgb(30, 31, 34, 0.8);
+  background: var(--defaultBackground);
   // background: rgba(196, 196, 196, 0.1);
   
   @supports ((backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px)) or (-ms-backdrop-filter: blur(20px)) or (-o-backdrop-filter: blur(20px))) {
@@ -26,7 +26,7 @@
     top: 1rem;
     right: 1rem;
     padding: 0.8rem;
-    background-color: #131416;
+    background-color: var(--defaultBackground);
     border-radius: 2rem;
     display: flex;
     justify-content: center;
@@ -45,7 +45,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #C5C7CA;
+    color: var(--contrastStrokeColor);
 
     .headline{
       font-weight: bold;
@@ -74,7 +74,8 @@
     box-sizing: border-box;
     padding: 3rem;
     border-radius: 2rem;
-    background-color: #1E1F22;
+    background-color: var(--defaultBackground);
+    border: 2px solid var(--subduedStrokeColor);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -104,7 +105,7 @@
         align-items: center;
         font-size: 1.2rem;
         line-height: 1.8rem;
-        color: #C5C7CA;
+        color: var(--defaultStrokeColor);
 
         div{
           cursor: pointer;
@@ -124,7 +125,7 @@
         color: #61666B;
         .link {
           text-decoration: none;
-          color: #C5C7CA;
+          color: var(--defaultStrokeColor);
         }
       }
 
@@ -138,7 +139,7 @@
           height: 5rem;
           cursor: pointer;
           padding: 1.5rem;
-          background-color: #313235;
+          background-color: var(--subduedBackground);
           margin: 0 0.8rem;
           border-radius: 50%;
           background-size: 40%;

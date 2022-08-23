@@ -14,6 +14,35 @@
    margin-top: 4.6rem;
   }
 
+  .banner{
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(94.15deg, #FF00DD 0%, #5100FF 99.97%);
+    overflow: scroll;
+    .text-content{
+     text-align: center;
+    }
+    .heading{
+     font-family:'Poppins';
+     font-size: 24px;
+     font-weight: 500;
+     line-height: 27px;
+     color: #FFFFFF;
+     margin-top: 40px;
+    }
+    .sub-header{
+     font-family:'Poppins';
+     font-size: 16px;
+     font-weight: 500;
+     line-height: 21px;
+     color: #FFFFFF;
+     margin-top: 12px;
+    }
+}
+
   .course-content{
   //  padding: 1rem 2.5rem 1rem 2.5rem;
   //  width: 95%;

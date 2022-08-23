@@ -11,6 +11,7 @@ import Button from '../button/Button';
 import profileIcon from '../../assets/images/icons/profile-icon.svg';
 import Lists from '../../config/list'
 import { useRouter } from 'next/router'
+import SearchBar from '../searchBar/SearchBar'
 const EdtechToken = 'credenc-edtech-authkey';
 
 export default function Header(props){
@@ -125,18 +126,26 @@ export default function Header(props){
             </div>
         
           </Link>
+          {
+            props?.showSearchBar ?
+              <div style={props?.showSearchBar ? {width : '25%',marginLeft: '20%'} : null}>
+                <SearchBar showSearchBar={props?.showSearchBar} />
+              </div> 
+          : null
+          }
+        
          <div className='user-elements'>
            {/* <Link> */}
          <div 
          className='icon-element' 
-         onClick={()=>props.toggleFilterExpandedStage()}
+         onClick={()=>props?.toggleFilterExpandedStage()}
          >
            <Image src={projectorIcon} objectFit="cover" alt='projectorIcon' />
          </div>
          {/* </Link>  */}
           {/* <Link href='bookmarks' className='nav-item bookmark' onClick={() => Mixpanel.track(MixpanelStrings.NAV_BOOKMARK_CLICKED)}> */}
            <div className='icon-element'>
-           <Image src={ props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon} objectFit="cover" alt='bookmarkIcon' />
+           <Image src={ props?.theme === 'dark' ? bookmarkIconDark : bookmarkIcon} objectFit="cover" alt='bookmarkIcon' />
            </div>
  
            <div onClick={()=>props.toggleTheme()} style={{cursor:"pointer",paddingLeft:10}}>

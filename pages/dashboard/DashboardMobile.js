@@ -862,6 +862,11 @@ const removeUpvote = async (item) => {
   })
 }
 
+const _handleFilterState=()=>{
+  setMobileFiltersState(true)
+  props?.toggleFilterVisible()
+}
+
    return(
         <div className="dashboard-mobile">
           {
@@ -1025,7 +1030,10 @@ const removeUpvote = async (item) => {
                 </div>
               </div>
               {window.innerWidth <= 500 && <div className='mobile-view-actions' style={{padding: 0}}>
-                <span className='filter' onClick={() => setMobileFiltersState(true)}><Image src={filterIcon} alt='filters' objectFit='cover' /></span>
+                <span 
+                className='filter' 
+                
+                ><Image src={filterIcon} alt='filters' objectFit='cover' onClick={() =>_handleFilterState() } /></span>
                 <FloatActionButton
                   type='course type'
                   heading={Lists.courseTypesFloatList[courseTypesFloatState]['name']}
@@ -1054,11 +1062,13 @@ const removeUpvote = async (item) => {
                     lineHeight: '1.6rem',
                     color: '#313235',
                   }}
+                  toggleFilterVisible={()=>props.toggleFilterVisible()}
                   floatList={[...Lists.sortByList]}
                   selected={sortState}
                   onSelect={(item, i) => {
                     setPageLoadSortState(null)
                     setSortState(i)
+                    props.toggleFilterVisible()
                     // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
                   }}
                 />
@@ -1126,6 +1136,7 @@ const removeUpvote = async (item) => {
                     selectSubject(item)
                     props.selectedSubject(item)
                     props.toggleSubjectDropdown()
+                    props.toggleFilterVisible()
                   }}
                 />
            : null
@@ -1134,9 +1145,9 @@ const removeUpvote = async (item) => {
         props?.loginModal ? 
         <div style={{width: '100%',height: '100%'}}>
         <LoginModalContainer
-         closeLoginModal={()=>props?.closeLoginModal()}
-         openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
-         forgotPasswordModal={props?.forgotPasswordModal}
+          closeLoginModal={()=>props?.closeLoginModal()}
+          openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
+          forgotPasswordModal={props?.forgotPasswordModal}
         /> 
         </div>
         : null

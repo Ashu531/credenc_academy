@@ -75,11 +75,11 @@ export default function CourseCard(props){
     <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} onClick={()=> props.openDetailModal() } >
   
       <div className='course-name' onMouseEnter={()=>setCourseNameTooltip(true)} onMouseLeave={()=>setCourseNameTooltip(false)}>
-        {props?.data?.name.length > 25 ? props?.data?.name.substring(0, 25) + '...' : props?.data?.name} 
+        {props?.data?.course_name.length > 25 ? props?.data?.course_name.substring(0, 25) + '...' : props?.data?.course_name} 
       </div>
       {
-      courseNameTooltip && props?.data?.name.length > 25 ?  <div className="course-name-tooltip">
-      <span className="course-name-tooltiptext">{props?.data?.name}</span>
+      courseNameTooltip && props?.data?.course_name.length > 25 ?  <div className="course-name-tooltip">
+      <span className="course-name-tooltiptext">{props?.data?.course_name}</span>
       </div> : null
       }
 

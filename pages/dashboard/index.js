@@ -31,6 +31,9 @@ export default function Dashboard(props) {
           forgotPasswordModal={props?.forgotPasswordModal}
           handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
           token={props?.token}
+          showSearchBar={props?.showSearchBar}
+          _showSearchBar={props?._showSearchBar}
+          hideSearchBar={props?.hideSearchBar}
         />}
         {isMobile && <DashboardMobile
           openFilterExpandedStage={props?.openFilterExpandedStage}
@@ -44,6 +47,8 @@ export default function Dashboard(props) {
           token={props?.token}
           selectedSubject= {(item)=>props?.selectedSubject(item)}
           toggleSubjectDropdown={()=>props?.toggleSubjectDropdown()}
+          toggleFilterVisible={()=>props?.toggleFilterVisible()}
+          filterModalVisible={props?.filterModalVisible}
         />}
         </>
       }

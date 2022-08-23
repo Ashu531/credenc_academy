@@ -66,7 +66,7 @@ export default function FooterMobile(props){
     }
   
     return(
-        <div className='mobile-footer'>
+        <div className='mobile-footer' style={ props?.filterModalVisible ? {zIndex: 0} : null }>
         <div className='mobile-footer-container'>
         <Link href='/'>
         <div className='mobile-footer-element'>

@@ -7,13 +7,22 @@ import searchIcon from '../../assets/images/icons/searchIcon.svg'
 import credencLogoLight from '../../assets/images/icons/credenc-logo.svg'
 
 export default function HeaderMobile(props){
+
+   const  _handleSubjectItem=()=>{
+        props?.toggleSubjectDropdown()
+        props?.toggleFilterVisible()
+    }
        
     return(
         <div className='mobile-header'>
             <div className='mobile-header_container'>
                 <Image src={props.theme === 'dark' ? credencLogoLight : credencLogo} objectFit="cover" alt='credencLogo' />
                 <div className='mobile-header-content'>
-                    <div className='mobile-header-element' style={{marginRight: 10}} onClick={()=>props.toggleSubjectDropdown()}>
+                    <div 
+                        className='mobile-header-element' 
+                        style={{marginRight: 10}} 
+                        onClick={()=> _handleSubjectItem()}
+                    >
                         <span className='all-subject-text'>{props.subjectName}</span>
                         <Image src={dropdownIcon} objectFit="cover" alt='dropdownIcon'/>
                     </div> 

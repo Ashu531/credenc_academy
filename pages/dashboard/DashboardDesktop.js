@@ -28,6 +28,7 @@ import closeIcon from '../../assets/images/icons/close-icon-grey.svg';
 import FloatActionButton from "../../components/floatActionButton/floatActionButton";
 import LoginModalContainer from '../../components/loginModal/LoginModalContainer'
 import ForgotPasswordModal from '../../components/forgotPasswordModal/ForgotPasswordModal'
+import SearchBar from '../../components/searchBar/SearchBar'
 
 
 const subjectKey = 'credenc-edtech-subject';
@@ -112,9 +113,12 @@ function DashboardDesktop(props) {
   const [isAppliedCostSlider, setIsAppliedCostSlider] = useState(false);
   const [sortState, setSortState] = useState(0);
   const [pageLoadSortState, setPageLoadSortState] = useState(null);
-
+  const [search,setSearch] = useState('');
   const [courseTypesFloatState, setCourseTypesFloatState] = useState(4)
   const [mobileFiltersState, setMobileFiltersState] = useState(false)
+  const [showSearchBar, setShowSearchBar] = useState(false);
+  const searchRef = useRef();
+  const [searchbarWidth, setSearchBarWidth] = useState("45%");
   let appliedFiltersCount = useRef(0);
 
   const [lastCourse, setLastCourse] = useState(null);
@@ -168,12 +172,12 @@ function DashboardDesktop(props) {
     const response = await fetch(`${constant.API_URL.DEV}/subject/search/`)
     const data = await response.json()
     let totalSubjectCount = 0;
-    data.data.forEach(item=>{
+    data?.data?.forEach(item=>{
       totalSubjectCount += item.count
     })
     let totalSubjectData = data?.data;
   
-    totalSubjectData.unshift(
+    totalSubjectData?.unshift(
     {
         "id": 0,
         "name": "All",
@@ -564,11 +568,12 @@ function DashboardDesktop(props) {
 
     // await delay(5000);
     let res;
-let token = null;
+    let token = null;
     if (token === null || !token) {
-      res = await axios.get(`${constant.API_URL.DEV}/batch/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
+      res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
         .then(res => {
           coursesApiStatus.current.success();
+          console.log(res,"res++++")
           return res.data;
         })
         .catch(err => {
@@ -576,7 +581,7 @@ let token = null;
           console.log(err);
         });
     } else {
-      res = await axios.get(`${constant.API_URL.DEV}/batch/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`, {
+      res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`, {
         headers: {
           'Authorization': `Bearer ${!!token ? token : ''}`
         }
@@ -853,6 +858,27 @@ const removeUpvote = async (item) => {
   })
 }
 
+const onScroll = () => {
+  if (searchRef.current.getBoundingClientRect().y < 371) {
+    setSearchBarWidth(
+      `${(searchRef.current.getBoundingClientRect().y / 370) * 49 + 35}%`
+    );
+  }
+  if (!props?.showSearchBar && searchRef.current.getBoundingClientRect().top < -80) {
+    props?._showSearchBar()
+  } else if (searchRef.current.getBoundingClientRect().top >= -80) {
+    props?.hideSearchBar()
+  }
+}
+useEffect(() => {
+  document.addEventListener("scroll", onScroll, true);
+  return () => document.removeEventListener("scroll", onScroll, true);
+}, []);
+
+const _handleSearch=(e)=>{
+   setSearch(e)
+}
+
  
 
  return(
@@ -1051,7 +1077,26 @@ const removeUpvote = async (item) => {
   : <div className="dashboard">
      <div className="dashboard-upper-section">
        
-       <Banner />
+        <div className='banner' ref={searchRef}> 
+          <div className='text-content'>
+          <h1 className='heading'>Be the next you!</h1>
+          <h2 className='sub-header'>Find your course from 20,000 hand picked courses</h2>
+          </div>
+          <div
+          style={{
+            width: `${searchbarWidth}`,
+            marginTop: 50,
+            marginBottom: 40,
+            zIndex: "1101",
+            visibility: `${props.showSearchBar ? "hidden" : "visible"}`,
+            transition: '10s ease-in ease-out',
+            transform: 'translateY(0)',
+          }}
+          >
+              <SearchBar searchbarWidth={searchbarWidth} search={search} handleSearch={(e)=>_handleSearch(e)} />
+          </div>
+         </div> 
+
        <div className="course-navbar">
        <Navbar 
         toggleFilterModal={openFilterModal} 
@@ -1216,6 +1261,7 @@ const removeUpvote = async (item) => {
          closeLoginModal={()=>props?.closeLoginModal()}
          openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
          forgotPasswordModal={props?.forgotPasswordModal}
+         theme={props?.theme}
         /> 
         </div>
         : null

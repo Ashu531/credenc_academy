@@ -32,6 +32,8 @@ class MyApp extends App {
      loginModal: false,
      forgotPasswordModal:false,
      navigation: false,
+     filterModalVisible: false,
+     showSearchBar: false,
     };
    
   }
@@ -165,6 +167,24 @@ class MyApp extends App {
       subjectName: item.name
     })
   }
+
+  toggleFilterVisible=()=>{
+    this.setState({
+      filterModalVisible: !this.state.filterModalVisible
+    })
+  }
+
+  _showSearchBar=()=>{
+    this.setState({
+     showSearchBar: true
+    })
+  }
+
+  hideSearchBar=()=>{
+    this.setState({
+     showSearchBar: false
+    })
+  }
  
 
   render(){
@@ -184,32 +204,38 @@ class MyApp extends App {
             loggedIn={this.state.loggedIn}
             openLoginModal={()=>this.openLoginModal()}
             logoutUser={()=>this.logoutUser()}
-            
-        /> : 
+            showSearchBar={this.state.showSearchBar}
+          /> : 
             <HeaderMobile
             // toggleTheme={this.toggleTheme} 
             theme={this.state.theme} 
             openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
             toggleSubjectDropdown={()=>this.toggleSubjectDropdown()}
             subjectName={this.state.subjectName}
+            toggleFilterVisible={()=>this.toggleFilterVisible()}
             />
           }
          <Component 
-          {...pageProps} 
-          theme={this.state.theme} 
-          filterExpandedStage={this.state.filterExpandedStage} 
-          openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
-          subjectDropdownMobile={this.state.subjectDropdownMobile}
-          loginModal={this.state.loginModal}
-          closeLoginModal={()=>this.closeLoginModal()}
-          openForgotPasswordModal={()=>this.openForgotPasswordModal()}
-          forgotPasswordModal={this.state.forgotPasswordModal}
-          handleForgotPasswordEnd={()=>this.handleForgotPasswordEnd()}
-          mobileLoginNavigation={this.state.navigation}
-          setMobileLoginNaviagtion={()=>this.setMobileLoginNaviagtion()}
-          logoutUser={()=>this.logoutUser()}
-          selectedSubject= {(item)=>this.selectedSubject(item)}
-          toggleSubjectDropdown={()=>this.toggleSubjectDropdown()}
+            {...pageProps} 
+            theme={this.state.theme} 
+            filterExpandedStage={this.state.filterExpandedStage} 
+            openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
+            subjectDropdownMobile={this.state.subjectDropdownMobile}
+            loginModal={this.state.loginModal}
+            closeLoginModal={()=>this.closeLoginModal()}
+            openForgotPasswordModal={()=>this.openForgotPasswordModal()}
+            forgotPasswordModal={this.state.forgotPasswordModal}
+            handleForgotPasswordEnd={()=>this.handleForgotPasswordEnd()}
+            mobileLoginNavigation={this.state.navigation}
+            setMobileLoginNaviagtion={()=>this.setMobileLoginNaviagtion()}
+            logoutUser={()=>this.logoutUser()}
+            selectedSubject= {(item)=>this.selectedSubject(item)}
+            toggleSubjectDropdown={()=>this.toggleSubjectDropdown()}
+            filterModalVisible={this.state.filterModalVisible}
+            toggleFilterVisible={()=>this.toggleFilterVisible()}
+            showSearchBar={this.state.showSearchBar}
+            _showSearchBar={this._showSearchBar}
+            hideSearchBar={this.hideSearchBar}
          />
          {
             window.innerWidth > 500 ? 
@@ -220,6 +246,7 @@ class MyApp extends App {
             openLoginModal={()=>this.openLoginModal()}
             setMobileLoginNaviagtion={()=>this.openMobileLoginNaviagtion()}
             theme={this.state.theme} 
+            filterModalVisible={this.state.filterModalVisible}
             />
          }
         <SlidingPanel
