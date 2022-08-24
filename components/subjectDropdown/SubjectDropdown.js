@@ -13,9 +13,9 @@ export default function SubjectDropdown(props){
                         {/* <Image /> */}
                         <h1 className='subject-element-title' style={props?.selectedSubject?.name === item?.name ? {color:"#5FAE3A" } : {color: "#222222"}}> {item?.name}</h1>
                     </div>
-                    <div className='subject-element-count'>
+                    {/* <div className='subject-element-count'>
                      {item?.count}
-                    </div>    
+                    </div>     */}
                      </div>  
                      {
                         props?.selectedSubject?.name === item?.name ?  

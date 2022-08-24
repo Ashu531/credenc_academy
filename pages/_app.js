@@ -1,6 +1,7 @@
 import App from 'next/app';
 import '../styles/globals.scss'
 import { useRouter } from "next/router";
+import React from 'react';
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from 'redux'
 import ReduxThunk from "redux-thunk";
@@ -14,6 +15,9 @@ import FooterModal from '../components/footerModal/FooterModal';
 import SlidingPanel from 'react-sliding-side-panel';
 import FooterMobile from '../components/footerMobile/FooterMobile'
 import Header from '../components/header/Header';
+import constant from '../config/constant';
+import axios from "axios";
+import ApiStatus from "../config/apiStatus";
 const EdtechTheme = 'credenc-edtech-theme';
 const EdtechToken = 'credenc-edtech-authkey';
 
@@ -34,13 +38,16 @@ class MyApp extends App {
      navigation: false,
      filterModalVisible: false,
      showSearchBar: false,
+     search: '',
+     searchData: []
     };
-   
+    this.coursesApiStatus = React.createRef(new ApiStatus());
   }
 
   componentDidMount() {
     this._retrieveData();
     this._mountComponent();
+    
   }
 
   _mountComponent=()=>{
@@ -105,6 +112,12 @@ class MyApp extends App {
   openFilterExpandedStage=()=>{
     this.setState({
       filterExpandedStage: true
+    })
+  }
+
+  closeFilterExpandedStage=()=>{
+    this.setState({
+      filterExpandedStage: false
     })
   }
 
@@ -185,6 +198,33 @@ class MyApp extends App {
      showSearchBar: false
     })
   }
+
+  _handleSearch=(e)=>{
+    this.setState({
+      search: e
+    },()=>{
+      this._getCardData(e)
+    })
+  }
+
+  _getCardData = async(value)=>{
+
+    // this.coursesApiStatus.current.makeApiCall();
+    let pageNumber=0
+
+    let res = await axios.get(`${constant.API_URL.DEV}/search/?search=${value}/${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
+    .then(res => {
+      // this.coursesApiStatus.current.success();
+      this.setState({
+        searchData: res.data
+      })
+      return res.data;
+    })
+    .catch(err => {
+      // this.coursesApiStatus.current.failed();
+      console.log(err);
+    });
+  }
  
 
   render(){
@@ -205,7 +245,13 @@ class MyApp extends App {
             openLoginModal={()=>this.openLoginModal()}
             logoutUser={()=>this.logoutUser()}
             showSearchBar={this.state.showSearchBar}
-          /> : 
+            _showSearchBar={this._showSearchBar}
+            searchValue={this.state.search}
+            handleSearch={this._handleSearch}
+            closeFilterExpandedStage={()=>this.closeFilterExpandedStage()}
+            openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
+            hideSearchBar={this.hideSearchBar}
+           /> : 
             <HeaderMobile
             // toggleTheme={this.toggleTheme} 
             theme={this.state.theme} 
@@ -236,6 +282,10 @@ class MyApp extends App {
             showSearchBar={this.state.showSearchBar}
             _showSearchBar={this._showSearchBar}
             hideSearchBar={this.hideSearchBar}
+            searchValue={this.state.search}
+            handleSearch={this._handleSearch}
+            closeFilterExpandedStage={()=>this.closeFilterExpandedStage()}
+            searchData={this.state.searchData}
          />
          {
             window.innerWidth > 500 ? 

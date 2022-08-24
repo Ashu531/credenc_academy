@@ -138,8 +138,8 @@ function DashboardDesktop(props) {
     
  const getDataFromBaseUrl=()=>{
 
-  let urlSubjectQuery = urlService.current.getValueFromEntry('subject')
-  let urlSubCategoryQuery = urlService.current.getValueFromEntry('sub_category')
+  let urlSubjectQuery = urlService.current.getValueFromEntry('domain')
+  let urlSubCategoryQuery = urlService.current.getValueFromEntry('subject')
 
     if(urlSubjectQuery && Object.keys(urlSubjectQuery).length !== 0){
      let data={
@@ -202,12 +202,12 @@ function DashboardDesktop(props) {
 
   const _getSubjectDetails=(item)=>{
 
-    urlService.current.removeEntry('subject')
+    urlService.current.removeEntry('domain')
     
     if(item.name === "All"){
       // urlService.current.addEntry('subject', 'All');
     }else{
-      urlService.current.addEntry('subject', item.name);
+      urlService.current.addEntry('domain', item.name);
     }
     
     getCardData(item)
@@ -215,12 +215,12 @@ function DashboardDesktop(props) {
 
   const _getSubCategoryDetails=(item)=>{
 
-    urlService.current.removeEntry('sub_category')
+    urlService.current.removeEntry('subject')
 
     if(selectedSubject.name === "All"){
-      urlService.current.addEntry('sub_category', item.title);
+      urlService.current.addEntry('subject', item.title);
     }else{
-      urlService.current.addEntry('sub_category', item.title);
+      urlService.current.addEntry('subject', item.title);
     }
   
     getCardData(item)
@@ -357,12 +357,17 @@ function DashboardDesktop(props) {
    const updateQueryString = (i, filter, list) => {
 
     urlService.current.removeEntry(filter);
+    urlService.current.removeEntry('search');
 
     list.forEach(item => {
       if (item['isApplied']) {
         urlService.current.addEntry(filter, item['filterValue']);
       }
     });
+
+    if(props?.searchValue && props?.searchValue?.length > 0){
+      urlService.current.addEntry('search', props?.searchValue);
+    }
 
   }
 
@@ -539,8 +544,8 @@ function DashboardDesktop(props) {
     urlService.current.removeEntry(queries.MIN_PRICE);
     urlService.current.removeEntry(queries.MAX_PRICE);
     history.replaceState({}, null, '?' + urlService.current.getUpdatedUrl().replaceAll('+', ' '));
-    urlService.current.addEntry(queries.MIN_PRICE, costRange.min);
-    urlService.current.addEntry(queries.MAX_PRICE, costRange.max);
+    // urlService.current.addEntry(queries.MIN_PRICE, costRange.min);
+    // urlService.current.addEntry(queries.MAX_PRICE, costRange.max);
 
   }
 
@@ -565,7 +570,6 @@ function DashboardDesktop(props) {
     }
 
     coursesApiStatus.current.makeApiCall();
-
     // await delay(5000);
     let res;
     let token = null;
@@ -573,7 +577,6 @@ function DashboardDesktop(props) {
       res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
         .then(res => {
           coursesApiStatus.current.success();
-          console.log(res,"res++++")
           return res.data;
         })
         .catch(err => {
@@ -733,15 +736,21 @@ function DashboardDesktop(props) {
       // resetFilters(false);
       // urlService.current.changeEntry('subject', `${location.query}`);
 
+     
+      if(!location.query.hasOwnProperty('subject') && !location.query.hasOwnProperty('domain')){
+        props.openFilterExpandedStage();
+      }
+      if(location.query.hasOwnProperty('search')){
+        props?.handleSearch(location?.query?.search)
+        props?._showSearchBar()
+      }
+
       if (pageNumber > 1) {
         setPageNumber(1);
       } else {
-        handleFilteredData(false);
+        handleFilteredData();
       }
-      if(!location.query.hasOwnProperty('subject') && !location.query.hasOwnProperty('sub_category')){
-        props.openFilterExpandedStage();
-      }
-  }
+   }
   }, [location?.query]);
 
   useEffect(() => {
@@ -817,7 +826,7 @@ function DashboardDesktop(props) {
 
   const upvote = async (item) => {
 
-    await axios.post(`${constant.API_URL.PROD}/batch/upvote/add`, {
+    await axios.post(`${constant.API_URL.DEV}/batch/upvote/add`, {
         "batch_id": item.id,
         "is_up_vote": "true"
     }, {
@@ -838,7 +847,7 @@ function DashboardDesktop(props) {
 }
 
 const removeUpvote = async (item) => {
-  await axios.post(`${constant.API_URL.PROD}/batch/upvote/remove/`, {
+  await axios.post(`${constant.API_URL.DEV}/batch/upvote/remove/`, {
       "batch_id": item.id,
       "is_up_vote": "false"
   }, {
@@ -859,28 +868,77 @@ const removeUpvote = async (item) => {
 }
 
 const onScroll = () => {
-  if (searchRef.current.getBoundingClientRect().y < 371) {
-    setSearchBarWidth(
-      `${(searchRef.current.getBoundingClientRect().y / 370) * 49 + 35}%`
-    );
-  }
-  if (!props?.showSearchBar && searchRef.current.getBoundingClientRect().top < -80) {
-    props?._showSearchBar()
-  } else if (searchRef.current.getBoundingClientRect().top >= -80) {
-    props?.hideSearchBar()
+  if(searchRef && searchRef.current !== null){
+    if (searchRef.current.getBoundingClientRect().y < 371) {
+      setSearchBarWidth(
+        `${(searchRef.current.getBoundingClientRect().y / 370) * 49 + 35}%`
+      );
+    }
+    if (!props?.showSearchBar && searchRef.current.getBoundingClientRect().top < -80) {
+      props?._showSearchBar()
+    } else if (searchRef.current.getBoundingClientRect().top >= -80) {
+      props?.hideSearchBar()
+    }
   }
 }
 useEffect(() => {
-  document.addEventListener("scroll", onScroll, true);
-  return () => document.removeEventListener("scroll", onScroll, true);
+    document.addEventListener("scroll", onScroll, true);
+    return () => document.removeEventListener("scroll", onScroll, true);
 }, []);
 
 const _handleSearch=(e)=>{
-   setSearch(e)
-}
+  if(e && e.length > 0){
+    props?.openFilterExpandedStage()
+    props?._showSearchBar()
+    }
+    // else{
+    //   props.closeFilterExpandedStage()
+    // }
+   props?.handleSearch(e)
+  }
 
- 
+  let searchData = props?.searchData;
 
+  useEffect(() => {
+     if(props?.searchData?.data && props?.searchData?.data.length > 0 ){
+      setCourses([...props.searchData.data]);
+      setCourseCardData([...props.searchData.data])
+     }
+  }, [searchData?.data]);
+
+  const _getCardData = async()=>{
+    this.coursesApiStatus.current.makeApiCall();
+    let pageNumber=0
+
+    let res = await axios.get(`${constant.API_URL.DEV}/search/?search=${props?.searchValue}/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
+    .then(res => {
+      this.coursesApiStatus.current.success();
+      return res.data;
+    })
+    .catch(err => {
+      this.coursesApiStatus.current.failed();
+      console.log(err);
+    });
+  }
+
+  useEffect(() => {
+    if(props?.searchData?.data && props?.searchData?.data.length > 0 ){
+     setCourses([...props.searchData.data]);
+     setCourseCardData([...props.searchData.data])
+    }
+  }, [searchData?.data]);
+
+  let searchItem = props?.searchValue;
+
+  useEffect(() => {
+
+    if(props?.searchValue && props?.searchValue.length > 0){
+      urlService.current.removeEntry('search')
+      urlService.current.addEntry('search',props?.searchValue);
+    }
+  }, [searchItem]);
+
+  
  return(
         <div>      
 {
@@ -1093,7 +1151,7 @@ const _handleSearch=(e)=>{
             transform: 'translateY(0)',
           }}
           >
-              <SearchBar searchbarWidth={searchbarWidth} search={search} handleSearch={(e)=>_handleSearch(e)} />
+              <SearchBar searchbarWidth={searchbarWidth} search={props.searchValue} handleSearch={(e)=>_handleSearch(e)} />
           </div>
          </div> 
 

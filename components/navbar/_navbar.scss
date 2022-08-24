@@ -17,16 +17,16 @@
        .navbar-arrow-container{
         box-sizing: border-box;
         display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-// padding: 10px;
-// gap: 10px;
-border: 1px solid var(--subduedStrokeColor);
-border-radius: 100px;
-width: 32px;
-height: 32px;
-cursor: pointer;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        // padding: 10px;
+        // gap: 10px;
+        border: 1px solid var(--subduedStrokeColor);
+        border-radius: 100px;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
        }
 
     .subject-tab{
@@ -54,12 +54,12 @@ cursor: pointer;
 
     .dashboard-subject-modal{
         
-background: var(--defaultBackground);
-box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.15);
-backdrop-filter: blur(60px);
-border-radius: 12px;
-z-index: 999;
-margin-top: -2.2vh;
+        background: var(--defaultBackground);
+        box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(60px);
+        border-radius: 12px;
+        z-index: 999;
+        margin-top: 6vh;
 
     }
    

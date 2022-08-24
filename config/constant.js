@@ -11,12 +11,12 @@ const constant= {
         title: "UI UX Design"
        },
        {
-        id:1,
-        title: "Marketing"
+        id:2,
+        title: "AI & Machine Learning"
        },
        {
-        id:1,
-        title: "Ram"
+        id:3,
+        title: "Entrepreneurship"
        },
      ]
     },

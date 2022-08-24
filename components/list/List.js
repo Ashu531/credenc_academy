@@ -70,22 +70,7 @@ function List({
               else
               bookmarkVisible = false
             }
-             return i === list.length - 1 ? 
-            <div key={`${item.id}:${i}`} ref={setLastElement}>
-              {/* <CourseCardContainer 
-                item={item}
-                handleClick={onItemClick}
-                onAddToBookmark={handleAddItemToBookmark}
-                onRemoveFromBookmark={handleRemoveItemFromBookmark}
-                onAddToCompare={handleAddItemToCompare}
-                onRemoveFromCompare={handleRemoveItemFromCompare}
-                upvoteList={upvoteList}
-                handleSignInClick={handleSignInClick}
-              /> */}
-            </div>
-            : 
-
-            <CourseCard 
+             return <CourseCard 
              data={item} 
              key={`${item.id}:${i}`} 
              openDetailModal={()=>openDetailModal(item)}
@@ -96,7 +81,6 @@ function List({
              setUpvoteCount={()=> setUpvoteCount(item)}
              removeUpvoteCount={()=> removeUpvoteCount(item)}
             />
-            null
           })
         );
       } else {

@@ -34,6 +34,10 @@ export default function Dashboard(props) {
           showSearchBar={props?.showSearchBar}
           _showSearchBar={props?._showSearchBar}
           hideSearchBar={props?.hideSearchBar}
+          searchValue={props?.searchValue}
+          handleSearch={props?.handleSearch}
+          closeFilterExpandedStage={()=>props?.closeFilterExpandedStage()}
+          searchData={props?.searchData}
         />}
         {isMobile && <DashboardMobile
           openFilterExpandedStage={props?.openFilterExpandedStage}

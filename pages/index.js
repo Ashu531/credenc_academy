@@ -41,6 +41,10 @@ export default function Home(props) {
       showSearchBar={props?.showSearchBar}
       _showSearchBar={props?._showSearchBar}
       hideSearchBar={props?.hideSearchBar}
+      searchValue={props?.searchValue}
+      handleSearch={props?.handleSearch}
+      closeFilterExpandedStage={()=>props?.closeFilterExpandedStage()}
+      searchData={props.searchData}
     />
     }
    </>

@@ -19,7 +19,7 @@ import goUpIcon from '../../assets/images/icons/caret-up-grey.svg'
 import closeIcon from '../../assets/images/icons/close-icon-grey.svg'
 import States from '../../values/states';
 import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
-import { width } from 'dom-helpers';
+import profileIcon from '../../assets/images/icons/profile-icon.svg';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const compareKey = 'credenc-marketplace-compares';
 const EdtechTheme = 'EdtechTheme';
@@ -78,7 +78,7 @@ export default function DetailModal(props){
         props.addToBookmark(props?.detailData)
         setBookmarkVisible(!bookmarkVisible)
     }
-    console.log(theme,"theme++++")
+    console.log(props.detailData,"theme++++")
     return(
         <>
         {
@@ -167,7 +167,7 @@ export default function DetailModal(props){
                 </span>
                 <span className='content-detail'>
                     <Image src={onlineIcon} objectFit="cover"/>
-                    {props?.detailData?.class_mode.map((item,index)=>{
+                    {props?.detailData?.class_modes.map((item,index)=>{
                         return(
                             <span className='content-detail-text' key={index}>
                             {item}
@@ -208,7 +208,7 @@ export default function DetailModal(props){
                            return(
                             <span className='skill-text-content' key={index}>
                             <span className='skill-text'>
-                            {item.name}
+                            {item}
                             </span>
                             </span>
                            )
@@ -224,10 +224,10 @@ export default function DetailModal(props){
                 </div>
                 <div className='avatar-container'>
                 {
-                   props?.detailData?.tutor && props?.detailData?.tutor.map((item,index)=>{
+                   props?.detailData?.instructor && props?.detailData?.instructor.map((item,index)=>{
                        return( 
                        <span key={index} className="avatar-content" >
-                            <Image src={item?.profile_photo} height={30} width={30} alt='avatar' style={{borderRadius: '50%'}} objectFit='contain'/>
+                            <Image src={item?.profile_photo ? item?.profile_photo : profileIcon} height={30} width={30} alt='avatar' style={{borderRadius: '50%'}} objectFit='contain'/>
                         </span>
                         )
                     })
@@ -280,7 +280,7 @@ export default function DetailModal(props){
          >
             <div className='detail-modal-footer-section-left'>
                 <span className='price-text'>
-                {props?.detailData?.price}
+                ₹{props?.detailData?.price}
                 </span>
             </div>
             <div className='detail-modal-footer-section-right' 

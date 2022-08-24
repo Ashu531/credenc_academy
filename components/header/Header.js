@@ -10,14 +10,18 @@ import SecondaryDropdown from '../primaryDropdown/SecondaryDropdown';
 import Button from '../button/Button';
 import profileIcon from '../../assets/images/icons/profile-icon.svg';
 import Lists from '../../config/list'
-import { useRouter } from 'next/router'
 import SearchBar from '../searchBar/SearchBar'
+import UrlService from "../../helper/urlService";
+import { useRouter } from 'next/router'
 const EdtechToken = 'credenc-edtech-authkey';
 
 export default function Header(props){
 
-  const [token,setToken] = useState('')
   let location = useRouter();
+  let nextURL=location?.asPath?.substring(2,location?.asPath?.length)
+  let urlService = useRef(new UrlService(nextURL));
+
+  const [token,setToken] = useState('')
 
   useEffect(()=>{
     _getAuthKey()
@@ -112,6 +116,16 @@ export default function Header(props){
     })
   }
 
+  const _handleSearch=(e)=>{
+
+    if(e.length === 0){
+      props?.closeFilterExpandedStage()
+      props?.hideSearchBar()
+      }
+    props?.handleSearch(e) 
+   
+  }
+
     return(
         <div className='navbar-wrapper'>
         
@@ -129,24 +143,24 @@ export default function Header(props){
           {
             props?.showSearchBar ?
               <div style={props?.showSearchBar ? {width : '25%',marginLeft: '20%'} : null}>
-                <SearchBar showSearchBar={props?.showSearchBar} />
+                <SearchBar showSearchBar={props?.showSearchBar} search={props?.searchValue} handleSearch={(e)=>_handleSearch(e)} />
               </div> 
           : null
           }
         
          <div className='user-elements'>
            {/* <Link> */}
-         <div 
+         {/* <div 
          className='icon-element' 
          onClick={()=>props?.toggleFilterExpandedStage()}
          >
            <Image src={projectorIcon} objectFit="cover" alt='projectorIcon' />
-         </div>
+         </div> */}
          {/* </Link>  */}
           {/* <Link href='bookmarks' className='nav-item bookmark' onClick={() => Mixpanel.track(MixpanelStrings.NAV_BOOKMARK_CLICKED)}> */}
-           <div className='icon-element'>
+           {/* <div className='icon-element'>
            <Image src={ props?.theme === 'dark' ? bookmarkIconDark : bookmarkIcon} objectFit="cover" alt='bookmarkIcon' />
-           </div>
+           </div> */}
  
            <div onClick={()=>props.toggleTheme()} style={{cursor:"pointer",paddingLeft:10}}>
             <span className='change-theme-text'>Change Theme</span>
