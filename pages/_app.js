@@ -249,7 +249,7 @@ class MyApp extends App {
             searchValue={this.state.search}
             handleSearch={this._handleSearch}
             closeFilterExpandedStage={()=>this.closeFilterExpandedStage()}
-            openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
+            // openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
             hideSearchBar={this.hideSearchBar}
            /> : 
             <HeaderMobile
