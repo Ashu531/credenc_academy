@@ -147,7 +147,7 @@ function DashboardMobile(props) {
     }
 
   const _getCardData=async()=>{
-    const response = await fetch(`${constant.API_URL.DEV}/batch/search/`)
+    const response = await fetch(`${constant.API_URL.DEV}/course/search/`)
     const data = await response.json()
     setCourseCardData(data.data)
   }
@@ -475,7 +475,7 @@ const handleSearchClicked = async (forcePageNumber = 0) => {
   let res;
 let token = null;
   if (token === null || !token) {
-    res = await axios.get(`${constant.API_URL.DEV}/batch/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
+    res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
       .then(res => {
         coursesApiStatus.current.success();
         return res.data;
@@ -485,7 +485,7 @@ let token = null;
         console.log(err);
       });
   } else {
-    res = await axios.get(`${constant.API_URL.DEV}/batch/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`, {
+    res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`, {
       headers: {
         'Authorization': `Bearer ${!!token ? token : ''}`
       }
@@ -727,7 +727,7 @@ const getSubjectData=async()=>{
 }
 
 const getDataFromBaseUrl=(totalSubjectData)=>{
-  if(location?.query?.hasOwnProperty('subject') ){
+  if(location?.query?.hasOwnProperty('domain') ){
     let data = totalSubjectData?.filter(item=> {
       if(item.name === location?.query?.subject){
         return item
@@ -754,12 +754,12 @@ const selectSubject=(item)=>{
 
 const _getSubjectDetails=(item)=>{
 
-  urlService.current.removeEntry('subject')
+  urlService.current.removeEntry('domain')
    
   if(item.name === "All"){
   
   }else{
-    urlService.current.addEntry('subject', item.name);
+    urlService.current.addEntry('domain', item.name);
   }
   
   getCardDetails(item)

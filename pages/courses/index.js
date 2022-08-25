@@ -353,7 +353,7 @@ const CoursePage = ({
     let res;
 
     if (token === null || !token) {
-      res = await axios.get(`${constant.API_URL.DEV}/batch/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
+      res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
         .then(res => {
           coursesApiStatus.current.success();
           return res.data;
@@ -363,7 +363,7 @@ const CoursePage = ({
           console.log(err);
         });
     } else {
-      res = await axios.get(`${constant.API_URL.DEV}/batch/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`, {
+      res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`, {
         headers: {
           'Authorization': `Bearer ${!!token ? token : ''}`
         }
