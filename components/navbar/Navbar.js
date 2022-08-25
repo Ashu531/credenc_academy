@@ -53,11 +53,11 @@ export default function SubjectNavbar(props){
          {
             subjectModalVisible ? 
              <div className="dashboard-subject-modal" >
-            <SubjectDropdown  
-            categories={props?.subjectData} 
-            selectedSubject={props?.selectedSubject} 
-            selectSubject={props?.selectSubject}
-            />
+                <SubjectDropdown  
+                    categories={props?.subjectData} 
+                    selectedSubject={props?.selectedSubject} 
+                    selectSubject={props?.selectSubject}
+                />
             </div> : null
          }
         </div>
