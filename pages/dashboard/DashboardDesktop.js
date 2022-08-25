@@ -604,6 +604,11 @@ function DashboardDesktop(props) {
 
   const handleFilteredData = async (updatePageNumber = true) => {
     coursesApiStatus.current.start();
+    urlService.current.removeEntry('search');
+    if(props?.searchValue && props?.searchValue?.length > 0){
+      urlService.current.addEntry('search', props?.searchValue);
+    }
+   
     let res = await handleSearchClicked();
     // if (forcePageNumber === 1) setForcePageNumber(0);
     if (pageNumber <= 1 || updatePageNumber === false) {
@@ -781,7 +786,6 @@ function DashboardDesktop(props) {
       if (pageNumber > 1) {
         setPageNumber(1);
       } else {
-       
         handleFilteredData(false);
       }
     }
@@ -897,14 +901,14 @@ const _handleSearch=(e)=>{
    props?.handleSearch(e)
   }
 
-  let searchData = props?.searchData;
-
   useEffect(() => {
      if(props?.searchData?.data && props?.searchData?.data.length > 0 ){
       setCourses([...props.searchData.data]);
       setCourseCardData([...props.searchData.data])
+     }else{
+       handleFilteredData(false)
      }
-  }, [searchData?.data]);
+  }, [props?.searchData]);
 
   const _getCardData = async()=>{
     this.coursesApiStatus.current.makeApiCall();
@@ -920,24 +924,6 @@ const _handleSearch=(e)=>{
       console.log(err);
     });
   }
-
-  useEffect(() => {
-    if(props?.searchData?.data && props?.searchData?.data.length > 0 ){
-     setCourses([...props.searchData.data]);
-     setCourseCardData([...props.searchData.data])
-    }
-  }, [searchData?.data]);
-
-  let searchItem = props?.searchValue;
-
-  useEffect(() => {
-
-    if(props?.searchValue && props?.searchValue.length > 0){
-      urlService.current.removeEntry('search')
-      urlService.current.addEntry('search',props?.searchValue);
-    }
-  }, [searchItem]);
-
   
  return(
         <div>      
