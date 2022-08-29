@@ -38,7 +38,7 @@ export default function EditProfile(props) {
 
     const _getProfileData=async()=>{
         userApiStatus.current.start();
-        let res = await getDataFromUrl(`${constant.API_URL.PROD}/profiles/`, props.token, userApiStatus)
+        let res = await getDataFromUrl(`${constant.API_URL.DEV}/profiles/`, props.token, userApiStatus)
         .then(res => {
             setEmail(res?.email)
             setName(res?.full_name)
@@ -84,7 +84,7 @@ export default function EditProfile(props) {
     useEffect(() => {
         async function getProfileDetails(){
         userApiStatus.current.start();
-        let res = await getDataFromUrl(`${constant.API_URL.PROD}/profiles/`, props.token, userApiStatus)
+        let res = await getDataFromUrl(`${constant.API_URL.DEV}/profiles/`, props.token, userApiStatus)
         .then(res => {
             console.log(res,"response++")
             setEmail(res?.email)

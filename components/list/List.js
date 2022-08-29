@@ -26,8 +26,10 @@ function List({
     addToCompare,
     addToBookmark,
     compareText,
-    setUpvoteCount,
-    removeUpvoteCount
+    openApplyNowModal,
+    upvoteCard,
+    upvoteCardDataAction,
+    upvoteCardDetail,
 }) {
   
 
@@ -78,8 +80,10 @@ function List({
              addToBookmark={()=>addToBookmark(item)}
              compareText={compareText(item)}
              bookmarkVisible={bookmarkVisible}
-             setUpvoteCount={()=> setUpvoteCount(item)}
-             removeUpvoteCount={()=> removeUpvoteCount(item)}
+             openApplyNowModal={(item)=> openApplyNowModal(item)}
+             upvoteCardData={(item)=>upvoteCardDataAction(item)}
+             upvoteCard={upvoteCard}
+             upvoteCardDetail={upvoteCardDetail}
             />
           })
         );

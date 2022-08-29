@@ -44,7 +44,9 @@ export default function Home(props) {
       searchValue={props?.searchValue}
       handleSearch={props?.handleSearch}
       closeFilterExpandedStage={()=>props?.closeFilterExpandedStage()}
-      searchData={props.searchData}
+      searchData={props?.searchData}
+      handleLogout={()=>props?.handleLogout()}
+      handleLogin={()=>props?.handleLogin()}
     />
     }
    </>

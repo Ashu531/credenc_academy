@@ -1148,6 +1148,8 @@ const _handleFilterState=()=>{
           closeLoginModal={()=>props?.closeLoginModal()}
           openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
           forgotPasswordModal={props?.forgotPasswordModal}
+          handleLogout={props?.handleLogout}
+          handleLogin={()=>props?.handleLogin()}
         /> 
         </div>
         : null

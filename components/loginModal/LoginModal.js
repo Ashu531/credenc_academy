@@ -32,6 +32,7 @@ export default function LoginModal({
   changeNavbarVisibility,
   closeLoginModal,
   openForgotPasswordModal,
+  handleLogin,
   // theme
 }) {
 
@@ -121,7 +122,7 @@ export default function LoginModal({
   }
 
   const signUp = async () => {
-    const response = await axios.post(`${constant.API_URL.PROD}/signup/`, {
+    const response = await axios.post(`${constant.API_URL.DEV}/signup/`, {
       full_name: nameInputState.trim(),
       password: passwordInputState.value.trim(),
       password2: confirmPassInputState.value.trim(),
@@ -153,7 +154,7 @@ export default function LoginModal({
   }
 
   const signIn = async () => {
-    const response = await axios.post(`${constant.API_URL.PROD}/login/`, {
+    const response = await axios.post(`${constant.API_URL.DEV}/login/`, {
       password: passwordInputState.value.trim(),
       email: emailInputState.trim()
     })
@@ -164,6 +165,7 @@ export default function LoginModal({
         setAuthApiStatus(ApiStatus.SUCCESS);
         setTimeout(() => location.reload(), 100)
         handleModalClose();
+        handleLogin()
         return res.data;
       } catch(e) {
         console.log(e);
@@ -212,7 +214,7 @@ export default function LoginModal({
     }
     setAuthApiStatus(ApiStatus.PENDING);
 
-    let googleLogInRes = await axios.post(`${constant.API_URL.PROD}/google/`, {
+    let googleLogInRes = await axios.post(`${constant.API_URL.DEV}/google/`, {
       auth_token: response.tokenId,
     })
     .then(res => {
@@ -220,6 +222,7 @@ export default function LoginModal({
         dispatchLogin(res.data.tokens);
         setAuthApiStatus(ApiStatus.SUCCESS);
         handleModalClose();
+        handleLogin()
         return res.data;
       } catch(e) {
         console.log(e);
@@ -292,7 +295,7 @@ export default function LoginModal({
     // -- linkedIn backend call
     setAuthApiStatus(ApiStatus.PENDING);
     if (!!code) {
-      let linekdInRes = await axios.post(`${constant.API_URL.PROD}/linkedin/`, {
+      let linekdInRes = await axios.post(`${constant.API_URL.DEV}/linkedin/`, {
         'code': `${code}`
       })
       .then(res => {

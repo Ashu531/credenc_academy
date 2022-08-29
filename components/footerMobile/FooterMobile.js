@@ -21,7 +21,7 @@ export default function FooterMobile(props){
 
     useEffect(()=>{
       _retrieveData()
-    },[])
+    },[props?.loggedIn])
 
     const _retrieveData=()=>{
       let authKey = localStorage.getItem(EdtechToken)

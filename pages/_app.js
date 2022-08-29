@@ -57,24 +57,37 @@ class MyApp extends App {
   }
 
   _retrieveData=()=>{
-  let localTheme = localStorage.getItem("EdtechTheme");
-   if(localTheme && localTheme.length > 0){
-    this.setState({
-     theme: localTheme
-    })
-   }else{
-    this.setState({
-      theme: "light"
-    })
-   }
+    let localTheme = localStorage.getItem("EdtechTheme");
+    if(localTheme && localTheme.length > 0){
+      this.setState({
+      theme: localTheme
+      })
+    }else{
+      this.setState({
+        theme: "light"
+      })
+    }
 
-   let token = localStorage.getItem(EdtechToken)
-   if(token && token.length > 0){
-     this.setState({
-       loggedIn: true
-     })
-   }
+    let token = localStorage.getItem(EdtechToken)
+    if(token && token.length > 0){
+      this.setState({
+        loggedIn: true
+      })
+    }
+  }
 
+  _handleLogout=()=>{
+    console.log("coming123")
+    this.setState({
+      loggedIn: false
+    })
+  }
+
+  _handleLogin=()=>{
+    console.log("cominglogin")
+    this.setState({
+      loggedIn: true
+    })
   }
 
 
@@ -286,6 +299,8 @@ class MyApp extends App {
             handleSearch={this._handleSearch}
             closeFilterExpandedStage={()=>this.closeFilterExpandedStage()}
             searchData={this.state.searchData}
+            handleLogout={()=>this._handleLogout()}
+            handleLogin={()=>this._handleLogin()}
          />
          {
             window.innerWidth > 500 ? 
@@ -297,6 +312,7 @@ class MyApp extends App {
             setMobileLoginNaviagtion={()=>this.openMobileLoginNaviagtion()}
             theme={this.state.theme} 
             filterModalVisible={this.state.filterModalVisible}
+            loggedIn={this.state.loggedIn}
             />
          }
         <SlidingPanel

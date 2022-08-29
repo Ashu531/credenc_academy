@@ -29,6 +29,7 @@ import FloatActionButton from "../../components/floatActionButton/floatActionBut
 import LoginModalContainer from '../../components/loginModal/LoginModalContainer'
 import ForgotPasswordModal from '../../components/forgotPasswordModal/ForgotPasswordModal'
 import SearchBar from '../../components/searchBar/SearchBar'
+import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
 
 
 const subjectKey = 'credenc-edtech-subject';
@@ -119,12 +120,15 @@ function DashboardDesktop(props) {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const searchRef = useRef();
   const [searchbarWidth, setSearchBarWidth] = useState("45%");
+  const [applyNow, setApplyNow] = useState(false)
   let appliedFiltersCount = useRef(0);
 
   const [lastCourse, setLastCourse] = useState(null);
   const courseTypeRef = useRef(null);
   // const [compareTextVisible,setCompareTextVisible] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
+  const [upvoteCard,setUpvoteCard] = useState(false)
+  const [upvoteCardData,setUpvoteCardData]= useState({})
 
   useEffect(() => {
     setMounted(true);
@@ -830,7 +834,7 @@ function DashboardDesktop(props) {
 
   const upvote = async (item) => {
 
-    await axios.post(`${constant.API_URL.DEV}/batch/upvote/add`, {
+    await axios.post(`${constant.API_URL.DEV}/batch/upvote/add/`, {
         "batch_id": item.id,
         "is_up_vote": "true"
     }, {
@@ -840,6 +844,7 @@ function DashboardDesktop(props) {
     })
     .then(res => {
         if (res?.data?.success)
+        handleFilteredData(false)
         //  Mixpanel.track(MixpanelStrings.COURSE_UPVOTED, {triggered_from: 'Course Card', ...item})
         return res;
     })
@@ -923,6 +928,16 @@ const _handleSearch=(e)=>{
       this.coursesApiStatus.current.failed();
       console.log(err);
     });
+  }
+
+  const _openApplyNowModal=(data)=>{
+    setApplyNow(true)
+    setDetailData(data)
+  }
+
+  const _upvoteCard=(data)=>{
+    setUpvoteCard(true)
+    setUpvoteCardData(data)
   }
   
  return(
@@ -1074,6 +1089,10 @@ const _handleSearch=(e)=>{
             upvoteList={userUpvoteList}
             setUpvoteCount={(item)=> setUpvoteCount(item)}
             removeUpvoteCount={(item)=> removeUpvoteCount(item)}
+            openApplyNowModal={(item)=> _openApplyNowModal(item)}
+            upvoteCardDataAction={(item)=>_upvoteCard(item)}
+            upvoteCard={upvoteCard}
+            upvoteCardDetail={upvoteCardData}
             // compareTextVisible={compareTextVisible} 
           />
         </div>
@@ -1182,8 +1201,10 @@ const _handleSearch=(e)=>{
                  addToBookmark={()=>_addToBookmark(item)}
                  compareText={_checkCompareText(item)}
                  bookmarkVisible={bookmarkVisible}
-                 setUpvoteCount={()=> setUpvoteCount(item)}
-                 removeUpvoteCount={()=> removeUpvoteCount(item)}
+                 openApplyNowModal={()=> _openApplyNowModal(item)}
+                 upvoteCardData={(item)=>_upvoteCard(item)}
+                 upvoteCard={upvoteCard}
+                 upvoteCardDetail={upvoteCardData}
                />
              )
            })
@@ -1296,7 +1317,18 @@ const _handleSearch=(e)=>{
         theme={props.theme} 
         setUpvoteCount={()=>setUpvoteCount(detailData)}
         removeUpvoteCount={()=>removeUpvoteCount(detailData)}
+        upvoteCardData={(item)=>_upvoteCard(item)}
+        upvoteCard={upvoteCard}
+        upvoteCardDetail={upvoteCardData}
         />
+      </SlidingPanel>
+      <SlidingPanel
+        type={'right'}
+        isOpen={applyNow}
+        backdropClicked={() => setApplyNow(false)}
+        size={30}
+      >
+        <ApplyNowModal detailData={detailData} />
       </SlidingPanel>
       {
         props?.loginModal ? 

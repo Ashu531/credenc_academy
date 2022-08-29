@@ -20,6 +20,7 @@ export default function CourseCard(props){
   const [isCardOpen,setIsCardOpen] = useState(false)
   const [bookmarkVisible, setBookmarkVisible] = useState(false)
   const [compareTextVisible, setCompareTextVisible] = useState('Add to Compare')
+  
 
   useEffect(() => {
     setMounted(true);
@@ -29,24 +30,29 @@ export default function CourseCard(props){
     setCompareTextVisible(props?.compareText)
    },[])
 
+  const _handleUpvoteData=(data)=>{
+    props?.upvoteCardData(data)
+  }
+
+  console.log(props)
 
  return(
       <>
       {
         mounted && 
         <div 
-        className = {!isCardOpen ? "card-container" : "card-container card-container-open"}
-        style={window.innerWidth <= 500 ? {width: "100%"} : !isCardOpen ? null : {padding:0} }
-       
-        onMouseEnter={e => {
-          setCompareButtonVisible({display: 'flex',flexDirection:"row"});
-          setIsCardOpen(true)
+          className = {!isCardOpen ? "card-container" : "card-container card-container-open"}
+          style={window.innerWidth <= 500 ? {width: "100%"} : !isCardOpen ? null : {padding:0} }
+        
+          onMouseEnter={e => {
+            setCompareButtonVisible({display: 'flex',flexDirection:"row"});
+            setIsCardOpen(true)
+            }} 
+          onMouseLeave={e => {
+            setCompareButtonVisible({display: 'none'})
+            setIsCardOpen(false)
           }} 
-        onMouseLeave={e => {
-          setCompareButtonVisible({display: 'none'})
-          setIsCardOpen(false)
-        }} 
-          >
+        >
         <div className='card-header' style={!isCardOpen ? null : {paddingLeft:12,paddingRight: 12}}>
           <Image src={courseLogo} objectFit="cover" alt='courseLogo' style={{borderRadius: 6}} />
           <div className='card-header-end-content'>
@@ -54,15 +60,13 @@ export default function CourseCard(props){
                       props.addToBookmark(props.data)
                       setBookmarkVisible(!bookmarkVisible)
                       }} style={props.bookmarkVisible === true || bookmarkVisible === true ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}>
-                      <Image src={ props.bookmarkVisible === true || bookmarkVisible === true  ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={20} width={20}/>
+                      <Image src={props.bookmarkVisible === true || bookmarkVisible === true  ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={20} width={20}/>
               </div>
               <div 
               className='grey-container' 
-              onClick={()=>{
-                props?.data?.upvoted === false ? props?.setUpvoteCount() : props?.removeUpvoteCount()
-              }}
+              onClick={()=> props?.data?.upvoted === false ? _handleUpvoteData(props.data) : null}
               >
-                  <span className='count-text'>{ props?.upvoteVisible === true ? props?.data?.up_votes+1 : props?.data?.up_votes}</span>
+                  <span className='count-text'>{props?.upvoteCardDetail?.id === props.data.id ? props?.upvoteCard === true ? props?.data?.up_votes+1 : props?.data?.up_votes : props?.data?.up_votes}</span>
                   <Image src={ props.theme === 'dark' ? upvoteLogoDark : upvoteLogo} objectFit="cover" alt='upvoteLogo' height={20} width={20} />
               </div>
     
@@ -75,10 +79,10 @@ export default function CourseCard(props){
     <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} onClick={()=> props.openDetailModal() } >
   
       <div className='course-name' onMouseEnter={()=>setCourseNameTooltip(true)} onMouseLeave={()=>setCourseNameTooltip(false)}>
-        {props?.data?.course_name.length > 25 ? props?.data?.course_name.substring(0, 25) + '...' : props?.data?.course_name} 
+        {props?.data?.course_name.length > 22 ? props?.data?.course_name.substring(0, 22) + '...' : props?.data?.course_name} 
       </div>
       {
-      courseNameTooltip && props?.data?.course_name.length > 25 ?  <div className="course-name-tooltip">
+      courseNameTooltip && props?.data?.course_name.length > 22 ?  <div className="course-name-tooltip">
       <span className="course-name-tooltiptext">{props?.data?.course_name}</span>
       </div> : null
       }
@@ -87,8 +91,8 @@ export default function CourseCard(props){
       {props?.data?.duration}
       </h2>
       <span className='course-price-content' style={!isCardOpen ? null : {marginTop: 22,marginBottom: 14}}>
-        {/* <span className='course-pay'>{props?.data?.finance_display[0]}</span> */}
-        <span className='course-price'>{props?.data?.price === "Free" ? "Free" : ` ₹${props?.data?.price}` }</span>
+        <span className='course-pay'>{props?.data?.finance_display[0]}</span>
+        <span className='course-price'>{props?.data?.price === "Free" || props?.data?.price === 0 || !props?.data?.price ? "Free" : ` ₹${props?.data?.price}` }</span>
       </span>
    </div>
 
@@ -98,20 +102,22 @@ export default function CourseCard(props){
       <div 
       className='course-compare-buttton' 
       onClick={()=>{
-        props.addToCompare(props?.data)
-        setCompareTextVisible('Go to Compare')
+        // props.addToCompare(props?.data)
+        // setCompareTextVisible('Go to Compare')
+        props?.openApplyNowModal()
         }}
       >
         <span className='add-to-compare-text'>
-          {compareTextVisible}
+          {/* {compareTextVisible} */}
+          Apply now
         </span>
       </div>
-      <div className='course-detail-button' onClick={()=> props.openDetailModal() } >
+      <div className='course-detail-button' onClick={()=> props.openDetailModal()}>
           <span className='course-detail-text'>
             Details
           </span>
            <Image src={ props.theme === 'dark' ? arrowRightDark : arrowRight} objectFit="contain" alt='arrowRight'/>
-      </  div>
+      </div>
       </div> : null}
 
 

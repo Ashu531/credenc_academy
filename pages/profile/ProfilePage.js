@@ -14,7 +14,8 @@ export default function ProfilePage({
   handleForgotPasswordEnd,
   mobileLoginNavigation,
   setMobileLoginNaviagtion,
-  logoutUser
+  logoutUser,
+  handleLogout
 }) {
   let location = useRouter();
 
@@ -199,10 +200,12 @@ export default function ProfilePage({
                 {window.innerWidth > 500 && profilePages.privacyPolicy === true && <PrivacyPolicy profilePage={true} />}
                 {window.innerWidth <= 500 && 
                 <ProfileMobilePage 
-                token={token} 
-                mobileLoginNavigation={mobileLoginNavigation} 
-                setMobileLoginNavigation={()=>setMobileLoginNaviagtion()}
-                logoutUser={()=>logoutUser()}
+                    token={token} 
+                    mobileLoginNavigation={mobileLoginNavigation} 
+                    setMobileLoginNavigation={()=>setMobileLoginNaviagtion()}
+                    logoutUser={()=>logoutUser()}
+                    handleLogout={()=>handleLogout()}
+                    handleLogin={()=>handleLogin()}
                 />}
               </div>
             </div>

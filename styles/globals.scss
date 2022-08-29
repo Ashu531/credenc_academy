@@ -79,6 +79,9 @@ body {
   &::-webkit-scrollbar{
     display: none;
   }
+  .css-j5h6pi-MuiPopper-root{
+    z-index: 99999;
+}
 
 }
 
@@ -122,3 +125,4 @@ body {
 @import '../components/otpField/otpField';
 @import '../pages/profile/profilePage';
 @import '../components/searchBar/searchBar';
+@import '../components/applyNowModal/applyNow';

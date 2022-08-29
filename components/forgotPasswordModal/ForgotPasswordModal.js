@@ -99,7 +99,7 @@ export default function ForgotPasswordModal({
     //   'email_forgot_password' : emailInputState.toString(),
     // })
     if(validate()){
-      let res = await axios.post(`${constant.API_URL.PROD}/send_forgot_password_otp/`, {
+      let res = await axios.post(`${constant.API_URL.DEV}/send_forgot_password_otp/`, {
         'email': emailInputState.toString()
       })
       .then(res => {
@@ -150,7 +150,7 @@ export default function ForgotPasswordModal({
     // });
 
     if(validate()){
-      let res = await axios.post(`${constant.API_URL.PROD}/forgot_password/`, {
+      let res = await axios.post(`${constant.API_URL.DEV}/forgot_password/`, {
         "otp": otp.values.join(''),
         "email": emailInputState.toString(),
         "new_password" : passwordInputState.value.toString(),

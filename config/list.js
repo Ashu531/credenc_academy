@@ -88,4 +88,6 @@ export default class Lists {
     ]
 
     static courseTypes = ['Certificate', 'Diploma', 'Degree', 'Job Assured', 'All'];
+
+    static genderTypes= ['Male','Female','Others']
 }

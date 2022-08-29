@@ -17,7 +17,8 @@ export default function ProfileNavMobile({
     openForgotPasswordModal,
     mobileLoginNavigation,
     setMobileLoginNavigation,
-    logoutUser
+    logoutUser,
+    handleLogout
 }) {
 
     let location = useRouter();
@@ -116,7 +117,7 @@ export default function ProfileNavMobile({
     useEffect(() => {
         async function getProfileDetails(){
             userApiStatus.current.start();
-            let res = await getDataFromUrl(`${constant.API_URL.PROD}/profiles/`, token, userApiStatus)
+            let res = await getDataFromUrl(`${constant.API_URL.DEV}/profiles/`, token, userApiStatus)
             .then(res => {
                 setEmail(res.email);
                 setName(res.full_name);
@@ -161,6 +162,12 @@ export default function ProfileNavMobile({
         setMobileLoginNavigation()
       }
 
+    const  _handleLogout=()=>{
+        logoutUser()
+        handleLogout()
+        location.push('/')
+    }
+
 
     return (
             <>
@@ -189,10 +196,7 @@ export default function ProfileNavMobile({
                         <div onClick={() => _openPrivacyPolicyPage()} className='menu-item'>Privacy Policy<span className={`arrow-right`}>{'>'}</span></div>
                         <div className='hr'></div>
                         <div 
-                        onClick={() => {
-                            logoutUser()
-                            location.push('/')
-                            }} 
+                        onClick={() => _handleLogout()} 
                             className='menu-item'>Logout<span className={`arrow-right`}>{'>'}</span></div>
                         <div className='hr'></div>
                     </div>

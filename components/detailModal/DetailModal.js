@@ -78,7 +78,7 @@ export default function DetailModal(props){
         props.addToBookmark(props?.detailData)
         setBookmarkVisible(!bookmarkVisible)
     }
-    console.log(props.detailData,"theme++++")
+
     return(
         <>
         {
@@ -100,24 +100,22 @@ export default function DetailModal(props){
                 </div>
                 <div className='header-action-content'>
                         <div className='header-action-container' 
-                        onClick={()=> _handleBookmarksTrigger()} 
-                        style={ bookmarkVisible === true  ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)",cursor:"pointer"} : {cursor:"pointer"}}
+                            onClick={()=> _handleBookmarksTrigger()} 
+                            style={ bookmarkVisible === true  ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)",cursor:"pointer"} : {cursor:"pointer"}}
                         >
                         <Image src={ bookmarkVisible === true ? selectedBookmark : theme === 'dark' ? bookmarkIconDark : bookmarkIcon}  
-                        objectFit="contain" 
-                        width={ window.innerWidth <= 500 ? 25 : 20 }
-                        height={window.innerWidth <= 500 ? 25 : 20 }
+                            objectFit="contain" 
+                            width={ window.innerWidth <= 500 ? 25 : 20 }
+                            height={window.innerWidth <= 500 ? 25 : 20 }
                         />
                         </div>
                     <div 
                     className='header-action-container' 
                     style={{marginLeft:8}}  
-                    onClick={()=>{
-                        props?.data?.upvoted === false ? props?.setUpvoteCount() : props?.removeUpvoteCount()
-                      }}
+                    onClick={()=> props?.detailData?.upvoted === false ? _handleUpvoteData(props.data) : null }
                     >
                         <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-                        <span className='upvote-text' style={window.innerWidth <= 500 ? {marginTop:1}: null} >{props?.detailData?.up_votes}</span>
+                        <span className='upvote-text' style={window.innerWidth <= 500 ? {marginTop:1}: null} >{props?.upvoteCardDetail?.id === props.detailData.id ? props?.upvoteCard === true ? props?.detailData?.up_votes+1 : props?.detailData?.up_votes : props?.detailData?.up_votes}</span>
                         <Image 
                         src={upvoteLogo}  
                         width={ window.innerWidth <= 500 ? 30 : 18 }
@@ -280,7 +278,7 @@ export default function DetailModal(props){
          >
             <div className='detail-modal-footer-section-left'>
                 <span className='price-text'>
-                ₹{props?.detailData?.price}
+                {props?.detailData?.price ? `₹${props?.detailData?.price}` : 'Free'}
                 </span>
             </div>
             <div className='detail-modal-footer-section-right' 
