@@ -218,6 +218,14 @@ export default function ForgotPasswordModal({
           <Image src={ theme === 'dark' ? credencLogo : credencLogoLight} objectFit="cover" />
           {/* <div style={{textDecoration: 'none', color: '#FFFFFF', fontSize: '21px'}}>BETA</div> */}
         </Link>
+        <div className='forgot-modal-header'>
+           <span className='forgot-pass-text'>
+           Forgot Your Password?
+           </span>
+           <span className='generate-otp-text'>
+           Enter your Email to generate an OTP
+           </span>
+        </div>
         <div className="header-container" >
           <div className="headline">{header}</div>
           <div className="subtitle">{subtitle}</div>

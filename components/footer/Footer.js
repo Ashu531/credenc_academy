@@ -42,7 +42,7 @@ export default function Footer(props){
        
         <div className='footer-disclaimer' onClick={()=>props.toggleFooterModal()}>
         <span className='footer-disclaimer-text'>
-        Disclaimer
+        Expand
         </span>
         <Image src={goUpIcon} objectFit="cover" alt='goUpIcon'/>
         </div>

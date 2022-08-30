@@ -22,7 +22,7 @@ export default function FooterModal(props){
         <div className='footer-modal-section'>
         <div className='footer-modal-header'>
          <span className='footer-elemental-content-text'>
-         SkillRush2022
+         ©Credenc2022
          </span>
          <div className='footer-elemental-content'>
                 <Link href="https://www.credenc.com/" >
@@ -74,7 +74,7 @@ export default function FooterModal(props){
                 </div>
 
                 <div className='subjectDiv'>
-                    <p className='paraHeading'>Subject</p>
+                    <p className='paraHeading'>Domain</p>
                     <p className='para'>Technology</p>
                     <p className='para'>Marketing</p>
                     <p className='para'>Design</p>
@@ -84,7 +84,7 @@ export default function FooterModal(props){
             </div>
             </div>
                 <div className='disclaimertext'>
-                Disclaimer : Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet, nulla pharetra tortor nunc. Velit et magna odio nibh eget volutpat tempus. Tincidunt interdum arcu nisi turpis. Mi, volutpat sapien mollis placerat sagittis vel nisl, amet tempus. Auctor dolor nulla bibendum massa.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet, nulla pharetra tortor nunc. Velit et magna odio nibh eget volutpat tempus. Tincidunt interdum arcu nisi turpis. Mi, volutpat sapien mollis placerat sagittis vel nisl, amet tempus. Auctor dolor nulla bibendum massa.
+                The information provided on our site and mobile application (collectively referred to as the “Platform”) is for general informational purposes only. The Platform may contain links to other websites or content belonging to or originating from third parties. Such links are not investigated, monitored, or checked for accuracy, validity, and reliability by us. We do not warrant, endorse, guarantee, or assume responsibility for the accuracy or reliability of any information offered by third-party websites linked through our Platform. Your use of the Platform is solely at your own risk and we under no circumstance shall have any liability whatsoever with respect to any information provided on our Platform. We strongly advise you to read all the terms and conditions and/or other related policies of the third-party websites linked through our Platform.
                 </div>
             </div>
             

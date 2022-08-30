@@ -34,7 +34,7 @@ export default function CourseCard(props){
     props?.upvoteCardData(data)
   }
 
-  console.log(props)
+  console.log(props?.data,"props?.data?.educator[0]?.logo++")
 
  return(
       <>
@@ -54,14 +54,14 @@ export default function CourseCard(props){
           }} 
         >
         <div className='card-header' style={!isCardOpen ? null : {paddingLeft:12,paddingRight: 12}}>
-          <Image src={courseLogo} objectFit="cover" alt='courseLogo' style={{borderRadius: 6}} />
+          <Image src={props?.data?.platform?.logo ? props?.data?.platform?.logo : courseLogo} height={36} width={36} alt='courseLogo' style={{borderRadius: '30%'}} objectFit="contain"/>
           <div className='card-header-end-content'>
-              <div className='grey-container' onClick={()=>{
-                      props.addToBookmark(props.data)
-                      setBookmarkVisible(!bookmarkVisible)
-                      }} style={props.bookmarkVisible === true || bookmarkVisible === true ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}>
-                      <Image src={props.bookmarkVisible === true || bookmarkVisible === true  ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={20} width={20}/>
-              </div>
+                <div className='grey-container' onClick={()=>{
+                        props.addToBookmark(props.data)
+                        setBookmarkVisible(!bookmarkVisible)
+                        }} style={props.bookmarkVisible === true || bookmarkVisible === true ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}>
+                        <Image src={props.bookmarkVisible === true || bookmarkVisible === true  ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={20} width={20}/>
+                </div>
               <div 
               className='grey-container' 
               onClick={()=> props?.data?.upvoted === false ? _handleUpvoteData(props.data) : null}
@@ -74,9 +74,9 @@ export default function CourseCard(props){
         </div>
         <div  className = {!isCardOpen ? "card-image-content" : "card-image-content card-image-content-open"}  onClick={()=> props.openDetailModal() } >
             <Image src={instituteLogo} objectFit="cover"  height={!isCardOpen ? 82 : 60} width={!isCardOpen ? 82 : 60} alt='instituteLogo'/>
-            <span className='institute-name'>Xavier School of Management </span>
+            <span className='institute-name'>{props?.data?.educator[0]?.name}</span>
         </div>
-    <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} onClick={()=> props.openDetailModal() } >
+     <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} onClick={()=> props.openDetailModal()}>
   
       <div className='course-name' onMouseEnter={()=>setCourseNameTooltip(true)} onMouseLeave={()=>setCourseNameTooltip(false)}>
         {props?.data?.course_name.length > 22 ? props?.data?.course_name.substring(0, 22) + '...' : props?.data?.course_name} 
@@ -86,7 +86,9 @@ export default function CourseCard(props){
       <span className="course-name-tooltiptext">{props?.data?.course_name}</span>
       </div> : null
       }
-
+      <h2 className='course-duration'>
+      {props?.data?.class_mode}
+      </h2>
       <h2 className='course-duration'>
       {props?.data?.duration}
       </h2>

@@ -85,7 +85,7 @@ export default function DetailModal(props){
             mounted && 
        <div className='detail-modal-container' style={ window.innerWidth<=500 ? {width:'100%',height:'90vh'} : null }>
          <div className='detail-modal-content'>
-            <div className='detail-modal-header'>
+            <div className='detail-modal-header' style={window.innerWidth<=500 ? {width: '90%'} : null}>
                 <div className='header-school-content'>
                   <Image 
                   src={instituteLogo}  
@@ -115,26 +115,28 @@ export default function DetailModal(props){
                     onClick={()=> props?.detailData?.upvoted === false ? _handleUpvoteData(props.data) : null }
                     >
                         <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-                        <span className='upvote-text' style={window.innerWidth <= 500 ? {marginTop:1}: null} >{props?.upvoteCardDetail?.id === props.detailData.id ? props?.upvoteCard === true ? props?.detailData?.up_votes+1 : props?.detailData?.up_votes : props?.detailData?.up_votes}</span>
-                        <Image 
-                        src={upvoteLogo}  
-                        width={ window.innerWidth <= 500 ? 30 : 18 }
-                        height={window.innerWidth <= 500 ? 30 : 18 }
-                        objectFit="cover" 
-                        />
+                            <span className='upvote-text' style={window.innerWidth <= 500 ? {marginTop:1}: null} >{props?.upvoteCardDetail?.id === props.detailData.id ? props?.upvoteCard === true ? props?.detailData?.up_votes+1 : props?.detailData?.up_votes : props?.detailData?.up_votes}</span>
+                            <Image 
+                                src={upvoteLogo}  
+                                width={ window.innerWidth <= 500 ? 30 : 18 }
+                                height={window.innerWidth <= 500 ? 30 : 18 }
+                                objectFit="cover" 
+                            />
                         </div>
                     </div>
                         <div className='header-action-container' style={{marginLeft:8}}>
-                        <Image 
-                        src={globeIcon}  
-                        width={ window.innerWidth <= 500 ? 25 : 18 }
-                        height={window.innerWidth <= 500 ? 25 : 18 }
-                        objectFit="cover" 
-                        />
+                            <a href={props?.detailData?.platform?.link} target='_blank'>
+                                <Image 
+                                    src={globeIcon}  
+                                    width={ window.innerWidth <= 500 ? 25 : 18 }
+                                    height={window.innerWidth <= 500 ? 25 : 18 }
+                                    objectFit="cover" 
+                                />
+                            </a>
                         </div>
                 </div>
             </div>
-            <div className='detail-modal-banner'  style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
+            <div className='detail-modal-banner'  style={ window.innerWidth <= 500 ? {width:'88%',marginTop: '11rem'} : null }>
                 <span className='banner-text'>
                 Next batch starts on June 12th, 2022
                 </span>
