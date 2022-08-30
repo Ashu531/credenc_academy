@@ -1338,6 +1338,7 @@ const _handleSearch=(e)=>{
          openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
          forgotPasswordModal={props?.forgotPasswordModal}
          theme={props?.theme}
+         handleLogin={()=>props?.handleLogin()}
         /> 
         </div>
         : null

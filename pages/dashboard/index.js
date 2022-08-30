@@ -38,6 +38,7 @@ export default function Dashboard(props) {
           handleSearch={props?.handleSearch}
           closeFilterExpandedStage={()=>props?.closeFilterExpandedStage()}
           searchData={props?.searchData}
+          handleLogin={()=>props?.handleLogin()}
         />}
         {isMobile && <DashboardMobile
           openFilterExpandedStage={props?.openFilterExpandedStage}
