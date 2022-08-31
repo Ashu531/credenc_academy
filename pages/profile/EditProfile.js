@@ -54,7 +54,7 @@ export default function EditProfile(props) {
         if(upadteUserApiStatus){
             upadteUserApiStatus.current.makeApiCall();
         }
-        const res = await axios.post(`${constant.API_URL.PROD}/profile/`, {
+        const res = await axios.post(`${constant.API_URL.DEV}/profile/`, {
             full_name: inputName.trim(),
         }, {
             headers: {

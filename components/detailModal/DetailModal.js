@@ -85,7 +85,8 @@ export default function DetailModal(props){
             mounted && 
        <div className='detail-modal-container' style={ window.innerWidth<=500 ? {width:'100%',height:'90vh'} : null }>
          <div className='detail-modal-content'>
-            <div className='detail-modal-header' style={window.innerWidth<=500 ? {width: '90%'} : null}>
+          <div style={{display:"flex",flexDirection:'row',width:'100%'}}>
+            <div className='detail-modal-header' style={window.innerWidth<=500 ? {width: '90%'} : {width: '90%'}}>
                 <div className='header-school-content'>
                   <Image 
                   src={instituteLogo}  
@@ -125,7 +126,7 @@ export default function DetailModal(props){
                         </div>
                     </div>
                         <div className='header-action-container' style={{marginLeft:8}}>
-                            <a href={props?.detailData?.platform?.link} target='_blank'>
+                            <a href={props?.detailData?.platform?.link} target='_blank' rel="noreferrer">
                                 <Image 
                                     src={globeIcon}  
                                     width={ window.innerWidth <= 500 ? 25 : 18 }
@@ -136,12 +137,15 @@ export default function DetailModal(props){
                         </div>
                 </div>
             </div>
+            <div style={{width: '100%',background: '#FFFFFF',flex: 1}} />
+            </div>
             <div className='detail-modal-banner'  style={ window.innerWidth <= 500 ? {width:'88%',marginTop: '11rem'} : null }>
                 <span className='banner-text'>
                 Next batch starts on June 12th, 2022
                 </span>
             </div>
-            <div className='detail-modal-course-content'>
+            <div className='detail-modal-middle-section'>
+              <div className='detail-modal-course-content'>
                 <div className='detail-modal-course-container'>
                     <span className='heading1'>
                     B.Des-UX in collaboration with ImaginXP
@@ -157,8 +161,8 @@ export default function DetailModal(props){
                         <span className='header2'>{props?.detailData?.class_mode}</span>
                     </div>
                 </div>
-            </div>
-            <div className='detail-modal-course-info'>
+              </div>
+              <div className='detail-modal-course-info'>
                 <span className='content-detail'>
                     <Image src={certificateIcon} objectFit="cover"/>
                     <span className='content-detail-text'>
@@ -262,7 +266,8 @@ export default function DetailModal(props){
                 </div> : null
             }
            
-         </div>
+                </div>
+            </div>
          <div 
          className='detail-modal-footer'  
          style={ 
@@ -285,14 +290,14 @@ export default function DetailModal(props){
             </div>
             <div className='detail-modal-footer-section-right' 
             style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
-                <span className='compare-button' onClick={()=>{
+                {/* <span className='compare-button' onClick={()=>{
                     props.addToCompare(props?.detailData)
                     setCompareText('Go to Compare')
                     }} > 
                     <span className='compare-button-text'>
                     {props.compareTextVisible || compareText}
                     </span>
-                </span>
+                </span> */}
                 <span className='apply-now-button'>
                     <span className='apply-now-button-text'>
                         Apply Now

@@ -44,7 +44,7 @@ export default function ResetPassword({token, handleForgotPassword,openForgotPas
     if(resetPasswordApiStatus){
       resetPasswordApiStatus.current.makeApiCall();
     }
-    const res = await axios.post(`${constant.API_URL.PROD}/set_new_password/`, {
+    const res = await axios.post(`${constant.API_URL.DEV}/set_new_password/`, {
       old_password: oldPasswordInputState.value.trim(),
       new_password: newPasswordInputState.value.trim(),
       confirm_new_password: confirmPasswordInputState.value.trim(),

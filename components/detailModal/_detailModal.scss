@@ -9,9 +9,10 @@
 
     .detail-modal-content{
        width: 100%;
-       height: 92vh;
+       height: 93vh;
+       background: var(--defaultBackground);
        overflow: scroll;
-       overflow-x: hidden;
+
        
        .detail-modal-header{
            display: flex;
@@ -24,7 +25,15 @@
            top: 0;
            background: var(--defaultBackground);
            width: 100%;
+           z-index: 999;
        }
+    //    .detail-modal-middle-section{
+    //     // display: flex;
+    //     // flex-direction: column;
+    //     // justify-content: space-between;
+    //     // align-items: center;
+    //     overflow: scroll;
+    //    }
 
        .header-school-content{
           display: flex;
@@ -95,7 +104,10 @@
             padding: 8px 24px;
             gap: 12px;
             background: linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%);
-            margin-top: 9rem;
+            position: absolute;
+            top: 9rem;
+            z-index: 999;
+            // margin-top: 9rem;
        }
 
        .banner-text{
@@ -115,6 +127,7 @@
            align-items: flex-start;
            padding: 24px;
            gap: 24px;
+           margin-top: 11rem;
        }
 
        .detail-modal-course-container{
@@ -383,7 +396,7 @@
         .detail-modal-footer-section-right{
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
             width: 60%;
             padding: 12px 24px ;
@@ -465,5 +478,9 @@
         position: absolute;
         top: 1.5%;
         right: 2.5%;
+    }
+    ::-webkit-scrollbar {
+        width: 0px;
+        background: transparent; /* make scrollbar transparent */
     }
 }

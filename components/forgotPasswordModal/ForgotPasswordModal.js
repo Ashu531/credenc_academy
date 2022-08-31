@@ -127,7 +127,7 @@ export default function ForgotPasswordModal({
     // })
 
     if(validate()){
-      let res = await axios.post(`${constant.API_URL.PROD}/verify_forgot_password_otp/`, {
+      let res = await axios.post(`${constant.API_URL.DEV}/verify_forgot_password_otp/`, {
         'email': emailInputState.toString(),
         "otp" : otp.values.join('')
       })
