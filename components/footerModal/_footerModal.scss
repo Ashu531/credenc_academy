@@ -61,6 +61,19 @@ margin: 16px 0;
 color: var(--bodyColor)
     }
 
+    .powered-by-credenc-text{
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 10px;
+      line-height: 15px;
+      background: linear-gradient(135deg, #00D1FF 0%, #00CB9C 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+
     .socialMediaDiv1Button{
       background: linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%);
 border-radius: 3px;

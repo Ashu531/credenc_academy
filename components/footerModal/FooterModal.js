@@ -8,6 +8,7 @@ import Image from "next/image";
 import goUpIcon from '../../assets/images/icons/caret-up-grey.svg'
 import Link from "next/link";
 import { useRouter } from 'next/router'
+import credencAcademy from '../../assets/images/icons/credencAcademy.svg'
 
 export default function FooterModal(props){
     const router = useRouter();
@@ -51,9 +52,15 @@ export default function FooterModal(props){
         <div className='footer-modal-content'>
        <div className='footerDiv'>
                 <div className='socialMediaDiv'>
-                    <div className='socialMediaDiv1'><button className='socialMediaDiv1Button'>A product by Credenc</button></div>
-                    <div className='socialMediaDiv2'>With SkillRush, you don&apos;t just compare Courses. You understand it. Narrow down choices. 
-                     Avoid pitfalls and make better decisions
+                    <a href='https://www.credenc.com/' target='_blank' rel="noreferrer" style={{textDecoration:"none"}}>
+                    <div style={{width: '100%',display:'flex',flexDirection: 'column',justifyContent:'flex-start',alignItems:"flex-start"}}>
+                        <Image src={credencAcademy} width={150} height={50} objectFit='contain' />
+                        <span className='powered-by-credenc-text'>Powered by Credenc.com</span>
+                    </div>
+                    </a>
+                    {/* <div className='socialMediaDiv1'><button className='socialMediaDiv1Button'>A product by Credenc</button></div> */}
+                    <div className='socialMediaDiv2'>
+                     With Credenc Academy, you don&apos;t just compare Courses. You understand it. Narrow down choices. Avoid pitfalls and make better decisions.
                      </div>
                      <div>
                         <Image src={FacebookLogo} objectFit="cover" />

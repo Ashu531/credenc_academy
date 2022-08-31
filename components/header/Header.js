@@ -18,8 +18,7 @@ const EdtechToken = 'credenc-edtech-authkey';
 export default function Header(props){
 
   let location = useRouter();
-  let nextURL=location?.asPath?.substring(2,location?.asPath?.length)
-  let urlService = useRef(new UrlService(nextURL));
+  console.log(location,"location+++")
 
   const [token,setToken] = useState('')
 
@@ -141,7 +140,7 @@ export default function Header(props){
         
           </Link>
           {
-            props?.showSearchBar ?
+            props?.showSearchBar && location.asPath !== '/privacy/' ?
               <div style={props?.showSearchBar ? {width : '25%',marginLeft: '20%'} : null}>
                 <SearchBar showSearchBar={props?.showSearchBar} search={props?.searchValue} handleSearch={(e)=>_handleSearch(e)} />
               </div> 

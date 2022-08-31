@@ -294,7 +294,7 @@ export default function DetailModal(props){
              ? 
              {width:'100%',
              display:"flex",
-             flexDirection:"column",
+             flexDirection:"row",
              justifyContent:'flex-start',
              alignItems:'flex-start',
              background: '#F7F7F7',

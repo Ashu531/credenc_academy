@@ -196,7 +196,6 @@ class MyApp extends App {
   }
 
   toggleFilterVisible=()=>{
-    console.log("coming++++")
     this.setState({
       filterModalVisible: !this.state.filterModalVisible
     })
