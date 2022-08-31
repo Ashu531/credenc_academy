@@ -29,6 +29,7 @@ import ForgotPasswordModal from "../../components/forgotPasswordModal/ForgotPass
 const compareKey = 'credenc-marketplace-compares';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const subjectKey = 'credenc-edtech-subject';
+const upvoteKey = 'credenc-edtech-upvote'
 
 const queries = {
   PROFESSION: 'profession',
@@ -113,6 +114,7 @@ function DashboardMobile(props) {
   let appliedFiltersCount = useRef(0);
 
   const [lastCourse, setLastCourse] = useState(null);
+  const [upvoteCard, setUpvoteCard] = useState('')
   const courseTypeRef = useRef(null);
   // const [compareTextVisible,setCompareTextVisible] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
@@ -867,6 +869,54 @@ const _handleFilterState=()=>{
   props?.toggleFilterVisible()
 }
 
+const _addToUpvote=(item)=>{
+  if(props?.token && props?.token.length > 0){
+    let upvote = JSON.parse(localStorage.getItem(upvoteKey)) 
+    let upvoteAvailable = false;
+    if(upvote && upvote.length > 0){
+      upvote.forEach(data=>{
+        if(data === item.id){
+          upvoteAvailable= true
+          return 0;
+        }
+    })
+
+    if(upvoteAvailable === true){
+      _onRemoveToUpvote(item);
+      }else{
+      _onAddToUpvote(item);
+     }
+    
+    }
+    else{
+      _onAddToUpvote(item);
+    }
+  }else{
+    props?.openLoginModal()
+  }
+}
+
+const _onAddToUpvote=(item)=>{
+  setUpvoteCard('1')
+  let upvoteArray = [];
+  let upvoteItem = JSON.parse(localStorage.getItem(upvoteKey)) 
+  if(upvoteItem && upvoteItem.length > 0){
+    upvoteArray.push(...upvoteItem)
+  }
+  upvoteArray.push(item.id)
+  localStorage.setItem(upvoteKey,JSON.stringify(upvoteArray));
+}
+
+const _onRemoveToUpvote=(item)=>{
+  setUpvoteCard('0')
+  let upvoteArray = [];
+  let upvoteItem = JSON.parse(localStorage.getItem(upvoteKey)) 
+  if(upvoteItem && upvoteItem.length > 0){
+    upvoteArray =  upvoteItem.filter(data => data !== item.id )
+  }
+  localStorage.setItem(upvoteKey,JSON.stringify(upvoteArray));
+}
+
    return(
         <div className="dashboard-mobile">
           {
@@ -1023,8 +1073,9 @@ const _handleFilterState=()=>{
                     addToCompare={(item)=>_addToCompare(item)} 
                     addToBookmark={(item)=>_addToBookmark(item)}
                     compareText={(item)=>_checkCompareText(item)}
-                    setUpvoteCount={()=> setUpvoteCount(item)}
-                    removeUpvoteCount={()=> removeUpvoteCount(item)}
+                    addToUpvote={(item)=>_addToUpvote(item)}
+                    token={props?.token}
+                    upvoteCard={upvoteCard}
                     // compareTextVisible={compareTextVisible}  
                   />
                 </div>
@@ -1062,13 +1113,12 @@ const _handleFilterState=()=>{
                     lineHeight: '1.6rem',
                     color: '#313235',
                   }}
-                  toggleFilterVisible={()=>props.toggleFilterVisible()}
+                  toggleFilterVisible={()=>props?.toggleFilterVisible()}
                   floatList={[...Lists.sortByList]}
                   selected={sortState}
                   onSelect={(item, i) => {
                     setPageLoadSortState(null)
                     setSortState(i)
-                    props.toggleFilterVisible()
                     // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
                   }}
                 />
@@ -1079,6 +1129,25 @@ const _handleFilterState=()=>{
                 <div className="course-card-list" style={{width:'90%'}}> 
                 {
                     courseCardData?.map((item,index)=>{
+                      let bookmarkVisible = false;
+                      let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
+                      if(tempBookmarkData && tempBookmarkData.length > 0){
+                        if (tempBookmarkData.includes(item?.id)){
+                          bookmarkVisible = true
+                        }
+                      else
+                        bookmarkVisible = false
+                      }
+
+                      let upvoteVisible = false;
+                      let upvoteData = JSON.parse(localStorage.getItem(upvoteKey));
+                      if(upvoteData && upvoteData.length > 0){
+                        if (upvoteData.includes(item?.id)){
+                          upvoteVisible = true
+                        }
+                      else
+                      upvoteVisible = false
+                      }
                     return(
                         <CourseCard 
                         key={index} 
@@ -1088,8 +1157,10 @@ const _handleFilterState=()=>{
                         addToBookmark={()=>_addToBookmark(item)}
                         bookmarkVisible={_checkBookmarks(item)}
                         compareText={_checkCompareText(item)}
-                        setUpvoteCount={()=> setUpvoteCount(item)}
-                        removeUpvoteCount={()=> removeUpvoteCount(item)}
+                        addToUpvote={()=>_addToUpvote(item)}
+                        upvoteVisible={upvoteVisible}
+                        token={props?.token}
+                        upvoteCard={upvoteCard}
                         />
                       )
                     })
@@ -1111,8 +1182,8 @@ const _handleFilterState=()=>{
            addToBookmark={()=>_addToBookmark(detailData)}
            theme={props?.theme} 
            openDetailModal={()=>_openDetailModal()}
-           setUpvoteCount={()=> setUpvoteCount(detailData)}
-           removeUpvoteCount={()=> removeUpvoteCount(detailData)}
+           addToUpvote={()=>_addToUpvote(detailData)}
+           token={props?.token}
            />
          </SlidingPanel>
          {

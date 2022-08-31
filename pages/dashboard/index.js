@@ -39,6 +39,7 @@ export default function Dashboard(props) {
           closeFilterExpandedStage={()=>props?.closeFilterExpandedStage()}
           searchData={props?.searchData}
           handleLogin={()=>props?.handleLogin()}
+          openLoginModal={()=>props?.openLoginModal()}
         />}
         {isMobile && <DashboardMobile
           openFilterExpandedStage={props?.openFilterExpandedStage}

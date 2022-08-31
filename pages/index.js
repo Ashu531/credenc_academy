@@ -47,6 +47,7 @@ export default function Home(props) {
       searchData={props?.searchData}
       handleLogout={()=>props?.handleLogout()}
       handleLogin={()=>props?.handleLogin()}
+      openLoginModal={()=>props?.openLoginModal()}
     />
     }
    </>

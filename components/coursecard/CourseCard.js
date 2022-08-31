@@ -12,6 +12,7 @@ import States from '../../values/states';
 import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
 // import theme from '../../scripts/reducers/theme';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
+const upvoteKey = 'credenc-edtech-upvote'
 
 export default function CourseCard(props){
   const [mounted, setMounted] = useState(false);
@@ -20,7 +21,7 @@ export default function CourseCard(props){
   const [isCardOpen,setIsCardOpen] = useState(false)
   const [bookmarkVisible, setBookmarkVisible] = useState(false)
   const [compareTextVisible, setCompareTextVisible] = useState('Add to Compare')
-  
+  const [upvoted,setUpvoted] = useState(props.upvoteCard && props.upvoteCard.length > 0 ? props.upvoteCard === '0' ? false : true  : props?.data?.upvoted)
 
   useEffect(() => {
     setMounted(true);
@@ -30,11 +31,12 @@ export default function CourseCard(props){
     setCompareTextVisible(props?.compareText)
    },[])
 
-  const _handleUpvoteData=(data)=>{
-    props?.upvoteCardData(data)
-  }
-
-  console.log(props?.data,"props?.data?.educator[0]?.logo++")
+   const _handleUpvote=(item)=>{
+     if(props?.token && props?.token.length > 0){
+      //  setUpvoted(!upvoted)
+     }
+     props?.addToUpvote(item)
+   }
 
  return(
       <>
@@ -64,12 +66,12 @@ export default function CourseCard(props){
                 </div>
               <div 
               className='grey-container' 
-              onClick={()=> props?.data?.upvoted === false ? _handleUpvoteData(props.data) : null}
+              onClick={()=> _handleUpvote(props?.data)}
+              style={upvoted || props.upvoteVisible ? {background: 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)'} : null}
               >
-                  <span className='count-text'>{props?.upvoteCardDetail?.id === props.data.id ? props?.upvoteCard === true ? props?.data?.up_votes+1 : props?.data?.up_votes : props?.data?.up_votes}</span>
-                  <Image src={ props.theme === 'dark' ? upvoteLogoDark : upvoteLogo} objectFit="cover" alt='upvoteLogo' height={20} width={20} />
+                  <span className='count-text' style={upvoted || props.upvoteVisible ? {color: '#FFFFFF'} : null}>{ upvoted || props.upvoteVisible ? props?.data?.up_votes + 1 : props?.data?.up_votes}</span>
+                  <Image src={ upvoted || props.upvoteVisible ? upvoteLogoDark : upvoteLogo} objectFit="cover" alt='upvoteLogo' height={20} width={20} />
               </div>
-    
           </div>
         </div>
         <div  className = {!isCardOpen ? "card-image-content" : "card-image-content card-image-content-open"}  onClick={()=> props.openDetailModal() } >
@@ -77,7 +79,6 @@ export default function CourseCard(props){
             <span className='institute-name'>{props?.data?.educator[0]?.name}</span>
         </div>
      <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} onClick={()=> props.openDetailModal()}>
-  
       <div className='course-name' onMouseEnter={()=>setCourseNameTooltip(true)} onMouseLeave={()=>setCourseNameTooltip(false)}>
         {props?.data?.course_name.length > 22 ? props?.data?.course_name.substring(0, 22) + '...' : props?.data?.course_name} 
       </div>

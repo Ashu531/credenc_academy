@@ -141,6 +141,7 @@ class MyApp extends App {
   }
 
   openLoginModal=()=>{
+    console.log("coming login modal")
     this.setState({
       loginModal: true
     })
@@ -195,6 +196,7 @@ class MyApp extends App {
   }
 
   toggleFilterVisible=()=>{
+    console.log("coming++++")
     this.setState({
       filterModalVisible: !this.state.filterModalVisible
     })
@@ -301,6 +303,7 @@ class MyApp extends App {
             searchData={this.state.searchData}
             handleLogout={()=>this._handleLogout()}
             handleLogin={()=>this._handleLogin()}
+            openLoginModal={()=>this.openLoginModal()}
          />
          {
             window.innerWidth > 500 ? 

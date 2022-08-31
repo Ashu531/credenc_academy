@@ -14,6 +14,7 @@ import Button from '../button/Button';
 import { Skeleton } from '@mui/material';
 import CourseCard from '../coursecard/CourseCard';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
+const upvoteKey = 'credenc-edtech-upvote'
 
 function List({
     list,
@@ -28,8 +29,8 @@ function List({
     compareText,
     openApplyNowModal,
     upvoteCard,
-    upvoteCardDataAction,
-    upvoteCardDetail,
+    token,
+    addToUpvote
 }) {
   
 
@@ -72,6 +73,17 @@ function List({
               else
               bookmarkVisible = false
             }
+
+            let upvoteVisible = false;
+            let upvoteData = JSON.parse(localStorage.getItem(upvoteKey));
+            if(upvoteData && upvoteData.length > 0){
+              if (upvoteData.includes(item?.id)){
+                upvoteVisible = true
+              }
+             else
+             upvoteVisible = false
+            }
+
              return <CourseCard 
              data={item} 
              key={`${item.id}:${i}`} 
@@ -81,9 +93,10 @@ function List({
              compareText={compareText(item)}
              bookmarkVisible={bookmarkVisible}
              openApplyNowModal={(item)=> openApplyNowModal(item)}
-             upvoteCardData={(item)=>upvoteCardDataAction(item)}
+             addToUpvote={(item)=>addToUpvote(item)}
+             upvoteVisible={upvoteVisible}
+             token={token}
              upvoteCard={upvoteCard}
-             upvoteCardDetail={upvoteCardDetail}
             />
           })
         );

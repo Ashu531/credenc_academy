@@ -109,7 +109,6 @@ function DashboardDesktop(props) {
   const [workExperienceList, setWorkExperienceList] = useState([...Lists.workExperiences]);
   const [financeOptionList, setFinanceOptionList] = useState([...Lists.financeOptions]);
   const [languageList, setLanguageList] = useState([...Lists.languages]);
-  const [userUpvoteList, setUserUpvoteList] = useState([]);
   const [updateCostSlider, setUpdateCostSlider] = useState(false)
   const [isAppliedCostSlider, setIsAppliedCostSlider] = useState(false);
   const [sortState, setSortState] = useState(0);
@@ -122,13 +121,11 @@ function DashboardDesktop(props) {
   const [searchbarWidth, setSearchBarWidth] = useState("45%");
   const [applyNow, setApplyNow] = useState(false)
   let appliedFiltersCount = useRef(0);
-
+  const [upvoteCard, setUpvoteCard] = useState('')
   const [lastCourse, setLastCourse] = useState(null);
   const courseTypeRef = useRef(null);
   // const [compareTextVisible,setCompareTextVisible] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
-  const [upvoteCard,setUpvoteCard] = useState(false)
-  const [upvoteCardData,setUpvoteCardData]= useState({})
 
   useEffect(() => {
     setMounted(true);
@@ -257,6 +254,54 @@ function DashboardDesktop(props) {
     setDetailData(data);
   }
 
+  const _addToUpvote=(item)=>{
+    if(props?.token && props?.token.length > 0){
+      let upvote = JSON.parse(localStorage.getItem(upvoteKey)) 
+      let upvoteAvailable = false;
+      if(upvote && upvote.length > 0){
+        upvote.forEach(data=>{
+          if(data === item.id){
+            upvoteAvailable= true
+            return 0;
+          }
+      })
+
+      if(upvoteAvailable === true){
+        _onRemoveToUpvote(item);
+        }else{
+        _onAddToUpvote(item);
+       }
+      
+      }
+      else{
+        _onAddToUpvote(item);
+      }
+    }else{
+      props?.openLoginModal()
+    }
+  }
+
+  const _onAddToUpvote=(item)=>{
+    setUpvoteCard('1')
+    let upvoteArray = [];
+    let upvoteItem = JSON.parse(localStorage.getItem(upvoteKey)) 
+    if(upvoteItem && upvoteItem.length > 0){
+      upvoteArray.push(...upvoteItem)
+    }
+    upvoteArray.push(item.id)
+    localStorage.setItem(upvoteKey,JSON.stringify(upvoteArray));
+  }
+
+  const _onRemoveToUpvote=(item)=>{
+    setUpvoteCard('0')
+    let upvoteArray = [];
+    let upvoteItem = JSON.parse(localStorage.getItem(upvoteKey)) 
+    if(upvoteItem && upvoteItem.length > 0){
+      upvoteArray =  upvoteItem.filter(data => data !== item.id )
+    }
+    localStorage.setItem(upvoteKey,JSON.stringify(upvoteArray));
+  }
+
   const _addToBookmark=(item)=>{
     let bookmark = JSON.parse(localStorage.getItem(bookmarkKey)) 
     let bookmarkAvailable = false;
@@ -277,7 +322,6 @@ function DashboardDesktop(props) {
     else{
       _onAddToBookmark(item);
     }
- 
   }
   
   const _onremoveToBookmark=(item)=>{
@@ -814,24 +858,6 @@ function DashboardDesktop(props) {
   }, []);
 
 
-  const setUpvoteCount=(item)=>{
-    if(props?.token && props?.token.length > 0){
-      upvote(item)
-    }
-    else{
-      console.log("User not signed in");
-    }
-    
-  }
-
-  const removeUpvoteCount=(item)=>{
-   if(props?.token && props?.token.length > 0){
-    removeUpvote(item)
-    }else{
-      console.log("User not signed in");
-    }
-  }
-
   const upvote = async (item) => {
 
     await axios.post(`${constant.API_URL.DEV}/batch/upvote/add/`, {
@@ -933,11 +959,6 @@ const _handleSearch=(e)=>{
   const _openApplyNowModal=(data)=>{
     setApplyNow(true)
     setDetailData(data)
-  }
-
-  const _upvoteCard=(data)=>{
-    setUpvoteCard(true)
-    setUpvoteCardData(data)
   }
   
  return(
@@ -1086,13 +1107,10 @@ const _handleSearch=(e)=>{
             addToCompare={(item)=>_addToCompare(item)} 
             addToBookmark={(item)=>_addToBookmark(item)}
             compareText={(item)=>_checkCompareText(item)}
-            upvoteList={userUpvoteList}
-            setUpvoteCount={(item)=> setUpvoteCount(item)}
-            removeUpvoteCount={(item)=> removeUpvoteCount(item)}
             openApplyNowModal={(item)=> _openApplyNowModal(item)}
-            upvoteCardDataAction={(item)=>_upvoteCard(item)}
+            addToUpvote={(item)=>_addToUpvote(item)}
+            token={props?.token}
             upvoteCard={upvoteCard}
-            upvoteCardDetail={upvoteCardData}
             // compareTextVisible={compareTextVisible} 
           />
         </div>
@@ -1139,7 +1157,6 @@ const _handleSearch=(e)=>{
       </div>
   : <div className="dashboard">
      <div className="dashboard-upper-section">
-       
         <div className='banner' ref={searchRef}> 
           <div className='text-content'>
           <h1 className='heading'>Be the next you!</h1>
@@ -1191,6 +1208,16 @@ const _handleSearch=(e)=>{
              else
               bookmarkVisible = false
             }
+
+            let upvoteVisible = false;
+            let upvoteData = JSON.parse(localStorage.getItem(upvoteKey));
+            if(upvoteData && upvoteData.length > 0){
+              if (upvoteData.includes(item?.id)){
+                upvoteVisible = true
+              }
+             else
+             upvoteVisible = false
+            }
             return(
                <CourseCard 
                  key={index} 
@@ -1202,9 +1229,10 @@ const _handleSearch=(e)=>{
                  compareText={_checkCompareText(item)}
                  bookmarkVisible={bookmarkVisible}
                  openApplyNowModal={()=> _openApplyNowModal(item)}
-                 upvoteCardData={(item)=>_upvoteCard(item)}
+                 addToUpvote={()=>_addToUpvote(item)}
+                 upvoteVisible={upvoteVisible}
+                 token={props?.token}
                  upvoteCard={upvoteCard}
-                 upvoteCardDetail={upvoteCardData}
                />
              )
            })
@@ -1314,12 +1342,9 @@ const _handleSearch=(e)=>{
         detailData={detailData} 
         addToCompare={()=>_addToCompare(detailData)} 
         addToBookmark={()=>_addToBookmark(detailData)}
-        theme={props.theme} 
-        setUpvoteCount={()=>setUpvoteCount(detailData)}
-        removeUpvoteCount={()=>removeUpvoteCount(detailData)}
-        upvoteCardData={(item)=>_upvoteCard(item)}
-        upvoteCard={upvoteCard}
-        upvoteCardDetail={upvoteCardData}
+        addToUpvote={()=>_addToUpvote(detailData)}
+        token={props?.token}
+        theme={props.theme}
         />
       </SlidingPanel>
       <SlidingPanel

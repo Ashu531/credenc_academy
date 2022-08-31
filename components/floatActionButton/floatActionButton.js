@@ -13,7 +13,8 @@ export default function FloatActionButton({
     style = {},
     icon,
     selected = 0,
-    activeState = true
+    activeState = true,
+    toggleFilterVisible
 }) {
 
     
@@ -34,6 +35,12 @@ export default function FloatActionButton({
     const handleSelect = (item, i) => {
         onSelect(item, i);
         setDisplayContent(false);
+        toggleFilterVisible()
+    }
+
+    const _handleSorting=()=>{
+        setDisplayContent(true)
+        toggleFilterVisible()
     }
 
     if (type === 'course type') {
@@ -62,7 +69,7 @@ export default function FloatActionButton({
     if (type === 'sort type') {
         return <>
             <div className={`float-sort-action-${floatType}`}>
-                <span onClick={() => setDisplayContent(true)} className='sort'><Image src={sortingIcon} alt='Sorting' objectFit='cover' /></span>
+                <span onClick={() => _handleSorting()} className='sort'><Image src={sortingIcon} alt='Sorting' objectFit='cover' /></span>
                 {(window.innerWidth <= 500) &&
                     <div
                         className={`dropdown-content-mobile`}

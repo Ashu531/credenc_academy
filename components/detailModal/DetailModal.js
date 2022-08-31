@@ -20,15 +20,18 @@ import closeIcon from '../../assets/images/icons/close-icon-grey.svg'
 import States from '../../values/states';
 import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
 import profileIcon from '../../assets/images/icons/profile-icon.svg';
+import moment from 'moment';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const compareKey = 'credenc-marketplace-compares';
 const EdtechTheme = 'EdtechTheme';
+const upvoteKey = 'credenc-edtech-upvote'
 
 export default function DetailModal(props){
 
     const [mounted, setMounted] = useState(false);
     const [detailFooter,setFooterModal] = useState(false);
     const[bookmarkVisible,setBookmarkVisible] = useState(false)
+    const[upvoteVisible,setUpvoteVisible] = useState(false)
     const[compareText,setCompareText] = useState('Add to Compare')
     const [theme,setTheme] = useState('')
 
@@ -39,6 +42,7 @@ export default function DetailModal(props){
     useEffect(()=>{
         _getBookmarks()
         _getCompareItems()
+        _getUpvotes()
     },[])
 
     useEffect(()=>{
@@ -60,6 +64,16 @@ export default function DetailModal(props){
         }
     }
 
+    const _getUpvotes=()=>{
+        let tempUpvoteData = JSON.parse(localStorage.getItem(upvoteKey));
+        if(tempUpvoteData && tempUpvoteData.length > 0){
+          if (tempUpvoteData.includes(props?.detailData?.id))
+          setUpvoteVisible(true)
+          else
+          setUpvoteVisible(false)
+        }
+    }
+
     const _getCompareItems=()=>{
         let tempCompareData = JSON.parse(localStorage.getItem(compareKey));
         if(tempCompareData && tempCompareData.length > 0){
@@ -77,6 +91,11 @@ export default function DetailModal(props){
     const _handleBookmarksTrigger=()=>{
         props.addToBookmark(props?.detailData)
         setBookmarkVisible(!bookmarkVisible)
+    }
+
+    const _handleUpvoteTrigger=()=>{
+        props?.addToUpvote(props?.detailData)
+        setUpvoteVisible(!upvoteVisible)
     }
 
     return(
@@ -112,13 +131,13 @@ export default function DetailModal(props){
                         </div>
                     <div 
                     className='header-action-container' 
-                    style={{marginLeft:8}}  
-                    onClick={()=> props?.detailData?.upvoted === false ? _handleUpvoteData(props.data) : null }
+                    style={upvoteVisible ? {marginLeft:8,background : 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)'} : null}  
+                    onClick={()=> _handleUpvoteTrigger() }
                     >
-                        <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-                            <span className='upvote-text' style={window.innerWidth <= 500 ? {marginTop:1}: null} >{props?.upvoteCardDetail?.id === props.detailData.id ? props?.upvoteCard === true ? props?.detailData?.up_votes+1 : props?.detailData?.up_votes : props?.detailData?.up_votes}</span>
+                        <div className='upvote-container'>
+                            <span className='upvote-text' style={ upvoteVisible ? window.innerWidth <= 500 ?  {marginTop:1,color: '#FFFFFF'} : {color: '#FFFFFF'} : null} >{ upvoteVisible ? props?.detailData?.up_votes + 1 : props?.detailData?.up_votes}</span>
                             <Image 
-                                src={upvoteLogo}  
+                                src={upvoteVisible ? upvoteLogoDark : upvoteLogo}  
                                 width={ window.innerWidth <= 500 ? 30 : 18 }
                                 height={window.innerWidth <= 500 ? 30 : 18 }
                                 objectFit="cover" 
@@ -139,19 +158,19 @@ export default function DetailModal(props){
             </div>
             <div style={{width: '100%',background: '#FFFFFF',flex: 1}} />
             </div>
-            <div className='detail-modal-banner'  style={ window.innerWidth <= 500 ? {width:'88%',marginTop: '11rem'} : null }>
+            <div className='detail-modal-banner'  style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
                 <span className='banner-text'>
-                Next batch starts on June 12th, 2022
+                Next batch starts on {moment(props?.detailData?.enrollment_start_date).format("MMM Do YY")}
                 </span>
             </div>
             <div className='detail-modal-middle-section'>
               <div className='detail-modal-course-content'>
                 <div className='detail-modal-course-container'>
                     <span className='heading1'>
-                    B.Des-UX in collaboration with ImaginXP
+                    {props?.detailData?.course_name}
                     </span>
                     <span className='heading2'>
-                    Users come and go, Bruh! But this course will stay!! So do it Now!!!
+                    {props?.detailData?.description}
                     </span>
                 </div>
                 <div className='detail-modal-course-overview'>
@@ -290,14 +309,6 @@ export default function DetailModal(props){
             </div>
             <div className='detail-modal-footer-section-right' 
             style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
-                {/* <span className='compare-button' onClick={()=>{
-                    props.addToCompare(props?.detailData)
-                    setCompareText('Go to Compare')
-                    }} > 
-                    <span className='compare-button-text'>
-                    {props.compareTextVisible || compareText}
-                    </span>
-                </span> */}
                 <span className='apply-now-button'>
                     <span className='apply-now-button-text'>
                         Apply Now

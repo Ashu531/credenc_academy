@@ -27,7 +27,7 @@
         min-width: 100%;
         box-sizing: border-box;
         border-radius: 3.2rem 3.2rem 0 0;
-        box-shadow: 8px 8px 32px rgba(0, 0, 0, 0.3);
+        box-shadow: 8px 8px 32px var(--subduedBackground);
         z-index: 5;
         transition: all 0.3s ease-out;
         overflow-y: scroll;
@@ -48,7 +48,7 @@
             align-items: center;
 
             &:hover{
-                background-color: #0A0A0B;
+                background-color: var(--subduedBackground);
             }
 
             .applied-container {
@@ -71,7 +71,7 @@
             span {
                 width: 6rem;
                 height: 0.3rem;
-                background: #61656B;
+                background: var(--subduedBackground);
                 border-radius: 5px;
                 justify-self: center;
             }
@@ -149,7 +149,7 @@
             text-transform: uppercase;
 
             &:hover{
-                background-color: #0A0A0B;
+                background-color: var(--defaultStrokeColor);
             }
 
             .selected-text {
@@ -191,12 +191,12 @@
         }
 
         .content-sort{
-            background: var(--defaultBackground);
+            background: var(--defaultStrokeColor);
             border-radius: 0.8rem;
             border: 1px solid rgb(49, 49, 49);
 
             @supports ((backdrop-filter: blur(60px)) or (-webkit-backdrop-filter: blur(60px)) or (-ms-backdrop-filter: blur(60px)) or (-o-backdrop-filter: blur(60px))) {
-                background: #16181a4d;
+                background: var(--bodyColor);
                 backdrop-filter: blur(60px);
                 -webkit-backdrop-filter: blur(60px);
                 -moz-backdrop-filter: blur(60px);
