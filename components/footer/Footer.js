@@ -21,7 +21,7 @@ export default function Footer(props){
             </div>
 
             <div className='footer-elemental-content'>
-                <a href="https://www.credenc.com/" className='footer-elemental-content-text' target="_blank">
+                <a href="https://www.credenc.com/" className='footer-elemental-content-text' target="_blank" rel="noreferrer">
                 About
                 </a>
                 {/* <span className='footer-elemental-content-text'>

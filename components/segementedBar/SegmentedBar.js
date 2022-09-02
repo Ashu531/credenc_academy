@@ -7,8 +7,6 @@ const SegmentedBar = forwardRef((props, ref) => {
   const { items, handleTabNumber, selected, type = "default", style={}, bgColor='' } = props;
   const [activeItem, setActiveitem] = useState(selected || 0);
 
- 
-
   useImperativeHandle(ref, () => ({
     changeTab
   }))
@@ -34,6 +32,7 @@ const SegmentedBar = forwardRef((props, ref) => {
             : styles.navList
         }`}
         style={{background: bgColor}}
+        ref={ref}
       >
         {items.map((item, i) => {
           const isActive = i === activeItem;

@@ -44,8 +44,6 @@ export default function SubjectNavbar(props){
         manageLeftScrollView()
     }
 
-    console.log(props.subjectData,"subjectData++++")
-
     return(
         <div className='subject-navbar'> 
         <div className='subject-tab' onMouseEnter={()=> setSubjectModalVisible(true)} onMouseLeave={()=> setSubjectModalVisible(false)}>

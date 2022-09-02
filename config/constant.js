@@ -5,7 +5,7 @@ const constant= {
       DEV: "https://edtech.credenc.com"
     },
     BASE_URL:{
-      PROD: "https://dxnku1c3h7tf2.cloudfront.net/",
+      PROD: "https://dxnku1c3h7tf2.cloudfront.net/?",
       DEV: "http://localhost:3000/?"
     },
     COURSES:{

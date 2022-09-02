@@ -18,7 +18,6 @@ const EdtechToken = 'credenc-edtech-authkey';
 export default function Header(props){
 
   let location = useRouter();
-  console.log(location,"location+++")
 
   const [token,setToken] = useState('')
 

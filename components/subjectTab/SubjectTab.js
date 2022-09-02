@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function SubjectTab(props){
-    console.log(props,"subject tab")
     return(
         <>
             {

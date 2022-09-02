@@ -628,7 +628,6 @@ function DashboardDesktop(props) {
     // await delay(5000);
     let res;
     let token = props?.token;
-    console.log(token)
     if (token === null || !token) {
       res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
         .then(res => {
@@ -862,7 +861,8 @@ function DashboardDesktop(props) {
 
     // change tab number
     let tabNumber = getTabNumber(queries.COURSE_TYPE, urlService)
-    courseTypeRef?.current?.changeTab(tabNumber);
+    setCourseType(tabNumber)
+    // courseTypeRef?.current?.changeTab(tabNumber);
   }, []);
 
 
