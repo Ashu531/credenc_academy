@@ -17,6 +17,7 @@ import callIcon from '../../assets/images/icons/phoneCall.svg'
 import axios from "axios";
 import constant from '../../config/constant';
 import moment from 'moment'
+import closeIcon from '../../assets/images/icons/close-icon-grey.svg'
 
 export default function ApplyNowModal(props){
 
@@ -70,7 +71,7 @@ export default function ApplyNowModal(props){
 
     return(
         <>
-         <div className='apply-modal-container'>
+         <div className='apply-modal-container' style={ window.innerWidth<=500 ? {width:'100%',height:'90vh'} : null }>
               <div className='apply-modal-content'>
                   <div className='apply-modal-header'>
                     <span className='header-1'>Enrolling for</span>
@@ -90,22 +91,22 @@ export default function ApplyNowModal(props){
                     <Input placeholder="Full Name" handleInput={(e)=>handleName(e)} value={name} />
                     </span>
                    </div>
-                   <div className='contact-content' style={{display:"flex",width:'100%'}}>
-                     <div className='mobile-content' style={{width: '50%'}}>
+                   <div className='contact-content' style={window.innerWidth <= 500 ? {display:"flex",flexDirection:'column',justifyContent:'flex-start',alignItems:'flex-start',width:'100%'} : {display:"flex",width:'100%'}}>
+                     <div className='mobile-content' style={window.innerWidth >  500 ? {width: '50%'} : {width:'100%'}}>
                         <span className='label-text'>
                         Mobile Number*
                         </span>
                         <Input placeholder='Mobile Number' handleInput={(e)=>handleNumber(e)} value={number} />
                      </div>
-                     <div className='email-content' style={{width: '50%'}}>
+                     <div className='email-content' style={window.innerWidth >  500 ? {width: '50%'} : {width:'100%'}}>
                         <span className='label-text'>
                         Email ID*
                         </span>
                         <Input placeholder='Email Id' handleInput={(e)=>handleEmail(e)} value={email}/>
                      </div>
                    </div>
-                   <div className='contact-content' style={{display:"flex",width:'100%'}}>
-                     <div className='mobile-content' style={{width: '50%'}}>
+                   <div className='contact-content' style={window.innerWidth <= 500 ? {display:"flex",flexDirection:'column',justifyContent:'flex-start',alignItems:'flex-start',width:'100%'} : {display:"flex",width:'100%'}}>
+                     <div className='mobile-content' style={window.innerWidth >  500 ? {width: '50%'} : {width:'100%'}}>
                         <span className='label-text'>
                         Gender*
                         </span>
@@ -152,7 +153,7 @@ export default function ApplyNowModal(props){
                      </div>
                    </div>
                   </div>
-                  <div className='apply-now-footer'>
+                  <div className='apply-now-footer' style={window.innerWidth <= 500 ? {position: 'relative',bottom: '-12vh'} : null}>
 
                    <div className='footer-content'>
                      <div className='image-content'>
@@ -183,10 +184,14 @@ export default function ApplyNowModal(props){
                   </div>
                   </div>
               </div> 
-
-             
-             
-            </div>
+              {
+             window.innerWidth <= 500 ? 
+             <span className='apply-modal-close-icon' onClick={()=>props.closeApplyNowModal()}>
+                 <Image src={closeIcon} objectFit='cover' height={20} width={20} />
+             </span>
+             : null
+         }
+         </div>
         </>
     )
 }

@@ -149,7 +149,6 @@ class MyApp extends App {
   }
 
   openLoginModal=()=>{
-    console.log("coming login modal")
     this.setState({
       loginModal: true
     })

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import pointerIcon from '../../assets/images/icons/caret-right-icon.svg';
 import Image from "next/image";
 import Header from '../../components/header/Header'
+import { useRouter } from 'next/router'
 // import { shouldNavbarVisible } from '../../services/shouldNavbarVisible';
 // import ProfileHeader from '../profilePage/ProfileHeader';
 
@@ -47,6 +48,7 @@ const rightsPointer = [
 export default function PrivacyPolicy(props) {
 
     let disclaimerRef = useRef();
+    let location = useRouter();
 
     const getWebsiteLink = (url) => {
         return <a style={{color: 'white', fontStyle: 'italic'}} href={url} target='_blank' rel="noreferrer noopener">skillrush.credenc.com</a>
@@ -73,6 +75,19 @@ export default function PrivacyPolicy(props) {
         // changeNavbarVisibility(shouldNavbarVisible());
         if (location.pathname === '/disclaimer') disclaimerRef.current.scrollIntoView();    
     }, [])
+
+    useEffect(() => {
+        location.beforePopState(({ as }) => {
+            if (as !== location.asPath) {
+                location.push('/')
+            }
+            return true;
+        });
+    
+        return () => {
+            location.beforePopState(() => true);
+        };
+    }, [location]);
 
   return (
     

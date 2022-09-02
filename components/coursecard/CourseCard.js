@@ -130,13 +130,10 @@ export default function CourseCard(props){
 
 
       { window.innerWidth<=500 ? 
-          <div className='course-button-content-mobile'>
-              <div className='course-compare-buttton-mobile' onClick={()=>{
-                props.addToCompare(props?.data)
-                setCompareTextVisible('Go to Compare')
-                }}>
+          <div className='course-button-content-mobile' style={ window.innerWidth <= 500 ? {padding: '12px 24px'} : null }>
+              <div className='course-compare-buttton-mobile' onClick={()=> props?.openApplyNowModal() }>
                 <span className='add-to-compare-text-mobile'>
-                {compareTextVisible}
+                Apply now
                 </span>
               </div>
               <div className='course-detail-button-mobile' onClick={()=> props.openDetailModal()}>

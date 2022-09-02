@@ -6,7 +6,7 @@ const constant= {
     },
     BASE_URL:{
       PROD: "https://dxnku1c3h7tf2.cloudfront.net/?",
-      DEV: "http://localhost:3000/?"
+      DEV: "https://dxnku1c3h7tf2.cloudfront.net/?"
     },
     COURSES:{
      SUB_CATEGORIES : [

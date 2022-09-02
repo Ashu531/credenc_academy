@@ -18,7 +18,7 @@ export default function Button({
 }) {
 
   return (
-    <div className={`button-component ${classes} ${disabled ? 'disable' : ''}`} style={ linearGradient == 'green' ? {background: 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)'} : style} onClick={onClick}> 
+    <div className={`button-component ${classes} ${disabled ? 'disable' : ''}`} style={ linearGradient == 'green' ? {background: 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)',borderRadius: 6} : style} onClick={onClick}> 
         {/* {leadingIcon && <img src={leadingIcon}/>} */}
         {!!count && <div className={'text'} style={theme === 'light' ? {color: '#222222'} : {color: '#DEDEDE'}}>{count}</div>}
         {(text && window.innerWidth > 500) && <div className={showTextOnHover ? 'hideText text' : 'text'} style={theme === 'light' ? {color: '#222222'} : {color: '#DEDEDE'}}>{text}</div>}

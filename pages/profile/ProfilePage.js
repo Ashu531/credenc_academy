@@ -194,7 +194,7 @@ export default function ProfilePage({
                   </div>
                 <div className='hr'></div>
               </div>
-              <div className='content-column'>
+              <div className='content-column' style={profilePages.privacyPolicy === true ? {overflow: 'scroll'} : null}>
                 {window.innerWidth > 500 && profilePages.editProfile === true && <EditProfile token={token} />}
                 {window.innerWidth > 500 && profilePages.resetPassword === true && <ResetPassword token={token} openForgotPasswordModal={()=>openForgotPasswordModal()} />}
                 {window.innerWidth > 500 && profilePages.privacyPolicy === true && <PrivacyPolicy profilePage={true} />}

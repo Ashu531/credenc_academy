@@ -10,6 +10,7 @@
         height: 100vh;
         overflow: scroll;
         overflow-x: hidden;
+        background-color: var(--defaultBackground);
         
         .apply-modal-header{
             display: flex;
@@ -163,5 +164,11 @@
          }
        
        }
+    }
+    .apply-modal-close-icon{
+        position: absolute;
+        top: 1.5%;
+        right: 2.5%;
+        z-index: 99999;
     }
 }

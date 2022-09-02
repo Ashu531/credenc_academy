@@ -26,6 +26,7 @@ import FloatActionButton from "../../components/floatActionButton/floatActionBut
 import Image from "next/image";
 import LoginModalContainer from '../../components/loginModal/LoginModalContainer'
 import ForgotPasswordModal from "../../components/forgotPasswordModal/ForgotPasswordModal"
+import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
 const compareKey = 'credenc-marketplace-compares';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const subjectKey = 'credenc-edtech-subject';
@@ -112,7 +113,7 @@ function DashboardMobile(props) {
   const [mobileFilter, setMobileFilter] = useState(false)
   const [mobileFiltersState, setMobileFiltersState] = useState(false)
   let appliedFiltersCount = useRef(0);
-
+  const [applyNow, setApplyNow] = useState(false)
   const [lastCourse, setLastCourse] = useState(null);
   const [upvoteCard, setUpvoteCard] = useState('')
   const courseTypeRef = useRef(null);
@@ -921,6 +922,15 @@ const _onRemoveToUpvote=(item)=>{
   removeUpvote(item)
 }
 
+const _openApplyNowModal=(data)=>{
+  setApplyNow(true)
+  setDetailData(data)
+}
+
+const _closeApplyNowModal=()=>{
+  setApplyNow(false)
+}
+
    return(
         <div className="dashboard-mobile">
           {
@@ -1080,6 +1090,7 @@ const _onRemoveToUpvote=(item)=>{
                     addToUpvote={(item)=>_addToUpvote(item)}
                     token={props?.token}
                     upvoteCard={upvoteCard}
+                    openApplyNowModal={(item)=> _openApplyNowModal(item)}
                     // compareTextVisible={compareTextVisible}  
                   />
                 </div>
@@ -1157,17 +1168,18 @@ const _onRemoveToUpvote=(item)=>{
                       }
                     return(
                         <CourseCard 
-                        key={index} 
-                        data={item}
-                        openDetailModal={()=>_openDetailModal(item)}
-                        addToCompare={()=>_addToCompare(item)} 
-                        addToBookmark={()=>_addToBookmark(item)}
-                        bookmarkVisible={_checkBookmarks(item)}
-                        compareText={_checkCompareText(item)}
-                        addToUpvote={()=>_addToUpvote(item)}
-                        upvoteVisible={upvoteVisible}
-                        token={props?.token}
-                        upvoteCard={upvoteCard}
+                          key={index} 
+                          data={item}
+                          openDetailModal={()=>_openDetailModal(item)}
+                          addToCompare={()=>_addToCompare(item)} 
+                          addToBookmark={()=>_addToBookmark(item)}
+                          bookmarkVisible={_checkBookmarks(item)}
+                          compareText={_checkCompareText(item)}
+                          addToUpvote={()=>_addToUpvote(item)}
+                          openApplyNowModal={()=> _openApplyNowModal(item)}
+                          upvoteVisible={upvoteVisible}
+                          token={props?.token}
+                          upvoteCard={upvoteCard}
                         />
                       )
                     })
@@ -1193,6 +1205,14 @@ const _onRemoveToUpvote=(item)=>{
            token={props?.token}
            />
          </SlidingPanel>
+         <SlidingPanel
+            type={'right'}
+            isOpen={applyNow}
+            backdropClicked={() => setApplyNow(false)}
+            size={30}
+          >
+             <ApplyNowModal detailData={detailData} closeApplyNowModal={()=>_closeApplyNowModal()} />
+           </SlidingPanel>
          {
            props?.subjectDropdownMobile ? 
            <FloatActionButton

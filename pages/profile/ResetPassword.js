@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import States from '../../config/states';
 import Button from '../../components/button/Button';
 import Input from '../../components/input/Input';
-import passVisibleIcon from '../../assets/images/icons/eye.svg';
+import passVisibleIcon from '../../assets/images/icons/eye-close.svg'; 
 import passNotVisibleIcon from '../../assets/images/icons/eye-close.svg';
 import ApiStatus from '../../config/apiStatus';
 import axios from 'axios';
@@ -144,7 +144,7 @@ export default function ResetPassword({token, handleForgotPassword,openForgotPas
           <div className='label'>Old Password:</div>
           <div className='input-container'>
               <Input 
-                placeholder='Enter Old Passowrd' 
+                placeholder='Enter Old Password' 
                 handleInput={(value) => setOldPasswordInputState({...oldPasswordInputState, value: value})}
                 trailingIcon={oldPasswordInputState.trailingIcon}
                 value={oldPasswordInputState.value}
@@ -157,7 +157,7 @@ export default function ResetPassword({token, handleForgotPassword,openForgotPas
           <div className='label'>New Password:</div>
           <div className='input-container'>
               <Input 
-                placeholder='Enter New Passowrd' 
+                placeholder='Enter New Password' 
                 handleInput={(value) => setNewPasswordInputState({...newPasswordInputState, value: value})}
                 trailingIcon={newPasswordInputState.trailingIcon}
                 value={newPasswordInputState.value}
@@ -170,7 +170,7 @@ export default function ResetPassword({token, handleForgotPassword,openForgotPas
           <div className='label'>Confirm Password:</div>
           <div className='input-container'>
               <Input 
-                placeholder='Re-Enter New Passowrd' 
+                placeholder='Re-Enter New Password' 
                 handleInput={(value) => setConfirmPasswordInputState({...confirmPasswordInputState, value: value})}
                 value={confirmPasswordInputState.value}
                 type={confirmPasswordInputState.type}

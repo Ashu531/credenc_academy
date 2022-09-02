@@ -12,11 +12,13 @@
       width: 72%;
       height: 55rem;
       background: var(--defaultBackground);
+      border: 1px solid var(--subduedBackground);
       border-radius: 1.2rem ;
       display: flex;
       justify-content: flex-start;
       align-items: flex-start;
       overflow: hidden;
+      margin-top: 5rem;
 
       .menu-column{
           width: 25%;
@@ -61,9 +63,9 @@
       .content-column{
         width: 75%;
         height: 100%;
-        border: 1px solid var(--subduedBackground);
+        // border: 1px solid var(--subduedBackground);
         border-radius: 0 1.2rem 1.2rem 0;
-        overflow: scroll;
+        // overflow: scroll;
 
         .profile-header {
           display: none;

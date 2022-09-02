@@ -27,9 +27,11 @@ export default function Footer(props){
                 {/* <span className='footer-elemental-content-text'>
                 Sitemap
                 </span> */}
-                <span className='footer-elemental-content-text' onClick={()=>_openPrivacyPolicy()}>
+                <a href='/privacy' target='_blank' rel="noreferrer" style={{textDecoration:'none'}}>
+                <span className='footer-elemental-content-text'>
                 Privacy Policy
                 </span>
+                </a>
                 <span className='footer-elemental-content-text'>
                 Contact
                 </span>

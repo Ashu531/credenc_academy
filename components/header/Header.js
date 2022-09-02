@@ -69,12 +69,6 @@ export default function Header(props){
       return;
     }
 
-    if(item.id === 1){
-      // Mixpanel.track("Invite selected in profile dropdown!");
-      // navigateToProfilePage('invite');
-      // return;
-    }
-
     // if(item.id === 2){
     //   // Mixpanel.track(MixpanelStrings.PRIVACY_POLICY_TRIGGERED);
     //   try {
@@ -100,8 +94,9 @@ export default function Header(props){
     if(item.id === 1){
       // Mixpanel.track(MixpanelStrings.LOGOUT_TRIGGERED);
       props?.logoutUser()
+      location.push('/')
       // dispatchLogout();
-      window.location.reload();
+      // window.location.reload();
       return;
     }
   }
@@ -160,9 +155,9 @@ export default function Header(props){
            <Image src={ props?.theme === 'dark' ? bookmarkIconDark : bookmarkIcon} objectFit="cover" alt='bookmarkIcon' />
            </div> */}
  
-           <div onClick={()=>props.toggleTheme()} style={{cursor:"pointer",paddingLeft:10}}>
+           {/* <div onClick={()=>props.toggleTheme()} style={{cursor:"pointer",paddingLeft:10}}>
             <span className='change-theme-text'>Change Theme</span>
-          </div>
+          </div> */}
           <div className='profile-item'>
           {renderProfile()}
           </div>
