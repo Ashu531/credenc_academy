@@ -13,19 +13,17 @@ export default function Footer(props){
     }
 
     return(
-        <div className='footer'>
+        <div className='footer' style={props.filterExpandedStage ? {position: 'absolute',bottom: '-5.8rem'} : null}>
             <div style={{paddingLeft: 23}}>
             <h1 className='footer-credence-text'>
-         {props.title}
-          </h1>
+                {props.title}
+            </h1>
             </div>
 
             <div className='footer-elemental-content'>
-                <Link href="https://www.credenc.com/" >
-                <a className='footer-elemental-content-text' target="_blank">
+                <a href="https://www.credenc.com/" className='footer-elemental-content-text' target="_blank">
                 About
                 </a>
-                </Link>
                 {/* <span className='footer-elemental-content-text'>
                 Sitemap
                 </span> */}

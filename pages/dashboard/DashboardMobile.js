@@ -29,7 +29,7 @@ import ForgotPasswordModal from "../../components/forgotPasswordModal/ForgotPass
 const compareKey = 'credenc-marketplace-compares';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const subjectKey = 'credenc-edtech-subject';
-const upvoteKey = 'credenc-edtech-upvote'
+const UpvoteKey = 'credenc-edtech-upvote'
 
 const queries = {
   PROFESSION: 'profession',
@@ -820,7 +820,7 @@ const setUpvoteCount=(item)=>{
   const upvote = async (item) => {
 
     await axios.post(`${constant.API_URL.DEV}/batch/upvote/add`, {
-        "batch_id": item.id,
+        "batch_id": item?.id,
         "is_up_vote": "true"
     }, {
         headers: {
@@ -871,9 +871,11 @@ const _handleFilterState=()=>{
 
 const _addToUpvote=(item)=>{
   if(props?.token && props?.token.length > 0){
-    let upvote = JSON.parse(localStorage.getItem(upvoteKey)) 
+    let upvoteArray = localStorage.getItem(UpvoteKey) ? localStorage.getItem(UpvoteKey) : []
+     
     let upvoteAvailable = false;
-    if(upvote && upvote.length > 0){
+    if(upvoteArray && upvoteArray.length > 0){
+      let upvote = JSON.parse(upvoteArray) 
       upvote.forEach(data=>{
         if(data === item.id){
           upvoteAvailable= true
@@ -899,22 +901,24 @@ const _addToUpvote=(item)=>{
 const _onAddToUpvote=(item)=>{
   setUpvoteCard('1')
   let upvoteArray = [];
-  let upvoteItem = JSON.parse(localStorage.getItem(upvoteKey)) 
+  let upvoteItem = JSON.parse(localStorage.getItem(UpvoteKey)) 
   if(upvoteItem && upvoteItem.length > 0){
     upvoteArray.push(...upvoteItem)
   }
   upvoteArray.push(item.id)
-  localStorage.setItem(upvoteKey,JSON.stringify(upvoteArray));
+  localStorage.setItem(UpvoteKey,JSON.stringify(upvoteArray));
+  upvote(item)
 }
 
 const _onRemoveToUpvote=(item)=>{
   setUpvoteCard('0')
   let upvoteArray = [];
-  let upvoteItem = JSON.parse(localStorage.getItem(upvoteKey)) 
+  let upvoteItem = JSON.parse(localStorage.getItem(UpvoteKey)) 
   if(upvoteItem && upvoteItem.length > 0){
     upvoteArray =  upvoteItem.filter(data => data !== item.id )
   }
-  localStorage.setItem(upvoteKey,JSON.stringify(upvoteArray));
+  localStorage.setItem(UpvoteKey,JSON.stringify(upvoteArray));
+  removeUpvote(item)
 }
 
    return(
@@ -1140,13 +1144,16 @@ const _onRemoveToUpvote=(item)=>{
                       }
 
                       let upvoteVisible = false;
-                      let upvoteData = JSON.parse(localStorage.getItem(upvoteKey));
-                      if(upvoteData && upvoteData.length > 0){
-                        if (upvoteData.includes(item?.id)){
-                          upvoteVisible = true
+                      let upvoteArray = localStorage.getItem(UpvoteKey) ? localStorage.getItem(UpvoteKey) : []
+                      if(upvoteArray && upvoteArray.length > 0){
+                      let upvoteData = JSON.parse(upvoteArray);
+                        if(upvoteData && upvoteData.length > 0){
+                          if (upvoteData.includes(item?.id)){
+                            upvoteVisible = true
+                          }
+                        else
+                        upvoteVisible = false
                         }
-                      else
-                      upvoteVisible = false
                       }
                     return(
                         <CourseCard 

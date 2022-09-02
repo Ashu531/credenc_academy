@@ -35,7 +35,7 @@ import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
 const subjectKey = 'credenc-edtech-subject';
 const compareKey = 'credenc-marketplace-compares';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
-const upvoteKey = 'credenc-edtech-upvote'
+const UpvoteKey = 'credenc-edtech-upvote'
 
 const queries = {
   PROFESSION: 'profession',
@@ -149,7 +149,7 @@ function DashboardDesktop(props) {
       if(urlSubCategoryQuery  && Object.keys(urlSubCategoryQuery).length !== 0){
         setSelectedCategory(urlSubCategoryQuery)
       }else{
-        setSelectedCategory(constant.COURSES.SUB_CATEGORIES[0].title)
+        setSelectedCategory(urlSubCategoryQuery)
       }
       setSelectedSubject(data)
       getCardData(data)
@@ -161,7 +161,7 @@ function DashboardDesktop(props) {
       if(urlSubCategoryQuery  && Object.keys(urlSubCategoryQuery).length !== 0){
         setSelectedCategory(urlSubCategoryQuery)
       }else{
-        setSelectedCategory(constant.COURSES.SUB_CATEGORIES[0].title)
+        setSelectedCategory(urlSubCategoryQuery)
       }
      
       setSelectedSubject(data)
@@ -256,9 +256,11 @@ function DashboardDesktop(props) {
 
   const _addToUpvote=(item)=>{
     if(props?.token && props?.token.length > 0){
-      let upvote = JSON.parse(localStorage.getItem(upvoteKey)) 
+      let upvoteArray = localStorage.getItem(UpvoteKey) ? localStorage.getItem(UpvoteKey) : []
+      
       let upvoteAvailable = false;
-      if(upvote && upvote.length > 0){
+      if(upvoteArray && upvoteArray.length > 0){
+        let upvote = JSON.parse(upvoteArray) 
         upvote.forEach(data=>{
           if(data === item.id){
             upvoteAvailable= true
@@ -273,10 +275,13 @@ function DashboardDesktop(props) {
        }
       
       }
+
       else{
         _onAddToUpvote(item);
       }
-    }else{
+    
+   }
+    else{
       props?.openLoginModal()
     }
   }
@@ -284,22 +289,24 @@ function DashboardDesktop(props) {
   const _onAddToUpvote=(item)=>{
     setUpvoteCard('1')
     let upvoteArray = [];
-    let upvoteItem = JSON.parse(localStorage.getItem(upvoteKey)) 
+    let upvoteItem = JSON.parse(localStorage.getItem(UpvoteKey)) 
     if(upvoteItem && upvoteItem.length > 0){
       upvoteArray.push(...upvoteItem)
     }
     upvoteArray.push(item.id)
-    localStorage.setItem(upvoteKey,JSON.stringify(upvoteArray));
+    localStorage.setItem(UpvoteKey,JSON.stringify(upvoteArray));
+    upvote(item)
   }
 
   const _onRemoveToUpvote=(item)=>{
     setUpvoteCard('0')
     let upvoteArray = [];
-    let upvoteItem = JSON.parse(localStorage.getItem(upvoteKey)) 
+    let upvoteItem = JSON.parse(localStorage.getItem(UpvoteKey)) 
     if(upvoteItem && upvoteItem.length > 0){
       upvoteArray =  upvoteItem.filter(data => data !== item.id )
     }
-    localStorage.setItem(upvoteKey,JSON.stringify(upvoteArray));
+    localStorage.setItem(UpvoteKey,JSON.stringify(upvoteArray));
+    removeUpvote(item)
   }
 
   const _addToBookmark=(item)=>{
@@ -620,7 +627,8 @@ function DashboardDesktop(props) {
     coursesApiStatus.current.makeApiCall();
     // await delay(5000);
     let res;
-    let token = null;
+    let token = props?.token;
+    console.log(token)
     if (token === null || !token) {
       res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
         .then(res => {
@@ -861,7 +869,7 @@ function DashboardDesktop(props) {
   const upvote = async (item) => {
 
     await axios.post(`${constant.API_URL.DEV}/batch/upvote/add/`, {
-        "batch_id": item.id,
+        "batch_id": item?.id,
         "is_up_vote": "true"
     }, {
         headers: {
@@ -870,7 +878,7 @@ function DashboardDesktop(props) {
     })
     .then(res => {
         if (res?.data?.success)
-        handleFilteredData(false)
+        // handleFilteredData(false)
         //  Mixpanel.track(MixpanelStrings.COURSE_UPVOTED, {triggered_from: 'Course Card', ...item})
         return res;
     })
@@ -1097,7 +1105,7 @@ const _handleSearch=(e)=>{
           <div style={{ flexGrow: 1 }}></div>
           <div className="text-container">Showing {totalCourses} Course{totalCourses === 1 ? '' : 's'}</div>
         </div>
-        <div className="list-container">
+        <div className="list-container" style={{paddingBottom: '5rem'}}>
           <List
             type={listTypes?.HORIZONTAL_CARDS}
             list={courses}
@@ -1179,16 +1187,16 @@ const _handleSearch=(e)=>{
 
        <div className="course-navbar">
        <Navbar 
-        toggleFilterModal={openFilterModal} 
-        openSubjectModal={openSubjectModal} 
-        closeSubjectModal={closeSubjectModal} 
-        subCategories={constant.COURSES.SUB_CATEGORIES} 
-        selectedCategory={selectedCategory} 
-        setSubCategoriesData={setSubCategoriesData} 
-        subjectData={subjectData}
-        selectedSubject={selectedSubject} 
-        selectSubject={selectSubject}
-        theme={props.newTheme}
+          toggleFilterModal={openFilterModal} 
+          openSubjectModal={openSubjectModal} 
+          closeSubjectModal={closeSubjectModal} 
+          subCategories={subjectData} 
+          selectedCategory={selectedSubject} 
+          setSubCategoriesData={selectSubject} 
+          subjectData={subjectData}
+          selectedSubject={selectedSubject} 
+          selectSubject={selectSubject}
+          theme={props.newTheme}
        />
        </div>
        {/* <FilterModal filterModal={filterModal} toggleFilterModal={closeFilterModal}/> */}
@@ -1210,14 +1218,19 @@ const _handleSearch=(e)=>{
             }
 
             let upvoteVisible = false;
-            let upvoteData = JSON.parse(localStorage.getItem(upvoteKey));
-            if(upvoteData && upvoteData.length > 0){
-              if (upvoteData.includes(item?.id)){
-                upvoteVisible = true
+            let upvoteArray = localStorage.getItem(UpvoteKey) ? localStorage.getItem(UpvoteKey) : []
+            if(upvoteArray && upvoteArray.length > 0){
+              let upvoteData = JSON.parse(upvoteArray);
+              if(upvoteData && upvoteData.length > 0){
+                if (upvoteData.includes(item?.id)){
+                  upvoteVisible = true
+                }
+               else
+               upvoteVisible = false
               }
-             else
-             upvoteVisible = false
             }
+              
+           
             return(
                <CourseCard 
                  key={index} 

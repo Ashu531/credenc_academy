@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { changeTheme, addBookmark, removeBookmark, addToCompare, removeFromCompare, logout } from '../../scripts/actions/index'
+import { changeTheme, logout } from '../../scripts/actions/index'
 import ProfilePage from './ProfilePage'
 
 const mapStateToProps = (state) => {

@@ -9,6 +9,7 @@ import goUpIcon from '../../assets/images/icons/caret-up-grey.svg'
 import Link from "next/link";
 import { useRouter } from 'next/router'
 import credencAcademy from '../../assets/images/icons/credencAcademy.svg'
+import constant from '../../config/constant';
 
 export default function FooterModal(props){
     const router = useRouter();
@@ -62,31 +63,59 @@ export default function FooterModal(props){
                     <div className='socialMediaDiv2'>
                      With Credenc Academy, you don&apos;t just compare Courses. You understand it. Narrow down choices. Avoid pitfalls and make better decisions.
                      </div>
-                     <div>
-                        <Image src={FacebookLogo} objectFit="cover" />
-                        <Image src={InstagramLogo} objectFit="cover" />
-                        <Image src={TwitterLogo} objectFit="cover" />
-                        <Image src={LinkedlnLogo} objectFit="cover" />
+                     <div style={{cursor:"pointer"}}>
+                        <a href='https://www.facebook.com/CredencIndia/' target='_blank'  rel="noreferrer">
+                            <Image src={FacebookLogo} objectFit="cover" />
+                        </a>
+                        <a href='https://www.instagram.com/credenc.india/' target='_blank'  rel="noreferrer">
+                            <Image src={InstagramLogo} objectFit="cover" />
+                        </a>
+                        <a href='https://twitter.com/CredencIndia?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor' target='_blank'  rel="noreferrer">
+                            <Image src={TwitterLogo} objectFit="cover" />
+                        </a>
+                        <a href='https://in.linkedin.com/company/credenc' target='_blank'  rel="noreferrer">
+                            <Image src={LinkedlnLogo} objectFit="cover" />
+                        </a>
                      </div>
                 </div>
 
-            <div className='programAndSubjectDiv'>
+            <div className='programAndSubjectDiv' style={{cursor: 'pointer'}}>
                 <div className='programDiv'>
-                    <p className='paraHeading'>Program Type</p>
+                     <p className='paraHeading'>Program Type</p>
+                     <a href={`${constant.BASE_URL.DEV}&course_type=Certificate`} className='removeLine'>
                     <p className='para'>Certificate</p>
+                    </a>
+                    <a href={`${constant.BASE_URL.DEV}&course_type=Diploma`} className='removeLine'>
                     <p className='para'>Diploma</p>
+                    </a>
+                    <a href={`${constant.BASE_URL.DEV}&course_type=Degree`} className='removeLine'>
                     <p className='para'>Degree</p>
+                    </a>
+                    <a href={`${constant.BASE_URL.DEV}&course_type=Job%20Assured`} className='removeLine'>
                     <p className='para'>Job assured</p>
+                    </a>
+                    {/* <a href={`${constant.BASE_URL.DEV}&course_type=Certificate`} className='removeLine'>
                     <p className='para'>Other</p>
+                    </a> */}
                 </div>
 
                 <div className='subjectDiv'>
                     <p className='paraHeading'>Domain</p>
-                    <p className='para'>Technology</p>
-                    <p className='para'>Marketing</p>
-                    <p className='para'>Design</p>
-                    <p className='para'>Buisness</p>
-                    <p className='para'>Other</p>
+                        <a href={`${constant.BASE_URL.DEV}&domain=Technology`} className='removeLine'>
+                             <p className='para'>Technology</p>
+                        </a>
+                        <a href={`${constant.BASE_URL.DEV}&domain=Marketing`} className='removeLine'>
+                            <p className='para'>Marketing</p>
+                        </a>
+                        <a href={`${constant.BASE_URL.DEV}&domain=Design`} className='removeLine'>
+                            <p className='para'>Design</p>
+                        </a>
+                        <a href={`${constant.BASE_URL.DEV}&domain=Business`} className='removeLine'>
+                            <p className='para'>Business</p>
+                        </a>
+                        <a href={`${constant.BASE_URL.DEV}&domain=Others`} className='removeLine'>
+                            <p className='para'>Others</p>
+                        </a>
                 </div>
             </div>
             </div>

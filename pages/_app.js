@@ -20,6 +20,7 @@ import axios from "axios";
 import ApiStatus from "../config/apiStatus";
 const EdtechTheme = 'credenc-edtech-theme';
 const EdtechToken = 'credenc-edtech-authkey';
+const UpvoteKey = 'credenc-edtech-upvote'
 
 class MyApp extends App {
 
@@ -45,6 +46,7 @@ class MyApp extends App {
   }
 
   componentDidMount() {
+    this._clearUpvoteData()
     this._retrieveData();
     this._mountComponent();
     
@@ -54,6 +56,14 @@ class MyApp extends App {
     this.setState({
       mounted: true
     })
+  }
+
+  _clearUpvoteData=()=>{
+    let upvoteData = localStorage.getItem(UpvoteKey);
+    if(upvoteData && upvoteData.length > 0){
+      upvoteData = []
+      localStorage.setItem(UpvoteKey,JSON.stringify(upvoteData))
+    }
   }
 
   _retrieveData=()=>{
@@ -77,14 +87,12 @@ class MyApp extends App {
   }
 
   _handleLogout=()=>{
-    console.log("coming123")
     this.setState({
       loggedIn: false
     })
   }
 
   _handleLogin=()=>{
-    console.log("cominglogin")
     this.setState({
       loggedIn: true
     })
@@ -187,6 +195,7 @@ class MyApp extends App {
 
   logoutUser=()=>{
     localStorage.setItem(EdtechToken,'');
+    this._clearUpvoteData()
   }
 
   selectedSubject=(item)=>{
@@ -308,6 +317,7 @@ class MyApp extends App {
             window.innerWidth > 500 ? 
             <Footer 
             toggleFooterModal={this.toggleFooterModal} 
+            filterExpandedStage={this.state.filterExpandedStage}
             title="©Credenc2022"/> : 
             <FooterMobile
             openLoginModal={()=>this.openLoginModal()}

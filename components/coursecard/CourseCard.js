@@ -25,6 +25,9 @@ export default function CourseCard(props){
 
   useEffect(() => {
     setMounted(true);
+    if(props?.data?.upvoted){
+      setUpvoted(true)
+    }
    }, []);
 
    useEffect(()=>{

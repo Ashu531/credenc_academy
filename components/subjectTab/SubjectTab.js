@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function SubjectTab(props){
+    console.log(props,"subject tab")
     return(
         <>
             {
@@ -10,13 +11,13 @@ export default function SubjectTab(props){
                         key={index} 
                         style={
                             props.theme === 'light' ? 
-                            props.selectedCategory === item.title 
+                            props.selectedCategory.name === item.name 
                             ? 
                             {background: "#F7F7F7",borderRadius: 6 }
                             :
                             { background: "#FFFFFF",borderRadius: 6}
                             :
-                            props.selectedCategory === item.title 
+                            props.selectedCategory === item.name 
                             ? 
                             {background: "#141414",borderRadius: 6 }
                             :
@@ -25,7 +26,7 @@ export default function SubjectTab(props){
 
                         onClick={()=>props.setSubCategoriesData(item)}
                         >
-                        <span className='subject-title-text'>{item.title}</span>
+                        <span className='subject-title-text'>{item.name}</span>
                         </div>
                     )
                 })

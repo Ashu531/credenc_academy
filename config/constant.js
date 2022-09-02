@@ -4,6 +4,10 @@ const constant= {
       PROD: "https://edtechbackend.credenc.com",
       DEV: "https://edtech.credenc.com"
     },
+    BASE_URL:{
+      PROD: "https://dxnku1c3h7tf2.cloudfront.net/",
+      DEV: "http://localhost:3000/?"
+    },
     COURSES:{
      SUB_CATEGORIES : [
        {

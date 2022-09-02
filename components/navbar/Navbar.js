@@ -44,6 +44,8 @@ export default function SubjectNavbar(props){
         manageLeftScrollView()
     }
 
+    console.log(props.subjectData,"subjectData++++")
+
     return(
         <div className='subject-navbar'> 
         <div className='subject-tab' onMouseEnter={()=> setSubjectModalVisible(true)} onMouseLeave={()=> setSubjectModalVisible(false)}>
@@ -68,7 +70,7 @@ export default function SubjectNavbar(props){
         }
        
         <div className='tabs' ref={ref}>
-        <SubjectTab title={props.subCategories} selectedCategory={props.selectedCategory} setSubCategoriesData={props.setSubCategoriesData} theme={props.theme}/>
+        <SubjectTab title={props.subjectData} selectedCategory={props?.selectedSubject} setSubCategoriesData={props?.selectSubject} theme={props.theme}/>
        </div>
        {
         rightScrollView === true ? <div className="navbar-arrow-container" onClick={() => scroll(20)} >

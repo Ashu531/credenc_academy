@@ -14,7 +14,7 @@ import Button from '../button/Button';
 import { Skeleton } from '@mui/material';
 import CourseCard from '../coursecard/CourseCard';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
-const upvoteKey = 'credenc-edtech-upvote'
+const UpvoteKey = 'credenc-edtech-upvote'
 
 function List({
     list,
@@ -75,7 +75,9 @@ function List({
             }
 
             let upvoteVisible = false;
-            let upvoteData = JSON.parse(localStorage.getItem(upvoteKey));
+            let upvoteArray = localStorage.getItem(UpvoteKey) ? localStorage.getItem(UpvoteKey) : []
+            if(upvoteArray && upvoteArray.length > 0){
+            let upvoteData = JSON.parse(upvoteArray);
             if(upvoteData && upvoteData.length > 0){
               if (upvoteData.includes(item?.id)){
                 upvoteVisible = true
@@ -83,6 +85,7 @@ function List({
              else
              upvoteVisible = false
             }
+          }
 
              return <CourseCard 
              data={item} 
