@@ -157,7 +157,7 @@ export default function ProfilePage({
         <>
         
           <div className='profile-page'>
-            <div className='profile-container'>
+            <div className='profile-container' style={window.innerWidth > 500 ? {marginTop: '5rem'} : null}>
               <div className='menu-column'>
                   <div 
                   className='menu-item'
@@ -206,6 +206,7 @@ export default function ProfilePage({
                     logoutUser={()=>logoutUser()}
                     handleLogout={()=>handleLogout()}
                     handleLogin={()=>handleLogin()}
+                    openForgotPasswordModal={()=>openForgotPasswordModal()}
                 />}
               </div>
             </div>

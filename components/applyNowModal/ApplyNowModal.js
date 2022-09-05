@@ -48,7 +48,7 @@ export default function ApplyNowModal(props){
             'course_id': props?.detailData?.id,
           })
         .then(res => {
-          console.log(res.data,"response++")
+            props.closeApplyNowModal()
           return res.data;
         })
         .catch(err => {
@@ -153,7 +153,21 @@ export default function ApplyNowModal(props){
                      </div>
                    </div>
                   </div>
-                  <div className='apply-now-footer' style={window.innerWidth <= 500 ? {position: 'relative',bottom: '-12vh'} : null}>
+                  <div className='apply-now-footer'  
+                       style={ 
+                        window.innerWidth<=500 
+                        ? 
+                        {
+                            width:'100%',
+                            display:"flex",
+                            flexDirection:"row",
+                            justifyContent:'flex-start',
+                            alignItems:'flex-start',
+                            background: '#F7F7F7',
+                        } 
+                        : null 
+                        }
+                   >
 
                    <div className='footer-content'>
                      <div className='image-content'>
@@ -162,7 +176,7 @@ export default function ApplyNowModal(props){
                             <Image src={callIcon} objectFit='cover'/>
                         </div>
                      </div>
-                     <div className='button-content' onClick={()=>handleSubmit()} style={{cursor:'pointer'}}>
+                     <div className='button-content' onClick={()=>handleSubmit()} style={{cursor:'pointer',paddingRight: '5rem'}}>
                        <div 
                          className='button-container'
                          style={{

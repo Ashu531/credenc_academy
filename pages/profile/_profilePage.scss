@@ -18,7 +18,6 @@
       justify-content: flex-start;
       align-items: flex-start;
       overflow: hidden;
-      margin-top: 5rem;
 
       .menu-column{
           width: 25%;
@@ -525,10 +524,11 @@
         display: none;
       }
       .content-column {
-        width: 100%;
+        width: 95%;
         border-radius: 0;
         background: var(--defaultBackground);
         padding: 1.5rem;
+        overflow: scroll;
 
         .profile-header {
           display: block;

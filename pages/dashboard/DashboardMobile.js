@@ -20,7 +20,7 @@ import UrlService from "../../helper/urlService";
 import Button from "../../components/button/Button";
 import Link from "next/link";
 import { getTabNumber } from "../../helper/getTabNumber";
-import filterIcon from '../../assets/images/icons/filterIcon.svg';
+import filterIcon from '../../assets/images/icons/funnelIcon.svg';
 import closeIcon from '../../assets/images/icons/close-icon-grey.svg';
 import FloatActionButton from "../../components/floatActionButton/floatActionButton";
 import Image from "next/image";
@@ -1095,11 +1095,10 @@ const _closeApplyNowModal=()=>{
                   />
                 </div>
               </div>
-              {window.innerWidth <= 500 && <div className='mobile-view-actions' style={{padding: 0}}>
-                <span 
-                className='filter' 
-                
-                ><Image src={filterIcon} alt='filters' objectFit='cover' onClick={() =>_handleFilterState() } /></span>
+              {window.innerWidth <= 500 && 
+              <div>
+              <div className='mobile-view-actions' style={{padding: 0,marginBottom: 10}}>
+                <span className='filter' style={{marginLeft:12}}><Image src={filterIcon} alt='filters' objectFit='cover' onClick={() =>_handleFilterState() } /></span>
                 <FloatActionButton
                   type='course type'
                   heading={Lists.courseTypesFloatList[courseTypesFloatState]['name']}
@@ -1108,7 +1107,7 @@ const _closeApplyNowModal=()=>{
                     fontWeight: 600,
                     fontSize: '1.1rem',
                     lineHeight: '1.6rem',
-                    color: '#313235',
+                    color: '#FFFFFF',
                   }}
                   floatList={[...Lists.courseTypesFloatList]}
                   selected={courseTypesFloatState}
@@ -1137,7 +1136,9 @@ const _closeApplyNowModal=()=>{
                     // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
                   }}
                 />
-              </div>}
+              </div>
+              </div>
+              }
               </div>
           : 
                 

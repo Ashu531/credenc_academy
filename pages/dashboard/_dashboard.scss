@@ -485,11 +485,12 @@
         align-items: center;
         justify-content: center;
         border-radius: 2rem;
-        background: var(--defaultBackground);
+        background: var(--inverseBackground);
       }
 
       .filter, .sort {
         width: 4rem;
+        background: var(--inverseBackground);
       }
 
       .certificate {

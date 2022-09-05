@@ -967,6 +967,10 @@ const _handleSearch=(e)=>{
     setApplyNow(true)
     setDetailData(data)
   }
+
+  const _closeApplyNowModal=()=>{
+    setApplyNow(false)
+  }
   
  return(
         <div>      
@@ -1365,7 +1369,7 @@ const _handleSearch=(e)=>{
         backdropClicked={() => setApplyNow(false)}
         size={30}
       >
-        <ApplyNowModal detailData={detailData} />
+        <ApplyNowModal detailData={detailData} closeApplyNowModal={()=>_closeApplyNowModal()} />
       </SlidingPanel>
       {
         props?.loginModal ? 

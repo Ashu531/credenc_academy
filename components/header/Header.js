@@ -13,6 +13,7 @@ import Lists from '../../config/list'
 import SearchBar from '../searchBar/SearchBar'
 import UrlService from "../../helper/urlService";
 import { useRouter } from 'next/router'
+import credencAcademy from '../../assets/images/icons/credencAcademy.svg'
 const EdtechToken = 'credenc-edtech-authkey';
 
 export default function Header(props){
@@ -128,14 +129,14 @@ export default function Header(props){
            href='/' 
            // onClick={() => Mixpanel.track(MixpanelStrings.HOME_BUTTON_CLICK)}
           >
-            <div  style={{cursor:"pointer"}}>
-            <Image src={ props.theme === 'dark' ? credencLogoLight : credencLogo } objectFit="cover" alt='credencLogo'/>
+            <div  style={{cursor:"pointer",paddingTop: 10,paddingBottom: 5}}>
+            <Image src={credencAcademy} objectFit="cover" alt='credencLogo'/>
             </div>
         
           </Link>
           {
             props?.showSearchBar && location.asPath !== '/privacy/' ?
-              <div style={props?.showSearchBar ? {width : '25%',marginLeft: '20%'} : null}>
+              <div style={props?.showSearchBar ? {width : '25%',marginRight: '10%'} : null}>
                 <SearchBar showSearchBar={props?.showSearchBar} search={props?.searchValue} handleSearch={(e)=>_handleSearch(e)} />
               </div> 
           : null

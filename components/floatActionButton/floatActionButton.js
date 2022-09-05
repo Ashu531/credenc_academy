@@ -1,8 +1,9 @@
 import React, { useState,useEffect } from 'react'
 import States from '../../config/states';
-import sortingIcon from '../../assets/images/icons/sorting-icon.svg';
+import sortingIcon from '../../assets/images/icons/filterSortMobile.svg';
 import { Skeleton } from '@mui/material';
 import Image from "next/image";
+import checkIcon from '../../assets/images/icons/checkIcon.svg'
 
 export default function FloatActionButton({
     type = 'course type',
@@ -54,9 +55,14 @@ export default function FloatActionButton({
                     {icon && <Image src={icon} objectFit="cover" />}
                     {displayContent && <div className='content-wrapper'>
                         {floatList.map((item, i) => (
-                            <div key={item.id} className='drop-item' onClick={() => { setDisplayContent(false); onSelect(item, i); }}>
+                            <div key={item.id} className='drop-item' onClick={() => { setDisplayContent(false); onSelect(item, i); }} style={i == 0 ? {borderTopRightRadius: 12,borderTopLeftRadius: 12} : i == floatList.length - 1 ? {borderBottomRightRadius: 12,borderBottomLeftRadius: 12} : null}>
                                 <span className={checkIfActive(floatList[selected].id, (item.id)) ? 'selected-text' : 'faded-text'}>{item.name || item.value} </span>
-                                {checkIfActive(floatList[selected].id, (item.id)) && <span className='check'>L</span>}
+                                {checkIfActive(floatList[selected].id, (item.id)) && 
+                                <Image 
+                                src={checkIcon} 
+                                // className='check' 
+                                objectFit='contain'
+                                />}
                             </div>
                         ))}
                     </div>}
@@ -68,7 +74,7 @@ export default function FloatActionButton({
 
     if (type === 'sort type') {
         return <>
-            <div className={`float-sort-action-${floatType}`}>
+            <div className={`float-sort-action-${floatType}`} style={{marginRight:12}}>
                 <span onClick={() => _handleSorting()} className='sort'><Image src={sortingIcon} alt='Sorting' objectFit='cover' /></span>
                 {(window.innerWidth <= 500) &&
                     <div

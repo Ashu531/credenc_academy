@@ -23,7 +23,7 @@
         left: 0;
         padding: 1.2rem 0;
         // background-color: #151515;
-        background-color: var(--defaultBackground);
+        background-color: var(--inverseBackground);
         min-width: 100%;
         box-sizing: border-box;
         border-radius: 3.2rem 3.2rem 0 0;
@@ -88,7 +88,7 @@
     display: inline-block;
     cursor: pointer;
     height: auto;
-    background: #fff;
+    background: var(--inverseBackground);
     border-radius: 2rem;
     transition: all 1s ease-out;
     z-index: 2;
@@ -102,7 +102,7 @@
         font-weight: 700;
         font-size: 1.2rem;
         line-height: 1.8rem;
-        color: #313235;
+        color: var(--defaultBackground);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -147,18 +147,20 @@
             justify-content: space-between;
             align-items: center;
             text-transform: uppercase;
-
+            background: var(--inverseBackground);
+    
             &:hover{
                 background-color: var(--defaultStrokeColor);
             }
 
             .selected-text {
-                color: #313235;
+                // color: var(--defaultBackground);
                 font-weight: 700;
+                color: var(--defaultBackground);
             }
 
             .faded-text {
-                color: #7B7D84;
+                color: var(--defaultBackground);
             }
 
             .check {
