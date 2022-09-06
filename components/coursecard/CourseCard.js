@@ -97,8 +97,8 @@ export default function CourseCard(props){
       {props?.data?.duration}
       </h2>
       <span className='course-price-content' style={!isCardOpen ? null : {marginTop: 22,marginBottom: 14}}>
-        <span className='course-pay'>{props?.data?.finance_display[0]}</span>
-        <span className='course-price'>{props?.data?.price === "Free" || props?.data?.price === 0 || !props?.data?.price ? "Free" : ` ₹${props?.data?.price}` }</span>
+        <span className='course-pay'>{props?.data?.price_list[0]}</span>
+        <span className='course-price'>{props?.data?.finance_display[0] === "Free" || props?.data?.finance_display[0] === 0 || !props?.data?.finance_display[0] ? "Free" : ` ₹${props?.data?.finance_display[0]}` }</span>
       </span>
    </div>
 
@@ -124,26 +124,20 @@ export default function CourseCard(props){
           </span>
            <Image src={ props.theme === 'dark' ? arrowRightDark : arrowRight} objectFit="contain" alt='arrowRight'/>
       </div>
-      </div> : null}
-
-
-
-
-      { window.innerWidth<=500 ? 
-          <div className='course-button-content-mobile' style={ window.innerWidth <= 500 ? {padding: '12px 24px'} : null }>
+      </div> : <div className='course-button-content-mobile' style={ window.innerWidth <= 500 ? {padding: '12px 24px'} : null }>
               <div className='course-compare-buttton-mobile' onClick={()=> props?.openApplyNowModal() }>
                 <span className='add-to-compare-text-mobile'>
                 Apply now
                 </span>
               </div>
-              <div className='course-detail-button-mobile' onClick={()=> props.openDetailModal()}>
+              <div className='course-detail-button-mobile' onClick={()=> props?.openDetailModal()}>
               <span className='course-detail-text-mobile'>
                 Details
                 </span>
                 <Image src={arrowRight} objectFit="contain" height={18} width={18} alt='arrowRight'/>
               </div>
-          </div> : null
-      }
+          </div>}
+
     </div>
   }
   </>

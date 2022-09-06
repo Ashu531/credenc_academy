@@ -9,9 +9,10 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        overflow-x: auto;
-        max-width: 70vw;
-        overflow-x: hidden;
+        overflow-y: auto;
+        max-width: 78vw;
+        margin-top: 1.5rem;
+        // overflow: hidden;
        }
 
        .navbar-arrow-container{
@@ -62,6 +63,11 @@
         position: absolute;
         top: 35.8rem;
 
+    }
+
+    ::-webkit-scrollbar {
+        width: 0px;
+        background: transparent; /* make scrollbar transparent */
     }
    
 }

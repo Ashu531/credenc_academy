@@ -23,7 +23,7 @@
         left: 0;
         padding: 1.2rem 0;
         // background-color: #151515;
-        background-color: var(--inverseBackground);
+        background-color: var(--defaultBackground);
         min-width: 100%;
         box-sizing: border-box;
         border-radius: 3.2rem 3.2rem 0 0;
@@ -150,7 +150,7 @@
             background: var(--inverseBackground);
     
             &:hover{
-                background-color: var(--defaultStrokeColor);
+                // background-color: var(--defaultStrokeColor);
             }
 
             .selected-text {

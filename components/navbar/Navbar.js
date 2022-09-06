@@ -20,7 +20,7 @@ export default function SubjectNavbar(props){
 
     useEffect(()=>{
         manageLeftScrollView()
-        manageRightScrollView
+        manageRightScrollView()
     },[leftScrollView,rightScrollView])
 
     const manageLeftScrollView=()=>{
@@ -46,7 +46,7 @@ export default function SubjectNavbar(props){
 
     return(
         <div className='subject-navbar'> 
-        <div className='subject-tab' onMouseEnter={()=> setSubjectModalVisible(true)} onMouseLeave={()=> setSubjectModalVisible(false)}>
+        {/* <div className='subject-tab' onMouseEnter={()=> setSubjectModalVisible(true)} onMouseLeave={()=> setSubjectModalVisible(false)}>
         <span className='all-subject-text'> {props?.selectedSubject.name && props?.selectedSubject.name !== "All" ? props?.selectedSubject.name.length > 10 ? props?.selectedSubject.name.substring(0,10) + '...' : props?.selectedSubject.name : "All Subjects"}</span>
          <Image src={ props.theme === 'dark' ? dropdownIconDark : dropdownIcon} objectFit="cover" alt='dropdownIcon' style={subjectModalVisible ? {transform: "rotate(180deg)"} : null}/>
 
@@ -60,18 +60,18 @@ export default function SubjectNavbar(props){
                 />
             </div> : null
          }
-        </div>
+        </div> */}
         {
-            leftScrollView === true ?  <div className="navbar-arrow-container" onClick={() => scroll(-20)}>
+            leftScrollView === true ?  <div className="navbar-arrow-container" onClick={() => scroll(-13)}>
             <Image src={caretRight} objectFit="cover" style={{transform: "rotate(180deg)"}} height={14} width={14} alt='caretRight' />
             </div> : null
         }
        
         <div className='tabs' ref={ref}>
-        <SubjectTab title={props.subjectData} selectedCategory={props?.selectedSubject} setSubCategoriesData={props?.selectSubject} theme={props.theme}/>
+        <SubjectTab title={props.subCategories} selectedCategory={props?.selectedCategory} setSubCategoriesData={props?.setSubCategoriesData} theme={props.theme}/>
        </div>
        {
-        rightScrollView === true ? <div className="navbar-arrow-container" onClick={() => scroll(20)} >
+        rightScrollView === true ? <div className="navbar-arrow-container" onClick={() => scroll(13)} >
         <Image src={caretRight} objectFit="cover" height={14} width={14} alt='caretRight'/>
         </div> : null
        }

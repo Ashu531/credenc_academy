@@ -135,11 +135,11 @@ padding: 7px;
     }
     .course-price-content{
 
-display: flex;
-flex-direction: column;
-justify-content: flex-start;
-align-items: flex-start;
-margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 36px;
 
         .course-pay{
             font-family:'Poppins';
@@ -152,10 +152,10 @@ margin-top: 36px;
         .course-price{
             font-family:'Poppins';
             font-style: normal;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 27px;
-    color: var(--inverseBackground);
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 27px;
+            color: var(--inverseBackground);
         }
     }
    

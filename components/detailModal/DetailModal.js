@@ -131,7 +131,7 @@ export default function DetailModal(props){
                         </div>
                     <div 
                     className='header-action-container' 
-                    style={upvoteVisible ? {marginLeft:8,background : 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)'} : null}  
+                    style={upvoteVisible ? {marginLeft:8,background : 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)'} : {marginLeft:8}}  
                     onClick={()=> _handleUpvoteTrigger() }
                     >
                         <div className='upvote-container'>

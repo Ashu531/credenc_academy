@@ -27,6 +27,8 @@ import Image from "next/image";
 import LoginModalContainer from '../../components/loginModal/LoginModalContainer'
 import ForgotPasswordModal from "../../components/forgotPasswordModal/ForgotPasswordModal"
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
+import SubjectTab from '../../components/subjectTab/SubjectTab'
+import Error from "../../components/error/Error"
 const compareKey = 'credenc-marketplace-compares';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const subjectKey = 'credenc-edtech-subject';
@@ -84,7 +86,8 @@ function DashboardMobile(props) {
   const [compareTextVisible,setCompareTextVisible] = useState('');
   const [detailModal,setDetailModal] = useState(false)
   const [filterModal, setFilterModal] = useState(false);
-  const [selectedCategory,setSelectedCategory] = useState(constant.COURSES.SUB_CATEGORIES[0].title);
+  const [selectedCategory,setSelectedCategory] = useState('');
+  const [subCategory,setSubCategory] = useState([]);
   const [subjectData,setSubjectData] = useState([])
   const [selectedSubject,setSelectedSubject] = useState({})
   const coursesApiStatus = useRef(new ApiStatus());
@@ -125,28 +128,51 @@ function DashboardMobile(props) {
 }, []);
 
   useEffect(()=>{
-    _getCardData()
+    // _getCardData()
+    _getSubCategoryData()
+    getDataFromBaseUrl()
   },[])
 
-  useEffect(()=>{
-    getCompareText()
-  },[detailData])
 
-  const getCompareText =()=>{
- 
-      let tempCompareData = JSON.parse(localStorage.getItem(compareKey));
-      if(tempCompareData && tempCompareData.length > 0){
-        if (tempCompareData.includes(detailData?.id)) 
-        {
-          setCompareTextVisible("Go to Compare")
-        }
-        else {
-          setCompareTextVisible("Add to Compare")
-        } 
-      }else{
-        return setCompareTextVisible("Add to Compare")
+  const _getSubCategoryData=async()=>{
+    const response = await fetch(`${constant.API_URL.DEV}/subsubject/search/`)
+    const data = await response.json()
+    let totalSubcategoryData = data?.data;
+
+    totalSubcategoryData?.unshift(
+      {
+          "name": "All",
+          "seo_ranks": 0,
+          "id": 0
       }
-    
+      )
+    setSubCategory(totalSubcategoryData)
+  }
+
+  const getDataFromBaseUrl=()=>{
+
+    // let urlSubjectQuery = urlService.current.getValueFromEntry('domain')
+    let urlSubCategoryQuery = urlService.current.getValueFromEntry('subject')
+      if(urlSubCategoryQuery  && Object.keys(urlSubCategoryQuery).length !== 0){
+        setSelectedCategory(urlSubCategoryQuery)
+      }else{
+        setSelectedCategory('All')
+      }
+     
+
+      // getCardData()
+    }
+
+    const getCardData=()=>{
+
+      updateBrowserUrl()
+  
+      if (pageNumber > 1) {
+        setPageNumber(1);
+      } else {
+        coursesApiStatus.current.start();
+        handleFilteredData();
+      }
     }
 
   const _getCardData=async()=>{
@@ -638,13 +664,16 @@ useEffect( () => {
   if (location?.query && Object.keys(location?.query).length > 0) {
     // resetFilters(false);
     // urlService.current.changeEntry('subject', `${location.query}`);
+    if(location.query.hasOwnProperty('subject') || location.query.hasOwnProperty('domain')){
+      props?.closeFilterExpandedStage();
+    }
 
     if (pageNumber > 1) {
       setPageNumber(1);
     } else {
       handleFilteredData(false);
     }
-    props.openFilterExpandedStage();
+    // props.openFilterExpandedStage();
   }
 }, [location?.query]);
 
@@ -726,10 +755,10 @@ const getSubjectData=async()=>{
   )
   localStorage.setItem(subjectKey,JSON.stringify(totalSubjectData[0]))
   setSubjectData(totalSubjectData)
-  getDataFromBaseUrl(totalSubjectData)
+  getSubjectDataFromUrl(totalSubjectData)
 }
 
-const getDataFromBaseUrl=(totalSubjectData)=>{
+const getSubjectDataFromUrl=(totalSubjectData)=>{
   if(location?.query?.hasOwnProperty('domain') ){
     let data = totalSubjectData?.filter(item=> {
       if(item.name === location?.query?.subject){
@@ -930,6 +959,28 @@ const _openApplyNowModal=(data)=>{
 const _closeApplyNowModal=()=>{
   setApplyNow(false)
 }
+
+const setSubCategoriesData=(item)=>{
+  console.log(item)
+  setSelectedCategory(item.name)
+  _getSubCategoryDetails(item)
+}
+
+const _getSubCategoryDetails=(item)=>{
+
+  urlService.current.removeEntry('subject')
+  console.log(subCategory,"subCategory+++")
+  if(subCategory?.id === 0){
+    // urlService.current.addEntry('subject', item.name);
+    urlService.current.removeEntry('subject')
+  }else{
+    urlService.current.addEntry('subject', item.name);
+  }
+
+  getCardData(item)
+}
+
+
 
    return(
         <div className="dashboard-mobile">
@@ -1141,8 +1192,13 @@ const _closeApplyNowModal=()=>{
               }
               </div>
           : 
-                
-                <div className="course-card-list" style={{width:'90%'}}> 
+             <div style={{width:'100%',height: '100%'}}> 
+             <div style={{display:'flex',flexDirection:'row',alignItems:"center",overflow:'scroll',background: '#FFFFFF',boxSizing: "border-box" ,boxShadow: 'rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px',width:'100%',position:'fixed',top: '7rem',zIndex: 998}}>
+             <SubjectTab title={subCategory} selectedCategory={selectedCategory} setSubCategoriesData={setSubCategoriesData} theme={props.theme} />  
+             </div>
+             {
+               courseCardData && courseCardData.length > 0 ?
+               <div  className="course-card-list" style={{marginTop: '15rem',marginLeft: '2rem',paddingBottom: '8rem',width: '90%'}}> 
                 {
                     courseCardData?.map((item,index)=>{
                       let bookmarkVisible = false;
@@ -1185,7 +1241,13 @@ const _closeApplyNowModal=()=>{
                       )
                     })
                   }
+                </div> : 
+                <div style={{marginTop: '10rem'}}>
+                <Error type={ Lists.errorTypes.EMPTY } />
                 </div>
+             }
+                
+            </div>
            }  
          
          <SlidingPanel

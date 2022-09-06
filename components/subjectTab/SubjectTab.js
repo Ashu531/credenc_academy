@@ -1,22 +1,23 @@
 import React from 'react';
 
 export default function SubjectTab(props){
+
     return(
         <>
             {
-                props.title.map((item,index)=>{
+                props?.title?.map((item,index)=>{
                     return(
                         <div className='goal-tab' 
                         key={index} 
                         style={
-                            props.theme === 'light' ? 
-                            props.selectedCategory.name === item.name 
+                            props?.theme === 'light' ? 
+                            props?.selectedCategory === item.name 
                             ? 
                             {background: "#F7F7F7",borderRadius: 6 }
                             :
                             { background: "#FFFFFF",borderRadius: 6}
                             :
-                            props.selectedCategory === item.name 
+                            props?.selectedCategory === item.name 
                             ? 
                             {background: "#141414",borderRadius: 6 }
                             :

@@ -10,6 +10,7 @@ import constant from '../../config/constant.js'
 import { useRouter } from 'next/router'
 import DetailModal from '../../components/detailModal/DetailModal'
 import { getDataFromUrl } from "../../helper/userService";
+import Error from "../../components/error/Error"
 import theme from "../../scripts/reducers/theme"
 import States from '../../config/states';
 import SegmentedBar from "../../components/segementedBar/SegmentedBar";
@@ -87,8 +88,9 @@ function DashboardDesktop(props) {
 
   const [filterModal, setFilterModal] = useState(false);
   const [courseCardData,setCourseCardData]= useState([])
-  const [selectedCategory,setSelectedCategory] = useState(constant.COURSES.SUB_CATEGORIES[0].title);
+  const [selectedCategory,setSelectedCategory] = useState('');
   const [subjectData,setSubjectData] = useState([])
+  const [subCategory,setSubCategory] = useState([])
   const [selectedSubject,setSelectedSubject] = useState({})
   const [detailModal, setDetailModal] = useState(false);
   const [detailData,setDetailData] = useState({});
@@ -132,40 +134,57 @@ function DashboardDesktop(props) {
 
 
   useEffect(()=>{
+    // getSubjectData()
+    getSubCategoryData()
     getDataFromBaseUrl()
-    getSubjectData()
   },[])
+
+  const getSubCategoryData=async()=>{
+    const response = await fetch(`${constant.API_URL.DEV}/subsubject/search/`)
+    const data = await response.json()
+    let totalSubcategoryData = data?.data;
+
+    totalSubcategoryData?.unshift(
+      {
+          "name": "All",
+          "seo_ranks": 0,
+          "id": 0
+      }
+      )
+    setSubCategory(totalSubcategoryData)
+  }
     
  const getDataFromBaseUrl=()=>{
 
-  let urlSubjectQuery = urlService.current.getValueFromEntry('domain')
+  // let urlSubjectQuery = urlService.current.getValueFromEntry('domain')
   let urlSubCategoryQuery = urlService.current.getValueFromEntry('subject')
 
-    if(urlSubjectQuery && Object.keys(urlSubjectQuery).length !== 0){
-     let data={
-        name: urlSubjectQuery
-      }
-      if(urlSubCategoryQuery  && Object.keys(urlSubCategoryQuery).length !== 0){
-        setSelectedCategory(urlSubCategoryQuery)
-      }else{
-        setSelectedCategory(urlSubCategoryQuery)
-      }
-      setSelectedSubject(data)
-      getCardData(data)
-    }else{
-      let data={
-        name: "All"
-      }
+    // if(urlSubjectQuery && Object.keys(urlSubjectQuery).length !== 0){
+    //  let data={
+    //     name: urlSubjectQuery
+    //   }
+    //   if(urlSubCategoryQuery  && Object.keys(urlSubCategoryQuery).length !== 0){
+    //     setSelectedCategory(urlSubCategoryQuery)
+    //   }else{
+    //     setSelectedCategory(urlSubCategoryQuery)
+    //   }
+    //   setSelectedSubject(data)
+    //   getCardData(data)
+    // }else{
+    //   let data={
+    //     name: "All"
+    //   }
 
-      if(urlSubCategoryQuery  && Object.keys(urlSubCategoryQuery).length !== 0){
-        setSelectedCategory(urlSubCategoryQuery)
-      }else{
-        setSelectedCategory(urlSubCategoryQuery)
-      }
      
-      setSelectedSubject(data)
-      getCardData()
+    // }
+    if(urlSubCategoryQuery  && Object.keys(urlSubCategoryQuery).length !== 0){
+      setSelectedCategory(urlSubCategoryQuery)
+    }else{
+      setSelectedCategory('All')
     }
+   
+    // setSelectedSubject(data)
+    getCardData()
   }
 
   const getSubjectData=async()=>{
@@ -217,10 +236,10 @@ function DashboardDesktop(props) {
 
     urlService.current.removeEntry('subject')
 
-    if(selectedSubject.name === "All"){
-      urlService.current.addEntry('subject', item.title);
+    if(item.name === "All"){
+      urlService.current.removeEntry('subject')
     }else{
-      urlService.current.addEntry('subject', item.title);
+      urlService.current.addEntry('subject', item.name);
     }
   
     getCardData(item)
@@ -239,7 +258,8 @@ function DashboardDesktop(props) {
     }
 
     const setSubCategoriesData=(item)=>{
-      setSelectedCategory(item.title)
+      console.log(item)
+      setSelectedCategory(item.name)
       _getSubCategoryDetails(item)
     }
 
@@ -1193,9 +1213,9 @@ const _handleSearch=(e)=>{
           toggleFilterModal={openFilterModal} 
           openSubjectModal={openSubjectModal} 
           closeSubjectModal={closeSubjectModal} 
-          subCategories={subjectData} 
-          selectedCategory={selectedSubject} 
-          setSubCategoriesData={selectSubject} 
+          subCategories={subCategory} 
+          selectedCategory={selectedCategory} 
+          setSubCategoriesData={setSubCategoriesData} 
           subjectData={subjectData}
           selectedSubject={selectedSubject} 
           selectSubject={selectSubject}
@@ -1207,7 +1227,9 @@ const _handleSearch=(e)=>{
        {/* <CategoryDropdown categories={categories}/> */}
        <div className="card-content">
        {/* <CategoryHeader  /> */}
-       <div className="course-card-container" >
+       {
+         courseCardData && courseCardData.length > 0 ? 
+         <div className="course-card-container" >
         {
            courseCardData?.map((item,index)=>{
             let bookmarkVisible = false;
@@ -1253,7 +1275,12 @@ const _handleSearch=(e)=>{
              )
            })
          }
-       </div>
+       </div> : 
+        <div style={{marginTop: '-5rem'}}>
+        <Error type={ Lists.errorTypes.EMPTY } />
+        </div>
+       }
+       
        </div>
        </div>
        </div>

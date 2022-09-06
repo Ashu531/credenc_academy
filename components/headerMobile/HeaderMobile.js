@@ -31,7 +31,7 @@ export default function HeaderMobile(props){
         <div className='mobile-header'>
             <div className='mobile-header_container'>
                 <Image src={props.theme === 'dark' ? credencLogoLight : credencLogo} objectFit="cover" alt='credencLogo' />
-                <div className='mobile-header-content'>
+                <div className='mobile-header-content' style={{paddingRight: 20}}>
                     <div 
                         className='mobile-header-element' 
                         style={{marginRight: 10}} 

@@ -1,5 +1,5 @@
 import React from 'react';
-import noResultImage from '../../assets/images/icons/no-results.svg';
+import noResultImage from '../../assets/images/icons/noResultFound.svg';
 import crashImage from '../../assets/images/icons/crash.svg';
 import Lists from '../../config/list';
 import Image from "next/image";
