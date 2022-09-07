@@ -57,6 +57,7 @@ export default function Dashboard(props) {
           filterModalVisible={props?.filterModalVisible}
           handleLogin={()=>props?.handleLogin()}
           closeFilterExpandedStage={()=>props?.closeFilterExpandedStage()}
+          openFilterVisible={()=>props?.openFilterVisible()}
         />}
         </>
       }

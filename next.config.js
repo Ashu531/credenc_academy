@@ -1,14 +1,14 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const withImages = require("next-images");
+const nextConfig = withImages({
   reactStrictMode: true,
-   images: {
+  images: {
     loader: "akamai",
-    path: "",
+    path: '',
     domains: ['credenc-neo-bank.s3.amazonaws.com'],
   },
-  // trailingSlash: true,
- 
-}
+  trailingSlash: true,
+})
 
 module.exports = nextConfig
 

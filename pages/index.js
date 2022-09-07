@@ -48,6 +48,7 @@ export default function Home(props) {
       handleLogout={()=>props?.handleLogout()}
       handleLogin={()=>props?.handleLogin()}
       openLoginModal={()=>props?.openLoginModal()}
+      openFilterVisible={()=>props?.openFilterVisible()}
     />
     }
    </>

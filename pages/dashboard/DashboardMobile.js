@@ -980,8 +980,6 @@ const _getSubCategoryDetails=(item)=>{
   getCardData(item)
 }
 
-
-
    return(
         <div className="dashboard-mobile">
           {
@@ -1178,7 +1176,7 @@ const _getSubCategoryDetails=(item)=>{
                     lineHeight: '1.6rem',
                     color: '#313235',
                   }}
-                  toggleFilterVisible={()=>props?.toggleFilterVisible()}
+                  toggleFilterVisible={()=>props?.openFilterVisible()}
                   floatList={[...Lists.sortByList]}
                   selected={sortState}
                   onSelect={(item, i) => {

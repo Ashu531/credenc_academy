@@ -19,6 +19,7 @@
     "mixpanel-browser": "^2.45.0",
     "moment": "^2.29.4",
     "next": "12.1.6",
+    "next-images": "^1.8.4",
     "next-redux": "^0.1.1",
     "next-redux-wrapper": "^7.0.5",
     "prop-types": "^15.8.1",

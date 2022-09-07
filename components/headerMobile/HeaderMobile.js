@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import filterIcon from '../../assets/images/icons/filterIcon.svg';
-import credencLogo from '../../assets/images/logo/credencLogo.svg'
+import credencLogo from '../../assets/images/icons/credencAcademy.svg'
 import Image from "next/image";
 import dropdownIcon from '../../assets/images/icons/dropdown.svg'
 import searchIcon from '../../assets/images/icons/searchIcon.svg'
@@ -32,14 +32,14 @@ export default function HeaderMobile(props){
             <div className='mobile-header_container'>
                 <Image src={props.theme === 'dark' ? credencLogoLight : credencLogo} objectFit="cover" alt='credencLogo' />
                 <div className='mobile-header-content' style={{paddingRight: 20}}>
-                    <div 
+                    {/* <div 
                         className='mobile-header-element' 
                         style={{marginRight: 10}} 
                         onClick={()=> _handleSubjectItem()}
                     >
                         <span className='all-subject-text'>{subject ? subject : props?.subjectName}</span>
                         <Image src={dropdownIcon} objectFit="cover" alt='dropdownIcon'/>
-                    </div> 
+                    </div>  */}
                     <div className='mobile-header-element' style={{marginRight: 10}}>
                         <Image src={searchIcon} objectFit="cover" alt='searchIcon' />
                     </div>

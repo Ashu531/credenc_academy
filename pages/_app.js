@@ -209,6 +209,12 @@ class MyApp extends App {
     })
   }
 
+  openFilterVisible=()=>{
+    this.setState({
+      filterModalVisible: true
+    })
+  }
+
   _showSearchBar=()=>{
     this.setState({
      showSearchBar: true
@@ -311,6 +317,7 @@ class MyApp extends App {
             handleLogout={()=>this._handleLogout()}
             handleLogin={()=>this._handleLogin()}
             openLoginModal={()=>this.openLoginModal()}
+            openFilterVisible={()=>this.openFilterVisible()}
          />
          {
             window.innerWidth > 500 ? 

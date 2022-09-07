@@ -130,7 +130,7 @@ export default function Header(props){
            // onClick={() => Mixpanel.track(MixpanelStrings.HOME_BUTTON_CLICK)}
           >
             <div  style={{cursor:"pointer",paddingTop: 10,paddingBottom: 5}}>
-            <Image src={credencAcademy} objectFit="cover" alt='credencLogo'/>
+            <Image src={credencAcademy} objectFit="cover" alt='credencLogo' />
             </div>
         
           </Link>

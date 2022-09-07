@@ -27,11 +27,13 @@ export default function Footer(props){
                 {/* <span className='footer-elemental-content-text'>
                 Sitemap
                 </span> */}
-                <a href='/privacy' target='_blank' rel="noreferrer" style={{textDecoration:'none'}}>
+                <Link href='http://localhost:3000/privacy' passHref={true}>
+                <a target='_blank' rel="noreferrer" style={{textDecoration:'none'}}>
                 <span className='footer-elemental-content-text'>
                 Privacy Policy
                 </span>
                 </a>
+                </Link>
                 <span className='footer-elemental-content-text'>
                 Contact
                 </span>
