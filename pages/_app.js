@@ -231,8 +231,45 @@ class MyApp extends App {
     this.setState({
       search: e
     },()=>{
-      this._getCardData(e)
+      // if(e && e.length < 3){
+      //   this._getSmallQueryResult()
+      // }else{
+      //   this._getQueryResult()
+      // }
+      // this._getCardData(e)
     })
+  }
+
+  _getSmallQueryResult=async(e)=>{
+    let res = await axios.get(`${constant.API_URL.DEV}/course/search/?query=${e}`)
+    .then(res => {
+      // this.coursesApiStatus.current.success();
+      console.log(res.data)
+      this.setState({
+        searchData: res.data
+      })
+      return res.data;
+    })
+    .catch(err => {
+      // this.coursesApiStatus.current.failed();
+      console.log(err);
+    });
+  }
+
+  _getQueryResult=async(e)=>{
+    let res = await axios.get(`${constant.API_URL.DEV}/course/search/?search=${e}`)
+    .then(res => {
+      // this.coursesApiStatus.current.success();
+      console.log(res.data)
+      this.setState({
+        searchData: res.data
+      })
+      return res.data;
+    })
+    .catch(err => {
+      // this.coursesApiStatus.current.failed();
+      console.log(err);
+    });
   }
 
   _getCardData = async(value)=>{

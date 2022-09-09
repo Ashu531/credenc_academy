@@ -120,6 +120,11 @@ export default function Header(props){
    
   }
 
+  const _goToHome=()=>{
+    props?.closeFilterExpandedStage()
+    props?.handleSearch('') 
+  }
+
     return(
         <div className='navbar-wrapper'>
         
@@ -129,14 +134,14 @@ export default function Header(props){
            href='/' 
            // onClick={() => Mixpanel.track(MixpanelStrings.HOME_BUTTON_CLICK)}
           >
-            <div  style={{cursor:"pointer",paddingTop: 10,paddingBottom: 5}}>
+            <div  style={{cursor:"pointer",paddingTop: 10,paddingBottom: 5}} onClick={()=>_goToHome()}>
             <Image src={credencAcademy} objectFit="cover" alt='credencLogo' />
             </div>
         
           </Link>
           {
             props?.showSearchBar && location.asPath !== '/privacy/' ?
-              <div style={props?.showSearchBar ? {width : '25%',marginRight: '10%'} : null}>
+              <div style={props?.showSearchBar ? {width : '25%'} : null}>
                 <SearchBar showSearchBar={props?.showSearchBar} search={props?.searchValue} handleSearch={(e)=>_handleSearch(e)} />
               </div> 
           : null
