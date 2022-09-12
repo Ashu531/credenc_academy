@@ -255,8 +255,6 @@
       gap: 10px;
       flex-wrap: wrap;
     }
-
-   
   }
 }
 
@@ -464,13 +462,26 @@
         margin-bottom: 8rem;
         margin-top: 4rem;
       }
+
+      .search-section-mobile{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        // padding: 4px 12px;
+        gap: 10px;
+        background: #FFFFFF;
+        box-shadow: 0px -4px 16px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        position: fixed;
+        bottom: 6rem;
+      }
     }
 
     .mobile-view-actions {
       width: 100%;
       max-width: 45rem;
       position: fixed;
-      bottom: 7rem;
+      bottom: 12rem;
       // left: 50%;
       // transform: translate(-50%, -50%);
       height: 4.2rem;

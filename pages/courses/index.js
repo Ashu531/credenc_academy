@@ -950,7 +950,7 @@ const CoursePage = ({
           <div style={{ flexGrow: 1 }}></div>
           <div className="text-container">Showing {totalCourses} Course{totalCourses === 1 ? '' : 's'}</div>
         </div>
-        <div className="list-container">
+        <div className="list-container" style={props.searchValue.length > 0 ? {marginTop: '2rem'} : null}>
           <List
             type={listTypes.HORIZONTAL_CARDS}
             list={courses}

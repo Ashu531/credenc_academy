@@ -29,6 +29,7 @@ import ForgotPasswordModal from "../../components/forgotPasswordModal/ForgotPass
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
 import SubjectTab from '../../components/subjectTab/SubjectTab'
 import Error from "../../components/error/Error"
+import SearchMobile from '../../components/searchBarMobile/SearchBar'
 const compareKey = 'credenc-marketplace-compares';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const subjectKey = 'credenc-edtech-subject';
@@ -534,6 +535,12 @@ let token = null;
 
 const handleFilteredData = async (updatePageNumber = true) => {
   coursesApiStatus.current.start();
+  urlService.current.removeEntry('search');
+
+    if(props?.searchValue && props?.searchValue?.length > 0){
+      urlService.current.addEntry('search', props?.searchValue);
+    }
+
   let res = await handleSearchClicked();
   // if (forcePageNumber === 1) setForcePageNumber(0);
   if (pageNumber <= 1 || updatePageNumber === false) {
@@ -980,6 +987,11 @@ const _getSubCategoryDetails=(item)=>{
   getCardData(item)
 }
 
+useEffect(() => {
+  handleFilteredData(false)
+  
+ }, [props?.searchValue]);
+
    return(
         <div className="dashboard-mobile">
           {
@@ -1126,7 +1138,10 @@ const _getSubCategoryDetails=(item)=>{
                   {/* <div style={{ flexGrow: 1 }}></div> */}
                   {/* <div className="text-container">Showing {totalCourses} Course{totalCourses === 1 ? '' : 's'}</div> */}
                 </div>
-                <div className="list-container" >
+                <div style={ props.searchValue.length > 0 ? {display: 'none'} : {display:'flex',flexDirection:'row',alignItems:"center",overflow:'scroll',background: '#FFFFFF',boxSizing: "border-box" ,boxShadow: 'rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px',width:'100%',position:'fixed',top: '7rem',zIndex: 998}}>
+                   <SubjectTab title={subCategory} selectedCategory={selectedCategory} setSubCategoriesData={setSubCategoriesData} theme={props.theme} />  
+                </div>
+                <div className="list-container" style={props.searchValue.length > 0 ? {marginTop: '2rem'} : null}>
                   <List
                     type={listTypes?.HORIZONTAL_CARDS}
                     list={courses}
@@ -1143,51 +1158,54 @@ const _getSubCategoryDetails=(item)=>{
                     // compareTextVisible={compareTextVisible}  
                   />
                 </div>
+                <div className='search-section-mobile' style={ props.searchValue.length > 0 ? {position: "fixed",top: 0,bottom: '100%'} : null }>
+                  <SearchMobile handleOpenMobileSearch={() => props?.handleOpenMobileSearch()} searchValue={props?.searchValue} />
+                </div>
               </div>
               {window.innerWidth <= 500 && 
               <div>
               <div className='mobile-view-actions' style={{padding: 0,marginBottom: 10}}>
                 <span className='filter' style={{marginLeft:12}}><Image src={filterIcon} alt='filters' objectFit='cover' onClick={() =>_handleFilterState() } /></span>
-                <FloatActionButton
-                  type='course type'
-                  heading={Lists.courseTypesFloatList[courseTypesFloatState]['name']}
-                  style={{
-                    borderRadius: '10rem',
-                    fontWeight: 600,
-                    fontSize: '1.1rem',
-                    lineHeight: '1.6rem',
-                    color: '#FFFFFF',
-                  }}
-                  floatList={[...Lists.courseTypesFloatList]}
-                  selected={courseTypesFloatState}
-                  onSelect={(item, i) => {
-                    // setPageLoadSortState(null)
-                    setCourseTypesFloatState(i)
-                    // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypesFloatList[i].name)
-                  }}
-                />
-                <FloatActionButton
-                  type='sort type'
-                  heading={null}
-                  style={{
-                    borderRadius: '10rem',
-                    fontWeight: 600,
-                    fontSize: '1.1rem',
-                    lineHeight: '1.6rem',
-                    color: '#313235',
-                  }}
-                  toggleFilterVisible={()=>props?.openFilterVisible()}
-                  floatList={[...Lists.sortByList]}
-                  selected={sortState}
-                  onSelect={(item, i) => {
-                    setPageLoadSortState(null)
-                    setSortState(i)
-                    // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
-                  }}
-                />
-              </div>
-              </div>
-              }
+                    <FloatActionButton
+                      type='course type'
+                      heading={Lists.courseTypesFloatList[courseTypesFloatState]['name']}
+                      style={{
+                        borderRadius: '10rem',
+                        fontWeight: 600,
+                        fontSize: '1.1rem',
+                        lineHeight: '1.6rem',
+                        color: '#FFFFFF',
+                      }}
+                      floatList={[...Lists.courseTypesFloatList]}
+                      selected={courseTypesFloatState}
+                      onSelect={(item, i) => {
+                        // setPageLoadSortState(null)
+                        setCourseTypesFloatState(i)
+                        // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypesFloatList[i].name)
+                      }}
+                    />
+                    <FloatActionButton
+                      type='sort type'
+                      heading={null}
+                      style={{
+                        borderRadius: '10rem',
+                        fontWeight: 600,
+                        fontSize: '1.1rem',
+                        lineHeight: '1.6rem',
+                        color: '#313235',
+                      }}
+                      toggleFilterVisible={()=>props?.openFilterVisible()}
+                      floatList={[...Lists.sortByList]}
+                      selected={sortState}
+                      onSelect={(item, i) => {
+                        setPageLoadSortState(null)
+                        setSortState(i)
+                        // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
+                      }}
+                    />
+                  </div>
+                </div>
+                }
               </div>
           : 
              <div style={{width:'100%',height: '100%'}}> 

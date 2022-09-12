@@ -40,7 +40,8 @@ class MyApp extends App {
      filterModalVisible: false,
      showSearchBar: false,
      search: '',
-     searchData: []
+     searchData: [],
+     openMobileSearch: false,
     };
     this.coursesApiStatus = React.createRef(new ApiStatus());
   }
@@ -290,6 +291,12 @@ class MyApp extends App {
       console.log(err);
     });
   }
+
+  _openMobileSearch=()=>{
+     this.setState({
+       openMobileSearch: true
+     })
+  }
  
 
   render(){
@@ -324,6 +331,7 @@ class MyApp extends App {
             toggleSubjectDropdown={()=>this.toggleSubjectDropdown()}
             subjectName={this.state.subjectName}
             toggleFilterVisible={()=>this.toggleFilterVisible()}
+            searchValue={this.state.search}
             />
           }
          <Component 
@@ -355,6 +363,8 @@ class MyApp extends App {
             handleLogin={()=>this._handleLogin()}
             openLoginModal={()=>this.openLoginModal()}
             openFilterVisible={()=>this.openFilterVisible()}
+            handleOpenMobileSearch = {() => this._openMobileSearch()}
+            openMobileSearch={this.state.openMobileSearch}
          />
          {
             window.innerWidth > 500 ? 

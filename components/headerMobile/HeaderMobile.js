@@ -28,7 +28,7 @@ export default function HeaderMobile(props){
     }
  
     return(
-        <div className='mobile-header'>
+        <div className='mobile-header' style={location.pathname == '/search' || props?.searchValue.length > 0 ? {display: 'none'} : null}>
             <div className='mobile-header_container'>
                 <Image src={props.theme === 'dark' ? credencLogoLight : credencLogo} objectFit="cover" alt='credencLogo' />
                 <div className='mobile-header-content' style={{paddingRight: 20}}>
@@ -40,9 +40,9 @@ export default function HeaderMobile(props){
                         <span className='all-subject-text'>{subject ? subject : props?.subjectName}</span>
                         <Image src={dropdownIcon} objectFit="cover" alt='dropdownIcon'/>
                     </div>  */}
-                    <div className='mobile-header-element' style={{marginRight: 10}}>
+                    {/* <div className='mobile-header-element' style={{marginRight: 10}}>
                         <Image src={searchIcon} objectFit="cover" alt='searchIcon' />
-                    </div>
+                    </div> */}
                     <div className='mobile-header-element' onClick={()=>props.openFilterExpandedStage()}>
                         <Image src={filterIcon} objectFit="cover" alt='filterIcon' />
                     </div>

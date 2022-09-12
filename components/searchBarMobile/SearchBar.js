@@ -5,6 +5,7 @@ import Image from "next/image";
 import axios from "axios";
 import constant from "../../config/constant";
 import queryIcon from '../../assets/images/icons/queryIcon.svg'
+import { useRouter } from 'next/router'
 
 const items = [
   {
@@ -45,6 +46,7 @@ export default function SearchBar(props) {
 
   const [searchQuery,setSearchQuery] = useState([])
   const [initialQuery,setInitialQuery] = useState(false)
+  let location = useRouter();
 
   const handleOnSearch = (string, results) => {
     // onSearch will have as the first callback parameter
@@ -52,7 +54,7 @@ export default function SearchBar(props) {
     _autocompleteQuery(string)
   };
 
-  const _autocompleteQuery=async(e)=>{
+  const _autocompleteQuery = async(e)=>{
     let res = await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`)
     .then(res => {
       // this.coursesApiStatus.current.success();
@@ -77,17 +79,25 @@ export default function SearchBar(props) {
     // console.log("enter detected",item);
   
     props?.handleSearch(item?.name)
+    location.push({
+      pathname: `/`
+    })
     setInitialQuery(true)
   };
 
   const handleOnFocus = (e) => {
     // console.log("Focused",e?.target?.value);
+    // props?.handleOpenMobileSearch()
+    // location.push('/search');
+    location.push({
+      pathname: `/search`
+    })
   };
 
   const formatResult = (item) => {
     return <div style={queryContainer}>
       <span style={queryContent}>
-        <Image src={item.logo ? item.logo : queryIcon} objectFit="contain" height={20} width={20} alt='query icon' />
+        <Image src={item?.logo ? item.logo : queryIcon} objectFit="contain" height={20} width={20} alt='query icon' />
         <span style={queryName}>
           {item?.name}
         </span>
@@ -102,7 +112,7 @@ export default function SearchBar(props) {
 
   return (
   
-    <div className="search-model">
+    <div className="search-model" style={ location.pathname == '/search' ? {padding: 0}: null}>
       <div className="search">
         <ReactSearchAutocomplete
           items={searchQuery}
@@ -110,20 +120,20 @@ export default function SearchBar(props) {
           onHover={handleOnHover}
           onSelect={handleOnSelect}
           onFocus={handleOnFocus}
-          inputSearchString={props?.search}
-          autoFocus
+          inputSearchString={props?.searchValue}
+          autoFocus={location.pathname == '/search' ? true : false}
           showNoResults={false}
           formatResult={formatResult}
           placeholder="Search by anything ;)"
           styling={{
-            height: '50px',
+            height: '48px',
             fontFamily: 'Poppins',
             fontStyle: 'normal',
             fontWeight: '500px',
             fontSize: '16px',
             lineHeight: '21px',
             backgroundColor: "#FFFFFF",
-            borderRadius: "25px",
+            // borderRadius: "25px",
             // boxShadow: "none",
             clearIconMargin: "3px 124px 0 0",
             border: "none",
@@ -131,7 +141,7 @@ export default function SearchBar(props) {
             color: "#000000",
             lineColor: "#FFFFFF",
             boxShadow: "rgba(32, 33, 36, 0.28) 0px 1px 6px 0px",
-            width:'90%'
+            // width:'90%'
             // searchIconMargin: '0 0 0 0px',
             //   iconColor: "#313235"
           }}
@@ -139,9 +149,9 @@ export default function SearchBar(props) {
           showClear={false}
         />
       </div>
-      <div className="search-icon-1" style={ props.showSearchBar ? {right: 11,top: 16} : null}>
+      {/* <div className="search-icon-1" style={ props.showSearchBar ? {right: 11,top: 16} : null}>
         <Image src={SearchIcon} className="search-icon-icon" objectFit="cover" height={18} width={18} />
-      </div>
+      </div> */}
     </div>
   );
 }
