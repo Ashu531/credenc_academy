@@ -61,6 +61,7 @@ export default function Dashboard(props) {
           closeFilterExpandedStage={()=>props?.closeFilterExpandedStage()}
           openFilterVisible={()=>props?.openFilterVisible()}
           handleOpenMobileSearch={()=>props?.handleOpenMobileSearch()}
+          clearSearch={()=>props?.clearSearch()}
         />}
         </>
       }

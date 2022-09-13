@@ -11,11 +11,14 @@ import userIcon from "../../assets/images/icons/loginIcon.svg";
 import profileIcon from '../../assets/images/icons/profile-icon.svg';
 import { useRouter } from 'next/router'
 import Link from "next/link";
+import UrlService from "../../helper/urlService";
 const EdtechToken = 'credenc-edtech-authkey';
 
 export default function FooterMobile(props){ 
 
     let location = useRouter();
+    let nextURL=location?.asPath?.substring(2,location?.asPath?.length)
+    let urlService = useRef(new UrlService(nextURL));
 
     const [token,setToken] = useState('')
 
@@ -64,9 +67,11 @@ export default function FooterMobile(props){
         location.push('/profile');
         props.setMobileLoginNaviagtion()
     }
-  
+
+    let filterValues = urlService.current.getEntries()
+
     return(
-        <div className='mobile-footer' style={location.pathname === '/search' ? {display: 'none'} : props?.filterModalVisible ? {zIndex: 0} : null }>
+        <div className='mobile-footer' style={location.pathname === '/search' || filterValues.length > 0 ? {display: 'none'} : props?.filterModalVisible ? {zIndex: 0} : null }>
         <div className='mobile-footer-container'>
         <Link href='/'>
         <div className='mobile-footer-element'>

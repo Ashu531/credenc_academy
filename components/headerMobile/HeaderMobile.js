@@ -43,9 +43,9 @@ export default function HeaderMobile(props){
                     {/* <div className='mobile-header-element' style={{marginRight: 10}}>
                         <Image src={searchIcon} objectFit="cover" alt='searchIcon' />
                     </div> */}
-                    <div className='mobile-header-element' onClick={()=>props.openFilterExpandedStage()}>
+                    {/* <div className='mobile-header-element' onClick={()=>props.openFilterExpandedStage()}>
                         <Image src={filterIcon} objectFit="cover" alt='filterIcon' />
-                    </div>
+                    </div> */}
                 </div>
             </div>
 

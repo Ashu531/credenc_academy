@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import States from '../../config/states';
-import sortingIcon from '../../assets/images/icons/filterSortMobile.svg';
+import filterIcon from '../../assets/images/icons/funnelIcon.svg';
 import { Skeleton } from '@mui/material';
 import Image from "next/image";
 import checkIcon from '../../assets/images/icons/checkIcon.svg'
@@ -15,7 +15,8 @@ export default function FloatActionButton({
     icon,
     selected = 0,
     activeState = true,
-    toggleFilterVisible
+    openFilterVisible,
+    toggleFilterVisible,
 }) {
 
     
@@ -36,19 +37,28 @@ export default function FloatActionButton({
     const handleSelect = (item, i) => {
         onSelect(item, i);
         setDisplayContent(false);
-        toggleFilterVisible()
+        openFilterVisible()
     }
 
     const _handleSorting=()=>{
         setDisplayContent(true)
-        toggleFilterVisible()
+        openFilterVisible()
     }
+
+
 
     if (type === 'course type') {
         return (
             <>
                 <div className={`float-action-${floatType}`}>
-                    {(!icon && !displayContent) && <div className="dropbtn" style={style} onClick={() => setDisplayContent(true)}>
+                    {(!icon && !displayContent) && <div 
+                    className="dropbtn" 
+                    style={style} 
+                    onClick={() => {   
+                        setDisplayContent(true)
+                        openFilterVisible()
+                    }}
+                    >
                         {selected === 0 ? heading : (floatList[selected].name || floatList[selected].value)}
                         <span className='caret'>{'<'}</span>
                     </div>}
@@ -67,7 +77,12 @@ export default function FloatActionButton({
                         ))}
                     </div>}
                 </div>
-                {displayContent && <div onClick={() => setDisplayContent(false)} className='blur'></div>}
+                {displayContent && <div 
+                onClick={() => {
+                    setDisplayContent(false)
+                    toggleFilterVisible()
+                }} 
+                className='blur'></div>}
             </>
         )
     }
@@ -75,7 +90,7 @@ export default function FloatActionButton({
     if (type === 'sort type') {
         return <>
             <div className={`float-sort-action-${floatType}`} style={{marginRight:12}}>
-                <span onClick={() => _handleSorting()} className='sort'><Image src={sortingIcon} alt='Sorting' objectFit='cover' /></span>
+                <span onClick={() => _handleSorting()} className='sort'><Image src={filterIcon} alt='Sorting' objectFit='cover' /></span>
                 {(window.innerWidth <= 500) &&
                     <div
                         className={`dropdown-content-mobile`}
@@ -94,7 +109,12 @@ export default function FloatActionButton({
                             Array(3).fill(null).map((it, i) => <Skeleton key={i} variant='text' width='70%' height='2.4rem' sx={{ bgcolor: '#303030', margin: '0 2rem' }} />)}
                     </div>}
             </div>
-            {displayContent && <div onClick={() => setDisplayContent(false)} className='blur'></div>}
+            {displayContent && <div 
+            onClick={() => {
+                setDisplayContent(false)
+                toggleFilterVisible()
+            }} 
+            className='blur'></div>}
         </>
     }
     if (type === 'subject type') {

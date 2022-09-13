@@ -241,6 +241,12 @@ class MyApp extends App {
     })
   }
 
+  _clearSearch=()=>{
+    this.setState({
+      search: ''
+    })
+  }
+
   _getSmallQueryResult=async(e)=>{
     let res = await axios.get(`${constant.API_URL.DEV}/course/search/?query=${e}`)
     .then(res => {
@@ -365,6 +371,7 @@ class MyApp extends App {
             openFilterVisible={()=>this.openFilterVisible()}
             handleOpenMobileSearch = {() => this._openMobileSearch()}
             openMobileSearch={this.state.openMobileSearch}
+            clearSearch={()=>this._clearSearch()}
          />
          {
             window.innerWidth > 500 ? 

@@ -50,6 +50,7 @@ export default function Home(props) {
       openLoginModal={()=>props?.openLoginModal()}
       openFilterVisible={()=>props?.openFilterVisible()}
       handleOpenMobileSearch={()=>props?.handleOpenMobileSearch()}
+      clearSearch={()=>props?.clearSearch()}
     />
     }
    </>

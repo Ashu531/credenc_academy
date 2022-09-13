@@ -20,7 +20,6 @@ import UrlService from "../../helper/urlService";
 import Button from "../../components/button/Button";
 import Link from "next/link";
 import { getTabNumber } from "../../helper/getTabNumber";
-import filterIcon from '../../assets/images/icons/funnelIcon.svg';
 import closeIcon from '../../assets/images/icons/close-icon-grey.svg';
 import FloatActionButton from "../../components/floatActionButton/floatActionButton";
 import Image from "next/image";
@@ -30,6 +29,7 @@ import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
 import SubjectTab from '../../components/subjectTab/SubjectTab'
 import Error from "../../components/error/Error"
 import SearchMobile from '../../components/searchBarMobile/SearchBar'
+import sortingIcon from '../../assets/images/icons/filterSortMobile.svg';
 const compareKey = 'credenc-marketplace-compares';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const subjectKey = 'credenc-edtech-subject';
@@ -903,7 +903,7 @@ const removeUpvote = async (item) => {
 
 const _handleFilterState=()=>{
   setMobileFiltersState(true)
-  props?.toggleFilterVisible()
+  props?.openFilterVisible()
 }
 
 const _addToUpvote=(item)=>{
@@ -968,7 +968,6 @@ const _closeApplyNowModal=()=>{
 }
 
 const setSubCategoriesData=(item)=>{
-  console.log(item)
   setSelectedCategory(item.name)
   _getSubCategoryDetails(item)
 }
@@ -976,8 +975,7 @@ const setSubCategoriesData=(item)=>{
 const _getSubCategoryDetails=(item)=>{
 
   urlService.current.removeEntry('subject')
-  console.log(subCategory,"subCategory+++")
-  if(subCategory?.id === 0){
+  if(item?.id === 0){
     // urlService.current.addEntry('subject', item.name);
     urlService.current.removeEntry('subject')
   }else{
@@ -992,22 +990,30 @@ useEffect(() => {
   
  }, [props?.searchValue]);
 
+ let filterValues = urlService.current.getEntries()
+
    return(
         <div className="dashboard-mobile">
-          {
-            props.filterExpandedStage ? 
-              <div 
+          <div 
               className="course-page" 
               style={  mobileFiltersState ? {zIndex : 99999} : window.innerWidth <= 500 ? { marginTop : '2rem' } : null }
-              > 
-              {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={window.innerWidth <= 500 ? {background: props.theme ==='dark' ? '#222222' : '#DEDEDE'} : null}>
+           > 
+              {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={window.innerWidth <= 500 ? {background: props.theme ==='dark' ? '#222222' : '#DEDEDE',zIndex:999} : null}>
                 <div 
                 className="filter-head" 
                 // style={window.innerWidth <= 500 ? {background: props.theme ==='dark' ? '#222222' : '#DEDEDE'} : null}
                 >
                   {appliedFiltersCount.current === 0 ? 'No Filters Applied' : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}
                   {appliedFiltersCount.current !== 0 && <span style={window.innerWidth > 500 ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>}
-                  {window.innerWidth <= 500 && <span className='cross' onClick={() => setMobileFiltersState(false)}><Image src={closeIcon} objectFit='cover' /></span>}
+                  {window.innerWidth <= 500 && 
+                  <span 
+                  className='cross' 
+                  onClick={() => {
+                    setMobileFiltersState(false)
+                    props?.toggleFilterVisible()
+                    }}>
+                    <Image src={closeIcon} objectFit='cover' />
+                    </span>}
                 </div>
                 <div className='filters'>
 
@@ -1158,14 +1164,17 @@ useEffect(() => {
                     // compareTextVisible={compareTextVisible}  
                   />
                 </div>
-                <div className='search-section-mobile' style={ props.searchValue.length > 0 ? {position: "fixed",top: 0,bottom: '100%'} : null }>
-                  <SearchMobile handleOpenMobileSearch={() => props?.handleOpenMobileSearch()} searchValue={props?.searchValue} />
+               
+                <div className='search-section-mobile' style={ props.searchValue.length > 0 ? {position: "fixed",top: 0,bottom: '100%'} : !props.searchValue && filterValues.length > 0 ? {position: "fixed",bottom: 0} : null }>
+                <div style={{width: '100%',boxShadow: 'rgba(17, 12, 46, 0.15) 0px 48px 100px 0px',background: '#FFFFFF' }}>
+                  <SearchMobile handleOpenMobileSearch={() => props?.handleOpenMobileSearch()} searchValue={props?.searchValue} clearSearch={()=>props?.clearSearch()} toggleFilterVisible={()=>props?.toggleFilterVisible()} openFilterVisible={()=>props?.openFilterVisible()}/>
                 </div>
+              </div>
               </div>
               {window.innerWidth <= 500 && 
               <div>
-              <div className='mobile-view-actions' style={{padding: 0,marginBottom: 10}}>
-                <span className='filter' style={{marginLeft:12}}><Image src={filterIcon} alt='filters' objectFit='cover' onClick={() =>_handleFilterState() } /></span>
+              <div className='mobile-view-actions' style={ props.searchValue && props.searchValue.length > 0 ? {padding: 0,marginBottom: 10,position: 'fixed', bottom: '6rem'} : {padding: 0,marginBottom: 10}}>
+                <span className='filter' style={{marginLeft:12}}><Image src={sortingIcon} alt='filters' objectFit='cover' onClick={() =>_handleFilterState() } /></span>
                     <FloatActionButton
                       type='course type'
                       heading={Lists.courseTypesFloatList[courseTypesFloatState]['name']}
@@ -1176,6 +1185,8 @@ useEffect(() => {
                         lineHeight: '1.6rem',
                         color: '#FFFFFF',
                       }}
+                      toggleFilterVisible={()=>props?.toggleFilterVisible()}
+                      openFilterVisible={()=>props?.openFilterVisible()}
                       floatList={[...Lists.courseTypesFloatList]}
                       selected={courseTypesFloatState}
                       onSelect={(item, i) => {
@@ -1194,7 +1205,8 @@ useEffect(() => {
                         lineHeight: '1.6rem',
                         color: '#313235',
                       }}
-                      toggleFilterVisible={()=>props?.openFilterVisible()}
+                      toggleFilterVisible={()=>props?.toggleFilterVisible()}
+                      openFilterVisible={()=>props?.openFilterVisible()}
                       floatList={[...Lists.sortByList]}
                       selected={sortState}
                       onSelect={(item, i) => {
@@ -1207,64 +1219,7 @@ useEffect(() => {
                 </div>
                 }
               </div>
-          : 
-             <div style={{width:'100%',height: '100%'}}> 
-             <div style={{display:'flex',flexDirection:'row',alignItems:"center",overflow:'scroll',background: '#FFFFFF',boxSizing: "border-box" ,boxShadow: 'rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px',width:'100%',position:'fixed',top: '7rem',zIndex: 998}}>
-             <SubjectTab title={subCategory} selectedCategory={selectedCategory} setSubCategoriesData={setSubCategoriesData} theme={props.theme} />  
-             </div>
-             {
-               courseCardData && courseCardData.length > 0 ?
-               <div  className="course-card-list" style={{marginTop: '15rem',marginLeft: '2rem',paddingBottom: '8rem',width: '90%'}}> 
-                {
-                    courseCardData?.map((item,index)=>{
-                      let bookmarkVisible = false;
-                      let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
-                      if(tempBookmarkData && tempBookmarkData.length > 0){
-                        if (tempBookmarkData.includes(item?.id)){
-                          bookmarkVisible = true
-                        }
-                      else
-                        bookmarkVisible = false
-                      }
-
-                      let upvoteVisible = false;
-                      let upvoteArray = localStorage.getItem(UpvoteKey) ? localStorage.getItem(UpvoteKey) : []
-                      if(upvoteArray && upvoteArray.length > 0){
-                      let upvoteData = JSON.parse(upvoteArray);
-                        if(upvoteData && upvoteData.length > 0){
-                          if (upvoteData.includes(item?.id)){
-                            upvoteVisible = true
-                          }
-                        else
-                        upvoteVisible = false
-                        }
-                      }
-                    return(
-                        <CourseCard 
-                          key={index} 
-                          data={item}
-                          openDetailModal={()=>_openDetailModal(item)}
-                          addToCompare={()=>_addToCompare(item)} 
-                          addToBookmark={()=>_addToBookmark(item)}
-                          bookmarkVisible={_checkBookmarks(item)}
-                          compareText={_checkCompareText(item)}
-                          addToUpvote={()=>_addToUpvote(item)}
-                          openApplyNowModal={()=> _openApplyNowModal(item)}
-                          upvoteVisible={upvoteVisible}
-                          token={props?.token}
-                          upvoteCard={upvoteCard}
-                        />
-                      )
-                    })
-                  }
-                </div> : 
-                <div style={{marginTop: '10rem'}}>
-                <Error type={ Lists.errorTypes.EMPTY } />
-                </div>
-             }
-                
-            </div>
-           }  
+            
          
          <SlidingPanel
           type={'right'}

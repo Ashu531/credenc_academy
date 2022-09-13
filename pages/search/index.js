@@ -11,7 +11,13 @@ export default function SearchPageMobile(props){
     return(
         <div className='search-container'>
            <div className='search-bar-content'>
-             <SearchMobile handleOpenMobileSearch={()=>props?.handleOpenMobileSearch()} search={props.searchValue} handleSearch={(e)=>_handleSearch(e)} />
+             <SearchMobile 
+                handleOpenMobileSearch={()=>props?.handleOpenMobileSearch()} 
+                search={props.searchValue} 
+                handleSearch={(e)=>_handleSearch(e)} 
+                toggleFilterVisible={()=>props?.toggleFilterVisible()}
+                openFilterVisible={()=>props?.openFilterVisible()}
+             />
            </div> 
         </div>
     )

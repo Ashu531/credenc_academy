@@ -6,6 +6,8 @@ import axios from "axios";
 import constant from "../../config/constant";
 import queryIcon from '../../assets/images/icons/queryIcon.svg'
 import { useRouter } from 'next/router'
+import mobileSearchIcon from '../../assets/images/icons/mobileSearchIcon.svg'
+import caretLeftDark from '../../assets/images/icons/caretLeftDark.svg'
 
 const items = [
   {
@@ -82,6 +84,7 @@ export default function SearchBar(props) {
     location.push({
       pathname: `/`
     })
+    props?.openFilterVisible()
     setInitialQuery(true)
   };
 
@@ -97,7 +100,7 @@ export default function SearchBar(props) {
   const formatResult = (item) => {
     return <div style={queryContainer}>
       <span style={queryContent}>
-        <Image src={item?.logo ? item.logo : queryIcon} objectFit="contain" height={20} width={20} alt='query icon' />
+        <Image src={item?.logo ? item.logo : queryIcon} objectFit="cover" height={20} width={20} alt='query icon' />
         <span style={queryName}>
           {item?.name}
         </span>
@@ -109,10 +112,29 @@ export default function SearchBar(props) {
     // return (<p dangerouslySetInnerHTML={{__html: '<strong>'+item+'</strong>'}}></p>); //To format result as html
   };
 
+  const _handleBack=()=>{
+    location.push({
+      pathname: `/`
+    })
+    props?.clearSearch()
+    props?.toggleFilterVisible()
+  }
+
+  const _handleFreshSearch=()=>{
+    props?.clearSearch()
+    location.push({
+      pathname: `/search`
+    })
+  }
+
 
   return (
   
-    <div className="search-model" style={ location.pathname == '/search' ? {padding: 0}: null}>
+    <div className="search-model" style={ location.pathname == '/search' ? {padding: 0} : null}
+      >
+      <div onClick={()=> _handleBack()} style={props?.searchValue && location.pathname == '/' ? {paddingLeft: 15,paddingTop: 3} : {display: 'none'}}>
+        <Image src={caretLeftDark} className="search-icon-icon" objectFit="cover" height={20} width={20} />
+      </div>
       <div className="search">
         <ReactSearchAutocomplete
           items={searchQuery}
@@ -149,9 +171,9 @@ export default function SearchBar(props) {
           showClear={false}
         />
       </div>
-      {/* <div className="search-icon-1" style={ props.showSearchBar ? {right: 11,top: 16} : null}>
-        <Image src={SearchIcon} className="search-icon-icon" objectFit="cover" height={18} width={18} />
-      </div> */}
+      <div style={props?.searchValue && location.pathname == '/' ? {padding: 24} : {display: 'none'}} onClick={()=>_handleFreshSearch()}>
+        <Image src={mobileSearchIcon} className="search-icon-icon" objectFit="cover" height={40} width={40} />
+      </div>
     </div>
   );
 }
