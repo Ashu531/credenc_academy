@@ -30,7 +30,8 @@ function List({
     openApplyNowModal,
     upvoteCard,
     token,
-    addToUpvote
+    addToUpvote,
+    bookmarkCard
 }) {
   
 
@@ -100,6 +101,7 @@ function List({
              upvoteVisible={upvoteVisible}
              token={token}
              upvoteCard={upvoteCard}
+             bookmarkCard={bookmarkCard}
             />
           })
         );

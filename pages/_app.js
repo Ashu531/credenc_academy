@@ -67,6 +67,14 @@ class MyApp extends App {
     }
   }
 
+   _clearBookmarkData=()=>{
+    let bookmarkData = localStorage.getItem(UpvoteKey);
+    if(bookmarkData && bookmarkData.length > 0){
+      bookmarkData = []
+      localStorage.setItem(UpvoteKey,JSON.stringify(bookmarkData))
+    }
+  }
+
   _retrieveData=()=>{
     let localTheme = localStorage.getItem("EdtechTheme");
     if(localTheme && localTheme.length > 0){
@@ -194,8 +202,10 @@ class MyApp extends App {
   }
 
   logoutUser=()=>{
-    localStorage.setItem(EdtechToken,'');
+    localStorage.removeItem(EdtechToken);
     this._clearUpvoteData()
+    this._clearBookmarkData()
+    setTimeout(() => location.reload(), 100)
   }
 
   selectedSubject=(item)=>{

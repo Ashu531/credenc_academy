@@ -19,7 +19,7 @@ export default function CourseCard(props){
   const [compareButtonVisible, setCompareButtonVisible] = useState({display: 'none'});
   const [courseNameTooltip, setCourseNameTooltip] = useState(false)
   const [isCardOpen,setIsCardOpen] = useState(false)
-  const [bookmarkVisible, setBookmarkVisible] = useState(false)
+  const [bookmarkVisible, setBookmarkVisible] = useState(props.bookmarkCard && props.bookmarkCard.length > 0 ? props.bookmarkCard === '0' ? false : true  : props?.data?.bookmarked)
   const [compareTextVisible, setCompareTextVisible] = useState('Add to Compare')
   const [upvoted,setUpvoted] = useState(props.upvoteCard && props.upvoteCard.length > 0 ? props.upvoteCard === '0' ? false : true  : props?.data?.upvoted)
 

@@ -127,6 +127,7 @@ function DashboardDesktop(props) {
   const courseTypeRef = useRef(null);
   // const [compareTextVisible,setCompareTextVisible] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
+  const [bookmarkCard, setBookmarkCard] = useState('')
 
   useEffect(() => {
     setMounted(true);
@@ -351,6 +352,7 @@ function DashboardDesktop(props) {
   }
   
   const _onremoveToBookmark=(item)=>{
+    setBookmarkCard('0')
     let bookmarkArray = [];
     let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
     if(bookmarkItem && bookmarkItem.length > 0){
@@ -364,6 +366,7 @@ function DashboardDesktop(props) {
   }
   
   const _onAddToBookmark=(item)=>{
+    setBookmarkCard('1')
     let bookmarkArray = [];
     let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
     if(bookmarkItem && bookmarkItem.length > 0){
@@ -1180,6 +1183,7 @@ const _handleSearch=(e)=>{
             addToUpvote={(item)=>_addToUpvote(item)}
             token={props?.token}
             upvoteCard={upvoteCard}
+            bookmarkCard={bookmarkCard}
             // compareTextVisible={compareTextVisible} 
           />
         </div>

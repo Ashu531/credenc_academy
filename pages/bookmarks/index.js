@@ -23,6 +23,7 @@ export default function Bookmarks(props){
     const bookmarkApiStatus = useRef(new ApiStatus());
     const [courses, setCourses] = useState([]);
     const [upvoteCard, setUpvoteCard] = useState('')
+    const [bookmarkCard, setBookmarkCard] = useState('')
     const [token, setToken] = useState('')
     const [detailModal, setDetailModal] = useState(false);
     const [detailData,setDetailData] = useState({});
@@ -234,6 +235,7 @@ export default function Bookmarks(props){
     }
     
     const _onremoveToBookmark=(item)=>{
+      setBookmarkCard('0')
       let bookmarkArray = [];
       let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
       if(bookmarkItem && bookmarkItem.length > 0){
@@ -243,6 +245,7 @@ export default function Bookmarks(props){
     }
     
     const _onAddToBookmark=(item)=>{
+      setBookmarkCard('1')
       let bookmarkArray = [];
       let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
       if(bookmarkItem && bookmarkItem.length > 0){
@@ -301,6 +304,7 @@ export default function Bookmarks(props){
                       addToUpvote={(item)=>_addToUpvote(item)}
                       openDetailModal={(item)=>openDetailModal(item)} 
                       openApplyNowModal={(item)=> _openApplyNowModal(item)}
+                      bookmarkCard={bookmarkCard}
                       // handleSignInClick={handleSignInClick}
                   />
                 </div>

@@ -163,7 +163,7 @@ export default function LoginModal({
         console.log(res);
         dispatchLogin(res.data.tokens);
         setAuthApiStatus(ApiStatus.SUCCESS);
-        // setTimeout(() => location.reload(), 100)
+        setTimeout(() => location.reload(), 100)
         handleModalClose();
         handleLogin()
         return res.data;

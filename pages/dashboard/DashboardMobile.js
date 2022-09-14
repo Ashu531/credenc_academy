@@ -121,6 +121,7 @@ function DashboardMobile(props) {
   const [lastCourse, setLastCourse] = useState(null);
   const [upvoteCard, setUpvoteCard] = useState('')
   const courseTypeRef = useRef(null);
+  const [bookmarkCard, setBookmarkCard] = useState('')
   // const [compareTextVisible,setCompareTextVisible] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -206,6 +207,7 @@ function DashboardMobile(props) {
   }
   
   const _onremoveToBookmark=(item)=>{
+    setBookmarkCard('0')
     let bookmarkArray = [];
     let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
     if(bookmarkItem && bookmarkItem.length > 0){
@@ -215,6 +217,7 @@ function DashboardMobile(props) {
   }
   
   const _onAddToBookmark=(item)=>{
+    setBookmarkCard('1')
     let bookmarkArray = [];
     let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
     if(bookmarkItem && bookmarkItem.length > 0){
@@ -1161,6 +1164,7 @@ useEffect(() => {
                     token={props?.token}
                     upvoteCard={upvoteCard}
                     openApplyNowModal={(item)=> _openApplyNowModal(item)}
+                    bookmarkCard={bookmarkCard}
                     // compareTextVisible={compareTextVisible}  
                   />
                 </div>
