@@ -357,6 +357,10 @@ function DashboardDesktop(props) {
       bookmarkArray =  bookmarkItem.filter(data => data !== item.id )
     }
     localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+    if(props?.token && props?.token.length > 0){
+      removeBookmarkFromBackend(item.id)
+    }
+    
   }
   
   const _onAddToBookmark=(item)=>{
@@ -367,6 +371,43 @@ function DashboardDesktop(props) {
     }
     bookmarkArray.push(item.id)
     localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+    console.log(props?.token,"props?.token+++")
+    if(props?.token && props?.token.length > 0){
+      addBookmarkToBackend(item.id)
+    }
+    
+  }
+
+  const addBookmarkToBackend = async (id) => {
+    let res = await axios.post(`${constant.API_URL.DEV}/bookmark/`, {
+      "id": [`${id}`],
+    }, {
+      headers: {
+        'Authorization': `Bearer ${props?.token}`
+      },
+    })
+      .then(res => res.data)
+      .catch(err => {
+        console.log(err);
+        dispatchRemoveBookmark(id, bookmarks);
+      })
+    return res;
+  }
+
+  const removeBookmarkFromBackend = async (id) => {
+    let res = await axios.post(`${constant.API_URL.DEV}/bookmark/remove/`, {
+      "id": `${id}`,
+    }, {
+      headers: {
+        'Authorization': `Bearer ${props?.token}`
+      },
+    })
+      .then(res => res.data)
+      .catch(err => {
+        console.log(err);
+        dispatchAddBookmark(id, bookmarks);
+      })
+    return res;
   }
 
   const _onAddToCompare=(item)=>{

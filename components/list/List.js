@@ -133,23 +133,46 @@ function List({
     else if(listApiStatus.current.hasCompleted()){
       if(list && list.length > 0){
         return (
-          list.map((item, i) => (
-            <div key={i}>
+          list.map((item, i) => {
+            let bookmarkVisible = false;
+            let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
+            if(tempBookmarkData && tempBookmarkData.length > 0){
+              if (tempBookmarkData.includes(item?.id))
+              bookmarkVisible = true
+              else
+              bookmarkVisible = false
+            }
 
-            </div>
-            // <CourseCardContainer 
-            //   item={item} 
-            //   key={`${item.id}:${i}`} 
-            //   handleClick={onItemClick}
-            //   onAddToBookmark={handleAddItemToBookmark}
-            //   onRemoveFromBookmark={handleRemoveItemFromBookmark}
-            //   onAddToCompare={handleAddItemToCompare}
-            //   onRemoveFromCompare={handleRemoveItemFromCompare}
-            //   handleSignInClick={handleSignInClick}
-            // />
-          ))
+            let upvoteVisible = false;
+            let upvoteArray = localStorage.getItem(UpvoteKey) ? localStorage.getItem(UpvoteKey) : []
+            if(upvoteArray && upvoteArray.length > 0){
+            let upvoteData = JSON.parse(upvoteArray);
+            if(upvoteData && upvoteData.length > 0){
+              if (upvoteData.includes(item?.id)){
+                upvoteVisible = true
+              }
+             else
+             upvoteVisible = false
+            }
+          }
+
+             return <CourseCard 
+             data={item} 
+             key={`${item.id}:${i}`} 
+             openDetailModal={()=>openDetailModal(item)}
+             addToCompare={()=>addToCompare(item)} 
+             addToBookmark={()=>addToBookmark(item)}
+             bookmarkVisible={bookmarkVisible}
+             openApplyNowModal={(item)=> openApplyNowModal(item)}
+             addToUpvote={(item)=>addToUpvote(item)}
+             upvoteVisible={upvoteVisible}
+             token={token}
+             upvoteCard={upvoteCard}
+            />
+          })
         );
-      } else {
+      }
+      else {
         return <Error type={ Lists.errorTypes.EMPTY } text={'No Bookmarks'} />;
       } 
     } 

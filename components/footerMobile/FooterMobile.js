@@ -63,6 +63,10 @@ export default function FooterMobile(props){
         }
     }
 
+    const navigateBookmarkPage=()=>{
+        location.push('/bookmarks');
+    }
+
     const openProfilePage=()=>{
         location.push('/profile');
         props.setMobileLoginNaviagtion()
@@ -71,7 +75,7 @@ export default function FooterMobile(props){
     let filterValues = urlService.current.getEntries()
 
     return(
-        <div className='mobile-footer' style={location.pathname === '/search' || filterValues.length > 0 ? {display: 'none'} : props?.filterModalVisible ? {zIndex: 0} : null }>
+        <div className='mobile-footer' style={location.pathname == '/search/' || filterValues.length > 0 ? {display: 'none'} : props?.filterModalVisible ? {zIndex: 0} : null }>
         <div className='mobile-footer-container'>
         <Link href='/'>
         <div className='mobile-footer-element'>
@@ -87,7 +91,7 @@ export default function FooterMobile(props){
             Compare
         </span>
         </div>
-        <div className='mobile-footer-element'>
+        <div className='mobile-footer-element' onClick={()=>navigateBookmarkPage()}>
         <Image src={ props?.theme === 'dark' ? bookmarkIconLight : bookmarkIcon} objectFit="contain" alt='bookmarkIcon' height={18} width={18}/>
         <span className='mobile-footer-text'>
             Bookmark

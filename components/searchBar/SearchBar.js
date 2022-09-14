@@ -139,7 +139,7 @@ export default function SearchBar(props) {
           showClear={false}
         />
       </div>
-      <div className="search-icon-1" style={ props.showSearchBar ? {right: 11,top: 16} : null}>
+      <div className="search-icon-web-1" style={ props.showSearchBar ? {right: 11,top: 16} : null}>
         <Image src={SearchIcon} className="search-icon-icon" objectFit="cover" height={18} width={18} />
       </div>
     </div>

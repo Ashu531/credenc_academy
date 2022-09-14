@@ -163,7 +163,7 @@ export default function LoginModal({
         console.log(res);
         dispatchLogin(res.data.tokens);
         setAuthApiStatus(ApiStatus.SUCCESS);
-        setTimeout(() => location.reload(), 100)
+        // setTimeout(() => location.reload(), 100)
         handleModalClose();
         handleLogin()
         return res.data;
@@ -178,9 +178,10 @@ export default function LoginModal({
 
     if (response?.response === "Successfully LoggedIn") {
 
-      let currentBookmarks = localStorage.getItem(bookmarkKey);
-      currentBookmarks = currentBookmarks?.split(',');
-
+      let currentBookmarks = JSON.parse(localStorage.getItem(bookmarkKey));
+      console.log(currentBookmarks,"currentBookmarks+++")
+      // currentBookmarks = currentBookmarks?.split(',');
+      console.log(response,"response+++")
       let res = await addBookmarkToBackend(currentBookmarks, response?.tokens?.access);
       if (res?.status) localStorage.removeItem(bookmarkKey);
     }
@@ -238,9 +239,9 @@ export default function LoginModal({
       let currentBookmarks = localStorage.getItem(bookmarkKey);
       currentBookmarks = currentBookmarks?.split(',');
 
-      // let res = await addBookmarkToBackend(currentBookmarks, googleLogInRes?.tokens?.access);
-      // if (res?.status) localStorage.removeItem(bookmarkKey);
-      // setTimeout(() => location.reload(), 100)
+      let res = await addBookmarkToBackend(currentBookmarks, googleLogInRes?.tokens?.access);
+      if (res?.status) localStorage.removeItem(bookmarkKey);
+      setTimeout(() => location.reload(), 100)
     }
 
     // dispatchLogin(response.tokenid);

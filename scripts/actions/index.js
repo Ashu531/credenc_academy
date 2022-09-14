@@ -28,3 +28,29 @@ export const changeTheme = (theme) => {
         }
     }
   }
+
+  export const addBookmark = (id, bookmarks) => {
+    let idArray = [];
+
+    if (!Array.isArray(id)) {
+      idArray = [id];
+    } else idArray = [...id];
+
+    let bookmarkSet = new Set([...bookmarks, ...idArray]);
+    let bookmarkArray = Array.from(bookmarkSet);
+    
+    return {
+      type: 'ADD_BOOKMARK',
+      bookmarks: [...bookmarkArray]
+    }
+}
+
+export const removeBookmark = (id, bookmarks) => {
+
+  let currentBookmarks = bookmarks.filter(item => item != id.toString());
+
+  return {
+    type: 'REMOVE_BOOKMARK',
+    bookmarks: currentBookmarks
+  }
+}

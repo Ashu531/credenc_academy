@@ -125,6 +125,12 @@ export default function Header(props){
     props?.handleSearch('') 
   }
 
+  const _openBookmarkTab=()=>{
+    location.push({
+      pathname: `/bookmarks`
+    })
+  }
+
     return(
         <div className='navbar-wrapper'>
         
@@ -157,9 +163,9 @@ export default function Header(props){
          </div> */}
          {/* </Link>  */}
           {/* <Link href='bookmarks' className='nav-item bookmark' onClick={() => Mixpanel.track(MixpanelStrings.NAV_BOOKMARK_CLICKED)}> */}
-           {/* <div className='icon-element'>
+           <div className='icon-element' onClick={()=>_openBookmarkTab()}>
            <Image src={ props?.theme === 'dark' ? bookmarkIconDark : bookmarkIcon} objectFit="cover" alt='bookmarkIcon' />
-           </div> */}
+           </div>
  
            {/* <div onClick={()=>props.toggleTheme()} style={{cursor:"pointer",paddingLeft:10}}>
             <span className='change-theme-text'>Change Theme</span>
