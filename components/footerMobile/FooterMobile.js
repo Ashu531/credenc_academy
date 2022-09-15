@@ -72,10 +72,13 @@ export default function FooterMobile(props){
         props.setMobileLoginNaviagtion()
     }
 
+    
+
     let filterValues = urlService.current.getEntries()
 
+
     return(
-        <div className='mobile-footer' style={location.pathname == '/search/' || filterValues.length > 0 ? {display: 'none'} : props?.filterModalVisible ? {zIndex: 0} : null }>
+        <div className='mobile-footer' style={location.pathname === '/search/' || (filterValues.length > 0 && location.pathname !== '/bookmarks' && location.pathname !== '/') ? {display: 'none'} : props?.filterModalVisible ? {zIndex: 0} : null }>
         <div className='mobile-footer-container'>
         <Link href='/'>
         <div className='mobile-footer-element'>

@@ -242,6 +242,7 @@ export default function Bookmarks(props){
         bookmarkArray =  bookmarkItem.filter(data => data !== item.id )
       }
       localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+      setTimeout(() => location.reload(), 100)
     }
     
     const _onAddToBookmark=(item)=>{
@@ -253,6 +254,7 @@ export default function Bookmarks(props){
       }
       bookmarkArray.push(item.id)
       localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+      setTimeout(() => location.reload(), 100)
     }
 
     const openDetailModal = (data)=>{
