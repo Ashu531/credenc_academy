@@ -26,11 +26,20 @@ export default function HeaderMobile(props){
         props?.toggleSubjectDropdown()
         props?.toggleFilterVisible()
     }
+
+    const _goToHome=()=>{
+        setTimeout(() => location.reload(), 100)
+        // props?.closeFilterExpandedStage()
+        // props?.handleSearch('') 
+      }
  
     return(
         <div className='mobile-header' style={location.pathname == '/search' || props?.searchValue.length > 0 ? {display: 'none'} : null}>
             <div className='mobile-header_container'>
-                <Image src={props.theme === 'dark' ? credencLogoLight : credencLogo} objectFit="cover" alt='credencLogo' />
+                <div onClick={()=>_goToHome()}>
+                    <Image src={props.theme === 'dark' ? credencLogoLight : credencLogo} objectFit="cover" alt='credencLogo' />
+                </div>
+                
                 <div className='mobile-header-content' style={{paddingRight: 20}}>
                     {/* <div 
                         className='mobile-header-element' 

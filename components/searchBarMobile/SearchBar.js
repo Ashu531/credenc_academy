@@ -50,6 +50,14 @@ export default function SearchBar(props) {
   const [initialQuery,setInitialQuery] = useState(false)
   let location = useRouter();
 
+  const myLoader = ({ src, width, quality }) => {
+    if(src && src.length > 0){
+        return `${src}?w=${width}&q=${quality || 75}`
+    }else{
+        return '..'
+    }
+ }
+
   const handleOnSearch = (string, results) => {
     // onSearch will have as the first callback parameter
     // the string searched and for the second the results.
@@ -100,7 +108,7 @@ export default function SearchBar(props) {
   const formatResult = (item) => {
     return <div style={queryContainer}>
       <span style={queryContent}>
-        <Image src={item?.logo ? item.logo : queryIcon} objectFit="cover" height={20} width={20} alt='query icon' />
+        <Image loader={myLoader} src={item?.logo ? item.logo : queryIcon} objectFit="cover" height={20} width={20} alt='query icon' />
         <span style={queryName}>
           {item?.name}
         </span>
@@ -177,50 +185,6 @@ export default function SearchBar(props) {
     </div>
   );
 }
-
-
-  // <div className="search-model" >
-    //   <input className='search-input' autoFocus style={ props.showSearchBar ? {height: 40} : null} type='text' placeholder='Search by anything ;)' value={props.search} onChange={(e)=>props.handleSearch(e.target.value)} />
-    //   <div className="search-icon-1" style={ props.showSearchBar ? {right: 8,top: 5} : null}>
-    //     <Image src={SearchIcon} className="search-icon-icon" objectFit="cover" height={18} width={18} />
-    //   </div>
-    // </div>
-
-{/* <div className="search-model" style={{width:'100%'}}>
-<div className="search" style={{width:'100%'}}>
-  <ReactSearchAutocomplete
-    items={items}
-    onSearch={handleOnSearch}
-    onHover={handleOnHover}
-    onSelect={handleOnSelect}
-    onFocus={handleOnFocus}
-    autoFocus
-    formatResult={formatResult}
-    placeholder="Search by anything ;)"
-    styling={{
-      height: 40,
-      fontFamily: 'Poppins',
-      fontStyle: 'normal',
-      fontWeight: '500px',
-      fontSize: '16px',
-      lineHeight: 21,
-      backgroundColor: "#FFFFFF",
-      borderRadius: "40px",
-      boxShadow: "none",
-      clearIconMargin: "3px 124px 0 0",
-      border: "none",
-      color: "#000000",
-      lineColor: "#FFFFFF",
-      width: '95%'
-    }}
-    showIcon={false}
-    showClear={false}
-  />
-</div>
-<div className="search-icon-1" style={ props.showSearchBar ? {right: 8,top: 5} : null}>
-  <Image src={SearchIcon} className="search-icon-icon" objectFit="cover" height={18} width={18} />
-</div>
-</div> */}
 
 
 const queryContainer = {

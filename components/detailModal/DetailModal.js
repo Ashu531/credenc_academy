@@ -35,6 +35,14 @@ export default function DetailModal(props){
     const[compareText,setCompareText] = useState('Add to Compare')
     const [theme,setTheme] = useState('')
 
+    const myLoader = ({ src, width, quality }) => {
+        if(src && src.length > 0){
+            return `${src}?w=${width}&q=${quality || 75}`
+        }else{
+            return '..'
+        }
+     }
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -98,6 +106,11 @@ export default function DetailModal(props){
         setUpvoteVisible(!upvoteVisible)
     }
 
+    const _handleApplyModal=()=>{
+        props?.openDetailModal()
+        props?.openApplyNowModal()
+    }
+
     return(
         <>
         {
@@ -108,6 +121,7 @@ export default function DetailModal(props){
             <div className='detail-modal-header' style={window.innerWidth<=500 ? {width: '90%'} : {width: '90%'}}>
                 <div className='header-school-content'>
                   <Image 
+                  loader={myLoader}
                   src={instituteLogo}  
                   height={40} 
                   width={40} 
@@ -250,7 +264,7 @@ export default function DetailModal(props){
                    props?.detailData?.instructor && props?.detailData?.instructor.map((item,index)=>{
                        return( 
                        <span key={index} className="avatar-content" >
-                            <Image src={item?.profile_photo ? item?.profile_photo : profileIcon} height={30} width={30} alt='avatar' style={{borderRadius: '50%'}} objectFit='contain'/>
+                            <Image loader={myLoader} src={item?.profile_photo ? item?.profile_photo : profileIcon} height={30} width={30} alt='avatar' style={{borderRadius: '50%'}} objectFit='contain'/>
                         </span>
                         )
                     })
@@ -308,7 +322,7 @@ export default function DetailModal(props){
                 </span>
             </div>
             <div className='detail-modal-footer-section-right' 
-            style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
+            style={ window.innerWidth <= 500 ? {width:'88%'} : null } onClick={()=>_handleApplyModal()}>
                 <span className='apply-now-button'>
                     <span className='apply-now-button-text'>
                         Apply Now

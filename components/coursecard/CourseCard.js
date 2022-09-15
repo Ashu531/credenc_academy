@@ -23,6 +23,14 @@ export default function CourseCard(props){
   const [compareTextVisible, setCompareTextVisible] = useState('Add to Compare')
   const [upvoted,setUpvoted] = useState(props.upvoteCard && props.upvoteCard.length > 0 ? props.upvoteCard === '0' ? false : true  : props?.data?.upvoted)
 
+  const myLoader = ({ src, width, quality }) => {
+    if(src && src.length > 0){
+      return `${src}?w=${width}&q=${quality || 75}`
+    }else{
+        return '..'
+    }
+  }
+
   useEffect(() => {
     setMounted(true);
     if(props?.data?.upvoted){
@@ -59,7 +67,7 @@ export default function CourseCard(props){
           }} 
         >
         <div className='card-header' style={!isCardOpen ? null : {paddingLeft:12,paddingRight: 12}}>
-          <Image src={props?.data?.platform?.logo ? props?.data?.platform?.logo : courseLogo} height={36} width={36} alt='courseLogo' style={{borderRadius: '30%'}} objectFit="contain"/>
+          <Image loader={myLoader} src={props?.data?.platform?.logo ? props?.data?.platform?.logo : courseLogo} height={36} width={36} alt='courseLogo' style={{borderRadius: '30%'}} objectFit="contain"/>
           <div className='card-header-end-content'>
                 <div className='grey-container' onClick={()=>{
                         props.addToBookmark(props.data)
@@ -78,7 +86,7 @@ export default function CourseCard(props){
           </div>
         </div>
         <div  className = {!isCardOpen ? "card-image-content" : "card-image-content card-image-content-open"}  onClick={()=> props.openDetailModal() } >
-            <Image src={instituteLogo} objectFit="cover"  height={!isCardOpen ? 82 : 60} width={!isCardOpen ? 82 : 60} alt='instituteLogo'/>
+            <Image loader={myLoader} src={instituteLogo} objectFit="cover"  height={!isCardOpen ? 82 : 60} width={!isCardOpen ? 82 : 60} alt='instituteLogo'/>
             <span className='institute-name'>{props?.data?.educator[0]?.name}</span>
         </div>
      <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} onClick={()=> props.openDetailModal()}>

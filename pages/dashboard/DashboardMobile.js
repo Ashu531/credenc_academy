@@ -1240,6 +1240,7 @@ useEffect(() => {
            theme={props?.theme} 
            openDetailModal={()=>_openDetailModal()}
            addToUpvote={()=>_addToUpvote(detailData)}
+           openApplyNowModal={(item)=> _openApplyNowModal(item)}
            token={props?.token}
            />
          </SlidingPanel>

@@ -274,6 +274,11 @@ function DashboardDesktop(props) {
     setDetailData(data);
   }
 
+  const toggleDetailModal = (data)=>{
+    setDetailModal(!detailModal);
+    setDetailData(data);
+  }
+
   const _addToUpvote=(item)=>{
     if(props?.token && props?.token.length > 0){
       let upvoteArray = localStorage.getItem(UpvoteKey) ? localStorage.getItem(UpvoteKey) : []
@@ -1430,6 +1435,8 @@ const _handleSearch=(e)=>{
         addToUpvote={()=>_addToUpvote(detailData)}
         token={props?.token}
         theme={props.theme}
+        openApplyNowModal={()=> _openApplyNowModal(detailData)}
+        openDetailModal={()=>toggleDetailModal(detailData)}
         />
       </SlidingPanel>
       <SlidingPanel
