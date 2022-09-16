@@ -28,11 +28,11 @@ export default function Footer(props){
                 Sitemap
                 </span> */}
                 <Link href='/privacy' passHref={true}>
-                {/* <a target='_blank' rel="noreferrer" style={{textDecoration:'none'}}> */}
+                <a target='_blank' rel="noreferrer" style={{textDecoration:'none'}}>
                 <span className='footer-elemental-content-text'>
                 Privacy Policy
                 </span>
-                {/* </a> */}
+                </a>
                 </Link>
                 <span className='footer-elemental-content-text'>
                 Contact
@@ -43,10 +43,10 @@ export default function Footer(props){
             </div>
        
         <div className='footer-disclaimer' onClick={()=>props.toggleFooterModal()}>
-        <span className='footer-disclaimer-text'>
-        Expand
-        </span>
-        <Image src={goUpIcon} objectFit="cover" alt='goUpIcon'/>
+            <span className='footer-disclaimer-text'>
+                Expand
+            </span>
+            <Image src={goUpIcon} objectFit="cover" alt='goUpIcon'/>
         </div>
         </div>
     )

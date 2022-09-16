@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/router';
 import Link from "next/link";
-import credencLogo from '../../assets/images/logo/credencLogo.svg';
+import credencLogo from '../../assets/images/icons/credencAcademy.svg';
 import profileIcon from '../../assets/images/icons/profile-icon.svg';
 import ApiStatus from '../../config/apiStatus';
 import axios from 'axios';

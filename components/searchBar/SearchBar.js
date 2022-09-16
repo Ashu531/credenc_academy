@@ -44,7 +44,6 @@ const items = [
 export default function SearchBar(props) {
 
   const [searchQuery,setSearchQuery] = useState([])
-  const [initialQuery,setInitialQuery] = useState(false)
 
   const myLoader = ({ src, width, quality }) => {
     if(src && src.length > 0){
@@ -85,7 +84,6 @@ export default function SearchBar(props) {
     // console.log("enter detected",item);
   
     props?.handleSearch(item?.name)
-    setInitialQuery(true)
   };
 
   const handleOnFocus = (e) => {
@@ -160,7 +158,8 @@ const queryContainer = {
   display:'flex',
   flexDirection:'row',
   justifyContent:'space-between',
-  alignItems:'center'
+  alignItems:'center',
+  cursor: 'pointer'
 }
 
 const queryName = {

@@ -258,6 +258,21 @@
   }
 }
 
+.sliding-panel-container{
+   .panel-container-left-enter-done{
+     .panel{
+       background: var(--defaultBackground) !important;
+     }
+   } 
+}
+.active{
+  .panel-container-left-enter-done{
+    .panel{
+      background: var(--defaultBackground) !important;
+    }
+  }
+}
+
 .filter-sidebar-content{
   flex-grow: 1;
   // overflow: hidden;

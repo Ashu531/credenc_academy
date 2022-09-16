@@ -116,6 +116,9 @@ export default function Header(props){
       props?.closeFilterExpandedStage()
       props?.hideSearchBar()
       }
+    else {
+      props?.openFilterExpandedStage()
+    }
     props?.handleSearch(e) 
    
   }

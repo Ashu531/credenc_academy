@@ -740,7 +740,7 @@ function DashboardDesktop(props) {
       setCourseCardData([...res.data])
     } else {
       setCourses([...courses, ...res.data]);
-      // setCourseCardData([...res.data])
+      setCourseCardData([...res.data])
     }
     setMaxPrice(Math.floor(parseFloat(res.max_price)));
     setTotalCourses(res.count);

@@ -3,7 +3,7 @@
   background: var(--subduedBackground);
   position: fixed;
   bottom: 0px;
-  height: 45vh;
+  height: 53vh;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 
@@ -24,7 +24,7 @@
     }
     
     .footer-modal-content{
-      height: 32vh;
+      height: 40vh;
       padding-top: 4vh;
       overflow: scroll;
     }
@@ -56,9 +56,9 @@
       width: 75%;
       display: inline;
       font-size: 14px;
-line-height: 17px;
-margin: 16px 0;
-color: var(--bodyColor)
+      line-height: 17px;
+      margin: 16px 0;
+      color: var(--bodyColor)
     }
 
     .powered-by-credenc-text{
@@ -76,16 +76,16 @@ color: var(--bodyColor)
 
     .socialMediaDiv1Button{
       background: linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%);
-border-radius: 3px;
-padding: 12px;
-background-color: var(--defaultBackground);
-border: none;
-font-family: 'Poppins';
-font-style: normal;
-font-weight: 500;
-font-size: 14px;
-line-height: 21px;
-color: var(--defaultBackground);
+      border-radius: 3px;
+      padding: 12px;
+      background-color: var(--defaultBackground);
+      border: none;
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 21px;
+      color: var(--defaultBackground);
     }
 
     .footerDiv{
@@ -138,20 +138,20 @@ color: var(--defaultBackground);
   .footer-elemental-content-text{
       font-family:'Poppins';
       font-style: normal;
-font-weight: 400;
-font-size: 12px;
-line-height: 19px;
-color: var(--bodyColor);
-padding-right: 24px;
-cursor: pointer;
-text-decoration: none;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 19px;
+      color: var(--bodyColor);
+      padding-right: 24px;
+      cursor: pointer;
+      text-decoration: none;
   }
   .footer-rights-text{
     font-style: normal;
-font-weight: 500;
-font-size: 12px;
-line-height: 19px;
-color: var(--bodyColor)
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 19px;
+    color: var(--bodyColor)
   }
   }
   .removeLine{

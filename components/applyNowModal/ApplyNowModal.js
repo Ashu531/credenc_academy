@@ -170,7 +170,7 @@ export default function ApplyNowModal(props){
                    >
 
                    <div className='footer-content'>
-                     <div className='image-content'>
+                     <div className='image-content' style={{display: 'none'}}>
                         <Image src={whatsAppIcon} objectFit='cover'/>
                         <div className='call-icon-container'>
                             <Image src={callIcon} objectFit='cover'/>
