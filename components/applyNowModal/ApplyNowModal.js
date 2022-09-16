@@ -18,6 +18,7 @@ import axios from "axios";
 import constant from '../../config/constant';
 import moment from 'moment'
 import closeIcon from '../../assets/images/icons/close-icon-grey.svg'
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 
 export default function ApplyNowModal(props){
 
@@ -142,12 +143,22 @@ export default function ApplyNowModal(props){
                         </span>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <Stack spacing={3} style={{width:'100%'}}>
-                                <DesktopDatePicker
+                                {
+                                    window.innerWidth < 500 ? 
+                                    <MobileDatePicker
+                                        inputFormat="MM/DD/YYYY"
+                                        value={dob}
+                                        onChange={handleChange}
+                                        renderInput={(params) => <TextField {...params} />}
+                                    /> : 
+                                    <DesktopDatePicker
                                     inputFormat="DD/MM/YYYY"
                                     value={dob}
                                     onChange={handleChange}
                                     renderInput={(params) => <TextField {...params} />}
                                 />
+                                }
+                               
                             </Stack>
                         </LocalizationProvider>
                      </div>
