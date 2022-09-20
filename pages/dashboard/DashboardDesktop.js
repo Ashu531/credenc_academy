@@ -1233,7 +1233,7 @@ const _handleSearch=(e)=>{
         />
       </div>}
       </div>
-  : <div className="dashboard">
+  : <div className="dashboard" style={ props?.loginModal ? {overflow: 'hidden'} : null }>
      <div className="dashboard-upper-section">
         <div className='banner' ref={searchRef}> 
           <div className='text-content'>

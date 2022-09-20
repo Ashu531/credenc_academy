@@ -6,6 +6,7 @@ import OtpField from "../otpField/OtpField";
 import passVisibleIcon from "../../assets/images/icons/eye.svg";
 import passNotVisibleIcon from "../../assets/images/icons/eye-close.svg";
 import backIcon from '../../assets/images/icons/caret-left-grey.svg';
+import backArrowDark from '../../assets/images/icons/backArrowDark.svg'
 import credencLogo from '../../assets/images/icons/credenc-logo.svg';
 import credencLogoLight from '../../assets/images/logo/credencLogo.svg'
 import Link from "next/link";
@@ -208,16 +209,16 @@ export default function ForgotPasswordModal({
       className={`wrapper forgot-pass-modal-container`}
       onClick={(e) => e.stopPropagation()}>
         <div className="back-button" onClick={handleBackClick}>
-          <Image src={backIcon} objectFit='cover' height={20} width={20}/>
+          <Image src={backArrowDark} objectFit='contain' height={12} width={7}/>
         </div>
-        <Link 
+        {/* <Link 
         href='/' 
         className='login-modal-brand' 
-        // onClick={() => Mixpanel.track(MixpanelStrings.HOME_BUTTON_CLICK)}
+        onClick={() => Mixpanel.track(MixpanelStrings.HOME_BUTTON_CLICK)}
         >
           <Image src={ theme === 'dark' ? credencLogo : credencLogoLight} objectFit="cover" />
-          {/* <div style={{textDecoration: 'none', color: '#FFFFFF', fontSize: '21px'}}>BETA</div> */}
-        </Link>
+          <div style={{textDecoration: 'none', color: '#FFFFFF', fontSize: '21px'}}>BETA</div>
+        </Link> */}
         <div className='forgot-modal-header'>
            <span className='forgot-pass-text'>
            Forgot Your Password?

@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import States from '../../config/states';
 import Button from '../../components/button/Button';
 import Input from '../../components/input/Input';
-import passVisibleIcon from '../../assets/images/icons/eye-close.svg'; 
+import passVisibleIcon from '../../assets/images/icons/eye.svg'; 
 import passNotVisibleIcon from '../../assets/images/icons/eye-close.svg';
 import ApiStatus from '../../config/apiStatus';
 import axios from 'axios';
@@ -18,6 +18,7 @@ export default function ResetPassword({token, handleForgotPassword,openForgotPas
   const [newPasswordInputState, setNewPasswordInputState] = useState({ ...passwordInputInitialState });
   const [confirmPasswordInputState, setConfirmPasswordInputState] = useState({ ...passwordInputInitialState });
   const [errorState, setErrorState] = useState(null);
+  const [successState,setSuccessState] = useState(null)
 
   const resetPasswordApiStatus = useRef(new ApiStatus());
 
@@ -57,6 +58,7 @@ export default function ResetPassword({token, handleForgotPassword,openForgotPas
         if(resetPasswordApiStatus){
             resetPasswordApiStatus.current.success();
             setButtonState(buttonStates.UPDATED)
+            resetPasswordAfterSuccess()
         }
         return res;
     })
@@ -70,12 +72,20 @@ export default function ResetPassword({token, handleForgotPassword,openForgotPas
     return res ? res.data : [];
   }
 
+  const resetPasswordAfterSuccess=()=>{
+    setSuccessState('Password updated successfully')
+    setErrorState(null)
+    setOldPasswordInputState('')
+    setNewPasswordInputState('')
+    setConfirmPasswordInputState('')
+  }
+
   const isApiInProgress = () => {
     return resetPasswordApiStatus === ApiStatus.STARTED || resetPasswordApiStatus === ApiStatus.PENDING;
   }
 
   const showHidePassword = (field) => {
-
+    console.log(oldPasswordInputState,"field++++")
     switch(field){
       case 'old': 
         if (oldPasswordInputState.hide) {
@@ -178,6 +188,7 @@ export default function ResetPassword({token, handleForgotPassword,openForgotPas
           </div>
       </div>
       {errorState && <div className='error'>{errorState}</div>}
+      {successState && <div className='success'>{successState}</div>}
       <div className='row'>
         <div className='button-container'>
           <div className='text-button' onClick={()=>openForgotPasswordModal()}>Forgot Password?</div>

@@ -50,6 +50,7 @@ export default function LoginModal({
   const [confirmPassInputState, setConfirmPassInputState] = useState({ ...passwordInputInitialState });
   const [theme,setTheme] = useState('')
   const [buttonState, setButtonState] = useState({});
+  const [error,setErrorMsg] = useState(false)
 
   const [authApiStatus, setAuthApiStatus] = useState(ApiStatus.NOT_STARTED);
   let location = useRouter();
@@ -126,13 +127,19 @@ export default function LoginModal({
       full_name: nameInputState.trim(),
       password: passwordInputState.value.trim(),
       password2: confirmPassInputState.value.trim(),
-      email: emailInputState.trim()
+      email: emailInputState.toLowerCase().trim()
     }).then(res => {
       setAuthApiStatus(ApiStatus.SUCCESS);
       setFormSegment(modalStates.LOGIN);
+      setHeader(res?.message)
       setTimeout(() => location.reload(), 100)
     })
-    .catch(err => {console.log(err); setAuthApiStatus(ApiStatus.FAILED)})
+    .catch(err => {
+      console.log(err); 
+      setAuthApiStatus(ApiStatus.FAILED) 
+      setHeader(err?.response?.data?.message)
+      setErrorMsg(true)
+    })
   }
 
   const addBookmarkToBackend = async (bookmarks, token) => {
@@ -156,7 +163,7 @@ export default function LoginModal({
   const signIn = async () => {
     const response = await axios.post(`${constant.API_URL.DEV}/login/`, {
       password: passwordInputState.value.trim(),
-      email: emailInputState.trim()
+      email: emailInputState.toLowerCase().trim()
     })
     .then(res => {
       try{
@@ -179,9 +186,7 @@ export default function LoginModal({
     if (response?.response === "Successfully LoggedIn") {
 
       let currentBookmarks = JSON.parse(localStorage.getItem(bookmarkKey));
-      console.log(currentBookmarks,"currentBookmarks+++")
       // currentBookmarks = currentBookmarks?.split(',');
-      console.log(response,"response+++")
       let res = await addBookmarkToBackend(currentBookmarks, response?.tokens?.access);
       if (res?.status) localStorage.removeItem(bookmarkKey);
     }
@@ -208,7 +213,7 @@ export default function LoginModal({
 
   const onGoogleLoginSuccess = async (response) => {
     if (response?.error === "idpiframe_initialization_failed" || response?.error === "popup_closed_by_user") {
-      setFormError(Strings.ALLOW_COOKIES_IN_INCOGNITO);
+      // setFormError(Strings.ALLOW_COOKIES_IN_INCOGNITO);
       return;
     } else if (!!response?.error) {
       setFormError(response?.error);
@@ -301,7 +306,6 @@ export default function LoginModal({
       })
       .then(res => {
       try{
-        console.log(res,"response+++++")
         dispatchLogin(res.data.tokens);
         setAuthApiStatus(ApiStatus.SUCCESS);
         handleModalClose();
@@ -343,8 +347,10 @@ export default function LoginModal({
       setHeader(Strings.SIGNUP_HEADER);
       setButtonState({...buttonStates.SIGNUP});
     }
+    setNameInputState('')
     setEmailInputState('');
     setPasswordInputState({ ...passwordInputInitialState });
+    setConfirmPassInputState({ ...passwordInputInitialState })
   }, [formSegment]);
 
   useEffect(() => {
@@ -395,7 +401,13 @@ export default function LoginModal({
           />
         </div>
         <div className="header-container">
-          <div className="headline">{header}</div>
+          <div className="headline" style={ error ? {
+            fontFamily: 'Poppins',
+            fontWeight: 500,
+            fontSize: 12,
+            color: 'red'
+          } : null}
+          >{header}</div>
         </div>
         {showSegment(modalStates.LOGIN) && <div className="form-container">
           {formError && <div className='error-container'>{formError}</div>}

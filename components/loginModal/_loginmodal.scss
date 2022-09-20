@@ -12,10 +12,12 @@
   // fallback background for unsupported browsers.
   background: var(--defaultBackground);
   // background: rgba(196, 196, 196, 0.1);
+
+  box-shadow: 0px 4px 60px rgba(0, 0, 0, 0.15);
   
   @supports ((backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px)) or (-ms-backdrop-filter: blur(20px)) or (-o-backdrop-filter: blur(20px))) {
     background: none;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(4px);
     -moz-backdrop-filter: blur(4px);
     -ms-backdrop-filter: blur(4px);
@@ -200,7 +202,7 @@
       overflow-y: scroll;
 
       .login-modal-brand {
-        display: block;
+        display: none;
       }
 
       .segment-container{

@@ -146,17 +146,17 @@ export default function ApplyNowModal(props){
                                 {
                                     window.innerWidth < 500 ? 
                                     <MobileDatePicker
-                                        inputFormat="MM/DD/YYYY"
+                                        inputFormat="MM-DD-YYYY"
                                         value={dob}
                                         onChange={handleChange}
-                                        renderInput={(params) => <TextField {...params} />}
+                                        renderInput={(params) => <TextField disabled {...params} />}
                                     /> : 
                                     <DesktopDatePicker
-                                    inputFormat="DD/MM/YYYY"
+                                    inputFormat="DD-MM-YYYY"
                                     value={dob}
                                     onChange={handleChange}
-                                    renderInput={(params) => <TextField {...params} />}
-                                />
+                                    renderInput={(params) => <TextField disabled {...params} />}
+                                   />
                                 }
                                
                             </Stack>

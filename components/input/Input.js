@@ -21,7 +21,7 @@ export default function Input({
       <div className='input-container'>
         <input disabled={disabled} placeholder={placeholder} value={value} type={type} onChange={(e) => handleInput(e.currentTarget.value)}/>
         {trailingIcon && <div className='icon' onClick={onTrailingIconClick}>
-          <Image src={trailingIcon} objectFit="cover" height={10} width={10} />
+          <Image src={trailingIcon} objectFit="cover" height={15} width={15} />
         </div>}
       </div>
       {err && <div className='error'>{err}</div>}

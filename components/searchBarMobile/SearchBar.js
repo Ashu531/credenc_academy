@@ -154,7 +154,7 @@ export default function SearchBar(props) {
           autoFocus={location.pathname == '/search' ? true : false}
           showNoResults={false}
           formatResult={formatResult}
-          placeholder="Search by anything ;)"
+          placeholder="Search by anything!"
           styling={{
             height: '48px',
             fontFamily: 'Poppins',
