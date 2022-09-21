@@ -28,7 +28,7 @@ function RangeInput({
         const newValue = calculateValue(value, max);
 
         if(type === Lists.filters.COST){
-            return `INR ${newValue}`;
+            return `INR ${Math.round(newValue)}`;
         }
 
         if(type === Lists.filters.COURSE_PACE){
@@ -39,9 +39,8 @@ function RangeInput({
     const [startValue, setStartValue] = useState(getValue(minValue, type));
     const [endValue, setEndValue] = useState(getValue(maxValue, type, true));
 
-    const getSeekbarValues = (minValue, maxValue) => {
+    const getSeekbarValues = ( minValue, maxValue) => {
         console.log("SEEKBAR VALUES  -->", minValue, maxValue);  // --------------------------------------------------
-
         setIsAppliedCostSlider(true);
         setStartValue(getValue(minValue, type));
         setEndValue(getValue(maxValue, type, true));

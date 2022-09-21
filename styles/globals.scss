@@ -91,6 +91,16 @@ body {
 
 }
 
+.hide-scrollbar {
+  /*FireFox*/
+  scrollbar-width: none;
+  /*IE10+*/
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  /*Chrome, Safari, Edge*/
+  display: none;
+}
 
 #app {
   --background-color: #1e1f22;

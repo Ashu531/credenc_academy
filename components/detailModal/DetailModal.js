@@ -21,6 +21,8 @@ import States from '../../values/states';
 import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
 import profileIcon from '../../assets/images/icons/profile-icon.svg';
 import moment from 'moment';
+import defaultEducator from '../../assets/images/icons/defaultEducator.svg'
+import defaultPlatform from '../../assets/images/icons/defaultPlatform.svg'
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const compareKey = 'credenc-marketplace-compares';
 const EdtechTheme = 'EdtechTheme';
@@ -111,6 +113,8 @@ export default function DetailModal(props){
         props?.openApplyNowModal()
     }
 
+    console.log(props.detailData)
+
     return(
         <>
         {
@@ -122,13 +126,13 @@ export default function DetailModal(props){
                 <div className='header-school-content'>
                   <Image 
                   loader={myLoader}
-                  src={instituteLogo}  
+                  src={props?.detailData?.educator[0]?.logo && props?.detailData?.educator[0]?.logo.length > 0 ? props?.detailData?.educator[0]?.logo : defaultEducator}  
                   height={40} 
                   width={40} 
                   objectFit="contain" 
                   />
                   <div className='school-content'> 
-                      <span className='heading1'>Xavier School of Management </span>
+                      <span className='heading1'>{props?.detailData?.educator[0].name}</span>
                       <span className='heading2'>Course educator</span>
                   </div>
                 </div>
@@ -188,10 +192,15 @@ export default function DetailModal(props){
                     </span>
                 </div>
                 <div className='detail-modal-course-overview'>
-                    <Image src={courseLogo} height={30} width={30} objectFit="cover"/>
+                    <Image loader={myLoader} src={props?.detailData?.platform?.logo && props?.detailData?.platform?.logo.length > 0 ? props?.detailData?.platform?.logo : defaultPlatform} height={30} width={30} objectFit="cover"/>
                     <div className='detail-modal-tutor-content'>
-                        <span className='header1'>Upgrad</span>
-                        <span className='header2'>{props?.detailData?.class_mode}</span>
+                        <span className='header1'>{props?.detailData?.platform?.name}</span>
+                        {
+                            props?.detailData?.platform?.one_liner && props?.detailData?.platform?.one_liner.length > 0 ?
+                            <span className='header2'>{props?.detailData?.class_mode}</span> :
+                            null
+                        }
+                        
                     </div>
                 </div>
               </div>

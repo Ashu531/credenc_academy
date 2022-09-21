@@ -104,13 +104,14 @@
         min-width: 8rem;
         height: 4rem;
         border-radius: 0.6rem;
-        background: #16181A;
+        background: var(--defaultBackground);
+        border: 1px solid var(--insignificantStrokeColor);
         outline: none;
         border: none;
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #C5C7CA;
+        color: var(--primaryColor);
     }
 
     div{
@@ -176,7 +177,7 @@
             top: 0;
             bottom: 0;
             border-radius: 0.5rem;
-            background-color: #AFB2B6;
+            background-color: var(--inverseBackground);
         }
 
         .thumb{
@@ -184,9 +185,9 @@
             z-index: 3;
             width: 2rem;
             height: 2rem;
-            background-color: #0E0F11;
+            background-color: var(--defaultBackground);
             border-radius: 50%;
-            border: 1px solid #5D676F;
+            border: 1px solid var(--insignificantStrokeColor);
         }
 
         .thumb.left{

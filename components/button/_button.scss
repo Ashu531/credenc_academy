@@ -2,7 +2,7 @@
     display: flex;;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    // width: 100%;
     box-sizing: border-box;
     font-size: 1.4rem;
     line-height: 2.1rem;
@@ -81,17 +81,17 @@
     align-items: center;
     
     .btn{
-        background: #16181A;
+        background: var(--defaultBackground);
         padding: 1rem 1.6rem;
         font-weight: 500;
         font-size: 1.2rem;
         line-height: 1.8rem;
-        color: #FFFFFF;
-        border: 1px solid #25292C;
+        color: var(--primaryColor);
+        border: 1px solid var(--insignificantStrokeColor);
     }
 
     .selected{
-        background: #FFFFFF;
+        background: var(--subduedBackground);
         color: #313235;
         border-radius: 0.4rem;
     }
@@ -149,7 +149,8 @@
         justify-content: center;
         padding: 1.4rem;
         border-radius: 0.8rem;
-        background: #0E0F11;
-        color: #C8CCD0;
+        background: var(--defaultBackground);
+        color: var(--primaryColor);
+        border: 1px solid var(--insignificantStrokeColor);
     }
 }

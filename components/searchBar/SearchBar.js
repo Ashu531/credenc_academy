@@ -122,7 +122,7 @@ export default function SearchBar(props) {
           formatResult={formatResult}
           placeholder="Search by anything!"
           styling={{
-            height: '50px',
+            height: '46px',
             fontFamily: 'Poppins',
             fontStyle: 'normal',
             fontWeight: '500px',
@@ -145,7 +145,7 @@ export default function SearchBar(props) {
           showClear={false}
         />
       </div>
-      <div className="search-icon-web-1" style={ props.showSearchBar ? {right: 11,top: 9} : null}>
+      <div className="search-icon-web-1" style={ props.showSearchBar ? {right: 9,top: 6} : null}>
         <Image loader={myLoader} src={SearchIcon} className="search-icon-icon" objectFit="cover" height={18} width={18} />
       </div>
     </div>

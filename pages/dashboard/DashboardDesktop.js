@@ -31,6 +31,7 @@ import LoginModalContainer from '../../components/loginModal/LoginModalContainer
 import ForgotPasswordModal from '../../components/forgotPasswordModal/ForgotPasswordModal'
 import SearchBar from '../../components/searchBar/SearchBar'
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
+import { minHeight } from "@mui/system"
 
 const subjectKey = 'credenc-edtech-subject';
 const compareKey = 'credenc-marketplace-compares';
@@ -125,9 +126,11 @@ function DashboardDesktop(props) {
   const [upvoteCard, setUpvoteCard] = useState('')
   const [lastCourse, setLastCourse] = useState(null);
   const courseTypeRef = useRef(null);
+  const navbarRef = useRef(null)
   // const [compareTextVisible,setCompareTextVisible] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
   const [bookmarkCard, setBookmarkCard] = useState('')
+  const [fixHeader,setFixHeader] = useState(false)
 
   useEffect(() => {
     setMounted(true);
@@ -259,7 +262,6 @@ function DashboardDesktop(props) {
     }
 
     const setSubCategoriesData=(item)=>{
-      console.log(item)
       setSelectedCategory(item.name)
       _getSubCategoryDetails(item)
     }
@@ -992,7 +994,15 @@ const onScroll = () => {
       props?.hideSearchBar()
     }
   }
+  if(searchRef && searchRef.current !== null){
+     if(searchRef.current.getBoundingClientRect().y <= -196){
+       setFixHeader(true)
+     }else if(searchRef.current.getBoundingClientRect().y > -196){
+      setFixHeader(false)
+     }
+  }
 }
+
 useEffect(() => {
     document.addEventListener("scroll", onScroll, true);
     return () => document.removeEventListener("scroll", onScroll, true);
@@ -1037,14 +1047,19 @@ const _handleSearch=(e)=>{
   const _closeApplyNowModal=()=>{
     setApplyNow(false)
   }
+
+  const _handleShowAllCourses=()=>{
+    setFilterModal(false)
+  }
+
   
  return(
         <div>      
 {
   props.filterExpandedStage ? 
       <div className="course-page"> 
-      {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`}>
-        <div className="filter-head">{appliedFiltersCount.current === 0 ? '' : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}
+      {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={ window.innerWidth > 500 ? {minHeight: '86.5vh'} : null}>
+        <div className="filter-head">{appliedFiltersCount.current === 0 ? <span className="no-filter-text">No filters applied</span> : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}
           {appliedFiltersCount.current !== 0 && <span style={window.innerWidth > 500 ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>}
           {window.innerWidth <= 500 && <span className='cross' onClick={() => setMobileFiltersState(false)}><img src={closeIcon} /></span>}
         </div>
@@ -1099,7 +1114,7 @@ const _handleSearch=(e)=>{
           />
         </div>
         <div className="filter-footer">
-          <Link className='link' href={`/privacy`} target='_blank' rel='noopener noreferer'>Privacy policy & disclaimer</Link>
+          {/* <Link className='link' href={`/privacy`} target='_blank' rel='noopener noreferer'>Privacy policy & disclaimer</Link> */}
           <div className='mobile-actions-container'>
             <div className='btn-container reset-button-wrapper'>
               <Button
@@ -1255,19 +1270,19 @@ const _handleSearch=(e)=>{
           </div>
          </div> 
 
-       <div className="course-navbar">
-       <Navbar 
-          toggleFilterModal={openFilterModal} 
-          openSubjectModal={openSubjectModal} 
-          closeSubjectModal={closeSubjectModal} 
-          subCategories={subCategory} 
-          selectedCategory={selectedCategory} 
-          setSubCategoriesData={setSubCategoriesData} 
-          subjectData={subjectData}
-          selectedSubject={selectedSubject} 
-          selectSubject={selectSubject}
-          theme={props.newTheme}
-       />
+       <div className="course-navbar" ref={navbarRef} style={fixHeader ? { position: 'fixed',top: 65,background: '#FFFFFF',zIndex: 9999,boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.1)' } : null}>
+        <Navbar 
+            toggleFilterModal={openFilterModal} 
+            openSubjectModal={openSubjectModal} 
+            closeSubjectModal={closeSubjectModal} 
+            subCategories={subCategory} 
+            selectedCategory={selectedCategory} 
+            setSubCategoriesData={setSubCategoriesData} 
+            subjectData={subjectData}
+            selectedSubject={selectedSubject} 
+            selectSubject={selectSubject}
+            theme={props.newTheme}
+        />
        </div>
        {/* <FilterModal filterModal={filterModal} toggleFilterModal={closeFilterModal}/> */}
        <div className="course-content">
@@ -1341,10 +1356,10 @@ const _handleSearch=(e)=>{
         size={30}
         >
           <div className='filter-sidebar-content'>
-                {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`}>
+                {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={window.innerWidth > 500 ? {minHeight : '95vh'} : null}>
                     <div className="filter-head">
-                      <span>{appliedFiltersCount.current === 0 ? '' : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}</span>
-                      {appliedFiltersCount.current !== 0 && <span style={window.innerWidth > 500 ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>}
+                      <span>{appliedFiltersCount.current === 0 ? <span className="no-filter-text">No filters applied</span> : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}</span>
+                      {/* {appliedFiltersCount.current !== 0 && <span style={window.innerWidth > 500 ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>} */}
                       {window.innerWidth <= 500 && <span className='cross' onClick={() => setMobileFiltersState(false)}><img src={closeIcon} /></span>}
                     </div>
                     <div className='filters'>
@@ -1398,7 +1413,7 @@ const _handleSearch=(e)=>{
                       />
                     </div>
                     <div className="filter-footer" style={{textAlign:"center", marginTop: 20}}>
-                    <Link className='link' href={`/privacy`} target='_blank' rel='noopener noreferer'>Privacy policy & disclaimer</Link>
+                    {/* <Link className='link' href={`/privacy`} target='_blank' rel='noopener noreferer'>Privacy policy & disclaimer</Link> */}
                     <div className='mobile-actions-container'>
                       <div className='btn-container reset-button-wrapper'>
                         <Button
@@ -1418,7 +1433,29 @@ const _handleSearch=(e)=>{
                       </div>
                     </div>
                   </div>
+                 
             </div>}
+            { window.innerWidth > 500 ?  <div className="detail-modal-footer">
+                  <div className='modal-container'>
+                    <div className='reset-button-container'>
+                        <Button
+                            disabled={false} 
+                            onClick={resetFilters}
+                            classes='btn-reset'
+                            text="Reset"
+                          />
+                      </div>
+                     <div className='modal-button-wrapper'>
+                          <Button
+                            disabled={false} 
+                            onClick={_handleShowAllCourses}
+                            classes='btn-apply'
+                            text= {`Show ${courseCardData.length} Courses`}
+                            type="Show"
+                          />
+                      </div>
+                      </div>
+                  </div> : null}
             </div>
         </SlidingPanel>
 

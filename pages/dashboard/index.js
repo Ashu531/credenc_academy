@@ -62,6 +62,7 @@ export default function Dashboard(props) {
           openFilterVisible={()=>props?.openFilterVisible()}
           handleOpenMobileSearch={()=>props?.handleOpenMobileSearch()}
           clearSearch={()=>props?.clearSearch()}
+          openLoginModal={()=>props?.openLoginModal()}
         />}
         </>
       }

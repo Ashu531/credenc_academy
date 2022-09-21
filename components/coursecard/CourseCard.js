@@ -10,6 +10,8 @@ import arrowRight from '../../assets/images/icons/arrowRight.svg'
 import arrowRightDark from '../../assets/images/icons/arrow-right-dark.svg'
 import States from '../../values/states';
 import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
+import defaultEducator from '../../assets/images/icons/defaultEducator.svg'
+import defaultPlatform from '../../assets/images/icons/defaultPlatform.svg'
 // import theme from '../../scripts/reducers/theme';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const upvoteKey = 'credenc-edtech-upvote'
@@ -67,7 +69,7 @@ export default function CourseCard(props){
           }} 
         >
         <div className='card-header' style={!isCardOpen ? null : {paddingLeft:12,paddingRight: 12}}>
-          <Image loader={myLoader} src={props?.data?.platform?.logo ? props?.data?.platform?.logo : courseLogo} height={36} width={36} alt='courseLogo' style={{borderRadius: '30%'}} objectFit="contain"/>
+          <Image loader={myLoader} src={props?.data?.platform?.logo ? props?.data?.platform?.logo : defaultPlatform} height={36} width={36} alt='courseLogo' style={{borderRadius: '30%'}} objectFit="contain"/>
           <div className='card-header-end-content'>
                 <div className='grey-container' onClick={()=>{
                         props.addToBookmark(props.data)
@@ -86,7 +88,7 @@ export default function CourseCard(props){
           </div>
         </div>
         <div  className = {!isCardOpen ? "card-image-content" : "card-image-content card-image-content-open"}  onClick={()=> props.openDetailModal() } >
-            <Image loader={myLoader} src={instituteLogo} objectFit="cover"  height={!isCardOpen ? 82 : 60} width={!isCardOpen ? 82 : 60} alt='instituteLogo'/>
+            <Image loader={myLoader} src={props?.data?.educator[0].logo && props?.data?.educator[0].logo.length > 0 ? props?.data?.educator[0].logo : defaultEducator } objectFit="cover"  height={!isCardOpen ? 82 : 60} width={!isCardOpen ? 82 : 60} alt='instituteLogo'/>
             <span className='institute-name'>{props?.data?.educator[0]?.name}</span>
         </div>
      <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} onClick={()=> props.openDetailModal()}>

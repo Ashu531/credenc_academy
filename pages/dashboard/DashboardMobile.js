@@ -1147,7 +1147,7 @@ useEffect(() => {
                   {/* <div style={{ flexGrow: 1 }}></div> */}
                   {/* <div className="text-container">Showing {totalCourses} Course{totalCourses === 1 ? '' : 's'}</div> */}
                 </div>
-                <div style={ props.searchValue.length > 0 ? {display: 'none'} : {display:'flex',flexDirection:'row',alignItems:"center",overflow:'scroll',background: '#FFFFFF',boxSizing: "border-box" ,boxShadow: 'rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px',width:'100%',position:'fixed',top: '7rem',zIndex: 998}}>
+                <div style={ props.searchValue.length > 0 ? {display: 'none'} : {display:'flex',flexDirection:'row',alignItems:"center",overflow:'scroll',background: '#FFFFFF',boxSizing: "border-box" ,boxShadow: 'rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px',width:'100%',position:'fixed',top: '5rem',zIndex: 998}}>
                    <SubjectTab title={subCategory} selectedCategory={selectedCategory} setSubCategoriesData={setSubCategoriesData} theme={props.theme} />  
                 </div>
                 <div className="list-container" style={props.searchValue.length > 0 ? {marginTop: '2rem'} : null}>
