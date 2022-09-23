@@ -21,7 +21,7 @@ export default function Footer(props){
             </div>
 
             <div className='footer-elemental-content'>
-                <a href="https://www.credenc.com/" className='footer-elemental-content-text' target="_blank" rel="noreferrer">
+                <a href="https://www.credenc.com/" className='footer-elemental-content-text' target="_blank" rel="noreferrer" >
                 About
                 </a>
                 {/* <span className='footer-elemental-content-text'>
@@ -34,12 +34,12 @@ export default function Footer(props){
                 </span>
                 </a>
                 </Link>
-                <span className='footer-elemental-content-text'>
+                {/* <span className='footer-elemental-content-text'>
                 Contact
                 </span>
                 <span className='footer-elemental-content-text'>
                 List your course
-                </span>
+                </span> */}
             </div>
        
         <div className='footer-disclaimer' onClick={()=>props.toggleFooterModal()}>

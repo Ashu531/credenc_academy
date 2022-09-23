@@ -280,14 +280,16 @@ color: var(--defaultBackground);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    padding: 12px;
+    // padding: 12px;
     
     background: var(--defaultBackground);
     
     border: 1px solid var(--insignificantStrokeColor);
     border-radius: 16px;
-    min-width: 35em;
+    // min-width: 35em;
     cursor: pointer;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
     
     // &:hover{
     //     // transform: translateY(0);

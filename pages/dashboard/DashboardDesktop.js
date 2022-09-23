@@ -134,7 +134,7 @@ function DashboardDesktop(props) {
 
   useEffect(() => {
     setMounted(true);
-}, []);
+  }, []);
 
 
   useEffect(()=>{
@@ -337,6 +337,7 @@ function DashboardDesktop(props) {
   }
 
   const _addToBookmark=(item)=>{
+    console.log('coming++++')
     let bookmark = JSON.parse(localStorage.getItem(bookmarkKey)) 
     let bookmarkAvailable = false;
     if(bookmark && bookmark.length > 0){
@@ -381,7 +382,6 @@ function DashboardDesktop(props) {
     }
     bookmarkArray.push(item.id)
     localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
-    console.log(props?.token,"props?.token+++")
     if(props?.token && props?.token.length > 0){
       addBookmarkToBackend(item.id)
     }

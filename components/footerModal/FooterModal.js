@@ -35,9 +35,13 @@ export default function FooterModal(props){
                 {/* <span className='footer-elemental-content-text'>
                 Sitemap
                 </span> */}
-                <span className='footer-elemental-content-text' onClick={()=>_openPrivacyPolicy()}>
-                Privacy Policy
-                </span>
+                <Link href='/privacy' passHref={true}>
+                    <a target='_blank' rel="noreferrer" style={{textDecoration:'none'}}>
+                        <span className='footer-elemental-content-text'>
+                        Privacy Policy
+                        </span>
+                    </a>
+                </Link>
                 <span className='footer-elemental-content-text'>
                 Contact
                 </span>

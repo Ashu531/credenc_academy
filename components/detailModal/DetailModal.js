@@ -132,7 +132,7 @@ export default function DetailModal(props){
                   objectFit="contain" 
                   />
                   <div className='school-content'> 
-                      <span className='heading1'>{props?.detailData?.educator[0].name}</span>
+                      <span className='heading1'>{props?.detailData?.educator && props?.detailData?.educator.length > 0 ? props?.detailData?.educator[0].name : props?.detailData?.platform?.name}</span>
                       <span className='heading2'>Course educator</span>
                   </div>
                 </div>
@@ -197,7 +197,7 @@ export default function DetailModal(props){
                         <span className='header1'>{props?.detailData?.platform?.name}</span>
                         {
                             props?.detailData?.platform?.one_liner && props?.detailData?.platform?.one_liner.length > 0 ?
-                            <span className='header2'>{props?.detailData?.class_mode}</span> :
+                            <span className='header2'>{props?.detailData?.platform?.one_liner}</span> :
                             null
                         }
                         
@@ -213,7 +213,7 @@ export default function DetailModal(props){
                 </span>
                 <span className='content-detail'>
                     <Image src={onlineIcon} objectFit="cover"/>
-                    {props?.detailData?.class_modes.map((item,index)=>{
+                    {props?.detailData?.class_modes && props?.detailData?.class_modes.map((item,index)=>{
                         return(
                             <span className='content-detail-text' key={index}>
                             {item}
@@ -288,7 +288,7 @@ export default function DetailModal(props){
             style={!detailFooter ? {paddingBottom: '18%'} : null}
             >
               <span className='content-date-text' style={{paddingLeft: 24}}>
-              Last updated on: <span style={{fontWeight: 600}}>12 JAN 2020</span>
+              Last updated on: <span style={{fontWeight: 600}}>{moment(props?.detailData?.date_modified).format("MMM Do YY")}</span>
               </span>
               <span style={{paddingRight: 24,cursor:"pointer"}} onClick={()=>toggleModal()}>
                   <span className='content-disclaimer-text'>
@@ -339,13 +339,27 @@ export default function DetailModal(props){
                 </span>
              </div>
          </div>
-         {
-             window.innerWidth <= 500 ? 
-             <span className='detail-modal-close-icon' onClick={()=>props.openDetailModal()}>
+         {/* {
+             window.innerWidth <= 500 ?  */}
+             <span 
+                className='detail-modal-close-icon' 
+                onClick={()=>props.openDetailModal()} 
+                style={
+                   window.innerWidth < 500 ? {
+                    position: 'absolute',
+                    top: '1.5%',
+                    right: '2.5%'
+                }: {
+                    position: 'absolute',
+                    top: '1%',
+                    right: '2.5%',
+                    cursor: 'pointer'
+                }}
+            >
                  <Image src={closeIcon} objectFit='cover' height={20} width={20} />
              </span>
              : null
-         }
+         {/* } */}
         </div>
         }
         </>

@@ -57,7 +57,7 @@ export default function CourseCard(props){
         mounted && 
         <div 
           className = {!isCardOpen ? "card-container" : "card-container card-container-open"}
-          style={window.innerWidth <= 500 ? {width: "100%"} : !isCardOpen ? null : {padding:0} }
+          style={window.innerWidth <= 500 ? {width: "100%",minWidth: 0} : !isCardOpen ? null : {padding:0} }
         
           onMouseEnter={e => {
             setCompareButtonVisible({display: 'flex',flexDirection:"row"});
@@ -68,16 +68,22 @@ export default function CourseCard(props){
             setIsCardOpen(false)
           }} 
         >
-        <div className='card-header' style={!isCardOpen ? null : {paddingLeft:12,paddingRight: 12}}>
+        <div 
+        className='card-header' 
+        style={!isCardOpen && window.innerWidth > 500 ? null : {paddingLeft:12,paddingRight: 12}}
+        >
           <Image loader={myLoader} src={props?.data?.platform?.logo ? props?.data?.platform?.logo : defaultPlatform} height={36} width={36} alt='courseLogo' style={{borderRadius: '30%'}} objectFit="contain"/>
           <div className='card-header-end-content'>
-                <div className='grey-container' onClick={()=>{
-                        props.addToBookmark(props.data)
+                <div className='grey-container' 
+                     onClick={()=>{
+                        props?.addToBookmark(props?.data)
                         setBookmarkVisible(!bookmarkVisible)
-                        }} style={props.bookmarkVisible === true || bookmarkVisible === true ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}>
-                        <Image src={props.bookmarkVisible === true || bookmarkVisible === true  ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={20} width={20}/>
+                        }} 
+                      style={props.bookmarkVisible === true || bookmarkVisible === true ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}
+                      >
+                    <Image src={props.bookmarkVisible === true || bookmarkVisible === true  ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={20} width={20}/>
                 </div>
-              <div 
+          <div 
               className='grey-container' 
               onClick={()=> _handleUpvote(props?.data)}
               style={upvoted || props.upvoteVisible ? {background: 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)'} : null}
@@ -87,30 +93,32 @@ export default function CourseCard(props){
               </div>
           </div>
         </div>
-        <div  className = {!isCardOpen ? "card-image-content" : "card-image-content card-image-content-open"}  onClick={()=> props.openDetailModal() } >
-            <Image loader={myLoader} src={props?.data?.educator[0].logo && props?.data?.educator[0].logo.length > 0 ? props?.data?.educator[0].logo : defaultEducator } objectFit="cover"  height={!isCardOpen ? 82 : 60} width={!isCardOpen ? 82 : 60} alt='instituteLogo'/>
+        <div  className = {!isCardOpen ? "card-image-content" : "card-image-content card-image-content-open"}  onClick={()=> props?.openDetailModal() } >
+            <Image loader={myLoader} src={props?.data?.educator[0]?.logo && props?.data?.educator[0]?.logo.length > 0 ? props?.data?.educator[0]?.logo : defaultEducator } objectFit="cover"  height={!isCardOpen ? 82 : 60} width={!isCardOpen ? 82 : 60} alt='instituteLogo'/>
             <span className='institute-name'>{props?.data?.educator[0]?.name}</span>
         </div>
-     <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} onClick={()=> props.openDetailModal()}>
-      <div className='course-name' onMouseEnter={()=>setCourseNameTooltip(true)} onMouseLeave={()=>setCourseNameTooltip(false)}>
-        {props?.data?.course_name.length > 22 ? props?.data?.course_name.substring(0, 22) + '...' : props?.data?.course_name} 
+        <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} onClick={()=> props.openDetailModal()}>
+          <div className='course-name' onMouseEnter={()=>setCourseNameTooltip(true)} onMouseLeave={()=>setCourseNameTooltip(false)}>
+            { props?.data?.course_name && props?.data?.course_name.length > 27 ? props?.data?.course_name.substring(0, 27) + '...' : props?.data?.course_name} 
+          </div>
+          {
+          courseNameTooltip && props?.data?.course_name.length > 22 ?  <div className="course-name-tooltip">
+          <span className="course-name-tooltiptext">{props?.data?.course_name}</span>
+          </div> : null
+          }
+          <h2 className='course-duration'>
+          {props?.data?.class_mode}
+          </h2>
+          <h2 className='course-duration'>
+          {props?.data?.duration}
+          </h2>
+          <span className='course-price-content' style={!isCardOpen ? null : {marginTop: 22,marginBottom: 14}}>
+          {props?.data?.price_list?.length > 0 ? 
+            <span className='course-pay'>{props?.data?.price_list[0]}</span>
+          : <span className='course-pay'>N/A</span>}
+            <span className='course-price'>{props?.data?.finance_display[0] === "Free" || props?.data?.finance_display[0] === 0 || !props?.data?.finance_display[0] ? "Free" : ` ₹${props?.data?.finance_display[0]}` }</span>
+          </span>
       </div>
-      {
-      courseNameTooltip && props?.data?.course_name.length > 22 ?  <div className="course-name-tooltip">
-      <span className="course-name-tooltiptext">{props?.data?.course_name}</span>
-      </div> : null
-      }
-      <h2 className='course-duration'>
-      {props?.data?.class_mode}
-      </h2>
-      <h2 className='course-duration'>
-      {props?.data?.duration}
-      </h2>
-      <span className='course-price-content' style={!isCardOpen ? null : {marginTop: 22,marginBottom: 14}}>
-        <span className='course-pay'>{props?.data?.price_list[0]}</span>
-        <span className='course-price'>{props?.data?.finance_display[0] === "Free" || props?.data?.finance_display[0] === 0 || !props?.data?.finance_display[0] ? "Free" : ` ₹${props?.data?.finance_display[0]}` }</span>
-      </span>
-   </div>
 
     {  window.innerWidth > 500 ? 
     <div 
@@ -128,7 +136,7 @@ export default function CourseCard(props){
           Apply now
         </span>
       </div>
-      <div className='course-detail-button' onClick={()=> props.openDetailModal()}>
+      <div className='course-detail-button' onClick={()=> props?.openDetailModal()}>
           <span className='course-detail-text'>
             Details
           </span>
@@ -146,7 +154,7 @@ export default function CourseCard(props){
                 </span>
                 <Image src={arrowRight} objectFit="contain" height={18} width={18} alt='arrowRight'/>
               </div>
-          </div>}
+      </div>}
 
     </div>
   }

@@ -74,46 +74,45 @@ export default function FooterMobile(props){
 
     
 
-    let filterValues = urlService.current.getEntries()
-
+    let filterValues = urlService.current.getEntries();
 
     return(
         <div className='mobile-footer' style={location.pathname === '/search/' || (filterValues.length > 0 && location.pathname !== '/bookmarks' && location.pathname !== '/') ? {display: 'none'} : props?.filterModalVisible ? {zIndex: 0} : null }>
-        <div className='mobile-footer-container'>
-        <Link href='/'>
-        <div className='mobile-footer-element'>
-        <Image src={props?.theme === 'dark' ? homeIconLight : homeIcon} objectFit="contain" alt='homeIcon' style={{alignSelf:"flex-end"}} />
-        <span className='mobile-footer-text'>
-            Home
-        </span>
-        </div>
-        </Link>
-        <div className='mobile-footer-element'>
-        <Image src={ props?.theme === 'dark' ? projectorIconLight : projectorIcon} objectFit="contain" alt='projectorIcon' height={18} width={18}/>
-        <span className='mobile-footer-text'>
-            Compare
-        </span>
-        </div>
-        <div className='mobile-footer-element' onClick={()=>navigateBookmarkPage()}>
-        <Image src={ props?.theme === 'dark' ? bookmarkIconLight : bookmarkIcon} objectFit="contain" alt='bookmarkIcon' height={18} width={18}/>
-        <span className='mobile-footer-text'>
-            Bookmark
-        </span>
-        </div>
-        {/* <div className='mobile-footer-element' onClick={()=>props.openLoginModal()}>
-        <Image src={loginIcon} objectFit="contain" alt='loginIcon' />
-        <span className='mobile-footer-text'>
-            Login
-        </span>
-        </div> */}
-
-        <div className='nav-item-container'>
-                {renderProfile()}
-                {/* <img src={profileIcon} alt='home icon'></img> */}
-                <span className='nav-item-name'>{ token && token.length > 0 ? 'Profile' : 'Login'}</span>
+            <div className='mobile-footer-container'>
+                <Link href='/'>
+                    <div className='mobile-footer-element'>
+                        <Image src={props?.theme === 'dark' ? homeIconLight : homeIcon} objectFit="contain" alt='homeIcon' style={{alignSelf:"flex-end"}} />
+                        <span className='mobile-footer-text'>
+                            Home
+                        </span>
+                    </div>
+                </Link>
+            <div className='mobile-footer-element'>
+                <Image src={ props?.theme === 'dark' ? projectorIconLight : projectorIcon} objectFit="contain" alt='projectorIcon' height={18} width={18}/>
+                <span className='mobile-footer-text'>
+                    Compare
+                </span>
             </div>
+            <div className='mobile-footer-element' onClick={()=>navigateBookmarkPage()}>
+                <Image src={ props?.theme === 'dark' ? bookmarkIconLight : bookmarkIcon} objectFit="contain" alt='bookmarkIcon' height={18} width={18}/>
+                <span className='mobile-footer-text'>
+                    Bookmark
+                </span>
+            </div>
+            {/* <div className='mobile-footer-element' onClick={()=>props.openLoginModal()}>
+            <Image src={loginIcon} objectFit="contain" alt='loginIcon' />
+            <span className='mobile-footer-text'>
+                Login
+            </span>
+            </div> */}
 
-        </div>
+                <div className='nav-item-container'>
+                    {renderProfile()}
+                    {/* <img src={profileIcon} alt='home icon'></img> */}
+                    <span className='nav-item-name'>{ token && token.length > 0 ? 'Profile' : 'Login'}</span>
+                </div>
+
+            </div>
         </div>
     )
 }

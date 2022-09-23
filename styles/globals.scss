@@ -89,17 +89,10 @@ body {
     z-index: 99999 !important;
   }
 
+  ::-webkit-scrollbar {
+    display: none !important; // Safari and Chrome
 }
 
-.hide-scrollbar {
-  /*FireFox*/
-  scrollbar-width: none;
-  /*IE10+*/
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-}
-.hide-scrollbar::-webkit-scrollbar {
-  /*Chrome, Safari, Edge*/
-  display: none;
 }
 
 #app {
@@ -124,7 +117,6 @@ body {
 @import '../components/subjectDropdown/subjectDropdown';
 @import '../components/footerModal/footerModal';
 @import '../pages/privacy/privacyPolicy';
-@import '../pages/courses/courses';
 @import '../components/primaryDropdown/primaryDropdown';
 @import '../components/checkbox/checkBox';
 @import '../components/chip/chip';

@@ -51,6 +51,7 @@ export default function Home(props) {
       openFilterVisible={()=>props?.openFilterVisible()}
       handleOpenMobileSearch={()=>props?.handleOpenMobileSearch()}
       clearSearch={()=>props?.clearSearch()}
+      closeFilterVisible={()=>props?.closeFilterVisible()}
     />
     }
    </>

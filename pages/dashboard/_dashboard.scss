@@ -527,11 +527,11 @@
       }
   
       .list-container{
-        padding: 2.4rem;
+        // padding: 2.4rem;
         width: 100%;
         box-sizing: border-box;
-        margin-bottom: 16rem;
-        margin-top: 4rem;
+        margin-bottom: 18rem;
+        margin-top: 12rem;
       }
 
       .search-section-mobile{
@@ -580,4 +580,7 @@
       }
     }
   }
+  ::-webkit-scrollbar {
+    display: none; // Safari and Chrome
+}
 }
