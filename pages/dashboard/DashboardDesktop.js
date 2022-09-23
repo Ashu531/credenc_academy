@@ -282,6 +282,7 @@ function DashboardDesktop(props) {
   }
 
   const _addToUpvote=(item)=>{
+    setDetailData(item)
     if(props?.token && props?.token.length > 0){
       let upvoteArray = localStorage.getItem(UpvoteKey) ? localStorage.getItem(UpvoteKey) : []
       
@@ -337,7 +338,7 @@ function DashboardDesktop(props) {
   }
 
   const _addToBookmark=(item)=>{
-    console.log('coming++++')
+    setDetailData(item)
     let bookmark = JSON.parse(localStorage.getItem(bookmarkKey)) 
     let bookmarkAvailable = false;
     if(bookmark && bookmark.length > 0){
@@ -385,7 +386,6 @@ function DashboardDesktop(props) {
     if(props?.token && props?.token.length > 0){
       addBookmarkToBackend(item.id)
     }
-    
   }
 
   const addBookmarkToBackend = async (id) => {
@@ -465,18 +465,6 @@ function DashboardDesktop(props) {
       bookmarkVisible = false
     }
     return bookmarkVisible;
-   }
-
-   const _checkCompareText=(item)=>{
-    let compareText = 'Add to Compare';
-    let tempCompareData = JSON.parse(localStorage.getItem(compareKey));
-    if(tempCompareData && tempCompareData.length > 0){
-      if (tempCompareData.includes(item?.id))
-      compareText = 'Go to Compare'
-      else
-      compareText = 'Add to Compare'
-    }
-    return compareText;
    }
 
    const updateQueryString = (i, filter, list) => {
@@ -1198,12 +1186,12 @@ const _handleSearch=(e)=>{
             openDetailModal={(item)=>openDetailModal(item)} 
             addToCompare={(item)=>_addToCompare(item)} 
             addToBookmark={(item)=>_addToBookmark(item)}
-            compareText={(item)=>_checkCompareText(item)}
             openApplyNowModal={(item)=> _openApplyNowModal(item)}
             addToUpvote={(item)=>_addToUpvote(item)}
             token={props?.token}
             upvoteCard={upvoteCard}
             bookmarkCard={bookmarkCard}
+            detailData={detailData}
             // compareTextVisible={compareTextVisible} 
           />
         </div>
@@ -1316,7 +1304,6 @@ const _handleSearch=(e)=>{
                upvoteVisible = false
               }
             }
-              
            
             return(
                <CourseCard 
@@ -1326,13 +1313,14 @@ const _handleSearch=(e)=>{
                  openDetailModal={()=>openDetailModal(item)} 
                  addToCompare={()=>_addToCompare(item)} 
                  addToBookmark={()=>_addToBookmark(item)}
-                 compareText={_checkCompareText(item)}
                  bookmarkVisible={bookmarkVisible}
                  openApplyNowModal={()=> _openApplyNowModal(item)}
                  addToUpvote={()=>_addToUpvote(item)}
                  upvoteVisible={upvoteVisible}
                  token={props?.token}
-                 upvoteCard={upvoteCard}
+                 upvoteCard={detailData.id === item.id ? upvoteCard : null}
+                 bookmarkCard={detailData.id === item.id ? bookmarkCard : null}
+                 detailData={detailData}
                />
              )
            })

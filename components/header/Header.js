@@ -150,7 +150,7 @@ export default function Header(props){
           </Link>
           {
             props?.showSearchBar && location.asPath !== '/privacy/' ?
-              <div style={props?.showSearchBar ? {width : '25%'} : null}>
+              <div style={props?.showSearchBar ? {width : '25%',zIndex: 99999} : null} >
                 <SearchBar showSearchBar={props?.showSearchBar} search={props?.searchValue} handleSearch={(e)=>_handleSearch(e)} />
               </div> 
           : null
@@ -173,7 +173,7 @@ export default function Header(props){
            {/* <div onClick={()=>props.toggleTheme()} style={{cursor:"pointer",paddingLeft:10}}>
             <span className='change-theme-text'>Change Theme</span>
           </div> */}
-          <div className='profile-item'>
+          <div className='profile-item' style={{zIndex: 9999999}}>
           {renderProfile()}
           </div>
          

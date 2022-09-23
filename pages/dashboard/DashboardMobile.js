@@ -279,18 +279,6 @@ function DashboardMobile(props) {
   return bookmarkVisible;
  }
 
- const _checkCompareText=(item)=>{
-  let compareText = 'Add to Compare';
-  let tempCompareData = JSON.parse(localStorage.getItem(compareKey));
-  if(tempCompareData && tempCompareData.length > 0){
-    if (tempCompareData.includes(item?.id))
-    compareText = 'Go to Compare'
-    else
-    compareText = 'Add to Compare'
-  }
-  return compareText;
- }
-
 
  const updateQueryString = (i, filter, list) => {
 
@@ -1166,12 +1154,12 @@ useEffect(() => {
                     openDetailModal={(item)=>_openDetailModal(item)} 
                     addToCompare={(item)=>_addToCompare(item)} 
                     addToBookmark={(item)=>_addToBookmark(item)}
-                    compareText={(item)=>_checkCompareText(item)}
                     addToUpvote={(item)=>_addToUpvote(item)}
                     token={props?.token}
                     upvoteCard={upvoteCard}
                     openApplyNowModal={(item)=> _openApplyNowModal(item)}
                     bookmarkCard={bookmarkCard}
+                    detailData={detailData}
                     // compareTextVisible={compareTextVisible}  
                   />
                 </div>
@@ -1242,7 +1230,6 @@ useEffect(() => {
            detailData={detailData} 
            addToCompare={()=>_addToCompare(detailData)} 
            bookmarkVisible={ ()=> _checkBookmarks(item)}
-           compareText={()=> _checkCompareText(item)} 
            addToBookmark={()=>_addToBookmark(detailData)}
            theme={props?.theme} 
            openDetailModal={()=>_openDetailModal()}

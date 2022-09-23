@@ -21,9 +21,8 @@ export default function CourseCard(props){
   const [compareButtonVisible, setCompareButtonVisible] = useState({display: 'none'});
   const [courseNameTooltip, setCourseNameTooltip] = useState(false)
   const [isCardOpen,setIsCardOpen] = useState(false)
-  const [bookmarkVisible, setBookmarkVisible] = useState(props.bookmarkCard && props.bookmarkCard.length > 0 ? props.bookmarkCard === '0' ? false : true  : props?.data?.bookmarked)
-  const [compareTextVisible, setCompareTextVisible] = useState('Add to Compare')
-  const [upvoted,setUpvoted] = useState(props.upvoteCard && props.upvoteCard.length > 0 ? props.upvoteCard === '0' ? false : true  : props?.data?.upvoted)
+  const [bookmarkVisible, setBookmarkVisible] = useState(null)
+  const [upvoted,setUpvoted] = useState(null)
 
   const myLoader = ({ src, width, quality }) => {
     if(src && src.length > 0){
@@ -35,19 +34,45 @@ export default function CourseCard(props){
 
   useEffect(() => {
     setMounted(true);
-    if(props?.data?.upvoted){
-      setUpvoted(true)
-    }
-   }, []);
+    _handleBookmarkData()
+    _handleUpvoteData()
+   }, [props?.bookmarkCard,props?.upvoteCard]);
 
-   useEffect(()=>{
-    setCompareTextVisible(props?.compareText)
-   },[])
+   const _handleBookmarkData=()=>{
+     if(props.bookmarkCard && props.bookmarkCard.length > 0){
+       if(props.bookmarkCard === '0'){
+        setBookmarkVisible(false)
+       }else{
+        setBookmarkVisible(true)
+       }
+     }else{
+       if(props?.data?.bookmarked === true){
+        setBookmarkVisible(props?.data?.bookmarked)
+       }
+      else{
+        setBookmarkVisible(props?.bookmarkVisible)
+      }
+     }
+   }
+
+   const _handleUpvoteData=()=>{
+    if(props.upvoteCard && props.upvoteCard.length > 0){
+      if(props.upvoteCard === '0'){
+        setUpvoted(false)
+      }else{
+        setUpvoted(true)
+      }
+    }else{
+      if(props?.data?.upvoted === true){
+        setUpvoted(props?.data?.upvoted)
+      }
+     else{
+      setUpvoted(props?.upvoteVisible)
+     }
+    }
+   }
 
    const _handleUpvote=(item)=>{
-     if(props?.token && props?.token.length > 0){
-      //  setUpvoted(!upvoted)
-     }
      props?.addToUpvote(item)
    }
 
@@ -79,17 +104,20 @@ export default function CourseCard(props){
                         props?.addToBookmark(props?.data)
                         setBookmarkVisible(!bookmarkVisible)
                         }} 
-                      style={props.bookmarkVisible === true || bookmarkVisible === true ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}
-                      >
-                    <Image src={props.bookmarkVisible === true || bookmarkVisible === true  ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={20} width={20}/>
+                      style={bookmarkVisible === true ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}
+                >
+                    <Image src={bookmarkVisible === true  ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={20} width={20}/>
                 </div>
           <div 
               className='grey-container' 
-              onClick={()=> _handleUpvote(props?.data)}
-              style={upvoted || props.upvoteVisible ? {background: 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)'} : null}
+              onClick={()=>{
+                 _handleUpvote(props?.data)
+                 setUpvoted(!upvoted)
+                }}
+              style={upvoted ? {background: 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)'} : null}
               >
-                  <span className='count-text' style={upvoted || props.upvoteVisible ? {color: '#FFFFFF'} : null}>{ upvoted || props.upvoteVisible ? props?.data?.up_votes + 1 : props?.data?.up_votes}</span>
-                  <Image src={ upvoted || props.upvoteVisible ? upvoteLogoDark : upvoteLogo} objectFit="cover" alt='upvoteLogo' height={20} width={20} />
+                  <span className='count-text' style={upvoted ? {color: '#FFFFFF'} : null}>{ upvoted ? !props?.data.upvoted ? props?.data?.up_votes + 1 : props?.data?.up_votes : props?.data?.up_votes}</span>
+                  <Image src={ upvoted ? upvoteLogoDark : upvoteLogo} objectFit="cover" alt='upvoteLogo' height={20} width={20} />
               </div>
           </div>
         </div>
@@ -125,14 +153,9 @@ export default function CourseCard(props){
     className='course-button-content' style={{...compareButtonVisible,marginLeft:0}}>
       <div 
       className='course-compare-buttton' 
-      onClick={()=>{
-        // props.addToCompare(props?.data)
-        // setCompareTextVisible('Go to Compare')
-        props?.openApplyNowModal()
-        }}
+      onClick={()=>{ props?.openApplyNowModal() }}
       >
         <span className='add-to-compare-text'>
-          {/* {compareTextVisible} */}
           Apply now
         </span>
       </div>

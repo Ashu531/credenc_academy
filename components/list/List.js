@@ -26,12 +26,12 @@ function List({
     openDetailModal,
     addToCompare,
     addToBookmark,
-    compareText,
     openApplyNowModal,
     upvoteCard,
     token,
     addToUpvote,
-    bookmarkCard
+    bookmarkCard,
+    detailData
 }) {
   
 
@@ -92,16 +92,14 @@ function List({
              data={item} 
              key={`${item.id}:${i}`} 
              openDetailModal={()=>openDetailModal(item)}
-             addToCompare={()=>addToCompare(item)} 
              addToBookmark={()=>addToBookmark(item)}
-             compareText={compareText(item)}
              bookmarkVisible={bookmarkVisible}
              openApplyNowModal={(item)=> openApplyNowModal(item)}
              addToUpvote={(item)=>addToUpvote(item)}
              upvoteVisible={upvoteVisible}
              token={token}
-             upvoteCard={upvoteCard}
-             bookmarkCard={bookmarkCard}
+             upvoteCard={detailData.id === item.id ? upvoteCard : null}
+             bookmarkCard={detailData?.id === item.id ? bookmarkCard : null}
             />
           })
         );
@@ -169,7 +167,8 @@ function List({
              addToUpvote={(item)=>addToUpvote(item)}
              upvoteVisible={upvoteVisible}
              token={token}
-             upvoteCard={upvoteCard}
+             upvoteCard={detailData.id === item.id ? upvoteCard : null}
+             bookmarkCard={detailData.id === item.id ? bookmarkCard : null}
             />
           })
         );

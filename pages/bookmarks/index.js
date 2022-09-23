@@ -307,6 +307,7 @@ export default function Bookmarks(props){
                       openDetailModal={(item)=>openDetailModal(item)} 
                       openApplyNowModal={(item)=> _openApplyNowModal(item)}
                       bookmarkCard={bookmarkCard}
+                      detailData={detailData} 
                       // handleSignInClick={handleSignInClick}
                   />
                 </div>

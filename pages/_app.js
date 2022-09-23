@@ -21,6 +21,7 @@ import ApiStatus from "../config/apiStatus";
 const EdtechTheme = 'credenc-edtech-theme';
 const EdtechToken = 'credenc-edtech-authkey';
 const UpvoteKey = 'credenc-edtech-upvote'
+const bookmarkKey = 'credenc-marketplace-bookmarks';
 
 class MyApp extends App {
 
@@ -99,6 +100,8 @@ class MyApp extends App {
     this.setState({
       loggedIn: false
     })
+    localStorage.removeItem(bookmarkKey)
+    localStorage.removeItem(UpvoteKey)
   }
 
   _handleLogin=()=>{
