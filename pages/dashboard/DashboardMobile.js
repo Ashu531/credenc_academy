@@ -119,11 +119,20 @@ function DashboardMobile(props) {
   let appliedFiltersCount = useRef(0);
   const [applyNow, setApplyNow] = useState(false)
   const [lastCourse, setLastCourse] = useState(null);
-  const [upvoteCard, setUpvoteCard] = useState('')
   const courseTypeRef = useRef(null);
-  const [bookmarkCard, setBookmarkCard] = useState('')
   // const [compareTextVisible,setCompareTextVisible] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
+  const [cardActionTaken,setCardActionTaken] = useState(false)
+
+  let observer = useRef(
+    new IntersectionObserver(
+      (entries) => {
+        const first = entries[0];
+        if (first.isIntersecting === true) {
+          setPageNumber((pn) => pn > 0 ? pn + 1 : pn);
+        }
+      })
+  );
 
   useEffect(() => {
     setMounted(true);
@@ -182,102 +191,6 @@ function DashboardMobile(props) {
     const data = await response.json()
     setCourseCardData(data.data)
   }
-
-  const _addToBookmark=(item)=>{
-    let bookmark = JSON.parse(localStorage.getItem(bookmarkKey)) 
-    let bookmarkAvailable = false;
-    if(bookmark && bookmark.length > 0){
-      bookmark.forEach(data=>{
-        if(data === item.id){
-          bookmarkAvailable= true
-          return 0;
-        }
-     })
-     if(bookmarkAvailable === true){
-      _onremoveToBookmark(item);
-     }else{
-      _onAddToBookmark(item);
-     }
-     
-    }
-    else{
-      _onAddToBookmark(item);
-    }
- 
-  }
-  
-  const _onremoveToBookmark=(item)=>{
-    setBookmarkCard('0')
-    let bookmarkArray = [];
-    let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
-    if(bookmarkItem && bookmarkItem.length > 0){
-      bookmarkArray =  bookmarkItem.filter(data => data !== item.id )
-    }
-    localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
-  }
-  
-  const _onAddToBookmark=(item)=>{
-    setBookmarkCard('1')
-    let bookmarkArray = [];
-    let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
-    if(bookmarkItem && bookmarkItem.length > 0){
-      bookmarkArray.push(...bookmarkItem)
-    }
-    bookmarkArray.push(item.id)
-    localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
-  }
-
-  const _onAddToCompare=(item)=>{
-    let compareArray = [];
-    let compareItem = JSON.parse(localStorage.getItem(compareKey)) 
-    if(compareItem && compareItem.length > 0){
-        compareItem.forEach(data=>{
-            if(data.id === item.id)
-            return;
-        })
-     compareArray.push(...compareItem)
-    }
-    compareArray.push(item.id)
-    localStorage.setItem(compareKey,JSON.stringify(compareArray));
-    
-   }
-   
-   
-   const _addToCompare=(item)=>{
-   let compare = JSON.parse(localStorage.getItem(compareKey)) 
-   let compareAvailable = false;
-   if(compare && compare.length > 0){
-    compare.forEach(data=>{
-       if(data === item.id){
-        compareAvailable= true
-         return 0;
-       }
-    })
-    if(compareAvailable === false){
-      _onAddToCompare(item);
-    }
-   }
-   else{
-    _onAddToCompare(item);
-   }
-}
-
-   const _openDetailModal=(data)=>{
-    setDetailModal(!detailModal)
-    setDetailData(data)
-   }
-
- const _checkBookmarks=(item)=>{
-  let bookmarkVisible = false;
-  let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
-  if(tempBookmarkData && tempBookmarkData.length > 0){
-    if (tempBookmarkData.includes(item?.id))
-    bookmarkVisible = true
-    else
-    bookmarkVisible = false
-  }
-  return bookmarkVisible;
- }
 
 
  const updateQueryString = (i, filter, list) => {
@@ -494,7 +407,7 @@ const handleSearchClicked = async (forcePageNumber = 0) => {
 
   // await delay(5000);
   let res;
-let token = null;
+  let token = props?.token;
   if (token === null || !token) {
     res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
       .then(res => {
@@ -535,10 +448,11 @@ const handleFilteredData = async (updatePageNumber = true) => {
   let res = await handleSearchClicked();
   // if (forcePageNumber === 1) setForcePageNumber(0);
   if (pageNumber <= 1 || updatePageNumber === false) {
-    setCourses([...res.data]);
+    // setCourses([...res.data]);
     setCourseCardData([...res.data])
   } else {
-    setCourses([...courses, ...res.data]);
+    // setCourses([...courseCardData, ...res.data]);
+    setCourseCardData([...courseCardData, ...res.data])
   }
   setMaxPrice(Math.floor(parseFloat(res.max_price)));
   setTotalCourses(res.count);
@@ -692,6 +606,21 @@ useEffect(() => {
 }, [courseType]);
 
 useEffect(() => {
+  const currentElement = lastCourse;
+  const currentObserver = observer.current;
+
+  if (currentElement) {
+    currentObserver.observe(currentElement);
+  }
+
+  return () => {
+    if (currentElement) {
+      currentObserver.unobserve(currentElement);
+    }
+  };
+}, [lastCourse]);
+
+useEffect(() => {
   if (!isMount) {
     Lists.sortByList.forEach((item) => {
       urlService.current.removeEntry(item['filterValue']);
@@ -824,129 +753,9 @@ useEffect(()=>{
    
 },[courseCardData])
 
-
-
-const setUpvoteCount=(item)=>{
-  if(props?.token && props?.token.length > 0){
-    upvote(item)
-  }else{
-    console.log("User not signed in");
-  }
-    
-  }
-
-  
-
-  const removeUpvoteCount=(item)=>{
-   if(props?.token && props?.token.length > 0){
-    removeUpvote(item)
-    }else{
-      console.log("User not signed in");
-    }
-  }
-
-  const upvote = async (item) => {
-
-    await axios.post(`${constant.API_URL.DEV}/batch/upvote/add`, {
-        "batch_id": item?.id,
-        "is_up_vote": "true"
-    }, {
-        headers: {
-            'Authorization': `Bearer ${props.token}`
-        },
-    })
-    .then(res => {
-        if (res?.data?.success)
-        //  Mixpanel.track(MixpanelStrings.COURSE_UPVOTED, {triggered_from: 'Course Card', ...item})
-        return res;
-    })
-    .catch(err => {
-        // setUpvoteButtonState({...States.upvoteButtonState.DEFAULT});
-        // setUpvotes(item['up_votes'] || 0);
-        console.log(err);
-    })
-}
-
-const removeUpvote = async (item) => {
-  let token = {
-    accessToken: props?.token,
-    refreshToken: null
-  }
-  await axios.post(`${constant.API_URL.DEV}/batch/upvote/remove/`, {
-      "batch_id": item.id,
-      "is_up_vote": "false"
-  }, {
-      headers: {
-          'Authorization': `Bearer ${token}`
-      },
-  })
-  .then(res => {
-      if (res?.data?.success) 
-      // Mixpanel.track(MixpanelStrings.COURSE_UPVOTE_REMOVED, {triggered_from: 'Course Card', ...item})
-      return res;
-  })
-  .catch(err => {
-      // setUpvoteButtonState({...States.upvoteButtonState.UPVOTED});
-      // setUpvotes(item['up_votes'] || 0);
-      console.log(err);
-  })
-}
-
 const _handleFilterState=()=>{
   setMobileFiltersState(true)
   props?.openFilterVisible()
-}
-
-const _addToUpvote=(item)=>{
-  if(props?.token && props?.token.length > 0){
-    let upvoteArray = localStorage.getItem(UpvoteKey) ? localStorage.getItem(UpvoteKey) : []
-     
-    let upvoteAvailable = false;
-    if(upvoteArray && upvoteArray.length > 0){
-      let upvote = JSON.parse(upvoteArray) 
-      upvote.forEach(data=>{
-        if(data === item.id){
-          upvoteAvailable= true
-          return 0;
-        }
-    })
-
-    if(upvoteAvailable === true){
-      _onRemoveToUpvote(item);
-      }else{
-      _onAddToUpvote(item);
-     }
-    
-    }
-    else{
-      _onAddToUpvote(item);
-    }
-  }else{
-    props?.openLoginModal()
-  }
-}
-
-const _onAddToUpvote=(item)=>{
-  setUpvoteCard('1')
-  let upvoteArray = [];
-  let upvoteItem = JSON.parse(localStorage.getItem(UpvoteKey)) 
-  if(upvoteItem && upvoteItem.length > 0){
-    upvoteArray.push(...upvoteItem)
-  }
-  upvoteArray.push(item.id)
-  localStorage.setItem(UpvoteKey,JSON.stringify(upvoteArray));
-  upvote(item)
-}
-
-const _onRemoveToUpvote=(item)=>{
-  setUpvoteCard('0')
-  let upvoteArray = [];
-  let upvoteItem = JSON.parse(localStorage.getItem(UpvoteKey)) 
-  if(upvoteItem && upvoteItem.length > 0){
-    upvoteArray =  upvoteItem.filter(data => data !== item.id )
-  }
-  localStorage.setItem(UpvoteKey,JSON.stringify(upvoteArray));
-  removeUpvote(item)
 }
 
 const _openApplyNowModal=(data)=>{
@@ -981,7 +790,25 @@ useEffect(() => {
   
  }, [props?.searchValue]);
 
- let filterValues = urlService.current.getEntries()
+ const closeDetailModal=(data)=>{
+  setDetailModal(false)
+  setDetailData(data);
+  if(cardActionTaken === true){
+    setTimeout(() => location.reload(), 100)
+  }
+
+}
+
+const _handleCardActionTaken=()=>{
+  setCardActionTaken(true)
+}
+
+const _openDetailModal = (data)=>{
+  setDetailModal(true);
+  setDetailData(data);
+}
+
+let filterValues = urlService.current.getEntries();
 
    return(
         <div className="dashboard-mobile">
@@ -1148,19 +975,13 @@ useEffect(() => {
                 <div className="list-container" style={ window.innerWidth <= 500 ?  props.searchValue.length > 0 ? {marginTop: '2rem',padding: 0} : {padding: 0} : null}>
                   <List
                     type={listTypes?.HORIZONTAL_CARDS}
-                    list={courses}
+                    list={courseCardData}
                     listApiStatus={coursesApiStatus}
-                    // handleSignInClick={handleSignInClick}
                     openDetailModal={(item)=>_openDetailModal(item)} 
-                    addToCompare={(item)=>_addToCompare(item)} 
-                    addToBookmark={(item)=>_addToBookmark(item)}
-                    addToUpvote={(item)=>_addToUpvote(item)}
                     token={props?.token}
-                    upvoteCard={upvoteCard}
                     openApplyNowModal={(item)=> _openApplyNowModal(item)}
-                    bookmarkCard={bookmarkCard}
-                    detailData={detailData}
-                    // compareTextVisible={compareTextVisible}  
+                    openLoginModal={()=>props?.openLoginModal()}
+                    setLastElement={setLastCourse}
                   />
                 </div>
                
@@ -1228,13 +1049,11 @@ useEffect(() => {
          >
            <DetailModal
            detailData={detailData} 
-           addToCompare={()=>_addToCompare(detailData)} 
-           bookmarkVisible={ ()=> _checkBookmarks(item)}
-           addToBookmark={()=>_addToBookmark(detailData)}
            theme={props?.theme} 
            openDetailModal={()=>_openDetailModal()}
-           addToUpvote={()=>_addToUpvote(detailData)}
            openApplyNowModal={(item)=> _openApplyNowModal(item)}
+           closeDetailModal={()=>closeDetailModal(detailData)}
+           handleCardActionTaken={()=>_handleCardActionTaken()}
            token={props?.token}
            />
          </SlidingPanel>

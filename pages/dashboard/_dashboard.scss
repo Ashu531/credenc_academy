@@ -269,6 +269,7 @@
 }
 
 .sliding-panel-container{
+  z-index: 99999 !important;
    .panel-container-left-enter-done{
      .panel{
        background: var(--defaultBackground) !important;
@@ -276,6 +277,7 @@
    } 
 }
 .active{
+  z-index: 99999 !important;
   .panel-container-left-enter-done{
     .panel{
       background: var(--defaultBackground) !important;
@@ -383,8 +385,7 @@
       }
     }
 
-  }
-  
+  } 
 }
 
 @media only screen and (max-width: 500px) {

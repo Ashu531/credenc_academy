@@ -21,19 +21,13 @@ function List({
     type=States.listTypes.FILTERS,
     onItemClick,
     listApiStatus,
-    setLastElement,
     theme,
     openDetailModal,
-    addToCompare,
-    addToBookmark,
     openApplyNowModal,
-    upvoteCard,
     token,
-    addToUpvote,
-    bookmarkCard,
-    detailData
+    openLoginModal,
+    setLastElement
 }) {
-  
 
   const listTypes = States.listTypes;
   const renderListType = (listType) => {
@@ -54,10 +48,6 @@ function List({
         Array(3).fill(null).map((item, i) => (
          
           <div key={i}></div>
-          // <CourseCard 
-          // item={item} 
-          // key={i}
-          // />
         ))
       );
     } 
@@ -66,41 +56,26 @@ function List({
       if(list && list.length > 0){
         return (
           list.map((item, i) => {
-            let bookmarkVisible = false;
-            let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
-            if(tempBookmarkData && tempBookmarkData.length > 0){
-              if (tempBookmarkData.includes(item?.id))
-              bookmarkVisible = true
-              else
-              bookmarkVisible = false
-            }
-
-            let upvoteVisible = false;
-            let upvoteArray = localStorage.getItem(UpvoteKey) ? localStorage.getItem(UpvoteKey) : []
-            if(upvoteArray && upvoteArray.length > 0){
-            let upvoteData = JSON.parse(upvoteArray);
-            if(upvoteData && upvoteData.length > 0){
-              if (upvoteData.includes(item?.id)){
-                upvoteVisible = true
-              }
-             else
-             upvoteVisible = false
-            }
-          }
-
-             return <CourseCard 
-             data={item} 
-             key={`${item.id}:${i}`} 
-             openDetailModal={()=>openDetailModal(item)}
-             addToBookmark={()=>addToBookmark(item)}
-             bookmarkVisible={bookmarkVisible}
-             openApplyNowModal={(item)=> openApplyNowModal(item)}
-             addToUpvote={(item)=>addToUpvote(item)}
-             upvoteVisible={upvoteVisible}
-             token={token}
-             upvoteCard={detailData.id === item.id ? upvoteCard : null}
-             bookmarkCard={detailData?.id === item.id ? bookmarkCard : null}
-            />
+           
+            return i === list.length - 1 ?
+            <div key={`${item.id}:${i}`} ref={setLastElement}>
+              <CourseCard 
+                data={item} 
+                key={`${item.id}:${i}`} 
+                openDetailModal={()=>openDetailModal(item)}
+                openApplyNowModal={(item)=> openApplyNowModal(item)}
+                token={token}
+                openLoginModal={()=>openLoginModal()}
+              />
+            </div> : 
+               <CourseCard 
+                data={item} 
+                key={`${item.id}:${i}`} 
+                openDetailModal={()=>openDetailModal(item)}
+                openApplyNowModal={(item)=> openApplyNowModal(item)}
+                token={token}
+                openLoginModal={()=>openLoginModal()}
+               />
           })
         );
       } else {
@@ -134,41 +109,13 @@ function List({
       if(list && list.length > 0){
         return (
           list.map((item, i) => {
-            let bookmarkVisible = false;
-            let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
-            if(tempBookmarkData && tempBookmarkData.length > 0){
-              if (tempBookmarkData.includes(item?.id))
-              bookmarkVisible = true
-              else
-              bookmarkVisible = false
-            }
-
-            let upvoteVisible = false;
-            let upvoteArray = localStorage.getItem(UpvoteKey) ? localStorage.getItem(UpvoteKey) : []
-            if(upvoteArray && upvoteArray.length > 0){
-            let upvoteData = JSON.parse(upvoteArray);
-            if(upvoteData && upvoteData.length > 0){
-              if (upvoteData.includes(item?.id)){
-                upvoteVisible = true
-              }
-             else
-             upvoteVisible = false
-            }
-          }
-
-             return <CourseCard 
+            return <CourseCard 
              data={item} 
              key={`${item.id}:${i}`} 
              openDetailModal={()=>openDetailModal(item)}
-             addToCompare={()=>addToCompare(item)} 
-             addToBookmark={()=>addToBookmark(item)}
-             bookmarkVisible={bookmarkVisible}
              openApplyNowModal={(item)=> openApplyNowModal(item)}
-             addToUpvote={(item)=>addToUpvote(item)}
-             upvoteVisible={upvoteVisible}
              token={token}
-             upvoteCard={detailData.id === item.id ? upvoteCard : null}
-             bookmarkCard={detailData.id === item.id ? bookmarkCard : null}
+             openLoginModal={()=>openLoginModal()}
             />
           })
         );

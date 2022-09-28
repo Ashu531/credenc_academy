@@ -1,6 +1,8 @@
 import React,{useEffect, useState} from 'react';
 import Image from "next/image";
 import courseLogo from '../../assets/images/logo/courseLogo.svg';
+import axios from "axios";
+import constant from '../../config/constant';
 import bookmarkIcon from '../../assets/images/icons/bookmark.svg'
 import bookmarkIconDark from '../../assets/images/icons/bookmark-dark.svg'
 import instituteLogo from '../../assets/images/logo/instituteLogo.svg'
@@ -23,10 +25,23 @@ import profileIcon from '../../assets/images/icons/profile-icon.svg';
 import moment from 'moment';
 import defaultEducator from '../../assets/images/icons/defaultEducator.svg'
 import defaultPlatform from '../../assets/images/icons/defaultPlatform.svg'
-const bookmarkKey = 'credenc-marketplace-bookmarks';
-const compareKey = 'credenc-marketplace-compares';
+import DotLoader from "react-spinners/DotLoader";
 const EdtechTheme = 'EdtechTheme';
-const upvoteKey = 'credenc-edtech-upvote'
+const bookmarkKey = 'credenc-marketplace-bookmarks';
+const UpvoteKey = 'credenc-edtech-upvote'
+
+const spinnerCSS = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red",
+  };
+
+const spinnerContainer = {
+   position: 'absolute',
+   top: '50%',
+   right: '45%'
+}  
+
 
 export default function DetailModal(props){
 
@@ -34,8 +49,12 @@ export default function DetailModal(props){
     const [detailFooter,setFooterModal] = useState(false);
     const[bookmarkVisible,setBookmarkVisible] = useState(false)
     const[upvoteVisible,setUpvoteVisible] = useState(false)
-    const[compareText,setCompareText] = useState('Add to Compare')
     const [theme,setTheme] = useState('')
+    const [courseData, setCourseData] = useState({})
+    const [toggleUpvote,setToggleUpvote] = useState(null)
+    const [upvoteCount,setUpvoteCount] = useState(0)
+    let [loading, setLoading] = useState(true);
+    let [color, setColor] = useState("#000000");
 
     const myLoader = ({ src, width, quality }) => {
         if(src && src.length > 0){
@@ -45,67 +64,253 @@ export default function DetailModal(props){
         }
      }
 
-    useEffect(() => {
+     useEffect(()=>{
         setMounted(true);
-    }, []);
+     },[])
 
     useEffect(()=>{
-        _getBookmarks()
-        _getCompareItems()
-        _getUpvotes()
+        _handlePreviewData(props?.detailData)
     },[])
 
-    useEffect(()=>{
-        _retrieveData()
-    },[])
+    const _handlePreviewData=async(item)=>{
+        if(props?.token && props?.token.length > 0){
+            let res = await axios.get(`${constant.API_URL.DEV}/course/preview/${item.id}/`,{
+                headers: {
+                  'Authorization': `Bearer ${props?.token}`
+                },
+              })
+                .then(res => {
+                  setCourseData(res.data.data)
+                  getBookmarks(res.data.data)
+                  getUpvotes(res.data.data)
+                  setUpvoteCount(res.data.data.up_votes)
+                  setMounted(true);
+                  setLoading(false)
+                })
+                .catch(err => {
+                  console.log(err);
+                  // dispatchRemoveBookmark(id, bookmarks);
+                })
+        }else{
+            let res = await axios.get(`${constant.API_URL.DEV}/course/preview/${item.id}/`)
+                .then(res => {
+                  setCourseData(res.data.data)
+                  getBookmarks(res.data.data)
+                  getUpvotes(res.data.data)
+                  setUpvoteCount(res.data.data.up_votes)
+                  setMounted(true);
+                  setLoading(false)
+                })
+                .catch(err => {
+                  console.log(err);
+                  // dispatchRemoveBookmark(id, bookmarks);
+                })
+        }
+       
+    }
 
-    const _retrieveData=()=>{
+    const _retrieveData=(item)=>{
         let localTheme = localStorage.getItem(EdtechTheme)
         setTheme(localTheme)
+        _retrieveBookmarks(item)
     }
 
-    const _getBookmarks=()=>{
-        let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
-        if(tempBookmarkData && tempBookmarkData.length > 0){
-          if (tempBookmarkData.includes(props?.detailData?.id))
-          setBookmarkVisible(true)
-          else
-          setBookmarkVisible(false)
-        }
-    }
+    const _retrieveBookmarks=(item)=>{
+            let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
+            if(tempBookmarkData && tempBookmarkData.length > 0){
+                if (tempBookmarkData.includes(item?.id))
+                setBookmarkVisible(true)
 
-    const _getUpvotes=()=>{
-        let tempUpvoteData = JSON.parse(localStorage.getItem(upvoteKey));
-        if(tempUpvoteData && tempUpvoteData.length > 0){
-          if (tempUpvoteData.includes(props?.detailData?.id))
-          setUpvoteVisible(true)
-          else
-          setUpvoteVisible(false)
-        }
-    }
-
-    const _getCompareItems=()=>{
-        let tempCompareData = JSON.parse(localStorage.getItem(compareKey));
-        if(tempCompareData && tempCompareData.length > 0){
-          if (tempCompareData.includes(props?.detailData?.id))
-          setCompareText('Go to Compare')
-          else
-          setCompareText('Add to Compare')
-        }
+                else
+                setBookmarkVisible(false)
+            }
     }
 
     const toggleModal =()=>{
         setFooterModal(!detailFooter);
     }
 
-    const _handleBookmarksTrigger=()=>{
-        props.addToBookmark(props?.detailData)
-        setBookmarkVisible(!bookmarkVisible)
+    const getUpvotes=(item)=>{
+       
+        if(item?.upvoted === true){
+            setUpvoteVisible(true)
+        }else{
+            setUpvoteVisible(false)
+        }
     }
 
-    const _handleUpvoteTrigger=()=>{
-        props?.addToUpvote(props?.detailData)
-        setUpvoteVisible(!upvoteVisible)
+    const getBookmarks=(item)=>{
+        if(props?.token && props?.token?.length > 0){
+            if(item?.bookmarked === true){
+                setBookmarkVisible(true)
+              }else{
+                setBookmarkVisible(false)
+            }
+        }else{
+            _retrieveData(item)
+        }
+    }
+
+    const _handleBookmarksTrigger=(item)=>{
+        if(bookmarkVisible === true){
+            _onremoveToBookmark(item)
+           }else{
+            _onAddToBookmark(item)
+        }
+    }
+
+    const _onremoveToBookmark=(item)=>{
+        let bookmarkArray = [];
+        let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
+        if(bookmarkItem && bookmarkItem.length > 0){
+          bookmarkArray =  bookmarkItem.filter(data => data !== item.id )
+        }
+        localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+        if(props?.token && props?.token.length > 0){
+          removeBookmarkFromBackend(item.id)
+        }
+        setBookmarkVisible(false)
+      }
+      
+      const _onAddToBookmark=(item)=>{
+        let bookmarkArray = [];
+        let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
+        if(bookmarkItem && bookmarkItem.length > 0){
+          bookmarkArray.push(...bookmarkItem)
+        }
+        bookmarkArray.push(item.id)
+        localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+        if(props?.token && props?.token.length > 0){
+          addBookmarkToBackend(item.id)
+        }
+        setBookmarkVisible(true)
+      }
+
+      const addBookmarkToBackend = async (id) => {
+        let res = await axios.post(`${constant.API_URL.DEV}/bookmark/`, {
+          "id": [`${id}`],
+        }, {
+          headers: {
+            'Authorization': `Bearer ${props?.token}`
+          },
+        })
+          .then(res => {
+            res.data
+            props?.handleCardActionTaken()
+          })
+          .catch(err => {
+            console.log(err);
+            setBookmarkVisible(false)
+            
+            // dispatchRemoveBookmark(id, bookmarks);
+          })
+        return res;
+      }
+    
+      const removeBookmarkFromBackend = async (id) => {
+        let res = await axios.post(`${constant.API_URL.DEV}/bookmark/remove/`, {
+          "id": `${id}`,
+        }, {
+          headers: {
+            'Authorization': `Bearer ${props?.token}`
+          },
+        })
+          .then(res => {
+            res.data
+            props?.handleCardActionTaken()
+          })
+          .catch(err => {
+            console.log(err);
+            setBookmarkVisible(true)
+           
+            // dispatchAddBookmark(id, bookmarks);
+          })
+        return res;
+      }
+
+    const _handleUpvoteTrigger=(item)=>{
+        if(props?.token && props?.token?.length > 0){
+            if(upvoteVisible === true){
+              _onRemoveToUpvote(item)
+             }else{
+              _onAddToUpvote(item)
+             }
+           }else{
+             props?.openLoginModal()
+        }
+    }
+
+    const _onAddToUpvote=(item)=>{
+        setToggleUpvote(true)
+        setUpvoteVisible(true)
+        setUpvoteCount(upvoteCount+1)
+        let upvoteArray = [];
+        let upvoteItem = JSON.parse(localStorage.getItem(UpvoteKey)) 
+        if(upvoteItem && upvoteItem.length > 0){
+          upvoteArray.push(...upvoteItem)
+        }
+        upvoteArray.push(item.id)
+        localStorage.setItem(UpvoteKey,JSON.stringify(upvoteArray));
+        upvote(item)
+      }
+    
+      const _onRemoveToUpvote=(item)=>{
+        setToggleUpvote(false)
+        setUpvoteVisible(false)
+        setUpvoteCount(upvoteCount-1)
+        let upvoteArray = [];
+        let upvoteItem = JSON.parse(localStorage.getItem(UpvoteKey)) 
+        if(upvoteItem && upvoteItem.length > 0){
+          upvoteArray =  upvoteItem.filter(data => data !== item.id )
+        }
+        localStorage.setItem(UpvoteKey,JSON.stringify(upvoteArray));
+        removeUpvote(item)
+      }
+    
+      const upvote = async (item) => {
+    
+        await axios.post(`${constant.API_URL.DEV}/batch/upvote/add/`, {
+            "batch_id": item?.id,
+            "is_up_vote": "true"
+        }, {
+            headers: {
+                'Authorization': `Bearer ${props?.token}`
+            },
+        })
+        .then(res => {
+            if (res?.data?.success)
+            props?.handleCardActionTaken()
+            // handleFilteredData(false)
+            //  Mixpanel.track(MixpanelStrings.COURSE_UPVOTED, {triggered_from: 'Course Card', ...item})
+            return res;
+        })
+        .catch(err => {
+            // setUpvoteButtonState({...States.upvoteButtonState.DEFAULT});
+            // setUpvotes(item['up_votes'] || 0);
+            console.log(err);
+        })
+    }
+    
+    const removeUpvote = async (item) => {
+      await axios.post(`${constant.API_URL.DEV}/batch/upvote/remove/`, {
+          "batch_id": item.id,
+          "is_up_vote": "false"
+      }, {
+          headers: {
+              'Authorization': `Bearer ${props?.token}`
+          },
+      })
+      .then(res => {
+          if (res?.data?.success) 
+          props?.handleCardActionTaken()
+          // Mixpanel.track(MixpanelStrings.COURSE_UPVOTE_REMOVED, {triggered_from: 'Course Card', ...item})
+          return res;
+      })
+      .catch(err => {
+          // setUpvoteButtonState({...States.upvoteButtonState.UPVOTED});
+          // setUpvotes(item['up_votes'] || 0);
+          console.log(err);
+      })
     }
 
     const _handleApplyModal=()=>{
@@ -113,32 +318,31 @@ export default function DetailModal(props){
         props?.openApplyNowModal()
     }
 
-    console.log(props.detailData)
-
     return(
         <>
         {
-            mounted && 
+            mounted && !loading ?
        <div className='detail-modal-container' style={ window.innerWidth<=500 ? {width:'100%',height:'90vh'} : null }>
+           
          <div className='detail-modal-content'>
           <div style={{display:"flex",flexDirection:'row',width:'100%'}}>
             <div className='detail-modal-header' style={window.innerWidth<=500 ? {width: '90%'} : {width: '90%'}}>
                 <div className='header-school-content'>
                   <Image 
                   loader={myLoader}
-                  src={props?.detailData?.educator[0]?.logo && props?.detailData?.educator[0]?.logo.length > 0 ? props?.detailData?.educator[0]?.logo : defaultEducator}  
+                  src={courseData?.educator[0]?.logo && courseData?.educator[0]?.logo.length > 0 ? courseData?.educator[0]?.logo : defaultEducator}  
                   height={40} 
                   width={40} 
                   objectFit="contain" 
                   />
                   <div className='school-content'> 
-                      <span className='heading1'>{props?.detailData?.educator && props?.detailData?.educator.length > 0 ? props?.detailData?.educator[0].name : props?.detailData?.platform?.name}</span>
+                      <span className='heading1'>{courseData?.educator && courseData?.educator.length > 0 ? courseData?.educator[0].name : courseData?.platform?.name}</span>
                       <span className='heading2'>Course educator</span>
                   </div>
                 </div>
                 <div className='header-action-content'>
                         <div className='header-action-container' 
-                            onClick={()=> _handleBookmarksTrigger()} 
+                            onClick={()=> _handleBookmarksTrigger(courseData)} 
                             style={ bookmarkVisible === true  ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)",cursor:"pointer"} : {cursor:"pointer"}}
                         >
                         <Image src={ bookmarkVisible === true ? selectedBookmark : theme === 'dark' ? bookmarkIconDark : bookmarkIcon}  
@@ -150,10 +354,12 @@ export default function DetailModal(props){
                     <div 
                     className='header-action-container' 
                     style={upvoteVisible ? {marginLeft:8,background : 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)'} : {marginLeft:8}}  
-                    onClick={()=> _handleUpvoteTrigger() }
+                    onClick={()=> _handleUpvoteTrigger(courseData) }
                     >
                         <div className='upvote-container'>
-                            <span className='upvote-text' style={ upvoteVisible ? window.innerWidth <= 500 ?  {marginTop:1,color: '#FFFFFF'} : {color: '#FFFFFF'} : null} >{ upvoteVisible ? props?.detailData?.up_votes + 1 : props?.detailData?.up_votes}</span>
+                            <span className='upvote-text' style={ upvoteVisible ? window.innerWidth <= 500 ?  {marginTop:1,color: '#FFFFFF'} : {color: '#FFFFFF'} : null} >
+                            {upvoteCount}
+                            </span>
                             <Image 
                                 src={upvoteVisible ? upvoteLogoDark : upvoteLogo}  
                                 width={ window.innerWidth <= 500 ? 30 : 18 }
@@ -163,7 +369,7 @@ export default function DetailModal(props){
                         </div>
                     </div>
                         <div className='header-action-container' style={{marginLeft:8}}>
-                            <a href={props?.detailData?.platform?.link} target='_blank' rel="noreferrer">
+                            <a href={courseData?.platform?.link} target='_blank' rel="noreferrer">
                                 <Image 
                                     src={globeIcon}  
                                     width={ window.innerWidth <= 500 ? 25 : 18 }
@@ -178,26 +384,26 @@ export default function DetailModal(props){
             </div>
             <div className='detail-modal-banner'  style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
                 <span className='banner-text'>
-                Next batch starts on {moment(props?.detailData?.enrollment_start_date).format("MMM Do YY")}
+                Next batch starts on {moment(courseData?.enrollment_start_date).format("MMM Do YY")}
                 </span>
             </div>
             <div className='detail-modal-middle-section'>
               <div className='detail-modal-course-content'>
                 <div className='detail-modal-course-container'>
                     <span className='heading1'>
-                    {props?.detailData?.course_name}
+                    {courseData?.course_name}
                     </span>
                     <span className='heading2'>
-                    {props?.detailData?.description}
+                    {courseData?.description}
                     </span>
                 </div>
                 <div className='detail-modal-course-overview'>
-                    <Image loader={myLoader} src={props?.detailData?.platform?.logo && props?.detailData?.platform?.logo.length > 0 ? props?.detailData?.platform?.logo : defaultPlatform} height={30} width={30} objectFit="cover"/>
+                    <Image loader={myLoader} src={courseData?.platform?.logo && courseData?.platform?.logo.length > 0 ? courseData?.platform?.logo : defaultPlatform} height={30} width={30} objectFit="cover"/>
                     <div className='detail-modal-tutor-content'>
-                        <span className='header1'>{props?.detailData?.platform?.name}</span>
+                        <span className='header1'>{courseData?.platform?.name}</span>
                         {
-                            props?.detailData?.platform?.one_liner && props?.detailData?.platform?.one_liner.length > 0 ?
-                            <span className='header2'>{props?.detailData?.platform?.one_liner}</span> :
+                            courseData?.platform?.one_liner && courseData?.platform?.one_liner.length > 0 ?
+                            <span className='header2'>{courseData?.platform?.one_liner}</span> :
                             null
                         }
                         
@@ -208,12 +414,12 @@ export default function DetailModal(props){
                 <span className='content-detail'>
                     <Image src={certificateIcon} objectFit="cover"/>
                     <span className='content-detail-text'>
-                      {props?.detailData?.program_type}
+                      {courseData?.program_type}
                     </span>    
                 </span>
                 <span className='content-detail'>
                     <Image src={onlineIcon} objectFit="cover"/>
-                    {props?.detailData?.class_modes && props?.detailData?.class_modes.map((item,index)=>{
+                    {courseData?.class_modes && courseData?.class_modes.map((item,index)=>{
                         return(
                             <span className='content-detail-text' key={index}>
                             {item}
@@ -225,13 +431,13 @@ export default function DetailModal(props){
                 <span className='content-detail'>
                     <Image src={chartIcon} objectFit="cover"/>
                     <span className='content-detail-text'>
-                    {props?.detailData?.start_level} to {props?.detailData?.end_level}
+                    {courseData?.start_level} to {courseData?.end_level}
                     </span>    
                 </span>
                 <span className='content-detail'>
                     <Image src={calendarIcon} objectFit="cover" />
                     <span className='content-detail-text'>
-                    {props?.detailData?.duration}
+                    {courseData?.duration}
                     </span>    
                 </span>
                 <span className='content-detail'>
@@ -250,7 +456,7 @@ export default function DetailModal(props){
                 </div>
                 <div className='skill-details'>
                     {
-                      props?.detailData?.skills && props?.detailData?.skills.map((item,index)=>{
+                      courseData?.skills && courseData?.skills.map((item,index)=>{
                            return(
                             <span className='skill-text-content' key={index}>
                             <span className='skill-text'>
@@ -270,7 +476,7 @@ export default function DetailModal(props){
                 </div>
                 <div className='avatar-container'>
                 {
-                   props?.detailData?.instructor && props?.detailData?.instructor.map((item,index)=>{
+                   courseData?.instructor && courseData?.instructor.map((item,index)=>{
                        return( 
                        <span key={index} className="avatar-content" >
                             <Image loader={myLoader} src={item?.profile_photo ? item?.profile_photo : profileIcon} height={30} width={30} alt='avatar' style={{borderRadius: '50%'}} objectFit='contain'/>
@@ -288,7 +494,7 @@ export default function DetailModal(props){
             style={!detailFooter ? {paddingBottom: '18%'} : null}
             >
               <span className='content-date-text' style={{paddingLeft: 24}}>
-              Last updated on: <span style={{fontWeight: 600}}>{moment(props?.detailData?.date_modified).format("MMM Do YY")}</span>
+              Last updated on: <span style={{fontWeight: 600}}>{moment(courseData?.date_modified).format("MMM Do YY")}</span>
               </span>
               <span style={{paddingRight: 24,cursor:"pointer"}} onClick={()=>toggleModal()}>
                   <span className='content-disclaimer-text'>
@@ -327,7 +533,7 @@ export default function DetailModal(props){
          >
             <div className='detail-modal-footer-section-left'>
                 <span className='price-text'>
-                {props?.detailData?.price ? `₹${props?.detailData?.price}` : 'Free'}
+                {courseData?.price ? `₹${courseData?.price}` : 'Free'}
                 </span>
             </div>
             <div className='detail-modal-footer-section-right' 
@@ -343,7 +549,7 @@ export default function DetailModal(props){
              window.innerWidth <= 500 ?  */}
              <span 
                 className='detail-modal-close-icon' 
-                onClick={()=>props.openDetailModal()} 
+                onClick={()=>props.closeDetailModal()} 
                 style={
                    window.innerWidth < 500 ? {
                     position: 'absolute',
@@ -361,6 +567,16 @@ export default function DetailModal(props){
              : null
          {/* } */}
         </div>
+         : 
+         <div style={spinnerContainer}>
+         <DotLoader
+           cssOverride={spinnerCSS}
+           size={100}
+           color={"#000000"}
+           loading={loading}
+           speedMultiplier={1}
+         />
+       </div>
         }
         </>
     )

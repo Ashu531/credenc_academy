@@ -29,6 +29,7 @@ export default function Bookmarks(props){
     const [detailData,setDetailData] = useState({});
     const [applyNow, setApplyNow] = useState(false)
     const [mounted, setMounted] = useState(false);
+    const [cardActionTaken,setCardActionTaken] = useState(false)
 
     useEffect(() => {
       setMounted(true);
@@ -272,6 +273,17 @@ export default function Bookmarks(props){
     setApplyNow(false)
   }
 
+  const closeDetailModal=()=>{
+    setDetailModal(false)
+    if(cardActionTaken === true){
+      setTimeout(() => location.reload(), 100)
+    }
+  } 
+
+  const _handleCardActionTaken=()=>{
+    setCardActionTaken(true)
+  }
+
     return(
       <> 
       {
@@ -300,31 +312,29 @@ export default function Bookmarks(props){
                   <List
                       type={States.listTypes.BOOKMARK_CARDS}
                       list={courses}
-                      // onItemClick={navigateToDetailPage}
                       listApiStatus={bookmarkApiStatus}
-                      addToBookmark={(item)=>_addToBookmark(item)}
-                      addToUpvote={(item)=>_addToUpvote(item)}
                       openDetailModal={(item)=>openDetailModal(item)} 
                       openApplyNowModal={(item)=> _openApplyNowModal(item)}
                       bookmarkCard={bookmarkCard}
                       detailData={detailData} 
-                      // handleSignInClick={handleSignInClick}
+                      token={token}
+                      openLoginModal={()=>props?.openLoginModal()} 
                   />
                 </div>
             </div>
             <SlidingPanel
               type={'right'}
               isOpen={detailModal}
-              backdropClicked={() => setDetailModal(false)}
+              backdropClicked={() => closeDetailModal()}
               size={30}
             >
               <DetailModal 
                 detailData={detailData} 
-                addToBookmark={()=>_addToBookmark(detailData)}
-                addToUpvote={()=>_addToUpvote(detailData)}
                 openDetailModal={()=>openDetailModal()}
-                token={props?.token}
+                token={token}
                 theme={props.theme}
+                closeDetailModal={()=>closeDetailModal(detailData)}
+                handleCardActionTaken={()=>_handleCardActionTaken()}
               />
             </SlidingPanel>
             <SlidingPanel
