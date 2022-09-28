@@ -14,11 +14,14 @@ import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
 import defaultEducator from '../../assets/images/icons/defaultEducator.svg'
 import defaultPlatform from '../../assets/images/icons/defaultPlatform.svg'
 import constant from '../../config/constant';
+import { useRouter } from 'next/router'
 // import theme from '../../scripts/reducers/theme';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 
 export default function CourseCard(props){
+
+  let router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [compareButtonVisible, setCompareButtonVisible] = useState({display: 'none'});
   const [courseNameTooltip, setCourseNameTooltip] = useState(false)
@@ -81,10 +84,16 @@ export default function CourseCard(props){
       bookmarkArray =  bookmarkItem.filter(data => data !== item.id )
     }
     localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+    setBookmarkVisible(false)
+    
     if(props?.token && props?.token.length > 0){
       removeBookmarkFromBackend(item.id)
+    }else{
+      if(router.pathname === "/bookmarks"){
+        setTimeout(() => location.reload(), 100)
+      }
     }
-    setBookmarkVisible(false)
+    
   }
   
   const _onAddToBookmark=(item)=>{
@@ -95,10 +104,11 @@ export default function CourseCard(props){
     }
     bookmarkArray.push(item.id)
     localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+    setBookmarkVisible(true)
     if(props?.token && props?.token.length > 0){
       addBookmarkToBackend(item.id)
     }
-    setBookmarkVisible(true)
+    
   }
 
   const addBookmarkToBackend = async (id) => {
@@ -130,6 +140,9 @@ export default function CourseCard(props){
     })
       .then(res => {
         res.data
+        if(router.pathname === "/bookmarks"){
+          setTimeout(() => location.reload(), 100)
+        }
       })
       .catch(err => {
         console.log(err);

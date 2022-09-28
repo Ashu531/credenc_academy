@@ -27,8 +27,8 @@ export default function HeaderMobile(props){
         props?.toggleFilterVisible()
     }
 
-    const _goToHome=()=>{
-        setTimeout(() => location.reload(), 100)
+    const _goToHome=()=>{location.push('/')
+        // setTimeout(() => location.reload(), 100)
         // props?.closeFilterExpandedStage()
         // props?.handleSearch('') 
       }
