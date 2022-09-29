@@ -22,7 +22,6 @@ export default function Bookmarks(props){
     let location = useRouter();
     const bookmarkApiStatus = useRef(new ApiStatus());
     const [courses, setCourses] = useState([]);
-    const [upvoteCard, setUpvoteCard] = useState('')
     const [bookmarkCard, setBookmarkCard] = useState('')
     const [token, setToken] = useState('')
     const [detailModal, setDetailModal] = useState(false);

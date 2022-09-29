@@ -78,17 +78,19 @@ export default function CourseCard(props){
     }
 
    const _onremoveToBookmark=(item)=>{
-    let bookmarkArray = [];
-    let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
-    if(bookmarkItem && bookmarkItem.length > 0){
-      bookmarkArray =  bookmarkItem.filter(data => data !== item.id )
-    }
-    localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+   
     setBookmarkVisible(false)
     
     if(props?.token && props?.token.length > 0){
       removeBookmarkFromBackend(item.id)
     }else{
+      let bookmarkArray = [];
+      let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
+      if(bookmarkItem && bookmarkItem.length > 0){
+        bookmarkArray =  bookmarkItem.filter(data => data !== item.id )
+      }
+      localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+
       if(router.pathname === "/bookmarks"){
         setTimeout(() => location.reload(), 100)
       }
@@ -97,16 +99,18 @@ export default function CourseCard(props){
   }
   
   const _onAddToBookmark=(item)=>{
-    let bookmarkArray = [];
-    let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
-    if(bookmarkItem && bookmarkItem.length > 0){
-      bookmarkArray.push(...bookmarkItem)
-    }
-    bookmarkArray.push(item.id)
-    localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+  
     setBookmarkVisible(true)
     if(props?.token && props?.token.length > 0){
       addBookmarkToBackend(item.id)
+    }else{
+      let bookmarkArray = [];
+      let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
+      if(bookmarkItem && bookmarkItem.length > 0){
+        bookmarkArray.push(...bookmarkItem)
+      }
+      bookmarkArray.push(item.id)
+      localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
     }
     
   }
@@ -248,15 +252,20 @@ const removeUpvote = async (item) => {
         mounted && 
         <div 
           className = {!isCardOpen ? "card-container" : "card-container card-container-open"}
-          style={window.innerWidth <= 500 ? {width: "100%",minWidth: 0} : !isCardOpen ? null : {padding:0} }
+          style={window.innerWidth <= 500 ? {width: "100%",minWidth: 0,padding: 0} : !isCardOpen ? null : {padding:0} }
         
           onMouseEnter={e => {
             setCompareButtonVisible({display: 'flex',flexDirection:"row"});
-            setIsCardOpen(true)
+            if(window.innerWidth > 500){
+              setIsCardOpen(true)
+            }
+            
             }} 
           onMouseLeave={e => {
             setCompareButtonVisible({display: 'none'})
-            setIsCardOpen(false)
+            if(window.innerWidth > 500){
+              setIsCardOpen(false)
+            }
           }} 
         >
         <div 
@@ -295,7 +304,7 @@ const removeUpvote = async (item) => {
           </div> : null
           }
           <h2 className='course-duration'>
-          {props?.data?.class_mode}
+          {props?.data?.class_modes}
           </h2>
           <h2 className='course-duration'>
           {props?.data?.duration}

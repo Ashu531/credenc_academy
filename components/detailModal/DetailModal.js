@@ -160,30 +160,38 @@ export default function DetailModal(props){
     }
 
     const _onremoveToBookmark=(item)=>{
-        let bookmarkArray = [];
-        let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
-        if(bookmarkItem && bookmarkItem.length > 0){
-          bookmarkArray =  bookmarkItem.filter(data => data !== item.id )
-        }
-        localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
-        if(props?.token && props?.token.length > 0){
+      setBookmarkVisible(false)
+
+      if(props?.token && props?.token.length > 0){
           removeBookmarkFromBackend(item.id)
+        }else{
+          let bookmarkArray = [];
+          let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
+          if(bookmarkItem && bookmarkItem.length > 0){
+            bookmarkArray =  bookmarkItem.filter(data => data !== item.id )
+          }
+          localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+          props?.handleCardActionTaken()
         }
-        setBookmarkVisible(false)
+    
       }
       
       const _onAddToBookmark=(item)=>{
-        let bookmarkArray = [];
-        let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
-        if(bookmarkItem && bookmarkItem.length > 0){
-          bookmarkArray.push(...bookmarkItem)
-        }
-        bookmarkArray.push(item.id)
-        localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+        setBookmarkVisible(true)
+      
         if(props?.token && props?.token.length > 0){
           addBookmarkToBackend(item.id)
+        }else{
+          let bookmarkArray = [];
+          let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
+          if(bookmarkItem && bookmarkItem.length > 0){
+            bookmarkArray.push(...bookmarkItem)
+          }
+          bookmarkArray.push(item.id)
+          localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+          props?.handleCardActionTaken()
         }
-        setBookmarkVisible(true)
+      
       }
 
       const addBookmarkToBackend = async (id) => {
@@ -236,8 +244,9 @@ export default function DetailModal(props){
               _onAddToUpvote(item)
              }
            }else{
+             props?.closeDetailModal()
              props?.openLoginModal()
-        }
+           }
     }
 
     const _onAddToUpvote=(item)=>{

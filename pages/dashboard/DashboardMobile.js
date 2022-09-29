@@ -891,7 +891,7 @@ let filterValues = urlService.current.getEntries();
                   />
                 </div>
                 <div className="filter-footer">
-                  <Link className='link' href={`/privacy`} target='_blank' rel='noopener noreferer'>Privacy policy & disclaimer</Link>
+                  {/* <Link className='link' href={`/privacy`} target='_blank' rel='noopener noreferer'>Privacy policy & disclaimer</Link> */}
                   <div className='mobile-actions-container'>
                     <div className='btn-container reset-button-wrapper'>
                       <Button
@@ -972,7 +972,7 @@ let filterValues = urlService.current.getEntries();
                 <div style={ props.searchValue.length > 0 ? {display: 'none'} : {display:'flex',flexDirection:'row',alignItems:"center",overflow:'scroll',background: '#FFFFFF',boxSizing: "border-box" ,boxShadow: 'rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px',width:'100%',position:'fixed',top: '5rem',zIndex: 998}}>
                    <SubjectTab title={subCategory} selectedCategory={selectedCategory} setSubCategoriesData={setSubCategoriesData} theme={props.theme} />  
                 </div>
-                <div className="list-container" style={ window.innerWidth <= 500 ?  props.searchValue.length > 0 ? {marginTop: '2rem',padding: 0} : {padding: 0} : null}>
+                <div className="list-container" style={ window.innerWidth <= 500 ?  props.searchValue.length > 0 ? {marginTop: '2rem'} : null : null}>
                   <List
                     type={listTypes?.HORIZONTAL_CARDS}
                     list={courseCardData}
@@ -1054,6 +1054,7 @@ let filterValues = urlService.current.getEntries();
            openApplyNowModal={(item)=> _openApplyNowModal(item)}
            closeDetailModal={()=>closeDetailModal(detailData)}
            handleCardActionTaken={()=>_handleCardActionTaken()}
+           openLoginModal={()=>props?.openLoginModal()}
            token={props?.token}
            />
          </SlidingPanel>

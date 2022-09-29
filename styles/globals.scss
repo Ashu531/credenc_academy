@@ -91,7 +91,9 @@ body {
 
   ::-webkit-scrollbar {
     display: none !important; // Safari and Chrome
-}
+  } 
+
+  touch-action: manipulation;
 
 }
 

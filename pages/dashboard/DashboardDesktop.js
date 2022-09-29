@@ -127,7 +127,6 @@ function DashboardDesktop(props) {
   const navbarRef = useRef(null)
   // const [compareTextVisible,setCompareTextVisible] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
-  const [fixHeader,setFixHeader] = useState(false)
   const [cardActionTaken,setCardActionTaken] = useState(false)
 
   let observer = useRef(
@@ -284,13 +283,12 @@ function DashboardDesktop(props) {
     setDetailData(data);
   }
 
-  const closeDetailModal=(data)=>{
+  const closeDetailModal=async(data)=>{
     setDetailModal(false)
     setDetailData(data);
     if(cardActionTaken === true){
       setTimeout(() => location.reload(), 100)
     }
-
   }
  
 
@@ -779,13 +777,13 @@ const onScroll = () => {
       props?.hideSearchBar()
     }
   }
-  if(searchRef && searchRef.current !== null){
-     if(searchRef.current.getBoundingClientRect().y <= -196){
-       setFixHeader(true)
-     }else if(searchRef.current.getBoundingClientRect().y > -196){
-      setFixHeader(false)
-     }
-  }
+  // if(searchRef && searchRef.current !== null){
+  //    if(searchRef.current.getBoundingClientRect().y <= -196){
+  //      setFixHeader(true)
+  //    }else if(searchRef.current.getBoundingClientRect().y > -196){
+  //     setFixHeader(false)
+  //    }
+  // }
 }
 
 useEffect(() => {
@@ -981,7 +979,7 @@ const _handleSearch=(e)=>{
           <div style={{ flexGrow: 1 }}></div>
           <div className="text-container">Showing {totalCourses} Course{totalCourses === 1 ? '' : 's'}</div>
         </div>
-        <div className="list-container" style={{paddingBottom: '5rem'}}>
+        <div className="list-container" style={{padding: '10rem 2.4rem 5rem 0rem'}}>
           <List
             type={listTypes?.HORIZONTAL_CARDS}
             list={courseCardData}
