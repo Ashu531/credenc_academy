@@ -70,6 +70,10 @@ export default function ApplyNowModal(props){
         setEmail(e)
     }
 
+    const onKeyDown = (e) => {
+        e.preventDefault();
+     };
+
     return(
         <>
          <div className='apply-modal-container' style={ window.innerWidth<=500 ? {width:'100%',height:'90vh'} : null }>
@@ -155,7 +159,7 @@ export default function ApplyNowModal(props){
                                     inputFormat="DD-MM-YYYY"
                                     value={dob}
                                     onChange={handleChange}
-                                    renderInput={(params) => <TextField disabled {...params} />}
+                                    renderInput={(params) => <TextField onKeyDown={onKeyDown} disabled {...params} />}
                                    />
                                 }
                                

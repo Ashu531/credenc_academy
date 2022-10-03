@@ -3,7 +3,7 @@
   background: var(--subduedBackground);
   position: fixed;
   bottom: 0px;
-  height: 55vh;
+  height: 60vh;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 
@@ -24,7 +24,7 @@
     }
     
     .footer-modal-content{
-      height: 42vh;
+      height: 47vh;
       padding-top: 4vh;
       overflow: scroll;
     }
@@ -119,7 +119,7 @@
       font-family: 'Poppins';
       font-style: normal;
       font-weight: 400;
-      font-size: 12px;
+      font-size: 10px;
       line-height: 21px;
       text-align: justify;
       color: var(--contrastStrokeColor);

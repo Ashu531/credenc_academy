@@ -79,6 +79,9 @@ export default function SubjectNavbar(props){
             <div className='subject-tab' onClick={()=>props.toggleFilterModal()} >
                 <span className='all-subject-text'>Filters</span>
                 <Image src={props.theme === 'dark' ? filterIconDark : filterIcon} objectFit="cover" alt='filterIcon' />
+                <span className='filter-container'>
+                  <span className='filter-count'>{props?.appliedFiltersCount}</span>
+                </span>
             </div>
         </div>
     )

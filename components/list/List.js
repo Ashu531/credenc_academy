@@ -56,7 +56,6 @@ function List({
       if(list && list.length > 0){
         return (
           list.map((item, i) => {
-           
             return i === list.length - 1 ?
             <div key={`${item.id}:${i}`} ref={setLastElement}>
               <CourseCard 

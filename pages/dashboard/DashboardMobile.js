@@ -816,7 +816,7 @@ let filterValues = urlService.current.getEntries();
               className="course-page" 
               style={  mobileFiltersState ? {zIndex : 99999} : window.innerWidth <= 500 ? { marginTop : '2rem' } : null }
            > 
-              {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={window.innerWidth <= 500 ? {background: props.theme ==='dark' ? '#222222' : '#DEDEDE',zIndex:999} : null}>
+              {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={window.innerWidth <= 500 ? {background: props.theme ==='dark' ? '#222222' : '#DEDEDE',zIndex:999,paddingBottom: '7.5rem'} : null}>
                 <div 
                 className="filter-head" 
                 // style={window.innerWidth <= 500 ? {background: props.theme ==='dark' ? '#222222' : '#DEDEDE'} : null}
@@ -871,24 +871,24 @@ let filterValues = urlService.current.getEntries();
                     updateFilterState={updateFilterState}
                     theme={theme}
                   />
-                  <Filter
+                  {/* <Filter
                     item={{ name: 'Work Experience', type: filterList.WORK_EXPERIENCE }}
                     filterState={workExperienceList}
                     updateFilterState={updateFilterState}
                     theme={theme}
-                  />
+                  /> */}
                   <Filter
                     item={{ name: 'Finance Options', type: filterList.FINANCE_OPTIONS }}
                     filterState={financeOptionList}
                     updateFilterState={updateFilterState}
                     theme={theme}
                   />
-                  <Filter
+                  {/* <Filter
                     item={{ name: 'Course Language', type: filterList.COURSE_LANGUAGE }}
                     filterState={languageList}
                     updateFilterState={updateFilterState}
                     theme={theme}
-                  />
+                  /> */}
                 </div>
                 <div className="filter-footer">
                   {/* <Link className='link' href={`/privacy`} target='_blank' rel='noopener noreferer'>Privacy policy & disclaimer</Link> */}

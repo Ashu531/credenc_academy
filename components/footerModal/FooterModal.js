@@ -42,12 +42,12 @@ export default function FooterModal(props){
                         </span>
                     </a>
                 </Link>
-                <span className='footer-elemental-content-text'>
+                {/* <span className='footer-elemental-content-text'>
                 Contact
                 </span>
                 <span className='footer-elemental-content-text'>
                 List your course
-                </span>
+                </span> */}
             </div>
          <div onClick={()=>props.toggleFooterModal()} style={{cursor:"pointer"}}>
             <span className='footer-elemental-content-text' style={{paddingRight: 9}}>Collapse</span>

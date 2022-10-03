@@ -330,7 +330,7 @@ class MyApp extends App {
     return <>
     <Provider store={store} >
       {
-        this.state.mounted && <div data-theme={this.state.theme} style={this.state.loginModal || this.state.forgotPasswordModal ? {height: 'calc(var(--vh, 1vh) * 100)',overflow: 'hidden'} : {height: 'calc(var(--vh, 1vh) * 100)'}}>
+        this.state.mounted && <div data-theme={this.state.theme} style={this.state.loginModal || this.state.forgotPasswordModal || this.state.footerModal ? {height: 'calc(var(--vh, 1vh) * 100)',overflow: 'hidden'} : {height: 'calc(var(--vh, 1vh) * 100)'}}>
           {
             window.innerWidth > 500 ? 
             <HeaderContainer 

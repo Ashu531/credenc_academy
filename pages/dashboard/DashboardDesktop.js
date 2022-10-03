@@ -119,7 +119,7 @@ function DashboardDesktop(props) {
   const [mobileFiltersState, setMobileFiltersState] = useState(false)
   const [showSearchBar, setShowSearchBar] = useState(false);
   const searchRef = useRef();
-  const [searchbarWidth, setSearchBarWidth] = useState("45%");
+  const [searchbarWidth, setSearchBarWidth] = useState("41.0919%");
   const [applyNow, setApplyNow] = useState(false)
   let appliedFiltersCount = useRef(0);
   const [lastCourse, setLastCourse] = useState(null);
@@ -128,13 +128,15 @@ function DashboardDesktop(props) {
   // const [compareTextVisible,setCompareTextVisible] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
   const [cardActionTaken,setCardActionTaken] = useState(false)
+  const [nextPage,setNextPage] = useState(true)
+  
 
   let observer = useRef(
     new IntersectionObserver(
       (entries) => {
         const first = entries[0];
         if (first.isIntersecting === true) {
-          setPageNumber((pn) => pn > 0 ? pn + 1 : pn);
+            setPageNumber((pn) => pn > 0 ? pn + 1 : pn);
         }
       })
   );
@@ -550,6 +552,12 @@ function DashboardDesktop(props) {
    
     let res = await handleSearchClicked();
     // if (forcePageNumber === 1) setForcePageNumber(0);
+    if(!res.next){
+      setNextPage(false)
+    }else{
+      setNextPage(true)
+    }
+
     if (pageNumber <= 1 || updatePageNumber === false) {
       // setCourses([...res.data]);
       setCourseCardData([...res.data])
@@ -666,14 +674,6 @@ function DashboardDesktop(props) {
       setCostRange({ ...costRange, max: maxPrice });
     }
   }, [maxPrice]);
-
-  useEffect(() => {
-    coursesApiStatus.current.start();
-    handleFilteredData();
-    if (pageNumber === 1) {
-      applyFilters();
-    }
-  }, [pageNumber]);
 
   useEffect( () => {
     if (location?.query && Object.keys(location?.query).length > 0) {
@@ -805,11 +805,21 @@ const _handleSearch=(e)=>{
   useEffect(() => {
     if (pageNumber > 1) {
       setPageNumber(1);
-    } else {
-      handleFilteredData(false);
-    }
-   
+    } 
+    handleFilteredData(false);
+  
   }, [props?.searchValue]);
+
+
+  useEffect(() => {
+    if(nextPage === true){
+      coursesApiStatus.current.start();
+      handleFilteredData();
+      if (pageNumber === 1) {
+        applyFilters();
+      }
+    }
+  }, [pageNumber]);
 
   const _getCardData = async()=>{
     this.coursesApiStatus.current.makeApiCall();
@@ -1066,6 +1076,7 @@ const _handleSearch=(e)=>{
             selectedSubject={selectedSubject} 
             selectSubject={selectSubject}
             theme={props.newTheme}
+            appliedFiltersCount={appliedFiltersCount.current}
         />
        </div>
        {/* <FilterModal filterModal={filterModal} toggleFilterModal={closeFilterModal}/> */}
@@ -1238,6 +1249,7 @@ const _handleSearch=(e)=>{
         closeDetailModal={()=>closeDetailModal(detailData)}
         openLoginModal={()=>props?.openLoginModal()}
         handleCardActionTaken={()=>_handleCardActionTaken()}
+        openDetailModal={()=>openDetailModal()}
         />
       </SlidingPanel>
       <SlidingPanel

@@ -191,6 +191,9 @@
     padding: 0;
     z-index: 999;
     margin-bottom: 6rem;
+    overflow:scroll;
+    -webkit-overflow-scrolling:touch;
+
 
     .modal-container{
       width: 100%;
@@ -200,6 +203,7 @@
       background: var(--defaultBackground);
       justify-content: flex-start;
       overflow-y: scroll;
+      -webkit-overflow-scrolling:touch;
 
       .login-modal-brand {
         display: none;

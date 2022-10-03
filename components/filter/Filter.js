@@ -56,12 +56,12 @@ export default function Filter({ item, filterState, updateFilterState, min, max,
               updateCostSlider={updateCostSlider}
               setIsAppliedCostSlider={setIsAppliedCostSlider}
             />
-            <List 
+            {/* <List 
               type={States.listTypes.CHECKBOXES} 
               list={filterState} 
               onItemClick={(value, i) => updateFilterState(filterType, value, i)}
               theme={theme}
-            />
+            /> */}
           </div>
         );
       }

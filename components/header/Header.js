@@ -18,7 +18,9 @@ const EdtechToken = 'credenc-edtech-authkey';
 
 export default function Header(props){
 
-  let location = useRouter();
+  let router = useRouter();
+  let nextURL=location?.asPath?.substring(2,location?.asPath?.length)
+  let urlService = useRef(new UrlService(nextURL));
 
   const [token,setToken] = useState('')
 
@@ -95,7 +97,7 @@ export default function Header(props){
     if(item.id === 1){
       // Mixpanel.track(MixpanelStrings.LOGOUT_TRIGGERED);
       props?.logoutUser()
-      location.push('/')
+      router.push('/')
       // dispatchLogout();
       // window.location.reload();
       return;
@@ -104,7 +106,7 @@ export default function Header(props){
   }
 
   const navigateToProfilePage=(item)=>{
-    location.push({
+    router.push({
       pathname: `/profile`,
       state: item
     })
@@ -126,10 +128,14 @@ export default function Header(props){
   const _goToHome=()=>{
     props?.closeFilterExpandedStage()
     props?.handleSearch('') 
+    router.replace({
+      pathname: '/',
+      query: {},
+   }).then(() => router.reload())  
   }
 
   const _openBookmarkTab=()=>{
-    location.push({
+    router.push({
       pathname: `/bookmarks`
     })
   }
@@ -139,17 +145,14 @@ export default function Header(props){
         
         <div className='navbar'>
          
-          <Link 
-           href='/' 
-           // onClick={() => Mixpanel.track(MixpanelStrings.HOME_BUTTON_CLICK)}
-          >
+
             <div  style={{cursor:"pointer",paddingTop: 10,paddingBottom: 5}} onClick={()=>_goToHome()}>
             <Image src={credencAcademy} objectFit="cover" alt='credencLogo' />
             </div>
         
-          </Link>
+
           {
-            props?.showSearchBar && location.asPath !== '/privacy/' ?
+            props?.showSearchBar && router.asPath !== '/privacy/' ?
               <div style={props?.showSearchBar ? {width : '25%',zIndex: 99999} : null} >
                 <SearchBar showSearchBar={props?.showSearchBar} search={props?.searchValue} handleSearch={(e)=>_handleSearch(e)} />
               </div> 
