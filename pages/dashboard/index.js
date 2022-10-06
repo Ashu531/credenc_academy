@@ -64,6 +64,9 @@ export default function Dashboard(props) {
           clearSearch={()=>props?.clearSearch()}
           openLoginModal={()=>props?.openLoginModal()}
           closeFilterVisible={()=>props?.closeFilterVisible()}
+          setScrollUp={()=>props?.setScrollUp()}
+          setScrollDown={()=>props?.setScrollDown()}
+          goingUp={props?.goingUp}
         />}
         </>
       }

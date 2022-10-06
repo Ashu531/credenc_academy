@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { connect } from 'react-redux'
 import {changeTheme} from '../../scripts/actions/index'
 import CourseCard from '../../components/coursecard/CourseCard'
@@ -123,6 +123,10 @@ function DashboardMobile(props) {
   // const [compareTextVisible,setCompareTextVisible] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
   const [cardActionTaken,setCardActionTaken] = useState(false)
+  const cardRef = useRef();
+  const prevScrollY = useRef(0);
+
+  const [goingUp, setGoingUp] = useState(false);
 
   let observer = useRef(
     new IntersectionObserver(
@@ -538,6 +542,8 @@ const resetFilters = async (makeApiCall = true) => {
   setCostRange({ min: 0, max: maxPrice });
 
   appliedFiltersCount.current = 0;
+
+  props?.closeFilterVisible()
 }
 
 const getSortStateFromUrl = () => {
@@ -810,6 +816,25 @@ const _openDetailModal = (data)=>{
 
 let filterValues = urlService.current.getEntries();
 
+useEffect(() => {
+  document.addEventListener("scroll", handleScroll, true);
+  return () => document.removeEventListener("scroll", handleScroll, true);
+}, [props?.goingUp]);
+
+const handleScroll=(event)=>{
+   if(cardRef && cardRef.current !== null){
+    const currentScrollY = cardRef.current.getBoundingClientRect().y;
+    if (prevScrollY.current < currentScrollY && props?.goingUp) {
+      props?.setScrollDown();
+    }
+    if (prevScrollY.current > currentScrollY && !props?.goingUp) {
+      props?.setScrollUp();
+    }
+
+    prevScrollY.current = currentScrollY;
+   }
+}
+
    return(
         <div className="dashboard-mobile">
           <div 
@@ -969,10 +994,10 @@ let filterValues = urlService.current.getEntries();
                   {/* <div style={{ flexGrow: 1 }}></div> */}
                   {/* <div className="text-container">Showing {totalCourses} Course{totalCourses === 1 ? '' : 's'}</div> */}
                 </div>
-                <div style={ props.searchValue.length > 0 ? {display: 'none'} : {display:'flex',flexDirection:'row',alignItems:"center",overflow:'scroll',background: '#FFFFFF',boxSizing: "border-box" ,boxShadow: 'rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px',width:'100%',position:'fixed',top: '5rem',zIndex: 998}}>
+                <div style={ props.searchValue.length > 0 ? {display: 'none'} : props.goingUp ? {display:'flex',flexDirection:'row',alignItems:"center",overflow:'scroll',background: '#FFFFFF',boxSizing: "border-box" ,boxShadow: 'rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px',width:'100%',position:'fixed',top: '0rem',zIndex: 998} :  {display:'flex',flexDirection:'row',alignItems:"center",overflow:'scroll',background: '#FFFFFF',boxSizing: "border-box" ,boxShadow: 'rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px',width:'100%',position:'fixed',top: '5rem',zIndex: 998}}>
                    <SubjectTab title={subCategory} selectedCategory={selectedCategory} setSubCategoriesData={setSubCategoriesData} theme={props.theme} />  
                 </div>
-                <div className="list-container" style={ window.innerWidth <= 500 ?  props.searchValue.length > 0 ? {marginTop: '2rem'} : null : null}>
+                <div className="list-container" style={ window.innerWidth <= 500 ?  props.searchValue.length > 0 ? {marginTop: '5rem'} : null : null} ref={cardRef}>
                   <List
                     type={listTypes?.HORIZONTAL_CARDS}
                     list={courseCardData}
@@ -985,7 +1010,7 @@ let filterValues = urlService.current.getEntries();
                   />
                 </div>
                
-                <div className='search-section-mobile' style={ props.searchValue.length > 0 ? {position: "fixed",top: 0,bottom: '100%'} : !props.searchValue && filterValues.length > 0 ? {position: "fixed",bottom: 0} : null }>
+                <div className='search-section-mobile' style={ props?.goingUp ? {position: "fixed",bottom: '0rem'} : props.searchValue.length > 0 ? {position: "fixed",top: 0,bottom: '100%'} : !props.searchValue && filterValues.length > 0 && (filterValues[0] === "subject" || filterValues[0] === "min_price" || filterValues[0] === "sort_by_relevance") ? {position: "fixed",bottom: '6rem'} : !props.searchValue && filterValues.length > 0 ? {position: "fixed",bottom: '0rem'} : null }>
                 <div style={{width: '100%',boxShadow: 'rgba(17, 12, 46, 0.15) 0px 48px 100px 0px',background: '#FFFFFF' }}>
                   <SearchMobile handleOpenMobileSearch={() => props?.handleOpenMobileSearch()} searchValue={props?.searchValue} clearSearch={()=>props?.clearSearch()} toggleFilterVisible={()=>props?.toggleFilterVisible()} openFilterVisible={()=>props?.openFilterVisible()}/>
                 </div>
@@ -993,7 +1018,7 @@ let filterValues = urlService.current.getEntries();
               </div>
               {window.innerWidth <= 500 && 
               <div>
-              <div className='mobile-view-actions' style={ props.searchValue && props.searchValue.length > 0 ? {padding: 0,marginBottom: 10,position: 'fixed', bottom: '6rem'} : {padding: 0,marginBottom: 10}}>
+              <div className='mobile-view-actions' style={ props?.goingUp ? {position: "fixed",bottom: '7rem',padding: 0} : props.searchValue && props.searchValue.length > 0 ? {padding: 0,marginBottom: 10,position: 'fixed', bottom: '3rem'} : !props.searchValue && filterValues.length > 0 && (filterValues[0] === "subject" || filterValues[0] === "min_price" || filterValues[0] === "sort_by_relevance") ? {position: "fixed",bottom: '13rem',padding: 0} : !props.searchValue && filterValues.length > 0 ? {position: "fixed",bottom: '7rem',padding: 0} : {padding: 0,marginBottom: 10}}>
                 <span className='filter' style={{marginLeft:12}}><Image src={sortingIcon} alt='filters' objectFit='cover' onClick={() =>_handleFilterState() } /></span>
                     <FloatActionButton
                       type='course type'

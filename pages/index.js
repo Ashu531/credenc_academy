@@ -52,6 +52,9 @@ export default function Home(props) {
       handleOpenMobileSearch={()=>props?.handleOpenMobileSearch()}
       clearSearch={()=>props?.clearSearch()}
       closeFilterVisible={()=>props?.closeFilterVisible()}
+      setScrollUp={()=>props?.setScrollUp()}
+      setScrollDown={()=>props?.setScrollDown()}
+      goingUp={props?.goingUp}
     />
     }
    </>

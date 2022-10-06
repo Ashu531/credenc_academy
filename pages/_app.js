@@ -43,6 +43,7 @@ class MyApp extends App {
      search: '',
      searchData: [],
      openMobileSearch: false,
+     goingUp: false,
     };
     this.coursesApiStatus = React.createRef(new ApiStatus());
   }
@@ -57,6 +58,18 @@ class MyApp extends App {
   _mountComponent=()=>{
     this.setState({
       mounted: true
+    })
+  }
+
+  _setScrollUp=()=>{
+    this.setState({
+      goingUp: true
+    })
+  }
+
+  _setScrollDown=()=>{
+    this.setState({
+      goingUp: false
     })
   }
 
@@ -357,6 +370,9 @@ class MyApp extends App {
             subjectName={this.state.subjectName}
             toggleFilterVisible={()=>this.toggleFilterVisible()}
             searchValue={this.state.search}
+            closeFilterVisible={()=>this.closeFilterVisible()}
+            filterModalVisible={this.state.filterModalVisible}
+            goingUp={this.state.goingUp}
             />
           }
          <Component 
@@ -392,6 +408,9 @@ class MyApp extends App {
             openMobileSearch={this.state.openMobileSearch}
             clearSearch={()=>this._clearSearch()}
             closeFilterVisible={()=>this.closeFilterVisible()}
+            setScrollUp={()=>this._setScrollUp()}
+            setScrollDown={()=>this._setScrollDown()}
+            goingUp={this.state.goingUp}
          />
          {
             window.innerWidth > 500 ? 
@@ -405,6 +424,7 @@ class MyApp extends App {
             theme={this.state.theme} 
             filterModalVisible={this.state.filterModalVisible}
             loggedIn={this.state.loggedIn}
+            goingUp={this.state.goingUp}
             />
          }
         <SlidingPanel

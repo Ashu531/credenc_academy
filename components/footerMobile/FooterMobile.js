@@ -72,12 +72,14 @@ export default function FooterMobile(props){
         props.setMobileLoginNaviagtion()
     }
 
-    
 
     let filterValues = urlService.current.getEntries();
+    if(filterValues.length > 0 && filterValues[0] === 'min_price'){
+        props?.closeFilterVisible()
+    }
 
     return(
-        <div className='mobile-footer' style={location.pathname === '/search/' || (filterValues.length > 0 && location.pathname !== '/bookmarks' && location.pathname !== '/') ? {display: 'none'} : props?.filterModalVisible ? {zIndex: 0} : null }>
+        <div className='mobile-footer' style={location.pathname === '/search/' || (filterValues.length > 0 && location.pathname !== '/bookmarks' && location.pathname !== '/') || props?.goingUp ? {display: 'none'} : props?.filterModalVisible ? {zIndex: 0} : null }>
             <div className='mobile-footer-container'>
                 <Link href='/'>
                     <div className='mobile-footer-element'>

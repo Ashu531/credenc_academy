@@ -27,14 +27,14 @@ export default function HeaderMobile(props){
         props?.toggleFilterVisible()
     }
 
-    const _goToHome=()=>{location.push('/')
-        // setTimeout(() => location.reload(), 100)
-        // props?.closeFilterExpandedStage()
-        // props?.handleSearch('') 
+    const _goToHome=()=>{
+        location.push('/')
+        setTimeout(() => location.reload(), 100)
+        props?.closeFilterVisible()
       }
  
     return(
-        <div className='mobile-header' style={location.pathname == '/search' || props?.searchValue.length > 0 ? {display: 'none'} : null}>
+        <div className='mobile-header' style={location.pathname == '/search' || props?.searchValue.length > 0 || props?.hideMobileHeader === true || props.goingUp ? {display: 'none'} : null}>
             <div className='mobile-header_container'>
                 <div onClick={()=>_goToHome()}>
                     <Image src={props.theme === 'dark' ? credencLogoLight : credencLogo} objectFit="cover" alt='credencLogo' />
