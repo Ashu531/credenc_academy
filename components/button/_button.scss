@@ -6,6 +6,7 @@
     box-sizing: border-box;
     font-size: 1.4rem;
     line-height: 2.1rem;
+    position: relative;
     
     &:hover{
         cursor: pointer;
@@ -30,6 +31,19 @@
 
     .hideText{
         display: none;
+    }
+
+    .pressedBubble{
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        width: 25px;
+        height: 25px;
+        margin: 0px;
+        padding: 0px;
+        background: linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%);
+        border-radius: 100% 0 0 0;
+        border-bottom-right-radius: 15px
     }
 }
 

@@ -9,7 +9,8 @@ export default function Input({
     type='text',
     handleInput,
     onTrailingIconClick,
-    disabled
+    disabled,
+    lenght
 }) {
 
   const isSearchable = () => {
@@ -19,7 +20,7 @@ export default function Input({
   return (
     <div className={`input-component ${isSearchable() ? 'small-wrapper-colored search-component' : ''}`}>
       <div className='input-container'>
-        <input disabled={disabled} placeholder={placeholder} value={value} type={type} onChange={(e) => handleInput(e.currentTarget.value)}/>
+        <input disabled={disabled} placeholder={placeholder} value={value} type={type} onChange={(e) => handleInput(e.currentTarget.value)} maxLength={lenght}/>
         {trailingIcon && <div className='icon' onClick={onTrailingIconClick}>
           <Image src={trailingIcon} objectFit="cover" height={15} width={15} />
         </div>}

@@ -440,7 +440,7 @@ export default function DetailModal(props){
                 <span className='content-detail'>
                     <Image src={chartIcon} objectFit="cover"/>
                     <span className='content-detail-text'>
-                    {courseData?.start_level} to {courseData?.end_level}
+                    { courseData?.start_level.length > 0 && courseData?.end_level.length > 0 ? courseData?.start_level + 'to' + courseData?.end_level : "Level Unknown" }
                     </span>    
                 </span>
                 <span className='content-detail'>

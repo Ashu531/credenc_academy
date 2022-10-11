@@ -17,6 +17,7 @@ export default function SearchPageMobile(props){
                 handleSearch={(e)=>_handleSearch(e)} 
                 toggleFilterVisible={()=>props?.toggleFilterVisible()}
                 openFilterVisible={()=>props?.openFilterVisible()}
+                clearSearch={()=>props?.clearSearch()}
              />
            </div> 
         </div>

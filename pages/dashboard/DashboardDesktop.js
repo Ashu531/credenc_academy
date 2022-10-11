@@ -224,12 +224,14 @@ function DashboardDesktop(props) {
 
     updateBrowserUrl()
 
-    if (pageNumber > 1) {
-      setPageNumber(1);
-    } else {
-      coursesApiStatus.current.start();
-      handleFilteredData();
-    }
+    setPageNumber(1);
+
+    handleCardData()
+  }
+
+  const handleCardData=()=>{
+    coursesApiStatus.current.start();
+    handleFilteredData(false);
   }
 
   const _getSubjectDetails=(item)=>{
@@ -271,6 +273,7 @@ function DashboardDesktop(props) {
     }
 
     const setSubCategoriesData=(item)=>{
+      console.log(item,"item++++")
       setSelectedCategory(item.name)
       _getSubCategoryDetails(item)
     }
@@ -281,11 +284,13 @@ function DashboardDesktop(props) {
   }
 
   const openDetailModal = (data)=>{
+    props?.openCoursePreviewModal()
     setDetailModal(true);
     setDetailData(data);
   }
 
   const closeDetailModal=async(data)=>{
+    props?.closeCoursePreviewModal()
     setDetailModal(false)
     setDetailData(data);
     if(cardActionTaken === true){

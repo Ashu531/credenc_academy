@@ -64,12 +64,18 @@ export default function FooterMobile(props){
     }
 
     const navigateBookmarkPage=()=>{
+        props?.closeLoginModal()
         location.push('/bookmarks');
     }
 
     const openProfilePage=()=>{
         location.push('/profile');
         props.setMobileLoginNaviagtion()
+    }
+
+    const navigateHomePage=()=>{
+        props?.closeLoginModal()
+        location.push('/');
     }
 
 
@@ -81,14 +87,14 @@ export default function FooterMobile(props){
     return(
         <div className='mobile-footer' style={location.pathname === '/search/' || (filterValues.length > 0 && location.pathname !== '/bookmarks' && location.pathname !== '/') || props?.goingUp ? {display: 'none'} : props?.filterModalVisible ? {zIndex: 0} : null }>
             <div className='mobile-footer-container'>
-                <Link href='/'>
-                    <div className='mobile-footer-element'>
+
+                <div className='mobile-footer-element' onClick={()=>navigateHomePage()}>
                         <Image src={props?.theme === 'dark' ? homeIconLight : homeIcon} objectFit="contain" alt='homeIcon' style={{alignSelf:"flex-end"}} />
                         <span className='mobile-footer-text'>
                             Home
                         </span>
-                    </div>
-                </Link>
+                </div>
+
             <div className='mobile-footer-element'>
                 <Image src={ props?.theme === 'dark' ? projectorIconLight : projectorIcon} objectFit="contain" alt='projectorIcon' height={18} width={18}/>
                 <span className='mobile-footer-text'>

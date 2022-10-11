@@ -40,8 +40,11 @@ export default function Dashboard(props) {
           searchData={props?.searchData}
           handleLogin={()=>props?.handleLogin()}
           openLoginModal={()=>props?.openLoginModal()}
+          openCoursePreviewModal={()=>props?.openCoursePreviewModal()}
+          closeCoursePreviewModal={()=>props?.closeCoursePreviewModal()}
         />}
-        {isMobile && <DashboardMobile
+        {isMobile && 
+          <DashboardMobile
           openFilterExpandedStage={props?.openFilterExpandedStage}
           filterExpandedStage={props?.filterExpandedStage}
           subjectDropdownMobile={props?.subjectDropdownMobile}

@@ -135,6 +135,7 @@ export default function SearchBar(props) {
     })
   }
 
+  
 
   return (
   
@@ -171,7 +172,7 @@ export default function SearchBar(props) {
             color: "#000000",
             lineColor: "#FFFFFF",
             boxShadow: "rgba(32, 33, 36, 0.28) 0px 1px 6px 0px",
-            // width:'90%'
+            width:'100%'
             // searchIconMargin: '0 0 0 0px',
             //   iconColor: "#313235"
           }}
@@ -179,8 +180,12 @@ export default function SearchBar(props) {
           showClear={false}
         />
       </div>
-      <div style={props?.searchValue && location.pathname == '/' ? {padding: 24} : {display: 'none'}} onClick={()=>_handleFreshSearch()}>
-        <Image src={mobileSearchIcon} className="search-icon-icon" objectFit="cover" height={40} width={40} />
+      <div 
+      // style={props?.searchValue && location.pathname == '/' ? {padding: 24} : {display: 'none'}} 
+      className='mobile-search-bar'
+      onClick={()=>_handleFreshSearch()}
+      >
+        <Image src={mobileSearchIcon} className="search-icon-icon" objectFit="cover" height={30} width={30} />
       </div>
     </div>
   );

@@ -137,8 +137,8 @@ export default function SearchBar(props) {
             color: "#000000",
             lineColor: "#FFFFFF",
             boxShadow: "rgba(32, 33, 36, 0.28) 0px 1px 6px 0px",
-            width:'90%'
-            // searchIconMargin: '0 0 0 0px',
+            width:'90%',
+            searchIconMargin: '0 0 0 0px',
             //   iconColor: "#313235"
           }}
           showIcon={false}

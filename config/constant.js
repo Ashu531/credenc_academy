@@ -5,8 +5,8 @@ const constant= {
       DEV: "https://edtech.credenc.com"
     },
     BASE_URL:{
-      PROD: "https://dxnku1c3h7tf2.cloudfront.net/?",
-      DEV: "https://dxnku1c3h7tf2.cloudfront.net/?"
+      PROD: "https://skillrush.credenc.com/?",
+      DEV: "https://skillrush.credenc.com/?"
     },
     COURSES:{
      SUB_CATEGORIES : [

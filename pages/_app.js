@@ -44,6 +44,7 @@ class MyApp extends App {
      searchData: [],
      openMobileSearch: false,
      goingUp: false,
+     coursePrevieModal: false,
     };
     this.coursesApiStatus = React.createRef(new ApiStatus());
   }
@@ -335,6 +336,18 @@ class MyApp extends App {
        openMobileSearch: true
      })
   }
+
+  _openCoursePreviewModal=()=>{
+    this.setState({
+      coursePrevieModal: true
+    })
+  }
+
+  _closeCoursePreviewModal=()=>{
+    this.setState({
+      coursePrevieModal: false
+    })
+  }
  
 
   render(){
@@ -343,7 +356,7 @@ class MyApp extends App {
     return <>
     <Provider store={store} >
       {
-        this.state.mounted && <div data-theme={this.state.theme} style={this.state.loginModal || this.state.forgotPasswordModal || this.state.footerModal ? {height: 'calc(var(--vh, 1vh) * 100)',overflow: 'hidden'} : {height: 'calc(var(--vh, 1vh) * 100)'}}>
+        this.state.mounted && <div data-theme={this.state.theme} style={this.state.loginModal || this.state.forgotPasswordModal || this.state.footerModal || this.state.coursePrevieModal ? {height: 'calc(var(--vh, 1vh) * 100)',overflow: 'hidden'} : {height: 'calc(var(--vh, 1vh) * 100)'}}>
           {
             window.innerWidth > 500 ? 
             <HeaderContainer 
@@ -411,6 +424,8 @@ class MyApp extends App {
             setScrollUp={()=>this._setScrollUp()}
             setScrollDown={()=>this._setScrollDown()}
             goingUp={this.state.goingUp}
+            openCoursePreviewModal={()=>this._openCoursePreviewModal()}
+            closeCoursePreviewModal={()=>this._closeCoursePreviewModal()}
          />
          {
             window.innerWidth > 500 ? 
@@ -425,6 +440,7 @@ class MyApp extends App {
             filterModalVisible={this.state.filterModalVisible}
             loggedIn={this.state.loggedIn}
             goingUp={this.state.goingUp}
+            closeLoginModal={()=>this.closeLoginModal()}
             />
          }
         <SlidingPanel

@@ -142,7 +142,9 @@ export default function Bookmarks(props){
                 </div>
               }
                 
-                <div className='card-list-content' style={ window.innerWidth < 500 ? {marginTop: '6rem',gap: 10,padding: '0rem 0rem 8rem 0rem'} : {gap: 10}}>
+                <div className='card-list-content' 
+                style={ window.innerWidth < 500 ? {marginTop: '6rem',gap: 10,padding: '0rem 0rem 8rem 0rem'} : courses && courses.length > 0 ? {gap: 10, position: "absolute", top: '14rem', left: '30px', paddingBottom: '6rem'} : {gap: 10}}
+                >
                   <List
                       type={States.listTypes.BOOKMARK_CARDS}
                       list={courses}

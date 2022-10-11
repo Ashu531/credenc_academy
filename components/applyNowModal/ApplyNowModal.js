@@ -59,11 +59,13 @@ export default function ApplyNowModal(props){
     } 
 
     const handleName=(e)=>{
-     setName(e)
+        let result = e.replace(/[^a-z ]/gi, '');
+         setName(result)
     }
 
     const handleNumber=(e)=>{
-        setNumber(e)
+        let result = e.replace(/[^0-9]/gi, '');
+        setNumber(result)
     }
 
     const handleEmail=(e)=>{
@@ -93,7 +95,7 @@ export default function ApplyNowModal(props){
                        Full Name*
                     </span>
                     <span style={{width: '100%'}}>
-                    <Input placeholder="Full Name" handleInput={(e)=>handleName(e)} value={name} />
+                    <Input placeholder="Full Name" handleInput={(e)=>handleName(e)} value={name} type='text' />
                     </span>
                    </div>
                    <div className='contact-content' style={window.innerWidth <= 500 ? {display:"flex",flexDirection:'column',justifyContent:'flex-start',alignItems:'flex-start',width:'100%'} : {display:"flex",width:'100%'}}>
@@ -101,13 +103,13 @@ export default function ApplyNowModal(props){
                         <span className='label-text'>
                         Mobile Number*
                         </span>
-                        <Input placeholder='Mobile Number' handleInput={(e)=>handleNumber(e)} value={number} />
+                        <Input placeholder='Mobile Number' handleInput={(e)=>handleNumber(e)} value={number} lenght={10} />
                      </div>
                      <div className='email-content' style={window.innerWidth >  500 ? {width: '50%'} : {width:'100%'}}>
                         <span className='label-text'>
                         Email ID*
                         </span>
-                        <Input placeholder='Email Id' handleInput={(e)=>handleEmail(e)} value={email}/>
+                        <Input placeholder='Email Id' handleInput={(e)=>handleEmail(e)} value={email} type='text'/>
                      </div>
                    </div>
                    <div className='contact-content' style={window.innerWidth <= 500 ? {display:"flex",flexDirection:'column',justifyContent:'flex-start',alignItems:'flex-start',width:'100%'} : {display:"flex",width:'100%'}}>
