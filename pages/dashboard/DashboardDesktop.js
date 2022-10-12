@@ -63,6 +63,8 @@ const queries = {
   SORT_BY_DATE: 'sort_by_date',
   FINANCE_OPTIONS: 'finance_options',
   COURSE_TYPE: 'course_type',
+  PLATFORM: 'platform',
+  EDUCATOR: 'educator'
 
 };
 
@@ -110,6 +112,8 @@ function DashboardDesktop(props) {
   const [workExperienceList, setWorkExperienceList] = useState([...Lists.workExperiences]);
   const [financeOptionList, setFinanceOptionList] = useState([...Lists.financeOptions]);
   const [languageList, setLanguageList] = useState([...Lists.languages]);
+  const [platformList, setPlatformList] = useState([...Lists.platform])
+  const [educatorList, setEducatorList] = useState([...Lists.educator])
   const [updateCostSlider, setUpdateCostSlider] = useState(false)
   const [isAppliedCostSlider, setIsAppliedCostSlider] = useState(false);
   const [sortState, setSortState] = useState(0);
@@ -273,7 +277,6 @@ function DashboardDesktop(props) {
     }
 
     const setSubCategoriesData=(item)=>{
-      console.log(item,"item++++")
       setSelectedCategory(item.name)
       _getSubCategoryDetails(item)
     }
@@ -452,6 +455,30 @@ function DashboardDesktop(props) {
         // mixpanelFilterOblect = { "filterType": 'COURSE LANGUAGE', ...languageList[appliedIndex] };
         break;
 
+      case filterList.PLATFORM:
+          update(
+            platformList,
+            appliedIndex,
+            isApplied,
+            setPlatformList,
+            filter,
+            queries.PLATFORM
+          );
+          // mixpanelFilterOblect = { "filterType": 'COURSE LANGUAGE', ...languageList[appliedIndex] };
+          break;
+
+        case filterList.EDUCATOR:
+            update(
+              educatorList,
+              appliedIndex,
+              isApplied,
+              setEducatorList,
+              filter,
+              queries.EDUCATOR
+            );
+            // mixpanelFilterOblect = { "filterType": 'COURSE LANGUAGE', ...languageList[appliedIndex] };
+            break;
+
       default:
         break;
     }
@@ -627,6 +654,12 @@ function DashboardDesktop(props) {
 
     const financeOptionFilterIndices = getAppliedIndices(Lists.financeOptions, Lists.filters.FINANCE_OPTIONS);
     setFiltersFromQuery(financeOptionFilterIndices, financeOptionList, setFinanceOptionList, reset);
+
+    const platformFilterIndices = getAppliedIndices(Lists.platform, Lists.filters.PLATFORM);
+    setFiltersFromQuery(platformFilterIndices, platformList, setPlatformList, reset);
+
+    const educatorFilterIndices = getAppliedIndices(Lists.educator, Lists.filters.EDUCATOR);
+    setFiltersFromQuery(educatorFilterIndices, educatorList, setEducatorList, reset);
   }
 
   const resetFilters = async (makeApiCall = true) => {
@@ -917,6 +950,18 @@ const _handleSearch=(e)=>{
             updateFilterState={updateFilterState}
             theme={theme}
           />
+          <Filter
+            item={{ name: 'Platform', type: filterList.PLATFORM }}
+            filterState={platformList}
+            updateFilterState={updateFilterState}
+            theme={theme}
+          />
+          <Filter
+            item={{ name: 'Educator', type: filterList.EDUCATOR }}
+            filterState={educatorList}
+            updateFilterState={updateFilterState}
+            theme={theme}
+          />
         </div>
         <div className="filter-footer">
           {/* <Link className='link' href={`/privacy`} target='_blank' rel='noopener noreferer'>Privacy policy & disclaimer</Link> */}
@@ -1189,6 +1234,18 @@ const _handleSearch=(e)=>{
                       <Filter
                         item={{ name: 'Course Language', type: filterList.COURSE_LANGUAGE }}
                         filterState={languageList}
+                        updateFilterState={updateFilterState}
+                        theme={theme}
+                      />
+                      <Filter
+                        item={{ name: 'Platform', type: filterList.PLATFORM }}
+                        filterState={platformList}
+                        updateFilterState={updateFilterState}
+                        theme={theme}
+                      />
+                      <Filter
+                        item={{ name: 'Educator', type: filterList.EDUCATOR }}
+                        filterState={educatorList}
                         updateFilterState={updateFilterState}
                         theme={theme}
                       />

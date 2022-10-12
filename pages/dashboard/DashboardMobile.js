@@ -61,6 +61,8 @@ const queries = {
   SORT_BY_DATE: 'sort_by_date',
   FINANCE_OPTIONS: 'finance_options',
   COURSE_TYPE: 'course_type',
+  PLATFORM: 'platform',
+  EDUCATOR: 'educator'
 
 };
 
@@ -107,7 +109,8 @@ function DashboardMobile(props) {
   const [workExperienceList, setWorkExperienceList] = useState([...Lists.workExperiences]);
   const [financeOptionList, setFinanceOptionList] = useState([...Lists.financeOptions]);
   const [languageList, setLanguageList] = useState([...Lists.languages]);
-
+  const [platformList, setPlatformList] = useState([...Lists.platform])
+  const [educatorList, setEducatorList] = useState([...Lists.educator])
   const [updateCostSlider, setUpdateCostSlider] = useState(false)
   const [isAppliedCostSlider, setIsAppliedCostSlider] = useState(false);
   const [sortState, setSortState] = useState(0);
@@ -345,6 +348,30 @@ const updateFilterState = async (filter, isApplied, appliedIndex) => {
       // mixpanelFilterOblect = { "filterType": 'COURSE LANGUAGE', ...languageList[appliedIndex] };
       break;
 
+      case filterList.PLATFORM:
+          update(
+            platformList,
+            appliedIndex,
+            isApplied,
+            setPlatformList,
+            filter,
+            queries.PLATFORM
+          );
+          // mixpanelFilterOblect = { "filterType": 'COURSE LANGUAGE', ...languageList[appliedIndex] };
+          break;
+
+        case filterList.EDUCATOR:
+            update(
+              educatorList,
+              appliedIndex,
+              isApplied,
+              setEducatorList,
+              filter,
+              queries.EDUCATOR
+            );
+            // mixpanelFilterOblect = { "filterType": 'COURSE LANGUAGE', ...languageList[appliedIndex] };
+            break;
+
     default:
       break;
   }
@@ -355,7 +382,7 @@ const updateFilterState = async (filter, isApplied, appliedIndex) => {
     // Mixpanel.track(MixpanelStrings.FILTER_SELECTED, mixpanelFilterOblect)
   }
 
-  updateBrowserUrl()
+  // updateBrowserUrl()
 
   // exiting before updating
   if (mobileFiltersState) return;
@@ -515,6 +542,12 @@ const applyFilters =(reset = false) => {
 
   const financeOptionFilterIndices = getAppliedIndices(Lists.financeOptions, Lists.filters.FINANCE_OPTIONS);
   setFiltersFromQuery(financeOptionFilterIndices, financeOptionList, setFinanceOptionList, reset);
+
+  const platformFilterIndices = getAppliedIndices(Lists.platform, Lists.filters.PLATFORM);
+  setFiltersFromQuery(platformFilterIndices, platformList, setPlatformList, reset);
+
+  const educatorFilterIndices = getAppliedIndices(Lists.educator, Lists.filters.EDUCATOR);
+  setFiltersFromQuery(educatorFilterIndices, educatorList, setEducatorList, reset);
 }
 
 const resetFilters = async (makeApiCall = true) => {
@@ -914,6 +947,18 @@ const handleScroll=(event)=>{
                     updateFilterState={updateFilterState}
                     theme={theme}
                   /> */}
+                   <Filter
+                   item={{ name: 'Platform', type: filterList.PLATFORM }}
+                   filterState={platformList}
+                   updateFilterState={updateFilterState}
+                   theme={theme}
+                   />
+                   <Filter
+                   item={{ name: 'Educator', type: filterList.EDUCATOR }}
+                   filterState={educatorList}
+                   updateFilterState={updateFilterState}
+                   theme={theme}
+                   />
                 </div>
                 <div className="filter-footer">
                   {/* <Link className='link' href={`/privacy`} target='_blank' rel='noopener noreferer'>Privacy policy & disclaimer</Link> */}

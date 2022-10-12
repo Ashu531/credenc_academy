@@ -55,6 +55,8 @@ export default function Home(props) {
       setScrollUp={()=>props?.setScrollUp()}
       setScrollDown={()=>props?.setScrollDown()}
       goingUp={props?.goingUp}
+      openCoursePreviewModal={()=>props?.openCoursePreviewModal()}
+      closeCoursePreviewModal={()=>props?.closeCoursePreviewModal()}
     />
     }
    </>

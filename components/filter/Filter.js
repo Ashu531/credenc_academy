@@ -8,7 +8,15 @@ import RangeInput from '../input/RangeInput';
 import List from '../list/List'; 
 import Image from "next/image";
 
-export default function Filter({ item, filterState, updateFilterState, min, max, getRange, updateCostSlider, setIsAppliedCostSlider,theme }) {
+export default function Filter({ item, filterState, updateFilterState, min, max, getRange, updateCostSlider, setIsAppliedCostSlider,theme,icon }) {
+
+  const myLoader = ({ src, width, quality }) => {
+    if(src && src.length > 0){
+      return `${src}?w=${width}&q=${quality || 75}`
+    }else{
+        return '..'
+    }
+  }
 
     const [expanded, setExpanded] = useState(false);
     
@@ -101,6 +109,24 @@ export default function Filter({ item, filterState, updateFilterState, min, max,
                   theme={theme}
                 />
       }
+
+      if(filterType === Lists.filters.PLATFORM){
+        return <List 
+                  type={States.listTypes.CHECKBOXES} 
+                  list={filterState}
+                  onItemClick={(value, i) => updateFilterState(filterType, value, i)}
+                  theme={theme}
+                />
+      }
+
+      if(filterType === Lists.filters.EDUCATOR){
+        return <List 
+                  type={States.listTypes.CHECKBOXES} 
+                  list={filterState}
+                  onItemClick={(value, i) => updateFilterState(filterType, value, i)}
+                  theme={theme}
+                />
+      }
     }
 
   return (
@@ -110,6 +136,11 @@ export default function Filter({ item, filterState, updateFilterState, min, max,
             {selectedItems(filterState) && <div className='applied'></div>}
             <Image src={expanded ? caretUp : caretDown} objectFit="cover"/>
         </div>
+        {/* {
+          icon && icon.length > 0 && <div>
+            <Image loader={myLoader} src={icon} height={20} width={20} objectFit='contain' />
+            </div>
+        } */}
         <div className={`filters ${expanded ? '' : 'hide'}`}>
             {renderFilter(item.type)}
         </div>

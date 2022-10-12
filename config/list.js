@@ -9,6 +9,8 @@ export default class Lists {
         WORK_EXPERIENCE: 4,
         FINANCE_OPTIONS: 5,
         COURSE_LANGUAGE: 6,
+        PLATFORM: 7,
+        EDUCATOR: 8,
     }
 
     static ProfileDropList = [
@@ -63,6 +65,26 @@ export default class Lists {
     static languages = [
         {name: 'English', filterValue: 'English', isApplied: false},
         {name: 'Hindi', filterValue: 'Hindi', isApplied: false},
+    ]
+
+    static platform = [
+        {name: 'AAFT', filterValue: 'AAFT', isApplied: false,image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/AAFT.png'},
+        {name: 'ExcelR', filterValue: 'ExcelR', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/ExcelR.png'},
+        {name: 'Greeklurn', filterValue: 'GreekLurn', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/geeklurn.png'},
+        {name: 'Insofe', filterValue: 'INSOFE', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/insode.jpeg'},
+        {name: 'Newton School', filterValue: 'Newton School', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/NewtonSchool.png'},
+        {name: 'Skill Circle', filterValue: 'SkillCircle', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/skill-lync.png'},
+        {name: 'Skill Lync', filterValue: 'Skill Lync', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/skillcircle.png'},
+    ]
+
+    static educator = [
+        {name: 'AAFT', filterValue: 'AAFT', isApplied: false,image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/AAFT.png'},
+        {name: 'ExcelR', filterValue: 'ExcelR', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/ExcelR.png'},
+        {name: 'Greeklurn', filterValue: 'GreekLurn', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/geeklurn.png'},
+        {name: 'Insofe', filterValue: 'INSOFE', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/insode.jpeg'},
+        {name: 'Newton School', filterValue: 'Newton School', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/NewtonSchool.png'},
+        {name: 'Skill Circle', filterValue: 'SkillCircle', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/skill-lync.png'},
+        {name: 'Skill Lync', filterValue: 'Skill Lync', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/skillcircle.png'},
     ]
 
     static sortByList = [
