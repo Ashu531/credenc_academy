@@ -128,6 +128,7 @@ export default function Header(props){
   const _goToHome=()=>{
     props?.closeFilterExpandedStage()
     props?.handleSearch('') 
+    props?.hideSearchBar()
     router.replace({
       pathname: '/',
       query: {},

@@ -105,8 +105,8 @@
     }
 
     .selected{
-        background: var(--subduedBackground);
-        color: #313235;
+        background: var(--primaryColor);
+        color: var(--defaultBackground);
         border-radius: 0.4rem;
     }
 }

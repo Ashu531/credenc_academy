@@ -70,7 +70,7 @@ export default class Lists {
     static platform = [
         {name: 'AAFT', filterValue: 'AAFT', isApplied: false,image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/AAFT.png'},
         {name: 'ExcelR', filterValue: 'ExcelR', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/ExcelR.png'},
-        {name: 'Greeklurn', filterValue: 'GreekLurn', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/geeklurn.png'},
+        {name: 'Geeklurn', filterValue: 'GeekLurn', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/geeklurn.png'},
         {name: 'Insofe', filterValue: 'INSOFE', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/insode.jpeg'},
         {name: 'Newton School', filterValue: 'Newton School', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/NewtonSchool.png'},
         {name: 'Skill Circle', filterValue: 'SkillCircle', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/skill-lync.png'},
@@ -80,11 +80,22 @@ export default class Lists {
     static educator = [
         {name: 'AAFT', filterValue: 'AAFT', isApplied: false,image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/AAFT.png'},
         {name: 'ExcelR', filterValue: 'ExcelR', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/ExcelR.png'},
-        {name: 'Greeklurn', filterValue: 'GreekLurn', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/geeklurn.png'},
+        {name: 'Geeklurn', filterValue: 'GeekLurn', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/geeklurn.png'},
         {name: 'Insofe', filterValue: 'INSOFE', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/insode.jpeg'},
         {name: 'Newton School', filterValue: 'Newton School', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/NewtonSchool.png'},
         {name: 'Skill Circle', filterValue: 'SkillCircle', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/skill-lync.png'},
         {name: 'Skill Lync', filterValue: 'Skill Lync', isApplied: false, image: 'https://credenc-neo-bank.s3.amazonaws.com/all_images/institution_logos/skillcircle.png'},
+        {name: 'Atlas Skilltech University', filterValue: 'Atlas Skilltech University', isApplied: false},
+        {name: 'Case Western Reserve University', filterValue: 'Case Western Reserve University', isApplied: false},
+        {name: 'IU International University of Applied Science', filterValue: 'IU International University of Applied Science', isApplied: false},
+        {name: 'MIA Digital University', filterValue: 'MIA Digital University', isApplied: false},
+        {name: 'NMIMS Global', filterValue: 'NMIMS Global', isApplied: false},
+        {name: 'Rennes School of Business', filterValue: 'Rennes School of Business', isApplied: false},
+        {name: 'Sprott School of business at Carleton University', filterValue: 'Sprott School of business at Carleton University', isApplied: false},
+        {name: 'Steinbeis University', filterValue: 'Steinbeis University', isApplied: false},
+        {name: 'University of Strathclyde Glasgow', filterValue: 'University of Strathclyde Glasgow', isApplied: false},
+        {name: 'VijayBhoomi University', filterValue: 'VijayBhoomi University', isApplied: false},
+        {name: 'Walsh College', filterValue: 'Walsh College', isApplied: false},
     ]
 
     static sortByList = [

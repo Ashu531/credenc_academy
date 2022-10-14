@@ -3,7 +3,7 @@
   background: var(--subduedBackground);
   position: fixed;
   bottom: 0px;
-  height: 60vh;
+  height: 56vh;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 
@@ -14,7 +14,7 @@
   
     .footer-modal-header{
       height: 5vh;
-      background-color: var(--subduedBackground);
+      background-color: #FFFFFF;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -29,7 +29,7 @@
       overflow: scroll;
     }
     .footer-modal-footer{
-      height: 4vh;
+      // height: 4vh;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -133,26 +133,49 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-  }
+    }
 
-  .footer-elemental-content-text{
-      font-family:'Poppins';
+    .footer-elemental-content-text{
+        font-family:'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 19px;
+        color: var(--bodyColor);
+        padding-right: 24px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .footer-rights-text{
       font-style: normal;
-      font-weight: 400;
+      font-weight: 500;
       font-size: 12px;
       line-height: 19px;
-      color: var(--bodyColor);
-      padding-right: 24px;
-      cursor: pointer;
-      text-decoration: none;
-  }
-  .footer-rights-text{
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 19px;
-    color: var(--bodyColor)
-  }
+      color: var(--bodyColor)
+    }
+
+    .contactDiv{
+      display: flex;
+      flex-direction: column;
+      // justify-content: center;
+      align-items: flex-start;
+
+      .iconContent{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+      }
+
+      .iconText{
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 21px;
+        color: var(--bodyColor);
+      }
+    }
   }
   .removeLine{
     text-decoration: none;

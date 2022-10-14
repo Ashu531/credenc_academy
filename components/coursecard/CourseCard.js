@@ -291,7 +291,7 @@ const removeUpvote = async (item) => {
           </div>
         </div>
         <div  className = {!isCardOpen ? "card-image-content" : "card-image-content card-image-content-open"}  onClick={()=> props?.openDetailModal() } >
-            <Image loader={myLoader} src={props?.data?.educator[0]?.logo && props?.data?.educator[0]?.logo.length > 0 ? props?.data?.educator[0]?.logo : defaultEducator } objectFit="cover"  height={!isCardOpen ? 82 : 60} width={!isCardOpen ? 82 : 60} alt='instituteLogo'/>
+            <Image loader={myLoader} src={props?.data?.educator[0]?.logo && props?.data?.educator[0]?.logo.length > 0 ? props?.data?.educator[0]?.logo : defaultEducator } objectFit="cover"  height={!isCardOpen ? 82 : 60} width={!isCardOpen ? 82 : 60} alt='instituteLogo' style={{borderRadius: '50%'}}/>
             <span className='institute-name'>{props?.data?.educator[0]?.name}</span>
         </div>
         <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} onClick={()=> props.openDetailModal()}>

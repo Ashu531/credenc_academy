@@ -343,6 +343,7 @@ export default function DetailModal(props){
                   height={40} 
                   width={40} 
                   objectFit="contain" 
+                  style={{borderRadius: '50%'}}
                   />
                   <div className='school-content'> 
                       <span className='heading1'>{courseData?.educator && courseData?.educator.length > 0 ? courseData?.educator[0].name : courseData?.platform?.name}</span>
@@ -407,7 +408,7 @@ export default function DetailModal(props){
                     </span>
                 </div>
                 <div className='detail-modal-course-overview'>
-                    <Image loader={myLoader} src={courseData?.platform?.logo && courseData?.platform?.logo.length > 0 ? courseData?.platform?.logo : defaultPlatform} height={30} width={30} objectFit="cover"/>
+                    <Image loader={myLoader} src={courseData?.platform?.logo && courseData?.platform?.logo.length > 0 ? courseData?.platform?.logo : defaultPlatform} height={30} width={30} objectFit="cover" style={{borderRadius: '50%'}}/>
                     <div className='detail-modal-tutor-content'>
                         <span className='header1'>{courseData?.platform?.name}</span>
                         {
@@ -419,6 +420,7 @@ export default function DetailModal(props){
                     </div>
                 </div>
               </div>
+              <div className='divider' />
               <div className='detail-modal-course-info'>
                 <span className='content-detail'>
                     <Image src={certificateIcon} objectFit="cover"/>
@@ -500,7 +502,7 @@ export default function DetailModal(props){
             </div>
             <div 
             className='content-footer'
-            style={!detailFooter ? {paddingBottom: '18%'} : null}
+            // style={!detailFooter ? {paddingBottom: '18%'} : null}
             >
               <span className='content-date-text' style={{paddingLeft: 24}}>
               Last updated on: <span style={{fontWeight: 600}}>{moment(courseData?.date_modified).format("MMM Do YY")}</span>
@@ -515,7 +517,7 @@ export default function DetailModal(props){
             {
                detailFooter ?  
                 <div className='disclaimer-footer-content' 
-                style={window.innerWidth <= 500 ? detailFooter ? {marginBottom: '18%'} : null : null}
+                // style={window.innerWidth <= 500 ? detailFooter ? {marginBottom: '18%'} : null : null}
                 >
                     <span className='footer-text'>
                     The information provided on our Platform is for general information purpose only and such informations are not investigated, monitored, or checked for accuracy, validity, and reliability by us. Your use of the Platform is solely at your own risk and we in no way shall have any liability whatsoever.

@@ -932,24 +932,24 @@ const _handleSearch=(e)=>{
             updateFilterState={updateFilterState}
             theme={theme}
           />
-          <Filter
+          {/* <Filter
             item={{ name: 'Work Experience', type: filterList.WORK_EXPERIENCE }}
             filterState={workExperienceList}
             updateFilterState={updateFilterState}
             theme={theme}
-          />
+          /> */}
           <Filter
             item={{ name: 'Finance Options', type: filterList.FINANCE_OPTIONS }}
             filterState={financeOptionList}
             updateFilterState={updateFilterState}
             theme={theme}
           />
-          <Filter
+          {/* <Filter
             item={{ name: 'Course Language', type: filterList.COURSE_LANGUAGE }}
             filterState={languageList}
             updateFilterState={updateFilterState}
             theme={theme}
-          />
+          /> */}
           <Filter
             item={{ name: 'Platform', type: filterList.PLATFORM }}
             filterState={platformList}
@@ -1037,7 +1037,7 @@ const _handleSearch=(e)=>{
             }}
           />
           <div style={{ flexGrow: 1 }}></div>
-          <div className="text-container">Showing {totalCourses} Course{totalCourses === 1 ? '' : 's'}</div>
+          <div className="text-container">Showing {courseCardData.length} Course{courseCardData.length === 1 ? '' : 's'}</div>
         </div>
         <div className="list-container" style={{padding: '10rem 2.4rem 5rem 0rem'}}>
           <List
@@ -1219,24 +1219,24 @@ const _handleSearch=(e)=>{
                         updateFilterState={updateFilterState}
                         theme={theme}
                       />
-                      <Filter
+                      {/* <Filter
                         item={{ name: 'Work Experience', type: filterList.WORK_EXPERIENCE }}
                         filterState={workExperienceList}
                         updateFilterState={updateFilterState}
                         theme={theme}
-                      />
+                      /> */}
                       <Filter
                         item={{ name: 'Finance Options', type: filterList.FINANCE_OPTIONS }}
                         filterState={financeOptionList}
                         updateFilterState={updateFilterState}
                         theme={theme}
                       />
-                      <Filter
+                      {/* <Filter
                         item={{ name: 'Course Language', type: filterList.COURSE_LANGUAGE }}
                         filterState={languageList}
                         updateFilterState={updateFilterState}
                         theme={theme}
-                      />
+                      /> */}
                       <Filter
                         item={{ name: 'Platform', type: filterList.PLATFORM }}
                         filterState={platformList}
@@ -1280,7 +1280,7 @@ const _handleSearch=(e)=>{
                             disabled={false} 
                             onClick={resetFilters}
                             classes='btn-reset'
-                            text="Reset"
+                            text= {appliedFiltersCount.current > 0 ? "Clear All" : "Reset"}
                           />
                       </div>
                      <div className='modal-button-wrapper'>
@@ -1288,7 +1288,7 @@ const _handleSearch=(e)=>{
                             disabled={false} 
                             onClick={_handleShowAllCourses}
                             classes='btn-apply'
-                            text= {`Show ${courseCardData.length} Courses`}
+                            text= {`Show ${totalCourses} Courses`}
                             type="Show"
                           />
                       </div>

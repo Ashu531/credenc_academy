@@ -62,16 +62,15 @@ export default function SubjectNavbar(props){
          }
         </div> */}
         {
-            leftScrollView === true ?  <div className="navbar-arrow-container" onClick={() => scroll(-13)} style={{position:'absolute',left:48,zIndex: 999,background: '#FFFFFF'}}>
+            leftScrollView === true ?  <div className="navbar-arrow-container" onClick={() => scroll(-800)} style={{position:'absolute',left:48,zIndex: 999,background: '#FFFFFF'}}>
             <Image src={caretRight} objectFit="cover" style={{transform: "rotate(180deg)"}} height={14} width={14} alt='caretRight' />
             </div> : null
         }
-       
             <div className='tabs' ref={ref}>
                 <SubjectTab title={props.subCategories} selectedCategory={props?.selectedCategory} setSubCategoriesData={props?.setSubCategoriesData} theme={props.theme}/>
             </div>
         {
-            rightScrollView === true ? <div className="navbar-arrow-container" onClick={() => scroll(13)} style={{position:'absolute',left:'80vw',zIndex: 999,background: '#FFFFFF'}}>
+            rightScrollView === true ? <div className="navbar-arrow-container" onClick={() => scroll(800)} style={{position:'absolute',left:'80vw',zIndex: 999,background: '#FFFFFF'}}>
                 <Image src={caretRight} objectFit="cover" height={14} width={14} alt='caretRight'/>
             </div> : null
         }
@@ -79,9 +78,12 @@ export default function SubjectNavbar(props){
             <div className='subject-tab' onClick={()=>props.toggleFilterModal()} >
                 <span className='all-subject-text'>Filters</span>
                 <Image src={props.theme === 'dark' ? filterIconDark : filterIcon} objectFit="cover" alt='filterIcon' />
-                <span className='filter-container'>
-                  <span className='filter-count'>{props?.appliedFiltersCount}</span>
-                </span>
+                {  props?.appliedFiltersCount > 0 ? 
+                    <span className='filter-container'>
+                         <span className='filter-count'>{props?.appliedFiltersCount}</span>
+                    </span>
+                    : null
+                }
             </div>
         </div>
     )

@@ -10,6 +10,9 @@ import Link from "next/link";
 import { useRouter } from 'next/router'
 import credencAcademy from '../../assets/images/icons/credencAcademy.svg'
 import constant from '../../config/constant';
+import mailIcon from '../../assets/images/icons/mailIcon.svg'
+import mapIcon from '../../assets/images/icons/mapIcon.svg'
+import callIcon from '../../assets/images/icons/callIcon.svg'
 
 export default function FooterModal(props){
     const router = useRouter();
@@ -24,7 +27,7 @@ export default function FooterModal(props){
         <div className='footer-modal-section'>
         <div className='footer-modal-header'>
          <span className='footer-elemental-content-text'>
-         ©Credenc2022
+         All rights reserved @Credenc - 2022
          </span>
          <div className='footer-elemental-content'>
                 <Link href="https://www.credenc.com/" >
@@ -103,7 +106,7 @@ export default function FooterModal(props){
                     </a> */}
                 </div>
 
-                <div className='subjectDiv'>
+                <div className='subjectDiv' style={{marginRight: '16%'}}>
                     <p className='paraHeading'>Domain</p>
                         <a href={`${constant.BASE_URL.DEV}&domain=Technology`} className='removeLine'>
                              <p className='para'>Technology</p>
@@ -121,22 +124,38 @@ export default function FooterModal(props){
                             <p className='para'>Others</p>
                         </a>
                 </div>
+
+                <div className='contactDiv'>
+                    <p className='paraHeading'>Contact</p>
+                    <div className='iconContent'>
+                      <Image src={mailIcon} height={21} width={21} objectFit='contain' />
+                      <span className='iconText' style={{marginLeft: 5}}>care@redenc.com</span>
+                    </div>
+                    <div className='iconContent' style={{marginTop: 10}}>
+                      <Image src={callIcon} height={21} width={21} objectFit='contain' />
+                      <span className='iconText' style={{marginLeft: 5}}>180 0121 0057</span>
+                    </div>
+                    <div className='iconContent' style={{marginTop: 10}}>
+                      <Image src={mapIcon} height={21} width={21} objectFit='contain' />
+                      <span className='iconText' style={{marginLeft: 5}}>3rd floor, Tower B, DLF Building No. 8, DLF Cyber City, Gurugram</span>
+                    </div>
+                </div>
             </div>
-            </div>
+        </div>
                 <div className='disclaimertext'>
                 Disclaimer: The information provided on our site and mobile application (collectively referred to as the “Platform”) is for general informational purposes only. The Platform may contain links to other websites or content belonging to or originating from third parties. Such links are not investigated, monitored, or checked for accuracy, validity, and reliability by us. We do not warrant, endorse, guarantee, or assume responsibility for the accuracy or reliability of any information offered by third-party websites linked through our Platform. Your use of the Platform is solely at your own risk and we under no circumstance shall have any liability whatsoever with respect to any information provided on our Platform. We strongly advise you to read all the terms and conditions and/or other related policies of the third-party websites linked through our Platform.
                 </div>
             </div>
             
        
-        <div className='footer-modal-footer'>
+        {/* <div className='footer-modal-footer'>
             <span className='footer-rights-text'>
             Credenc©2022. All Rights Reserved.
             </span>
             <span className='footer-rights-text'>
             CIN Number: U74999DL2017PTC319926
             </span>
-        </div>
+        </div> */}
         </div>
        </div>
     )

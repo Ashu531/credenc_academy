@@ -30,6 +30,7 @@ import SubjectTab from '../../components/subjectTab/SubjectTab'
 import Error from "../../components/error/Error"
 import SearchMobile from '../../components/searchBarMobile/SearchBar'
 import sortingIcon from '../../assets/images/icons/filterSortMobile.svg';
+import backArrowDark from '../../assets/images/icons/backArrowDark.svg'
 const compareKey = 'credenc-marketplace-compares';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const subjectKey = 'credenc-edtech-subject';
@@ -881,7 +882,7 @@ const handleScroll=(event)=>{
                 >
                   {appliedFiltersCount.current === 0 ? 'No Filters Applied' : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}
                   {appliedFiltersCount.current !== 0 && <span style={window.innerWidth > 500 ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>}
-                  {window.innerWidth <= 500 && 
+                  {/* {window.innerWidth <= 500 && 
                   <span 
                   className='cross' 
                   onClick={() => {
@@ -896,7 +897,7 @@ const handleScroll=(event)=>{
                    
                     }}>
                     <Image src={closeIcon} objectFit='cover' />
-                    </span>}
+                    </span>} */}
                 </div>
                 <div className='filters'>
 
@@ -960,9 +961,26 @@ const handleScroll=(event)=>{
                    theme={theme}
                    />
                 </div>
-                <div className="filter-footer">
+                <div className="filter-footer"> 
                   {/* <Link className='link' href={`/privacy`} target='_blank' rel='noopener noreferer'>Privacy policy & disclaimer</Link> */}
+                 
                   <div className='mobile-actions-container'>
+                  <div 
+                  className="back-button-content" 
+                  onClick={() => {
+                      let filterValues = urlService.current.getEntries();
+                      if(filterValues && filterValues.length > 0){
+                        handleApplyButton()
+                      }
+                      else{
+                        setMobileFiltersState(false)
+                        props?.toggleFilterVisible()
+                      }
+                   
+                    }}>
+                    <Image src={backArrowDark} height={10} width={10} objectFit='contain' />
+                    <span className="back-button-text">Back</span>
+                  </div>
                     <div className='btn-container reset-button-wrapper'>
                       <Button
                         // disabled={true} 
