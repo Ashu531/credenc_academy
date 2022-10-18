@@ -657,9 +657,11 @@ function DashboardDesktop(props) {
 
     const platformFilterIndices = getAppliedIndices(Lists.platform, Lists.filters.PLATFORM);
     setFiltersFromQuery(platformFilterIndices, platformList, setPlatformList, reset);
+    console.log(platformFilterIndices,"platformFilterIndices")
 
     const educatorFilterIndices = getAppliedIndices(Lists.educator, Lists.filters.EDUCATOR);
     setFiltersFromQuery(educatorFilterIndices, educatorList, setEducatorList, reset);
+    console.log(educatorFilterIndices,"educatorFilterIndices++")
   }
 
   const resetFilters = async (makeApiCall = true) => {
@@ -853,9 +855,9 @@ const _handleSearch=(e)=>{
     if(nextPage === true){
       coursesApiStatus.current.start();
       handleFilteredData();
-      if (pageNumber === 1) {
-        applyFilters();
-      }
+      // if (pageNumber === 1) {
+      //   applyFilters();
+      // }
     }
   }, [pageNumber]);
 

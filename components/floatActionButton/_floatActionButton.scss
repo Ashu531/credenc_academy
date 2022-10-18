@@ -220,7 +220,7 @@
     width: 100vw;
     // height: calc(var(--vh, 1vh) * 100);
     height: 100vh;
-    z-index: 0;
+    z-index: 1;
     background: rgba(0, 0, 0, 0.75);
     @supports ((backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px)) or (-ms-backdrop-filter: blur(20px)) or (-o-backdrop-filter: blur(20px))) {
         background: none;

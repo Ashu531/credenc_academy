@@ -500,9 +500,10 @@ export default function DetailModal(props){
                  
             </div>
             </div>
+            <div className='divider' style={{marginTop: 0}} />
             <div 
             className='content-footer'
-            // style={!detailFooter ? {paddingBottom: '18%'} : null}
+            style={window.innerWidth <= 500 ? {paddingBottom : '4%'} : {paddingBottom: '3%'}}
             >
               <span className='content-date-text' style={{paddingLeft: 24}}>
               Last updated on: <span style={{fontWeight: 600}}>{moment(courseData?.date_modified).format("MMM Do YY")}</span>
@@ -544,7 +545,7 @@ export default function DetailModal(props){
          >
             <div className='detail-modal-footer-section-left'>
                 <span className='price-text'>
-                {courseData?.price ? `₹${courseData?.price}` : 'Free'}
+                {courseData?.finance_display[0] > 0 ? `₹${courseData?.finance_display[0]}` : 'Price Unknown'}
                 </span>
             </div>
             <div className='detail-modal-footer-section-right' 

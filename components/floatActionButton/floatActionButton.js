@@ -45,7 +45,7 @@ export default function FloatActionButton({
         openFilterVisible()
     }
 
-
+    console.log(displayContent,"displayContent++++");
 
     if (type === 'course type') {
         return (
@@ -90,11 +90,11 @@ export default function FloatActionButton({
     if (type === 'sort type') {
         return <>
             <div className={`float-sort-action-${floatType}`} style={{marginRight:12}}>
-                <span onClick={() => _handleSorting()} className='sort'><Image src={filterIcon} alt='Sorting' objectFit='cover' /></span>
+                <span onClick={() => _handleSorting()} className='sort'><Image src={filterIcon} alt='Sorting' objectFit='contain' /></span>
                 {(window.innerWidth <= 500) &&
                     <div
                         className={`dropdown-content-mobile`}
-                        style={displayContent ? { bottom: 0, } : { bottom: '-100%', }}
+                        style={displayContent ? { bottom: 0} : { bottom: '-100%'}}
                     >
                         <span className='bottom-sheet-holder'><span></span></span>
                         {floatList.map((item, i) => (

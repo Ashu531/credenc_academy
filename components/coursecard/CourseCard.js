@@ -272,7 +272,7 @@ const removeUpvote = async (item) => {
         className='card-header' 
         style={!isCardOpen && window.innerWidth > 500 ? null : {paddingLeft:12,paddingRight: 12}}
         >
-          <Image loader={myLoader} src={props?.data?.platform?.logo ? props?.data?.platform?.logo : defaultPlatform} height={36} width={36} alt='courseLogo' style={{borderRadius: '30%'}} objectFit="contain"/>
+          <Image loader={myLoader} src={props?.data?.platform?.logo ? props?.data?.platform?.logo : defaultPlatform} height={36} width={36} alt='courseLogo' style={{borderRadius: '50%'}} objectFit="contain"/>
           <div className='card-header-end-content'>
                 <div className='grey-container' 
                      onClick={()=>_handleCardBookmark(props?.data)} 
@@ -313,7 +313,7 @@ const removeUpvote = async (item) => {
           {props?.data?.price_list?.length > 0 ? 
             <span className='course-pay'>{props?.data?.price_list[0]}</span>
           : <span className='course-pay'>N/A</span>}
-            <span className='course-price'>{props?.data?.finance_display[0] === "Free" || props?.data?.finance_display[0] === 0 || !props?.data?.finance_display[0] ? "Free" : ` ₹${props?.data?.finance_display[0]}` }</span>
+            <span className='course-price'>{props?.data?.finance_display[0] === "Free" || props?.data?.finance_display[0] === 0 || !props?.data?.finance_display[0] ? "Price Unknown" : ` ₹${props?.data?.finance_display[0]}` }</span>
           </span>
       </div>
 

@@ -279,7 +279,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
-        padding: 24px;
+        padding: 24px 24px 0px 24px;
         gap: 16px;
         background: var(--defaultBackground);
         border-radius: 2px;
@@ -314,7 +314,7 @@
         justify-content: space-between;
         align-items: center;
         gap: 6px;
-        padding-bottom: 6%;
+        padding-bottom: 2%;
        }
 
        .content-disclaimer-text{

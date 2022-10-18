@@ -1082,7 +1082,7 @@ const handleScroll=(event)=>{
               {window.innerWidth <= 500 && 
               <div>
               <div className='mobile-view-actions' style={ props?.goingUp ? {position: "fixed",bottom: '7rem',padding: 0} : props.searchValue && props.searchValue.length > 0 ? {padding: 0,marginBottom: 10,position: 'fixed', bottom: '3rem'} : !props.searchValue && filterValues.length > 0 && (filterValues[0] === "subject" || filterValues[0] === "min_price" || filterValues[0] === "sort_by_relevance") ? {position: "fixed",bottom: '13rem',padding: 0} : !props.searchValue && filterValues.length > 0 ? {position: "fixed",bottom: '7rem',padding: 0} : {padding: 0,marginBottom: 10}}>
-                <span className='filter' style={{marginLeft:12}}><Image src={sortingIcon} alt='filters' objectFit='cover' onClick={() =>_handleFilterState() } /></span>
+                <span className='filter' style={{marginLeft:12}}><Image src={sortingIcon} alt='filters' objectFit='cover' onClick={() =>_handleFilterState() } />{ appliedFiltersCount.current > 0 ? <span className='mobile-filter-count'>{appliedFiltersCount.current}</span> : null}</span>
                     <FloatActionButton
                       type='course type'
                       heading={Lists.courseTypesFloatList[courseTypesFloatState]['name']}
