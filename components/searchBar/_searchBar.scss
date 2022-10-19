@@ -44,6 +44,8 @@
 
     .sc-eCYdqJ {
       .wrapper{
+        box-shadow: rgba(32, 33, 36, 0.28) 0px 1px 6px 0px !important;
+
         .sc-gsnTZi{
           ul{
             padding: 0px 0 25px 0;
@@ -54,11 +56,21 @@
             padding: 0px 0 25px 0;
           }
         }
-        .ebHbzY{
+        .sc-hKMtZM{
           input{
-            padding: 0 52px 0 13px;
+            padding: 0 52px 0 13px !important;
           }
         }
+        .eisVpJ{
+          input{
+            padding: 0 52px 0 13px !important;
+          }
+        }
+      }
+    }
+    .ksUSjM{
+      .wrapper{
+        box-shadow: rgba(32, 33, 36, 0.28) 0px 1px 6px 0px !important;
       }
     }
     .hnfnUj{
@@ -81,7 +93,7 @@
         height: 40px;
         position: absolute;
         right: 9px;
-        top: 7px;
+        top: 15px;
         z-index: 999;
         box-sizing: border-box;
         display: flex;

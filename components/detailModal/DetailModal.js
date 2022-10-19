@@ -392,7 +392,9 @@ export default function DetailModal(props){
             </div>
             <div style={{width: '100%',background: '#FFFFFF',flex: 1}} />
             </div>
-            <div className='detail-modal-banner'  style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
+            <div className='detail-modal-banner'  
+            // style={ window.innerWidth <= 500 ? {width:'100%'} : null }
+            >
                 <span className='banner-text'>
                 Next batch starts on {moment(courseData?.enrollment_start_date).format("MMM Do YY")}
                 </span>
@@ -414,7 +416,7 @@ export default function DetailModal(props){
                         {
                             courseData?.platform?.one_liner && courseData?.platform?.one_liner.length > 0 ?
                             <span className='header2'>{courseData?.platform?.one_liner}</span> :
-                            null
+                            <span className='header2'>Course Platform</span>
                         }
                         
                     </div>
@@ -458,29 +460,35 @@ export default function DetailModal(props){
                     </span>    
                 </span>
             </div>
-            <div className='skill-container'>
-                <div className='skill-header-content'>
-                    <Image src={starIcon} objectFit="cover" />
-                    <span className='skill-header'>
-                    Top 8 Skills you will learn
-                    </span>
-                </div>
-                <div className='skill-details'>
-                    {
-                      courseData?.skills && courseData?.skills.map((item,index)=>{
-                           return(
-                            <span className='skill-text-content' key={index}>
-                            <span className='skill-text'>
-                            {item}
-                            </span>
-                            </span>
-                           )
-                       }) 
-                    }
-                   
-                </div>
-            </div>
-            <div className='instructor-container'>
+            {
+              courseData?.skills && courseData?.skills.length > 0 ? 
+              <div className='skill-container'>
+              <div className='skill-header-content'>
+                  <Image src={starIcon} objectFit="cover" />
+                  <span className='skill-header'>
+                  Top 8 Skills you will learn
+                  </span>
+              </div>
+              <div className='skill-details'>
+                  {
+                    courseData?.skills && courseData?.skills.map((item,index)=>{
+                         return(
+                          <span className='skill-text-content' key={index}>
+                          <span className='skill-text'>
+                          {item}
+                          </span>
+                          </span>
+                         )
+                     }) 
+                  }
+                 
+              </div>
+              </div> : null
+            }
+
+            {
+              courseData?.instructor && courseData?.instructor.length > 0 ? 
+              <div className='instructor-container'>
                 <div className='instructor-header'>
                     <Image src={instructorIcon} objectFit='cover' />
                     <span className='instructor-text'>Instructors</span>
@@ -496,11 +504,11 @@ export default function DetailModal(props){
                     })
                 }
                 </div>
-            <div>
-                 
-            </div>
-            </div>
-            <div className='divider' style={{marginTop: 0}} />
+             </div> : null
+            }
+           
+            
+            <div className='divider' style={{marginTop: 10,marginBottom: 15}}/>
             <div 
             className='content-footer'
             style={window.innerWidth <= 500 ? {paddingBottom : '4%'} : {paddingBottom: '3%'}}

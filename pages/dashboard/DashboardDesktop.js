@@ -657,11 +657,10 @@ function DashboardDesktop(props) {
 
     const platformFilterIndices = getAppliedIndices(Lists.platform, Lists.filters.PLATFORM);
     setFiltersFromQuery(platformFilterIndices, platformList, setPlatformList, reset);
-    console.log(platformFilterIndices,"platformFilterIndices")
 
     const educatorFilterIndices = getAppliedIndices(Lists.educator, Lists.filters.EDUCATOR);
     setFiltersFromQuery(educatorFilterIndices, educatorList, setEducatorList, reset);
-    console.log(educatorFilterIndices,"educatorFilterIndices++")
+
   }
 
   const resetFilters = async (makeApiCall = true) => {
@@ -743,13 +742,14 @@ function DashboardDesktop(props) {
       urlService.current.removeEntry('course_type_sub');
       urlService.current.changeEntry(queries.COURSE_TYPE, Lists.courseTypes[courseType]);
       updateBrowserUrl();
-      coursesApiStatus.current.start();
-
+      console.log('coming++++')
       if (pageNumber > 1) {
         setPageNumber(1);
-      } else {
-        handleFilteredData(false);
       }
+      coursesApiStatus.current.start();
+      handleFilteredData(false); 
+      // setPageNumber(1);
+      // handleCardData()
     }
   }, [courseType]);
 
@@ -846,7 +846,7 @@ const _handleSearch=(e)=>{
     if (pageNumber > 1) {
       setPageNumber(1);
     } 
-    handleFilteredData(false);
+    handleFilteredData();
   
   }, [props?.searchValue]);
 
@@ -1001,6 +1001,7 @@ const _handleSearch=(e)=>{
               theme={theme}
               // bgColor='#16181A'
               handleTabNumber={(i) => {
+                setPageNumber(1)
                 setCourseType(i)
                 // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypes[i])
               }}
@@ -1033,6 +1034,7 @@ const _handleSearch=(e)=>{
             dropList={[...Lists.sortByList]}
             selected={pageLoadSortState || sortState}
             onSelect={(item, i) => {
+              setPageNumber(1)
               setPageLoadSortState(null)
               setSortState(i)
               // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)

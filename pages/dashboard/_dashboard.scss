@@ -107,8 +107,8 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-repeat: no-repeat;
-  overflow: auto;
+  // background-repeat: no-repeat;
+  overflow: scroll;
   // background-size: cover;
 
   .course-card-list{
@@ -131,7 +131,7 @@
   // left: 9.2rem;
   // min-width: 100vw;
   flex-grow: 1;
-  overflow: hidden;
+  overflow: scroll;
   background: var(--defaultBackground);
   padding: 1.2rem 2.5rem 1.2rem 2.5rem;
   z-index: 99;
@@ -396,13 +396,20 @@
   .course-page{
     padding: 0;
     width: 100vw;
+    // flex-grow: 1;
+    // overflow: scroll;
+    // background: var(--defaultBackground);
+    // padding: 1.2rem 2.5rem 1.2rem 2.5rem;
+    // z-index: 99;
+    // margin-top: 6vh;
+    // height: 87vh;
   
     .filter-mobile{
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
-      height: 100vh;
+      // height: 100vh;
       height: calc(var(--vh, 1vh) * 100);
       box-sizing: border-box;
       background: var(--defaultBackground);

@@ -292,18 +292,18 @@ const removeUpvote = async (item) => {
         </div>
         <div  className = {!isCardOpen ? "card-image-content" : "card-image-content card-image-content-open"}  onClick={()=> props?.openDetailModal() } >
             <Image loader={myLoader} src={props?.data?.educator[0]?.logo && props?.data?.educator[0]?.logo.length > 0 ? props?.data?.educator[0]?.logo : defaultEducator } objectFit="cover"  height={!isCardOpen ? 82 : 60} width={!isCardOpen ? 82 : 60} alt='instituteLogo' style={{borderRadius: '50%'}}/>
-            <span className='institute-name'>{props?.data?.educator[0]?.name}</span>
+            <span className='institute-name'>{props?.data?.educator[0]?.name.length > 30 ? props?.data?.educator[0]?.name.substring(0,30) + '...' : props?.data?.educator[0]?.name}</span>
         </div>
         <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} onClick={()=> props.openDetailModal()}>
           <div className='course-name' onMouseEnter={()=>setCourseNameTooltip(true)} onMouseLeave={()=>setCourseNameTooltip(false)}>
-            { props?.data?.course_name && props?.data?.course_name.length > 27 ? props?.data?.course_name.substring(0, 27) + '...' : props?.data?.course_name} 
+            { props?.data?.course_name && props?.data?.course_name.length > 50 ? props?.data?.course_name.substring(0, 50) + '...' : props?.data?.course_name} 
           </div>
           {
           courseNameTooltip && props?.data?.course_name.length > 22 ?  <div className="course-name-tooltip">
           <span className="course-name-tooltiptext">{props?.data?.course_name}</span>
           </div> : null
           }
-          <h2 className='course-duration'>
+          <h2 className='course-duration' style={{height: '21px'}}>
           {props?.data?.class_modes}
           </h2>
           <h2 className='course-duration'>

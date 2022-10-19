@@ -101,12 +101,13 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 8px 24px;
+            padding: 8px 5px;
             gap: 12px;
             background: linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%);
             position: absolute;
             top: 9rem;
             z-index: 999;
+            text-align: center;
             // margin-top: 9rem;
        }
 
@@ -344,7 +345,7 @@
         padding: 24px;
         gap: 6px;
         background: var(--subduedBackground);
-        margin-top: 12px;
+        // margin-top: 12px;
        }
 
        .footer-text{

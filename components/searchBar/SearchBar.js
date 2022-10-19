@@ -6,41 +6,6 @@ import axios from "axios";
 import constant from "../../config/constant";
 import queryIcon from '../../assets/images/icons/queryIcon.svg'
 
-const items = [
-  {
-    id: 0,
-    name: "Cobol",
-  },
-  {
-    id: 1,
-    name: "JavaScript",
-  },
-  {
-    id: 2,
-    name: "Basic",
-  },
-  {
-    id: 3,
-    name: "PHP",
-  },
-  {
-    id: 4,
-    name: "Java",
-  },
-  {
-    id: 5,
-    name: "ReactJs",
-  },
-  {
-    id: 6,
-    name: "NodeJs",
-  },
-  {
-    id: 7,
-    name: "Python beginner Course",
-  },
-];
-
 export default function SearchBar(props) {
 
   const [searchQuery,setSearchQuery] = useState([])
@@ -53,31 +18,20 @@ export default function SearchBar(props) {
     }
  }
 
-  const handleOnSearch = (string, results) => {
-    // onSearch will have as the first callback parameter
-    // the string searched and for the second the results.
-    _autocompleteQuery(string)
-  };
-
-  const _autocompleteQuery=async(e)=>{
-    let res = await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`)
-    .then(res => {
-      // this.coursesApiStatus.current.success();
-      setSearchQuery(res.data.data)
-      return res.data;
-    })
-    .catch(err => {
-      // this.coursesApiStatus.current.failed();
-      console.log(err);
-    });
+  const _autocompleteQuery=async(e,results)=>{
+    await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`)
+    .then(response => response.data.data)
+    .then(data => setSearchQuery(data))
+    // .then(res => {
+    //   // this.coursesApiStatus.current.success();
+    //   setSearchQuery(res.data.data)
+    //   return res.data.data;
+    // })
+    // .catch(err => {
+    //   // this.coursesApiStatus.current.failed();
+    //   console.log(err);
+    // });
   }
-
- 
-
-  const handleOnHover = (result) => {
-    // the item hovered
-    // console.log(result);
-  };
 
   const handleOnSelect = (item) => {
     // the item selected
@@ -86,16 +40,12 @@ export default function SearchBar(props) {
     props?.handleSearch(item?.name)
   };
 
-  const handleOnFocus = (e) => {
-    // console.log("Focused",e?.target?.value);
-  };
-
   const formatResult = (item) => {
     return <div style={queryContainer}>
       <span style={queryContent}>
         <Image loader={myLoader} src={item.logo ? item.logo : queryIcon} objectFit="contain" height={20} width={20} alt='query icon' />
         <span style={queryName}>
-          {item?.name.length > 20 ? item?.name.substring(0,20) + '...' : item?.name}
+          {item?.name.length > 54 ? item?.name.substring(0,54) + '...' : item?.name}
         </span>
       </span>
       <span style={queryCategory}>
@@ -105,17 +55,15 @@ export default function SearchBar(props) {
     // return (<p dangerouslySetInnerHTML={{__html: '<strong>'+item+'</strong>'}}></p>); //To format result as html
   };
 
-
   return (
   
     <div className="search-model">
       <div className="search">
         <ReactSearchAutocomplete
           items={searchQuery}
-          onSearch={handleOnSearch}
-          onHover={handleOnHover}
+          onSearch={_autocompleteQuery}
           onSelect={handleOnSelect}
-          onFocus={handleOnFocus}
+          inputDebounce={500}
           inputSearchString={props?.search}
           autoFocus
           showNoResults={false}
@@ -136,7 +84,6 @@ export default function SearchBar(props) {
             hoverBackgroundColor: "#F7F7F7",
             color: "#000000",
             lineColor: "#FFFFFF",
-            boxShadow: "rgba(32, 33, 36, 0.28) 0px 1px 6px 0px",
             width:'90%',
             searchIconMargin: '0 0 0 0px',
             //   iconColor: "#313235"
@@ -145,7 +92,7 @@ export default function SearchBar(props) {
           showClear={false}
         />
       </div>
-      <div className="search-icon-web-1" style={ props.showSearchBar ? {right: 9,top: 6} : null}>
+      <div className="search-icon-web-1" style={ props.showSearchBar ? {right: 9,top: 15} : null}>
         <Image loader={myLoader} src={SearchIcon} className="search-icon-icon" objectFit="cover" height={18} width={18} />
       </div>
     </div>

@@ -129,6 +129,7 @@ function DashboardMobile(props) {
   const [cardActionTaken,setCardActionTaken] = useState(false)
   const cardRef = useRef();
   const prevScrollY = useRef(0);
+  const [nextPage,setNextPage] = useState(true)
 
   const [goingUp, setGoingUp] = useState(false);
 
@@ -478,6 +479,12 @@ const handleFilteredData = async (updatePageNumber = true) => {
     }
 
   let res = await handleSearchClicked();
+
+  if(!res.next){
+    setNextPage(false)
+  }else{
+    setNextPage(true)
+  }
   // if (forcePageNumber === 1) setForcePageNumber(0);
   if (pageNumber <= 1 || updatePageNumber === false) {
     // setCourses([...res.data]);
@@ -605,11 +612,13 @@ useEffect(() => {
 }, [maxPrice]);
 
 useEffect(() => {
+  if(nextPage === true){
   coursesApiStatus.current.start();
   handleFilteredData();
   if (pageNumber === 1) {
     applyFilters();
   }
+}
 }, [pageNumber]);
 
 useEffect( () => {
@@ -672,7 +681,6 @@ useEffect(() => {
     if (pageNumber > 1) {
       setPageNumber(1);
     } else {
-     
       handleFilteredData(false);
     }
   }
@@ -1073,7 +1081,7 @@ const handleScroll=(event)=>{
                   />
                 </div>
                
-                <div className='search-section-mobile' style={ props?.goingUp ? {position: "fixed",bottom: '0rem'} : props.searchValue.length > 0 ? {position: "fixed",top: 0,bottom: '100%'} : !props.searchValue && filterValues.length > 0 && (filterValues[0] === "subject" || filterValues[0] === "min_price" || filterValues[0] === "sort_by_relevance") ? {position: "fixed",bottom: '6rem'} : !props.searchValue && filterValues.length > 0 ? {position: "fixed",bottom: '0rem'} : null }>
+                <div className='search-section-mobile' style={  props.searchValue.length > 0 ? {position: "fixed",top: 0,bottom: '100%'} : props?.goingUp ? {position: "fixed",bottom: '0rem'}  : !props.searchValue && filterValues.length > 0 && (filterValues[0] === "subject" || filterValues[0] === "min_price" || filterValues[0] === "sort_by_relevance") ? {position: "fixed",bottom: '6rem'} : !props.searchValue && filterValues.length > 0 ? {position: "fixed",bottom: '0rem'} : null }>
                 <div style={{width: '100%',boxShadow: 'rgba(17, 12, 46, 0.15) 0px 48px 100px 0px',background: '#FFFFFF' }}>
                   <SearchMobile handleOpenMobileSearch={() => props?.handleOpenMobileSearch()} searchValue={props?.searchValue} clearSearch={()=>props?.clearSearch()} toggleFilterVisible={()=>props?.toggleFilterVisible()} openFilterVisible={()=>props?.openFilterVisible()}/>
                 </div>
@@ -1099,6 +1107,7 @@ const handleScroll=(event)=>{
                       selected={courseTypesFloatState}
                       onSelect={(item, i) => {
                         // setPageLoadSortState(null)
+                        setPageNumber(1)
                         setCourseTypesFloatState(i)
                         // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypesFloatList[i].name)
                       }}
@@ -1118,6 +1127,7 @@ const handleScroll=(event)=>{
                       floatList={[...Lists.sortByList]}
                       selected={sortState}
                       onSelect={(item, i) => {
+                        setPageNumber(1)
                         setPageLoadSortState(null)
                         setSortState(i)
                         // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)

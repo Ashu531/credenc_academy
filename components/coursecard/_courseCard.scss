@@ -9,7 +9,8 @@ background: var(--defaultBackground);
 
 border: 1px solid var(--insignificantStrokeColor);
 border-radius: 16px;
-min-width: 30.5em;
+min-width: 31em;
+// max-width: 40em;
 cursor: pointer;
 
 // &:hover{
@@ -39,6 +40,7 @@ font-size: 12px;
 line-height: 18px;
 color: var(--bodyColor);
 margin-top: 10px;
+text-align: center;
 }
 
 .grey-container{
@@ -93,6 +95,8 @@ padding: 7px;
         font-size: 16px;
         line-height: 24px;
         color: var(--contrastStrokeColor);
+        height: 48px;
+        max-width: 16em;
     }
 
     .course-name-tooltip {

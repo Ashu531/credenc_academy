@@ -139,12 +139,12 @@ export default function SearchBar(props) {
 
   return (
   
-    <div className="search-model" style={ location.pathname == '/search' ? {padding: 0} : null}
+    <div className="search-model-mobile" style={ location.pathname == '/search' ? {padding: 0} : null}
       >
       <div onClick={()=> _handleBack()} style={props?.searchValue && location.pathname == '/' ? {paddingLeft: 15,paddingTop: 3} : {display: 'none'}}>
         <Image src={caretLeftDark} className="search-icon-icon" objectFit="cover" height={20} width={20} />
       </div>
-      <div className="search">
+      <div className="search-bar-mobile">
         <ReactSearchAutocomplete
           items={searchQuery}
           onSearch={handleOnSearch}
@@ -170,8 +170,7 @@ export default function SearchBar(props) {
             border: "none",
             hoverBackgroundColor: "#F7F7F7",
             color: "#000000",
-            lineColor: "#FFFFFF",
-            boxShadow: "rgba(32, 33, 36, 0.28) 0px 1px 6px 0px",
+            // lineColor: "#FFFFFF",
             width:'100%'
             // searchIconMargin: '0 0 0 0px',
             //   iconColor: "#313235"
