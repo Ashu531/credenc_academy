@@ -161,7 +161,7 @@ export default function SearchBar(props) {
             fontFamily: 'Poppins',
             fontStyle: 'normal',
             fontWeight: '500px',
-            fontSize: '16px',
+            fontSize: '14px',
             lineHeight: '21px',
             backgroundColor: "#FFFFFF",
             // borderRadius: "25px",

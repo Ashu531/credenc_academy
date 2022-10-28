@@ -164,7 +164,8 @@ export default function ForgotPasswordModal({
         handleForgotPasswordEnd();
       })
       .catch(err => {
-        setFormError(err?.response?.data.error);
+        console.log(err,"error forgot password+++")
+        setFormError(err?.response?.data.message);
       });
     }
   }
@@ -202,6 +203,8 @@ export default function ForgotPasswordModal({
   // useEffect(() => {
   //   changeNavbarVisibility(false)
   // }, [])
+
+  console.log(formError,"formError+++")
 
   return (
     <div className="modal" onClick={handleForgotPasswordEnd}>

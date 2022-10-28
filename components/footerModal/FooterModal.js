@@ -108,19 +108,19 @@ export default function FooterModal(props){
 
                 <div className='subjectDiv' style={{marginRight: '16%'}}>
                     <p className='paraHeading'>Domain</p>
-                        <a href={`${constant.BASE_URL.DEV}&domain=Technology`} className='removeLine'>
+                        <a href={`${constant.BASE_URL.PROD}&domain=Technology`} className='removeLine'>
                              <p className='para'>Technology</p>
                         </a>
-                        <a href={`${constant.BASE_URL.DEV}&domain=Marketing`} className='removeLine'>
+                        <a href={`${constant.BASE_URL.PROD}&domain=Marketing`} className='removeLine'>
                             <p className='para'>Marketing</p>
                         </a>
-                        <a href={`${constant.BASE_URL.DEV}&domain=Design`} className='removeLine'>
+                        <a href={`${constant.BASE_URL.PROD}&domain=Design`} className='removeLine'>
                             <p className='para'>Design</p>
                         </a>
-                        <a href={`${constant.BASE_URL.DEV}&domain=Business`} className='removeLine'>
+                        <a href={`${constant.BASE_URL.PROD}&domain=Business`} className='removeLine'>
                             <p className='para'>Business</p>
                         </a>
-                        <a href={`${constant.BASE_URL.DEV}&domain=Others`} className='removeLine'>
+                        <a href={`${constant.BASE_URL.PROD}&domain=Others`} className='removeLine'>
                             <p className='para'>Others</p>
                         </a>
                 </div>

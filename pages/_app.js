@@ -150,6 +150,13 @@ class MyApp extends App {
     })
   }
 
+  closeFooterModal = ()=>{
+    console.log('coming++++')
+    this.setState({
+      footerModal: false
+    })
+  }
+
   toggleFilterExpandedStage=()=>{
     this.setState({
       filterExpandedStage: !this.state.filterExpandedStage
@@ -432,6 +439,7 @@ class MyApp extends App {
             <Footer 
             toggleFooterModal={this.toggleFooterModal} 
             filterExpandedStage={this.state.filterExpandedStage}
+            closeFooterModal={this.closeFooterModal}
             title="©Credenc2022"/> : 
             <FooterMobile
             openLoginModal={()=>this.openLoginModal()}

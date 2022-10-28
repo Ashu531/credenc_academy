@@ -406,7 +406,7 @@ export default function DetailModal(props){
             </div>
             <div className='detail-modal-middle-section'>
               <div className='detail-modal-course-content'>
-                <div className='detail-modal-course-container'>
+                <div className='detail-modal-course-container' style={{marginTop: 10}}>
                     <span className='heading1'>
                     {courseData?.course_name}
                     </span>

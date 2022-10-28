@@ -1116,7 +1116,7 @@ const _handleSearch=(e)=>{
           </div>
          </div> 
 
-       <div className="course-navbar" style={searchRef && searchRef?.current !== null && searchRef?.current?.getBoundingClientRect().y <= -196 ? { position: 'fixed',top: '8vh',background: '#FFFFFF',zIndex: 9999,boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.1)',padding: '0rem 5rem'} : {padding: '0rem 5rem'}}>
+       <div className="course-navbar" style={searchRef && searchRef?.current !== null && searchRef?.current?.getBoundingClientRect().y <= -196 ? { position: 'fixed',top: '8vh',background: '#FFFFFF',zIndex: 9999,boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.1)',padding: '0.8rem 5rem 0rem 5rem'} : {padding: '0.8rem 5rem 0rem 5rem'}}>
         <Navbar 
             toggleFilterModal={openFilterModal} 
             openSubjectModal={openSubjectModal} 

@@ -96,7 +96,7 @@ function DashboardMobile(props) {
   const [selectedSubject,setSelectedSubject] = useState({})
   const coursesApiStatus = useRef(new ApiStatus());
   const [mounted, setMounted] = useState(false);
-  const [courseType, setCourseType] = useState(getTabNumber(queries.COURSE_TYPE, urlService) || 4);
+  const [courseType, setCourseType] = useState(getTabNumber(queries.COURSE_TYPE, urlService) || 0);
    
   const [courses, setCourses] = useState([]);
   const [maxPrice, setMaxPrice] = useState(0);
@@ -117,7 +117,7 @@ function DashboardMobile(props) {
   const [sortState, setSortState] = useState(0);
   const [pageLoadSortState, setPageLoadSortState] = useState(null);
 
-  const [courseTypesFloatState, setCourseTypesFloatState] = useState(4)
+  const [courseTypesFloatState, setCourseTypesFloatState] = useState(0)
   const [mobileFilter, setMobileFilter] = useState(false)
   const [mobileFiltersState, setMobileFiltersState] = useState(false)
   let appliedFiltersCount = useRef(0);
