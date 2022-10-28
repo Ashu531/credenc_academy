@@ -45,7 +45,7 @@ export default function SearchBar(props) {
       <span style={queryContent}>
         <Image loader={myLoader} src={item.logo ? item.logo : queryIcon} objectFit="contain" height={20} width={20} alt='query icon' />
         <span style={queryName}>
-          {item?.name.length > 54 ? item?.name.substring(0,54) + '...' : item?.name}
+          {item?.name.length > 20 ? item?.name.substring(0,20) + '...' : item?.name}
         </span>
       </span>
       <span style={queryCategory}>

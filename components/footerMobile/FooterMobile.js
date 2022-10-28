@@ -12,6 +12,9 @@ import profileIcon from '../../assets/images/icons/profile-icon.svg';
 import { useRouter } from 'next/router'
 import Link from "next/link";
 import UrlService from "../../helper/urlService";
+import bookmarkSelected from "../../assets/images/icons/bookmarkSelectedIcon.svg";
+import userSelectedIcon from "../../assets/images/icons/userSelectedIcon.svg";
+import homeDisabled from "../../assets/images/icons/homeDisabled.svg";
 const EdtechToken = 'credenc-edtech-authkey';
 
 export default function FooterMobile(props){ 
@@ -31,11 +34,13 @@ export default function FooterMobile(props){
       setToken(authKey)
     }
 
+    console.log(props?.loginModal,"props?.loginModal+++")
+
     const renderProfile = () => {
         if (token && token.length > 0) {
             return (
                 <Image  
-                src={profileIcon}
+                src={profileIcon }
                 alt='user icon'
                 objectFit='cover'
                 height={18} 
@@ -49,7 +54,7 @@ export default function FooterMobile(props){
         } else {
             return (
                 <Image 
-                src={userIcon}
+                src={props?.loginModal ? userSelectedIcon : userIcon}
                 alt='profile icon'
                 objectFit='cover'
                 height={18} 
@@ -84,12 +89,14 @@ export default function FooterMobile(props){
         props?.closeFilterVisible()
     }
 
+    console.log(location,"location+++")
+
     return(
         <div className='mobile-footer' style={location.pathname === '/search/' || (filterValues.length > 0 && location.pathname !== '/bookmarks' && location.pathname !== '/') || props?.goingUp ? {display: 'none'} : props?.filterModalVisible ? {zIndex: 0} : null }>
             <div className='mobile-footer-container'>
 
                 <div className='mobile-footer-element' onClick={()=>navigateHomePage()}>
-                        <Image src={props?.theme === 'dark' ? homeIconLight : homeIcon} objectFit="contain" alt='homeIcon' style={{alignSelf:"flex-end"}} />
+                        <Image src={location.pathname === '/' && !props?.loginModal ? homeIcon : homeDisabled} objectFit="contain" alt='homeIcon' style={{alignSelf:"flex-end"}} />
                         <span className='mobile-footer-text'>
                             Home
                         </span>
@@ -102,7 +109,12 @@ export default function FooterMobile(props){
                 </span>
             </div>
             <div className='mobile-footer-element' onClick={()=>navigateBookmarkPage()}>
-                <Image src={ props?.theme === 'dark' ? bookmarkIconLight : bookmarkIcon} objectFit="contain" alt='bookmarkIcon' height={18} width={18}/>
+                {
+                    location.pathname === '/bookmarks' && !props?.loginModal ? 
+                    <Image src={bookmarkSelected} objectFit="contain" alt='bookmarkIcon' height={18} width={18}/> :
+                    <Image src={bookmarkIcon} objectFit="contain" alt='bookmarkIcon' height={18} width={18}/>
+                }
+                
                 <span className='mobile-footer-text'>
                     Bookmark
                 </span>

@@ -1041,7 +1041,7 @@ const _handleSearch=(e)=>{
             }}
           />
           <div style={{ flexGrow: 1 }}></div>
-          <div className="text-container">Showing {courseCardData.length} Course{courseCardData.length === 1 ? '' : 's'}</div>
+          <div className="text-container">Showing {totalCourses} Course{totalCourses === 1 ? '' : 's'}</div>
         </div>
         <div className="list-container" style={{padding: '10rem 2.4rem 5rem 0rem'}}>
           <List
@@ -1118,7 +1118,7 @@ const _handleSearch=(e)=>{
           </div>
          </div> 
 
-       <div className="course-navbar" style={  searchRef && searchRef?.current !== null && searchRef?.current?.getBoundingClientRect().y <= -196 ? { position: 'fixed',top: '8vh',background: '#FFFFFF',zIndex: 9999,boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.1)' } : null}>
+       <div className="course-navbar" style={searchRef && searchRef?.current !== null && searchRef?.current?.getBoundingClientRect().y <= -196 ? { position: 'fixed',top: '8vh',background: '#FFFFFF',zIndex: 9999,boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.1)',padding: '0rem 5rem'} : {padding: '0rem 5rem'}}>
         <Navbar 
             toggleFilterModal={openFilterModal} 
             openSubjectModal={openSubjectModal} 

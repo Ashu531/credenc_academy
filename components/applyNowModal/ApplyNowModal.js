@@ -98,22 +98,22 @@ export default function ApplyNowModal(props){
                     <Input placeholder="Full Name" handleInput={(e)=>handleName(e)} value={name} type='text' />
                     </span>
                    </div>
-                   <div className='contact-content' style={{display:"flex",flexDirection:'column',justifyContent:'flex-start',alignItems:'flex-start',width:'100%'}}>
-                     <div className='mobile-content' style={ {width:'100%'}}>
+                   <div className='contact-content' style={window.innerWidth <= 500 ? {display:"flex",flexDirection:'column',justifyContent:'flex-start',alignItems:'flex-start',width:'100%'} : {display:"flex",width:'100%'}}>
+                     <div className='mobile-content' style={window.innerWidth >  500 ? {width: '50%'} : {width:'100%'}}>
                         <span className='label-text'>
                         Mobile Number*
                         </span>
                         <Input placeholder='Mobile Number' handleInput={(e)=>handleNumber(e)} value={number} lenght={10} />
                      </div>
-                     <div className='email-content' style={{width:'100%'}}>
+                     <div className='email-content' style={window.innerWidth >  500 ? {width: '50%'} : {width:'100%'}}>
                         <span className='label-text'>
                         Email ID*
                         </span>
                         <Input placeholder='Email Id' handleInput={(e)=>handleEmail(e)} value={email} type='text'/>
                      </div>
                    </div>
-                   <div className='contact-content' style={{display:"flex",flexDirection:'column',justifyContent:'flex-start',alignItems:'flex-start',width:'100%'}}>
-                     <div className='mobile-content' style={{width:'100%'}}>
+                   <div className='contact-content' style={window.innerWidth <= 500 ? {display:"flex",flexDirection:'column',justifyContent:'flex-start',alignItems:'flex-start',width:'100%'} : {display:"flex",width:'100%'}}>
+                     <div className='mobile-content' style={window.innerWidth >  500 ? {width: '50%'} : {width:'100%'}}>
                         <span className='label-text'>
                         Gender*
                         </span>

@@ -6,7 +6,7 @@ const constant= {
     },
     BASE_URL:{
       PROD: "https://skillrush.credenc.com/?",
-      DEV: "https://skillrush.credenc.com/?"
+      DEV: "http://localhost:3000/?"
     },
     COURSES:{
      SUB_CATEGORIES : [

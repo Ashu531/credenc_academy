@@ -395,9 +395,14 @@ export default function DetailModal(props){
             <div className='detail-modal-banner'  
             // style={ window.innerWidth <= 500 ? {width:'100%'} : null }
             >
-                <span className='banner-text'>
-                Next batch starts on {moment(courseData?.enrollment_start_date).format("MMM Do YY")}
-                </span>
+                { courseData?.enrollment_start_date && courseData?.enrollment_start_date.length > 0 ?
+                    <span className='banner-text'>
+                      Next batch starts on {moment(courseData?.enrollment_start_date).format("MMM Do YY")}
+                    </span> : 
+                    <span className='banner-text'>
+                    Next batch starts on soon
+                  </span>
+                } 
             </div>
             <div className='detail-modal-middle-section'>
               <div className='detail-modal-course-content'>
@@ -553,7 +558,7 @@ export default function DetailModal(props){
          >
             <div className='detail-modal-footer-section-left'>
                 <span className='price-text'>
-                {courseData?.finance_display[0] > 0 ? `₹${courseData?.finance_display[0]}` : 'Price Unknown'}
+                {courseData?.finance_display[0] ? `₹${courseData?.finance_display[0]}` : 'Price Unknown'}
                 </span>
             </div>
             <div className='detail-modal-footer-section-right' 

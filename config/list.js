@@ -23,9 +23,9 @@ export default class Lists {
     ]
 
     static classModes = [
-        {name: 'Online Live', filterValue: 'Online Live', isApplied: false},
-        {name: 'Online Recorded', filterValue: 'Online Recorded', isApplied: false},
-        {name: 'On Campus', filterValue: 'On Campus', isApplied: false},
+        {name: 'Live', filterValue: 'Live', isApplied: false},
+        {name: 'Recorded', filterValue: 'Recorded', isApplied: false},
+        {name: 'Campus', filterValue: 'Campus', isApplied: false},
     ]
 
     static coursePaceList = [
@@ -55,11 +55,10 @@ export default class Lists {
     ]
 
     static financeOptions = [
-        {name: 'One Time Pay', filterValue: 'lumpsum', isApplied: false},
-        {name: 'Subscription', filterValue: 'subscription', isApplied: false},
+        {name: 'EMI', filterValue: 'emi', isApplied: false},
+        {name: 'Loan', filterValue: 'loan', isApplied: false},
+        {name: 'Lumpsum', filterValue: 'lumpsum', isApplied: false},
         {name: 'Pay After Placement', filterValue: 'pay_after_placement', isApplied: false},
-        {name: 'No Cost EMI', filterValue: 'no_cost_emi', isApplied: false},
-        {name: 'Installment', filterValue: 'installment', isApplied: false},
     ]
 
     static languages = [

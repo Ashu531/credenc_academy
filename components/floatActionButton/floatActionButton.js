@@ -45,8 +45,6 @@ export default function FloatActionButton({
         openFilterVisible()
     }
 
-    console.log(displayContent,"displayContent++++");
-
     if (type === 'course type') {
         return (
             <>

@@ -441,6 +441,7 @@ class MyApp extends App {
             loggedIn={this.state.loggedIn}
             goingUp={this.state.goingUp}
             closeLoginModal={()=>this.closeLoginModal()}
+            loginModal={this.state.loginModal}
             />
          }
         <SlidingPanel
