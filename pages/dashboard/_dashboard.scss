@@ -185,7 +185,7 @@
 
     .filter-footer {
       justify-self: flex-end;
-      margin-bottom: 14vh;
+      // margin-bottom: 14vh;
       background: var(--defaultBackground);
       z-index: 10;
       min-height: 3.2rem;
@@ -199,11 +199,14 @@
       align-items: center;
       .link {
         margin: 0;
-        text-decoration: none;
+        font-family: 'Poppins';
         font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 15px;
         text-transform: uppercase;
-        color: var(--defaultBackground);
-        font-size: 1rem;
+        color: var(--bodyColor);
+        text-decoration: none;
       }
       .mobile-actions-container {
         display: none;

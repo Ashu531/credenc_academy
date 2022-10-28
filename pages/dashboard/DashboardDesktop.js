@@ -62,7 +62,6 @@ const queries = {
   SORT_BY_RELEVANCE: 'sort_by_relevance',
   SORT_BY_DATE: 'sort_by_date',
   FINANCE_OPTIONS: 'finance_options',
-  COURSE_TYPE: 'course_type',
   PLATFORM: 'platform',
   EDUCATOR: 'educator'
 
@@ -98,7 +97,7 @@ function DashboardDesktop(props) {
   const [detailData,setDetailData] = useState({});
   const coursesApiStatus = useRef(new ApiStatus());
   const [mounted, setMounted] = useState(false);
-  const [courseType, setCourseType] = useState(getTabNumber(queries.COURSE_TYPE, urlService) || 4);
+  const [courseType, setCourseType] = useState(getTabNumber(queries.COURSE_TYPE, urlService) || 0);
 
   const [courses, setCourses] = useState([]);
   const [maxPrice, setMaxPrice] = useState(0);
@@ -119,7 +118,7 @@ function DashboardDesktop(props) {
   const [sortState, setSortState] = useState(0);
   const [pageLoadSortState, setPageLoadSortState] = useState(null);
   const [search,setSearch] = useState('');
-  const [courseTypesFloatState, setCourseTypesFloatState] = useState(4)
+  const [courseTypesFloatState, setCourseTypesFloatState] = useState(0)
   const [mobileFiltersState, setMobileFiltersState] = useState(false)
   const [showSearchBar, setShowSearchBar] = useState(false);
   const searchRef = useRef();
@@ -742,7 +741,6 @@ function DashboardDesktop(props) {
       urlService.current.removeEntry('course_type_sub');
       urlService.current.changeEntry(queries.COURSE_TYPE, Lists.courseTypes[courseType]);
       updateBrowserUrl();
-      console.log('coming++++')
       if (pageNumber > 1) {
         setPageNumber(1);
       }
@@ -966,7 +964,7 @@ const _handleSearch=(e)=>{
           />
         </div>
         <div className="filter-footer">
-          {/* <Link className='link' href={`/privacy`} target='_blank' rel='noopener noreferer'>Privacy policy & disclaimer</Link> */}
+          <a href='/privacy' target='_blank' style={{textDecoration: 'none'}}><span className='link' >Privacy policy & disclaimer</span></a>
           <div className='mobile-actions-container'>
             <div className='btn-container reset-button-wrapper'>
               <Button
@@ -1009,7 +1007,7 @@ const _handleSearch=(e)=>{
             />
           </div>
           <SecondaryDropdown
-            heading={Lists.sortByList[sortState]['name']}
+            heading={'SORT BY POPULARITY'}
             style={theme === 'dark' ? {
               background: '#141414',
               padding: '1.4rem',

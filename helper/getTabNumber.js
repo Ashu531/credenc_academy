@@ -5,15 +5,15 @@ export const getTabNumber = (type, urlService) => {
         let tabName = urlService.current.getValueFromEntry(type);
         switch (tabName) {
             case 'Certificate':
-                return 0;
-            case 'Diploma':
                 return 1;
-            case 'Degree':
+            case 'Diploma':
                 return 2;
-            case 'Job Assured':
+            case 'Degree':
                 return 3;
-            default:
+            case 'Job Assured':
                 return 4;
+            default:
+                return 0;
         }
     }
 }

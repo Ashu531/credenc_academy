@@ -5,6 +5,7 @@ import styles from "./_segmentedbar.module.scss";
 
 const SegmentedBar = forwardRef((props, ref) => {
   const { items, handleTabNumber, selected, type = "default", style={}, bgColor='' } = props;
+  console.log(selected,"selected++++")
   const [activeItem, setActiveitem] = useState(selected || 0);
 
   useImperativeHandle(ref, () => ({

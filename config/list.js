@@ -98,10 +98,10 @@ export default class Lists {
     ]
 
     static sortByList = [
-        {id: 0, name: 'Most Relevant', filterValue: 'sort_by_relevance'},
-        {id: 1, name: 'Most Upvoted', filterValue: 'sort_by_upvotes'},
-        {id: 2, name: 'Price: High to Low', filterValue: 'sort_by_price_high'},
-        {id: 3, name: 'Price: Low to High', filterValue: 'sort_by_price_low'},
+        {id: 0, name: 'MOST RELEVANT', filterValue: 'sort_by_relevance'},
+        {id: 1, name: 'MOST UPVOTED', filterValue: 'sort_by_upvotes'},
+        {id: 2, name: 'PRICE: HIGH TO LOW', filterValue: 'sort_by_price_high'},
+        {id: 3, name: 'PRICE: LOW TO HIGH', filterValue: 'sort_by_price_low'},
         // {id: 4, name: 'Sort by Rating'},
     ]
 
@@ -111,15 +111,15 @@ export default class Lists {
     }
 
     static courseTypesFloatList = [
-        {id: 0, name: 'Certificate', filterValue: 'Certificate'},
-        {id: 1, name: 'Diploma', filterValue: 'Diploma'},
-        {id: 2, name: 'Degree', filterValue: 'Degree'},
-        {id: 3, name: 'Job Assured', filterValue: 'Job Assured'},
-        {id: 4, name: 'All', filterValue: 'All'},
-        // {id: 4, name: 'Sort by Rating'},
+        {id: 0, name: 'All', filterValue: 'All'},
+        {id: 1, name: 'Certificate', filterValue: 'Certificate'},
+        {id: 2, name: 'Diploma', filterValue: 'Diploma'},
+        {id: 3, name: 'Degree', filterValue: 'Degree'},
+        {id: 4, name: 'Job Assured', filterValue: 'Job Assured'},
+       // {id: 4, name: 'Sort by Rating'},
     ]
 
-    static courseTypes = ['Certificate', 'Diploma', 'Degree', 'Job Assured', 'All'];
+    static courseTypes = ['All','Certificate', 'Diploma', 'Degree', 'Job Assured'];
 
     static genderTypes= ['Male','Female','Others']
 }
