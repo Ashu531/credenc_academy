@@ -930,6 +930,7 @@ const handleScroll=(event)=>{
                     getRange={handleCostRange}
                     updateCostSlider={updateCostSlider}
                     setIsAppliedCostSlider={() => setIsAppliedCostSlider(true)}
+                    isAppliedCostSlider={isAppliedCostSlider}
                     theme={theme}
                   />
                   <Filter

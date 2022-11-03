@@ -34,8 +34,6 @@ export default function FooterMobile(props){
       setToken(authKey)
     }
 
-    console.log(props?.loginModal,"props?.loginModal+++")
-
     const renderProfile = () => {
         if (token && token.length > 0) {
             return (
@@ -89,10 +87,8 @@ export default function FooterMobile(props){
         props?.closeFilterVisible()
     }
 
-    console.log(location,"location+++")
-
     return(
-        <div className='mobile-footer' style={location.pathname === '/search/' || (filterValues.length > 0 && location.pathname !== '/bookmarks' && location.pathname !== '/') || props?.goingUp ? {display: 'none'} : props?.filterModalVisible ? {zIndex: 0} : null }>
+        <div className='mobile-footer' style={location.pathname === '/search/' || (filterValues.length > 0 && location.pathname !== '/bookmarks' && location.pathname !== '/') || (props?.goingUp) ? {position: 'absolute', top: -9999, left: -9999} : props?.filterModalVisible ? {zIndex: 0} : null }>
             <div className='mobile-footer-container'>
 
                 <div className='mobile-footer-element' onClick={()=>navigateHomePage()}>

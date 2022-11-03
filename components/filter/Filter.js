@@ -8,7 +8,7 @@ import RangeInput from '../input/RangeInput';
 import List from '../list/List'; 
 import Image from "next/image";
 
-export default function Filter({ item, filterState, updateFilterState, min, max, getRange, updateCostSlider, setIsAppliedCostSlider,theme,icon }) {
+export default function Filter({ item, filterState, updateFilterState, min, max, getRange, updateCostSlider, setIsAppliedCostSlider,theme,isAppliedCostSlider }) {
 
   const myLoader = ({ src, width, quality }) => {
     if(src && src.length > 0){
@@ -133,7 +133,7 @@ export default function Filter({ item, filterState, updateFilterState, min, max,
     <div className='filter-component' style={{background: expanded ? theme === 'dark' ? '#222222' : '#FFFFFF' : ''}}>
         <div className={`filter-button`} onClick={() => setExpanded(!expanded)}>
             <div>{item.name}</div>
-            {selectedItems(filterState) && <div className='applied'></div>}
+            {(selectedItems(filterState) || isAppliedCostSlider) && <div className='applied'></div>}
             <Image src={expanded ? caretUp : caretDown} objectFit="cover"/>
         </div>
         {/* {

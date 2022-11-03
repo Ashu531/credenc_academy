@@ -90,7 +90,7 @@ export default class Lists {
         {name: 'MIA Digital University', filterValue: 'MIA Digital University', isApplied: false},
         {name: 'NMIMS Global', filterValue: 'NMIMS Global', isApplied: false},
         {name: 'Rennes School of Business', filterValue: 'Rennes School of Business', isApplied: false},
-        {name: 'Sprott School of business at Carleton University', filterValue: 'Sprott School of business at Carleton University', isApplied: false},
+        {name: 'Sprott School of Business at Carleton University', filterValue: 'Sprott School of Business at Carleton University', isApplied: false},
         {name: 'Steinbeis University', filterValue: 'Steinbeis University', isApplied: false},
         {name: 'University of Strathclyde Glasgow', filterValue: 'University of Strathclyde Glasgow', isApplied: false},
         {name: 'VijayBhoomi University', filterValue: 'VijayBhoomi University', isApplied: false},

@@ -890,6 +890,8 @@ const _handleSearch=(e)=>{
   const _handleCardActionTaken=()=>{
     setCardActionTaken(true)
   }
+
+  console.log(isAppliedCostSlider,"isAppliedCostSlider+++")
   
  return(
         <div>      
@@ -924,6 +926,7 @@ const _handleSearch=(e)=>{
             getRange={handleCostRange}
             updateCostSlider={updateCostSlider}
             setIsAppliedCostSlider={() => setIsAppliedCostSlider(true)}
+            isAppliedCostSlider={isAppliedCostSlider}
             theme={theme}
           />
           <Filter
@@ -1116,7 +1119,7 @@ const _handleSearch=(e)=>{
           </div>
          </div> 
 
-       <div className="course-navbar" style={searchRef && searchRef?.current !== null && searchRef?.current?.getBoundingClientRect().y <= -196 ? { position: 'fixed',top: '8vh',background: '#FFFFFF',zIndex: 9999,boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.1)',padding: '0.8rem 5rem 0rem 5rem'} : {padding: '0.8rem 5rem 0rem 5rem'}}>
+       <div className="course-navbar" style={searchRef && searchRef?.current !== null && searchRef?.current?.getBoundingClientRect().y <= -196 ? { position: 'fixed',top: '8vh',background: '#FFFFFF',zIndex: 9999,boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.1)',padding: '1rem 5rem 0rem 5rem'} : {padding: '0.8rem 5rem 0rem 5rem'}}>
         <Navbar 
             toggleFilterModal={openFilterModal} 
             openSubjectModal={openSubjectModal} 
@@ -1184,7 +1187,7 @@ const _handleSearch=(e)=>{
         size={30}
         >
           <div className='filter-sidebar-content'>
-                {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={window.innerWidth > 500 ? {minHeight : '95vh'} : null}>
+                {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={window.innerWidth > 500 ? {minHeight : '95vh',overflow: 'scroll'} : null}>
                     <div className="filter-head">
                       <span>{appliedFiltersCount.current === 0 ? <span className="no-filter-text">No filters applied</span> : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}</span>
                       {/* {appliedFiltersCount.current !== 0 && <span style={window.innerWidth > 500 ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>} */}
@@ -1213,6 +1216,7 @@ const _handleSearch=(e)=>{
                         getRange={handleCostRange}
                         updateCostSlider={updateCostSlider}
                         setIsAppliedCostSlider={() => setIsAppliedCostSlider(true)}
+                        isAppliedCostSlider={isAppliedCostSlider}
                         theme={theme}
                       />
                       <Filter

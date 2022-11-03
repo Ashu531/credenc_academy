@@ -89,16 +89,16 @@ export default function FooterModal(props){
             <div className='programAndSubjectDiv' style={{cursor: 'pointer'}}>
                 <div className='programDiv'>
                      <p className='paraHeading'>Program Type</p>
-                     <a href={`${constant.BASE_URL.DEV}&course_type=Certificate`} className='removeLine'>
+                     <a href={`${constant.BASE_URL.PROD}&course_type=Certificate`} className='removeLine'>
                     <p className='para'>Certificate</p>
                     </a>
-                    <a href={`${constant.BASE_URL.DEV}&course_type=Diploma`} className='removeLine'>
+                    <a href={`${constant.BASE_URL.PROD}&course_type=Diploma`} className='removeLine'>
                     <p className='para'>Diploma</p>
                     </a>
-                    <a href={`${constant.BASE_URL.DEV}&course_type=Degree`} className='removeLine'>
+                    <a href={`${constant.BASE_URL.PROD}&course_type=Degree`} className='removeLine'>
                     <p className='para'>Degree</p>
                     </a>
-                    <a href={`${constant.BASE_URL.DEV}&course_type=Job%20Assured`} className='removeLine'>
+                    <a href={`${constant.BASE_URL.PROD}&course_type=Job%20Assured`} className='removeLine'>
                     <p className='para'>Job assured</p>
                     </a>
                     {/* <a href={`${constant.BASE_URL.DEV}&course_type=Certificate`} className='removeLine'>

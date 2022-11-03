@@ -246,7 +246,6 @@ export default function PrimaryNavbar({
   };
 
   useEffect(() => {
-    console.log("I AM ENTERING HERE!")
     if (window.location.href.includes('privacy') || window.location.href.includes('disclaimer')) {
       return;
     }

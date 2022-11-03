@@ -63,12 +63,14 @@ class MyApp extends App {
   }
 
   _setScrollUp=()=>{
+    console.log("coming++++ up")
     this.setState({
       goingUp: true
     })
   }
 
   _setScrollDown=()=>{
+    console.log("coming++++ down")
     this.setState({
       goingUp: false
     })
@@ -151,7 +153,6 @@ class MyApp extends App {
   }
 
   closeFooterModal = ()=>{
-    console.log('coming++++')
     this.setState({
       footerModal: false
     })
