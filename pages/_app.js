@@ -63,14 +63,12 @@ class MyApp extends App {
   }
 
   _setScrollUp=()=>{
-    console.log("coming++++ up")
     this.setState({
       goingUp: true
     })
   }
 
   _setScrollDown=()=>{
-    console.log("coming++++ down")
     this.setState({
       goingUp: false
     })
@@ -364,7 +362,7 @@ class MyApp extends App {
     return <>
     <Provider store={store} >
       {
-        this.state.mounted && <div data-theme={this.state.theme} style={this.state.loginModal || this.state.forgotPasswordModal || this.state.footerModal || this.state.coursePrevieModal ? {height: 'calc(var(--vh, 1vh) * 100)',overflow: 'hidden'} : {height: 'calc(var(--vh, 1vh) * 100)'}}>
+        this.state.mounted && <div data-theme={this.state.theme} style={this.state.loginModal || this.state.forgotPasswordModal || this.state.footerModal || this.state.coursePrevieModal ? {height: '100%',overflow: 'hidden'} : {height: '100%',overflow: 'hidden'}}>
           {
             window.innerWidth > 500 ? 
             <HeaderContainer 

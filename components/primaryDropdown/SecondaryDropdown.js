@@ -37,8 +37,10 @@ export default function SecondaryDropdown({
         </div>}
         {icon && <Image src={icon}/>}
         <div className={getWrapperClasses()}>
-            <div className={getContentClasses()}>
-                {dropList.map((item, i) => (
+                <div 
+                className=
+                {`${getContentClasses()} border-gradient`}>
+                  {dropList.map((item, i) => (
                     <div key={item.id} className='drop-item' onClick={() => onSelect(item, i)}>
                         <span className={checkIfActive(dropList[selected].id, (item.id)) ? 'green-text' : ''}>{item.name || item.value} </span>
                         <div>
@@ -50,7 +52,7 @@ export default function SecondaryDropdown({
                 {dropList.length === 0 && 
                     Array(5).fill(null).map((it, i) => <Skeleton key={`dummy${i}`} variant='text' width='70%' height='2.4rem' sx={{bgcolor: '#303030', margin: '0 2rem'}}/>)
                 }
-            </div>
+                  </div>
         </div>
     </div>
   )

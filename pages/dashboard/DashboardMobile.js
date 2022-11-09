@@ -31,6 +31,8 @@ import Error from "../../components/error/Error"
 import SearchMobile from '../../components/searchBarMobile/SearchBar'
 import sortingIcon from '../../assets/images/icons/filterSortMobile.svg';
 import backArrowDark from '../../assets/images/icons/backArrowDark.svg'
+import InfiniteScroll from 'react-infinite-scroll-component';
+
 const compareKey = 'credenc-marketplace-compares';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const subjectKey = 'credenc-edtech-subject';
@@ -485,12 +487,15 @@ const handleFilteredData = async (updatePageNumber = true) => {
   }else{
     setNextPage(true)
   }
+
+  // setCourseCardData([...courseCardData, ...res.data])
+
+  // setCourseCardData([...courseCardData, ...res.data])
   // if (forcePageNumber === 1) setForcePageNumber(0);
+
   if (pageNumber <= 1 || updatePageNumber === false) {
-    // setCourses([...res.data]);
     setCourseCardData([...res.data])
   } else {
-    // setCourses([...courseCardData, ...res.data]);
     setCourseCardData([...courseCardData, ...res.data])
   }
   setMaxPrice(Math.floor(parseFloat(res.max_price)));
@@ -787,7 +792,7 @@ const getCardDetails=(item)=>{
       setPageNumber(1);
     } else {
       coursesApiStatus.current.start();
-      handleFilteredData();
+      handleFilteredData(false);
     }
 }
 
@@ -816,6 +821,7 @@ const _closeApplyNowModal=()=>{
 }
 
 const setSubCategoriesData=(item)=>{
+  setPageNumber(1)
   setSelectedCategory(item.name)
   _getSubCategoryDetails(item)
 }
@@ -830,7 +836,9 @@ const _getSubCategoryDetails=(item)=>{
     urlService.current.addEntry('subject', item.name);
   }
 
-  getCardData(item)
+  handleFilteredData();
+
+  // getCardData(item)
 }
 
 useEffect(() => {
@@ -863,18 +871,23 @@ useEffect(() => {
   return () => document.removeEventListener("scroll", handleScroll, true);
 }, [props?.goingUp]);
 
-const handleScroll=(event)=>{
-   if(cardRef && cardRef.current !== null){
-    const currentScrollY = cardRef.current.getBoundingClientRect().y;
-    if (prevScrollY.current < currentScrollY && props?.goingUp) {
-      props?.setScrollDown();
-    }
-    if (prevScrollY.current > currentScrollY && !props?.goingUp) {
-      props?.setScrollUp();
-    }
+const handleScroll=()=>{
+  //  if(cardRef && cardRef.current !== null){
+  //   const currentScrollY = cardRef.current.getBoundingClientRect().y;
+  //   if (prevScrollY.current < currentScrollY && props?.goingUp) {
+  //     props?.setScrollDown();
+  //   }
+  //   if (prevScrollY.current > currentScrollY && !props?.goingUp) {
+  //     props?.setScrollUp();
+  //   }
 
-    prevScrollY.current = currentScrollY;
-   }
+  //   prevScrollY.current = currentScrollY;
+  //  }
+}
+
+const handleScrollData=()=>{
+  setPageNumber(pageNumber+1)
+  handleFilteredData()
 }
 
    return(
@@ -907,7 +920,7 @@ const handleScroll=(event)=>{
                     <Image src={closeIcon} objectFit='cover' />
                     </span>} */}
                 </div>
-                <div className='filters'>
+                <div className='filters' style={{overflow: "scroll"}}>
 
                   <Filter
                     item={{ name: 'Class Mode', type: filterList.CLASS_MODE }}
@@ -1069,8 +1082,8 @@ const handleScroll=(event)=>{
                 <div style={ props.searchValue.length > 0 ? {display: 'none'} : props.goingUp ? {display:'flex',flexDirection:'row',alignItems:"center",overflow:'scroll',background: '#FFFFFF',boxSizing: "border-box" ,boxShadow: 'rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px',width:'100%',position:'fixed',top: '0rem',zIndex: 998} :  {display:'flex',flexDirection:'row',alignItems:"center",overflow:'scroll',background: '#FFFFFF',boxSizing: "border-box" ,boxShadow: 'rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px',width:'100%',position:'fixed',top: '5rem',zIndex: 998}}>
                    <SubjectTab title={subCategory} selectedCategory={selectedCategory} setSubCategoriesData={setSubCategoriesData} theme={props.theme} />  
                 </div>
-                <div className="list-container" style={ window.innerWidth <= 500 ?  props.searchValue.length > 0 ? {marginTop: '5rem'} : null : null} ref={cardRef}>
-                  <List
+                {/* <div className="list-container" style={ window.innerWidth <= 500 ?  props.searchValue.length > 0 ? {marginTop: '5rem'} : null : null} ref={cardRef}> */}
+                  {/* <List
                     type={listTypes?.HORIZONTAL_CARDS}
                     list={courseCardData}
                     listApiStatus={coursesApiStatus}
@@ -1079,7 +1092,38 @@ const handleScroll=(event)=>{
                     openApplyNowModal={(item)=> _openApplyNowModal(item)}
                     openLoginModal={()=>props?.openLoginModal()}
                     setLastElement={setLastCourse}
-                  />
+                  /> */}
+                <div className="list-container" id="scrollableDiv" style={props?.goingUp ? { height: 800, overflow: "auto", marginTop: '4rem',marginBottom: '4rem' } : props?.searchValue ? { height: 800, overflow: "auto",marginTop: '4rem',marginBottom: '4rem' } : { height: 800, overflow: "auto"}}>
+                <InfiniteScroll
+                  dataLength={courseCardData.length} //This is important field to render the next data
+                  next={handleScrollData}
+                  hasMore={true}
+                  // loader={<h4>Loading...</h4>}
+                  style={{width: '100vw'}}
+                  onScroll={handleScroll}
+                  scrollableTarget="scrollableDiv"
+                  endMessage={
+                    <p style={{ textAlign: 'center' }}>
+                      <b>Yay! You have seen it all</b>
+                    </p>
+                  }
+                  // below props only if you need pull down functionality
+                >
+                 {courseCardData && courseCardData.map((item,index)=>{
+                    return(
+                      <div key={index}>
+                        <CourseCard 
+                          index={index}
+                          data={item} 
+                          openDetailModal={()=>_openDetailModal(item)}
+                          openApplyNowModal={()=> _openApplyNowModal(item)}
+                          token={props?.token}
+                          openLoginModal={()=>props?.openLoginModal()}
+                        />
+                      </div>
+                    )
+                 })}
+                </InfiniteScroll>
                 </div>
                
                 <div className='search-section-mobile' style={  props.searchValue.length > 0 ? {position: "fixed",top: 0,bottom: '100%'} : props?.goingUp ? {position: "fixed",bottom: '0rem'}  : !props.searchValue && filterValues.length > 0 && (filterValues[0] === "subject" || filterValues[0] === "min_price" || filterValues[0] === "sort_by_relevance") ? {position: "fixed",bottom: '6rem'} : !props.searchValue && filterValues.length > 0 ? {position: "fixed",bottom: '0rem'} : null }>

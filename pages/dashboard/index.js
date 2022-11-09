@@ -44,6 +44,7 @@ export default function Dashboard(props) {
           closeCoursePreviewModal={()=>props?.closeCoursePreviewModal()}
         />}
         {isMobile && 
+        <div style={{height: '100%',overflow: 'hidden'}}>
           <DashboardMobile
           openFilterExpandedStage={props?.openFilterExpandedStage}
           filterExpandedStage={props?.filterExpandedStage}
@@ -70,7 +71,9 @@ export default function Dashboard(props) {
           setScrollUp={()=>props?.setScrollUp()}
           setScrollDown={()=>props?.setScrollDown()}
           goingUp={props?.goingUp}
-        />}
+        />
+        </div>
+        }
         </>
       }
       </>

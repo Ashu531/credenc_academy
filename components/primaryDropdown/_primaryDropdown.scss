@@ -135,12 +135,13 @@
             color: var(--primaryColor);
     
             .drop-item {
-                // width: 100%;
+                width: 80%;
                 padding: 0.8rem 1.6rem 0.8rem 1.6rem;
                 cursor: pointer;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                margin-left: 0.2rem;
     
                 &:hover{
                     background-color: var(--defaultBackground);
@@ -178,11 +179,14 @@
 
         .content-sort{
             background: var(--primaryColor);
-            border-radius: 0.8rem;
-            border: 0.1px solid rgb(49, 49, 49);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            // align-items: center;
+            // border-radius: 0.8rem;
 
             @supports ((backdrop-filter: blur(60px)) or (-webkit-backdrop-filter: blur(60px)) or (-ms-backdrop-filter: blur(60px)) or (-o-backdrop-filter: blur(60px))) {
-                background: var(--insignificantStrokeColor);
+                background: var(--defaultBackground);
                 backdrop-filter: blur(60px);
                 -webkit-backdrop-filter: blur(60px);
                 -moz-backdrop-filter: blur(60px);
@@ -190,6 +194,38 @@
                 -o-backdrop-filter: blur(60px);
               }
         }
+        // .border-gradient {
+        //     border-radius: 10px; /*1*/
+        //     border: 2px solid transparent; /*2*/
+        //     background: linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%); /*3*/
+        //     -webkit-mask: /*4*/
+        //         linear-gradient(#fff 0 0) padding-box, 
+        //         linear-gradient(#fff 0 0);
+        //     -webkit-mask-composite: xor; /*5'*/
+        //   mask-composite: exclude;
+        // }
+        // .border-gradient-green {
+        //     border-image-source: linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%);
+        // }
+
+        .border-gradient {
+            position: relative;
+          }
+          .border-gradient::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 10px; 
+            padding: 2px; 
+            background:linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%); 
+            -webkit-mask: 
+               linear-gradient(#fff 0 0) content-box, 
+               linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+                    mask-composite: exclude; 
+            z-index: -1;
+          }
+          
     }
 
     .no-padding{
@@ -243,6 +279,7 @@
                 color: var(--defaultColor);
                 padding: 0.8rem 1.6rem 0.8rem 3.2rem;
                 cursor: pointer;
+                width: 80%;
     
                 &:hover{
                     background-color: var(--defaultBackground);

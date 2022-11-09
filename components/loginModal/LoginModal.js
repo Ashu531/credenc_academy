@@ -393,7 +393,7 @@ export default function LoginModal({
           <Image src={credencLogo} objectFit="cover"/>
           {/* <div style={{textDecoration: 'none', color: '#FFFFFF', fontSize: '21px'}}>BETA</div> */}
         </Link>
-        <div className="segment-container">
+        <div className="segment-container" style={window.innerWidth <= 500 ? {marginTop: '1rem'} : null}>
           <SegmentedBar
             items={['Sign In', 'Sign Up']}
             handleTabNumber={(i) => setFormSegment(i)}
@@ -475,7 +475,7 @@ export default function LoginModal({
               {buttonState.divider}
             <div className="divider"></div>
           </div>
-          <div className="social-icons-container">
+          <div className="social-icons-container" style={window.innerWidth <= 500 ? {padding: 0} : null }>
             <div>
               <GoogleLogin
                 clientId={`${constant.GOOGLE_CLIENT_ID}`}

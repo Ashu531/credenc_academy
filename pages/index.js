@@ -23,6 +23,7 @@ export default function Home(props) {
     <>
     {
     mounted &&  
+    <div style={{height: '100%',overflow: 'hidden'}}>
     <Dashboard 
       theme={props?.theme} 
       filterExpandedStage={props?.filterExpandedStage} 
@@ -58,6 +59,7 @@ export default function Home(props) {
       openCoursePreviewModal={()=>props?.openCoursePreviewModal()}
       closeCoursePreviewModal={()=>props?.closeCoursePreviewModal()}
     />
+    </div>
     }
    </>
   )

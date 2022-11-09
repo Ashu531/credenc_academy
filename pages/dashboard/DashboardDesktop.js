@@ -890,8 +890,6 @@ const _handleSearch=(e)=>{
   const _handleCardActionTaken=()=>{
     setCardActionTaken(true)
   }
-
-  console.log(isAppliedCostSlider,"isAppliedCostSlider+++")
   
  return(
         <div>      

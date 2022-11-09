@@ -88,7 +88,7 @@ export default function FooterMobile(props){
     }
 
     return(
-        <div className='mobile-footer' style={location.pathname === '/search/' || (filterValues.length > 0 && location.pathname !== '/bookmarks' && location.pathname !== '/') || (props?.goingUp) ? {position: 'absolute', top: -9999, left: -9999} : props?.filterModalVisible ? {zIndex: 0} : null }>
+        <div className='mobile-footer' style={location.pathname === '/search/' || (filterValues.length > 0 && location.pathname !== '/bookmarks' && location.pathname !== '/') ? {opacity: 0} : props?.filterModalVisible ? {zIndex: 0} : null }>
             <div className='mobile-footer-container'>
 
                 <div className='mobile-footer-element' onClick={()=>navigateHomePage()}>

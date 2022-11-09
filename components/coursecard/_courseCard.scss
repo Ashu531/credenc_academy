@@ -96,7 +96,7 @@ padding: 7px;
         line-height: 24px;
         color: var(--contrastStrokeColor);
         height: 48px;
-        max-width: 16em;
+        max-width: 16.6em;
     }
 
     .course-name-tooltip {
@@ -294,6 +294,7 @@ color: var(--defaultBackground);
     cursor: pointer;
     margin-left: 2.5rem;
     margin-right: 2.5rem;
+    margin-bottom: 10px;
     
     // &:hover{
     //     // transform: translateY(0);
@@ -377,6 +378,7 @@ color: var(--defaultBackground);
             font-size: 16px;
             line-height: 24px;
             color: var(--contrastStrokeColor);
+            max-width: 17.7em;
         }
     
         .course-name-tooltip {

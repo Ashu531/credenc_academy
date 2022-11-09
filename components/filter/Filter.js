@@ -120,12 +120,14 @@ export default function Filter({ item, filterState, updateFilterState, min, max,
       }
 
       if(filterType === Lists.filters.EDUCATOR){
-        return <List 
+        return <div style={{marginBottom: 30}}>
+          <List 
                   type={States.listTypes.CHECKBOXES} 
                   list={filterState}
                   onItemClick={(value, i) => updateFilterState(filterType, value, i)}
                   theme={theme}
-                />
+          />
+        </div>
       }
     }
 

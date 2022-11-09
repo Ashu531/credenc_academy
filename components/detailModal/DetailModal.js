@@ -26,6 +26,7 @@ import moment from 'moment';
 import defaultEducator from '../../assets/images/icons/defaultEducator.svg'
 import defaultPlatform from '../../assets/images/icons/defaultPlatform.svg'
 import DotLoader from "react-spinners/DotLoader";
+import LinkedlnLogo from '../../assets/images/icons/linkedin-icon.svg';
 const EdtechTheme = 'EdtechTheme';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
@@ -53,6 +54,10 @@ export default function DetailModal(props){
     const [courseData, setCourseData] = useState({})
     const [toggleUpvote,setToggleUpvote] = useState(null)
     const [upvoteCount,setUpvoteCount] = useState(0)
+    const [instructorContent, setIntructorContent] = useState({
+      show : false,
+      data : {}
+    })
     let [loading, setLoading] = useState(true);
     let [color, setColor] = useState("#000000");
 
@@ -74,7 +79,7 @@ export default function DetailModal(props){
 
     const _handlePreviewData=async(item)=>{
         if(props?.token && props?.token.length > 0){
-            let res = await axios.get(`${constant.API_URL.DEV}/course/preview/${item.id}/`,{
+            let res = await axios.get(`${constant.API_URL.DEV}/course/preview/${item?.id}/`,{
                 headers: {
                   'Authorization': `Bearer ${props?.token}`
                 },
@@ -92,7 +97,7 @@ export default function DetailModal(props){
                   // dispatchRemoveBookmark(id, bookmarks);
                 })
         }else{
-            let res = await axios.get(`${constant.API_URL.DEV}/course/preview/${item.id}/`)
+            let res = await axios.get(`${constant.API_URL.DEV}/course/preview/${item?.id}/`)
                 .then(res => {
                   setCourseData(res.data.data)
                   getBookmarks(res.data.data)
@@ -327,6 +332,22 @@ export default function DetailModal(props){
         props?.openApplyNowModal()
     }
 
+    const _handleIntructorHover=(data)=>{
+      setIntructorContent({
+        show: true,
+        data: data
+      })
+    }
+
+    const _handleIntructorHoverHide=()=>{
+      setIntructorContent({
+        show: true,
+        data: {}
+      })
+    }
+
+    console.log(instructorContent,"instructorContent+++")
+
     return(
         <>
         {
@@ -498,12 +519,46 @@ export default function DetailModal(props){
                     <Image src={instructorIcon} objectFit='cover' />
                     <span className='instructor-text'>Instructors</span>
                 </div>
-                <div className='avatar-container'>
+                <div className='avatar-container' style={ window.innerWidth <= 500 ? { gap: 20, width:'100%',overflow: "auto" } : null}>
                 {
                    courseData?.instructor && courseData?.instructor.map((item,index)=>{
                        return( 
                        <span key={index} className="avatar-content" >
-                            <Image loader={myLoader} src={item?.profile_photo ? item?.profile_photo : profileIcon} height={30} width={30} alt='avatar' style={{borderRadius: '50%'}} objectFit='contain'/>
+                         {
+                           window.innerWidth > 500 ? 
+                           <div style={{width: 40,height: 40,position:"relative",cursor:"pointer"}} onMouseEnter={()=>_handleIntructorHover(item)} onMouseLeave={()=>_handleIntructorHoverHide()} >
+                              <Image loader={myLoader} src={item?.profile_photo ? item?.profile_photo : profileIcon} height={40} width={40} alt='avatar' style={{borderRadius: '50%'}} objectFit='contain'/> 
+                              {
+                                instructorContent?.show && item?.id === instructorContent?.data?.id ? 
+                                <div className='instructor-hover-container'>
+                                <div className='instructor-hover-content' style={{width: '60%'}}>
+                                  <span className="instructor-hover-name">{item?.name}</span>
+                                  <span className="instructor-hover-designation">{item?.designation}</span>
+                                </div>
+                                <a href={item?.linkedin_link} target="_blank" rel="noreferrer" style={{width: '20%'}}>
+                                  <Image src={LinkedlnLogo} height={40} width={40} objectFit="contain" />
+                                </a>
+                              </div> : null
+                              }
+                           </div>
+                           
+                           :
+                           <div className="instructor-content">
+                           <div className='instructor-info-container'>
+                              <div className="instructor-info-image">
+                                <Image loader={myLoader} src={item?.profile_photo ? item?.profile_photo : profileIcon} height={57} width={57} alt='avatar' objectFit='cover' style={{borderRadius: '50%'}} />
+                              </div>
+                              <div className="instructor-image-content">
+                                <span className="instructor-info-name">{item?.name}</span>
+                                <span className="instructor-info-designation">{item?.designation}</span>
+                                {
+                                  item?.role_in_course && item?.role_in_course.length > 0 ? 
+                                  <span className="instructor-info-role">{item?.role_in_course}</span> : null
+                                }
+                              </div>
+                           </div>
+                         </div>
+                         }
                         </span>
                         )
                     })
@@ -516,7 +571,7 @@ export default function DetailModal(props){
             <div className='divider' style={{marginTop: 10,marginBottom: 15}}/>
             <div 
             className='content-footer'
-            style={window.innerWidth <= 500 ? {paddingBottom : '4%'} : {paddingBottom: '3%'}}
+            style={window.innerWidth <= 500 ? {paddingBottom : '7%'} : {paddingBottom: '6%'}}
             >
               <span className='content-date-text' style={{paddingLeft: 24}}>
               Last updated on: <span style={{fontWeight: 600}}>{moment(courseData?.date_modified).format("MMM Do YY")}</span>
