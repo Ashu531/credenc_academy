@@ -23,7 +23,6 @@ export default function Home(props) {
     <>
     {
     mounted &&  
-    <div style={{height: '100%',overflow: 'hidden'}}>
     <Dashboard 
       theme={props?.theme} 
       filterExpandedStage={props?.filterExpandedStage} 
@@ -58,8 +57,9 @@ export default function Home(props) {
       goingUp={props?.goingUp}
       openCoursePreviewModal={()=>props?.openCoursePreviewModal()}
       closeCoursePreviewModal={()=>props?.closeCoursePreviewModal()}
+      addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+      removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
     />
-    </div>
     }
    </>
   )

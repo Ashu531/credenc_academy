@@ -98,10 +98,10 @@ export default class Lists {
     ]
 
     static sortByList = [
-        {id: 0, name: 'MOST RELEVANT', filterValue: 'sort_by_relevance'},
-        {id: 1, name: 'MOST UPVOTED', filterValue: 'sort_by_upvotes'},
-        {id: 2, name: 'PRICE: HIGH TO LOW', filterValue: 'sort_by_price_high'},
-        {id: 3, name: 'PRICE: LOW TO HIGH', filterValue: 'sort_by_price_low'},
+        {id: 0, name: 'MOST RELEVANT', filterValue: 'sort_by_relevance',label: 'SORT BY RELEVANCE'},
+        {id: 1, name: 'MOST UPVOTED', filterValue: 'sort_by_upvotes',label: 'SORT BY UPVOTES'},
+        {id: 2, name: 'PRICE: HIGH TO LOW', filterValue: 'sort_by_price_high',label: 'SORT BY PRICE: HIGH TO LOW'},
+        {id: 3, name: 'PRICE: LOW TO HIGH', filterValue: 'sort_by_price_low',label: 'SORT BY PRICE: LOW TO HIGH'},
         // {id: 4, name: 'Sort by Rating'},
     ]
 

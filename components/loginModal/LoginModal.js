@@ -229,6 +229,7 @@ export default function LoginModal({
         setAuthApiStatus(ApiStatus.SUCCESS);
         handleModalClose();
         handleLogin()
+        if (res?.status) localStorage.removeItem(bookmarkKey);
         return res.data;
       } catch(e) {
         console.log(e);

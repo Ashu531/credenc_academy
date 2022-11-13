@@ -31,7 +31,11 @@ export default function ForgotPasswordModal({
   const [header, setHeader] = useState('');
   const [subtitle, setSubtitle] = useState('');
   const [formError, setFormError] = useState(null);
-
+  const [passwordSuccess,setPasswordSuccess] = useState({
+    reset: false,
+    heading: '',
+    subHeading: ''
+  })
   const [emailInputState, setEmailInputState] = useState('');
   const passwordInputInitialState = States.passwordInputInitialState;
   const [passwordInputState, setPasswordInputState] = useState({ ...passwordInputInitialState });
@@ -158,13 +162,20 @@ export default function ForgotPasswordModal({
         "confirm_password" : confirmPassInputState.value.toString(),
       })
       .then(res => {
+        if(res?.data?.status === true){
+          setPasswordSuccess({
+            reset: true,
+            heading: 'New Password Set!',
+            subHeading: 'Log in and get browsing!'
+          })
+          setModalState(modalStates.PASSWORD_SUCCESS);
+        }
         if(res['data']['error'] && res['data']['error'] != '')
           setFormError(res['data']['error']);
-        else
-        handleForgotPasswordEnd();
+        // else
+        // handleForgotPasswordEnd();
       })
       .catch(err => {
-        console.log(err,"error forgot password+++")
         setFormError(err?.response?.data.message);
       });
     }
@@ -200,20 +211,24 @@ export default function ForgotPasswordModal({
     }
   }, [modalState]);
 
+  const goToLogin=()=>{
+    handleForgotPasswordEnd();
+  }
+
   // useEffect(() => {
   //   changeNavbarVisibility(false)
   // }, [])
-
-  console.log(formError,"formError+++")
 
   return (
     <div className="modal" onClick={handleForgotPasswordEnd}>
       <div 
       className={`wrapper forgot-pass-modal-container`}
       onClick={(e) => e.stopPropagation()}>
-        <div className="back-button" onClick={handleBackClick}>
+        {
+          passwordSuccess.reset === true ? null : <div className="back-button" onClick={handleBackClick}>
           <Image src={backArrowDark} objectFit='contain' height={12} width={7}/>
         </div>
+        }
         {/* <Link 
         href='/' 
         className='login-modal-brand' 
@@ -222,15 +237,27 @@ export default function ForgotPasswordModal({
           <Image src={ theme === 'dark' ? credencLogo : credencLogoLight} objectFit="cover" />
           <div style={{textDecoration: 'none', color: '#FFFFFF', fontSize: '21px'}}>BETA</div>
         </Link> */}
+        {
+          passwordSuccess.reset === true ? 
+          <div className='forgot-modal-header'>
+            <span className='new-password-set'>
+              {passwordSuccess.heading}
+            </span>
+            <span className='new-password-otp'>
+              {passwordSuccess.subHeading}
+            </span>
+        </div> :
         <div className='forgot-modal-header'>
-           <span className='forgot-pass-text'>
-           Forgot Your Password?
-           </span>
-           <span className='generate-otp-text'>
-           Enter your Email to generate an OTP
-           </span>
-        </div>
-        <div className="header-container" >
+            <span className='forgot-pass-text'>
+              Forgot Your Password?
+            </span>
+            <span className='generate-otp-text'>
+              Enter your Email to generate an OTP
+            </span>
+       </div>
+        }
+        
+        <div className="header-container">
           <div className="headline">{header}</div>
           <div className="subtitle">{subtitle}</div>
         </div>
@@ -253,7 +280,8 @@ export default function ForgotPasswordModal({
           <div style={{height: '1.6rem'}}></div>
           <Button text="Submit" linearGradient='green' classes="btn-secondary small-wrapper-colored" onClick={verifyOtp} />
         </div>}
-        {renderState(modalStates.NEW_PASSWORD) && <div className='reset-password-container'>
+
+          {renderState(modalStates.NEW_PASSWORD) && <div className='reset-password-container'>
           <Input
             placeholder="Password"
             type={passwordInputState.type}
@@ -270,7 +298,12 @@ export default function ForgotPasswordModal({
           />
           <div style={{height: '1.6rem'}}></div>
           <Button text="Set New Password" linearGradient='green' classes="btn-secondary small-wrapper-colored" onClick={setNewPassword} />
-        </div>}
+          </div>
+        }
+        {
+          renderState(modalStates.PASSWORD_SUCCESS) ? 
+          <Button text="Log In" linearGradient='green' classes="btn-secondary success-button" onClick={goToLogin} /> : null
+        }
       </div>
     </div>
   );

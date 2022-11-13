@@ -32,7 +32,7 @@ export default function SecondaryDropdown({
   return (
     <div className={`dropdown-${dropdownType}`}>
         {!icon && <div className="dropbtn" style={style}>
-            {selected === 0 ? heading : (dropList[selected].name || dropList[selected].value)}
+            {selected === 0 ? heading : (dropList[selected].label || dropList[selected].value)}
             <span><Image src={caretDownIcon} objectFit="cover" /></span>
         </div>}
         {icon && <Image src={icon}/>}

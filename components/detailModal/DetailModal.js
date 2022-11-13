@@ -168,12 +168,12 @@ export default function DetailModal(props){
       setBookmarkVisible(false)
 
       if(props?.token && props?.token.length > 0){
-          removeBookmarkFromBackend(item.id)
+          removeBookmarkFromBackend(item.code)
         }else{
           let bookmarkArray = [];
           let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
           if(bookmarkItem && bookmarkItem.length > 0){
-            bookmarkArray =  bookmarkItem.filter(data => data !== item.id )
+            bookmarkArray =  bookmarkItem.filter(data => data !== item.code )
           }
           localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
           props?.handleCardActionTaken()
@@ -185,14 +185,14 @@ export default function DetailModal(props){
         setBookmarkVisible(true)
       
         if(props?.token && props?.token.length > 0){
-          addBookmarkToBackend(item.id)
+          addBookmarkToBackend(item.code)
         }else{
           let bookmarkArray = [];
           let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
           if(bookmarkItem && bookmarkItem.length > 0){
             bookmarkArray.push(...bookmarkItem)
           }
-          bookmarkArray.push(item.id)
+          bookmarkArray.push(item.code)
           localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
           props?.handleCardActionTaken()
         }
@@ -346,8 +346,6 @@ export default function DetailModal(props){
       })
     }
 
-    console.log(instructorContent,"instructorContent+++")
-
     return(
         <>
         {
@@ -427,7 +425,7 @@ export default function DetailModal(props){
             </div>
             <div className='detail-modal-middle-section'>
               <div className='detail-modal-course-content'>
-                <div className='detail-modal-course-container' style={{marginTop: 10}}>
+                <div className='detail-modal-course-container'>
                     <span className='heading1'>
                     {courseData?.course_name}
                     </span>
@@ -527,18 +525,25 @@ export default function DetailModal(props){
                          {
                            window.innerWidth > 500 ? 
                            <div style={{width: 40,height: 40,position:"relative",cursor:"pointer"}} onMouseEnter={()=>_handleIntructorHover(item)} onMouseLeave={()=>_handleIntructorHoverHide()} >
-                              <Image loader={myLoader} src={item?.profile_photo ? item?.profile_photo : profileIcon} height={40} width={40} alt='avatar' style={{borderRadius: '50%'}} objectFit='contain'/> 
+                              <a href={item?.linkedin_link} target="_blank" rel="noreferrer">
+                                <div style={instructorContent?.show && item?.id === instructorContent?.data?.id ? {width: 45,height: 45,position:'relative',zIndex: 9,border: '1.5px solid #00CB9C',borderRadius: '50%',transition: 'all 0.07s ease-out'} : {width: 40,height: 40,position:'relative'}}>
+                                    <Image loader={myLoader} src={item?.profile_photo ? item?.profile_photo : profileIcon} layout='fill' alt='avatar' style={{borderRadius: '50%'}} objectFit='contain'/> 
+                                </div>
+                              </a>
                               {
                                 instructorContent?.show && item?.id === instructorContent?.data?.id ? 
+                                <a href={item?.linkedin_link} target="_blank" rel="noreferrer">
                                 <div className='instructor-hover-container'>
-                                <div className='instructor-hover-content' style={{width: '60%'}}>
-                                  <span className="instructor-hover-name">{item?.name}</span>
+                                <div className='instructor-hover-content' style={{width: '80%'}}>
+                                  <span className="instructor-hover-name">{item?.name.length > 22 ? item?.name.substring(0,22)+'...' : item?.name}</span>
                                   <span className="instructor-hover-designation">{item?.designation}</span>
                                 </div>
-                                <a href={item?.linkedin_link} target="_blank" rel="noreferrer" style={{width: '20%'}}>
-                                  <Image src={LinkedlnLogo} height={40} width={40} objectFit="contain" />
-                                </a>
-                              </div> : null
+                                <div style={{width: '10%'}}>
+                                   <Image src={LinkedlnLogo} height={40} width={40} objectFit="contain" />
+                                </div>   
+                                </div>
+                              </a> 
+                              : null
                               }
                            </div>
                            
@@ -568,7 +573,7 @@ export default function DetailModal(props){
             }
            
             
-            <div className='divider' style={{marginTop: 10,marginBottom: 15}}/>
+            <div className='divider' style={{marginTop: 16,marginBottom: 15}}/>
             <div 
             className='content-footer'
             style={window.innerWidth <= 500 ? {paddingBottom : '7%'} : {paddingBottom: '6%'}}

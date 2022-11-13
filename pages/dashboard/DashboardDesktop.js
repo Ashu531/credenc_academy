@@ -1008,7 +1008,7 @@ const _handleSearch=(e)=>{
             />
           </div>
           <SecondaryDropdown
-            heading={'SORT BY POPULARITY'}
+            heading={Lists.sortByList[sortState]['label']}
             style={theme === 'dark' ? {
               background: '#141414',
               padding: '1.4rem',
@@ -1033,6 +1033,7 @@ const _handleSearch=(e)=>{
             dropList={[...Lists.sortByList]}
             selected={pageLoadSortState || sortState}
             onSelect={(item, i) => {
+              console.log(i,'i+++++')
               setPageNumber(1)
               setPageLoadSortState(null)
               setSortState(i)
@@ -1152,6 +1153,8 @@ const _handleSearch=(e)=>{
                  openApplyNowModal={()=> _openApplyNowModal(item)}
                  token={props?.token}
                  openLoginModal={()=>props?.openLoginModal()}
+                 addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+                 removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
                />
             </div> :
                <CourseCard 
@@ -1162,6 +1165,8 @@ const _handleSearch=(e)=>{
                   openApplyNowModal={()=> _openApplyNowModal(item)}
                   token={props?.token}
                   openLoginModal={()=>props?.openLoginModal()}
+                  addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+                  removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
               />
              
            })

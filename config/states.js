@@ -85,7 +85,8 @@ export default class States {
     static forgotPasswordModalStates = {
         ENTER_EMAIL: 0,
         ENTER_OTP: 1,
-        NEW_PASSWORD: 2
+        NEW_PASSWORD: 2,
+        PASSWORD_SUCCESS: 3
     }
 
     static passwordInputInitialState = {

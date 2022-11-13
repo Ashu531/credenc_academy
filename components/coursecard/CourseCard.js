@@ -53,7 +53,7 @@ export default function CourseCard(props){
    const _retrieveBookmarks=()=>{
     let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
     if(tempBookmarkData && tempBookmarkData.length > 0){
-      if (tempBookmarkData.includes(props?.data?.id)){
+      if (tempBookmarkData.includes(props?.data?.code)){
         setBookmarkVisible(true)
       }
       else
@@ -82,13 +82,15 @@ export default function CourseCard(props){
     setBookmarkVisible(false)
     
     if(props?.token && props?.token.length > 0){
-      removeBookmarkFromBackend(item.id)
+      removeBookmarkFromBackend(item.code)
+      props?.removeLocalBookmarks()
     }else{
       let bookmarkArray = [];
       let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
       if(bookmarkItem && bookmarkItem.length > 0){
-        bookmarkArray =  bookmarkItem.filter(data => data !== item.id )
+        bookmarkArray =  bookmarkItem.filter(data => data !== item.code )
       }
+      props?.removeLocalBookmarks(bookmarkArray.length)
       localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
 
       if(router.pathname === "/bookmarks"){
@@ -99,17 +101,18 @@ export default function CourseCard(props){
   }
   
   const _onAddToBookmark=(item)=>{
-  
     setBookmarkVisible(true)
     if(props?.token && props?.token.length > 0){
-      addBookmarkToBackend(item.id)
+      addBookmarkToBackend(item.code)
+      props?.addLocalBookmarks()
     }else{
       let bookmarkArray = [];
       let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
       if(bookmarkItem && bookmarkItem.length > 0){
         bookmarkArray.push(...bookmarkItem)
       }
-      bookmarkArray.push(item.id)
+      bookmarkArray.push(item.code)
+      props?.addLocalBookmarks(bookmarkArray.length)
       localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
     }
     

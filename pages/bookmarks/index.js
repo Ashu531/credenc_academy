@@ -43,7 +43,7 @@ export default function Bookmarks(props){
         if(storedBookmarks && storedBookmarks.length > 0){
           bookmark = JSON.parse(storedBookmarks)
          }
-       
+
         const getIds = () => {
           return bookmark.map(id => `id=${id}`).join('&');
         }
@@ -53,8 +53,7 @@ export default function Bookmarks(props){
           const res = await axios.get(`${constant.API_URL.DEV}/bookmark/list/?${getIds()}`)
             .then(res => {
               bookmarkApiStatus.current.success();
-              console.log(res.data)
-              setCourses(res.data);
+              setCourses(res.data.data);
               return res;
             })
             .catch(err => {
@@ -71,7 +70,7 @@ export default function Bookmarks(props){
           })
             .then(res => {
               bookmarkApiStatus.current.success();
-              setCourses(res.data);
+              setCourses(res.data.data);
               return res;
             })
             .catch(err => {
@@ -155,6 +154,7 @@ export default function Bookmarks(props){
                       detailData={detailData} 
                       token={token}
                       openLoginModal={()=>props?.openLoginModal()} 
+                      removeLocalBookmarks={()=>props?.removeLocalBookmarks()}
                   />
                 </div>
             </div>

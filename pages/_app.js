@@ -45,6 +45,7 @@ class MyApp extends App {
      openMobileSearch: false,
      goingUp: false,
      coursePrevieModal: false,
+     bookmarkCount: 0
     };
     this.coursesApiStatus = React.createRef(new ApiStatus());
   }
@@ -53,7 +54,7 @@ class MyApp extends App {
     this._clearUpvoteData()
     this._retrieveData();
     this._mountComponent();
-    
+    this._handleBookmarkCount();
   }
 
   _mountComponent=()=>{
@@ -354,6 +355,71 @@ class MyApp extends App {
       coursePrevieModal: false
     })
   }
+
+  _handleBookmarkCount=async()=>{
+    let token = localStorage.getItem(EdtechToken)
+     if(token && token.length > 0){
+      let res = await axios.get(`${constant.API_URL.DEV}/bookmark/list/`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        // this.coursesApiStatus.current.success();
+        this.setState({
+          bookmarkCount: res.data.count
+        })
+        return res.data;
+      })
+      .catch(err => {
+        // this.coursesApiStatus.current.failed();
+        console.log(err);
+      });
+     }else{
+        this._fetchLocalBookmarks()
+     }
+  }
+
+  _fetchLocalBookmarks=()=>{
+    let bookmarkArray = [];
+    let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
+   
+    if(bookmarkItem && bookmarkItem.length > 0){
+      this.setState({
+        bookmarkCount: bookmarkItem.length
+      })
+    }
+
+   
+  }
+
+  _addLocalBookmarks=(count)=>{
+    let token = localStorage.getItem(EdtechToken)
+    if(token && token.length > 0){
+      this.setState({
+        bookmarkCount: this.state.bookmarkCount+1
+      })
+    }else{
+      this.setState({
+        bookmarkCount: count
+      })
+    }
+   
+  }
+
+  _removeLocalBookmarks=(count)=>{
+    let token = localStorage.getItem(EdtechToken)
+    if(token && token.length > 0){
+      this.setState({
+        bookmarkCount: this.state.bookmarkCount-1
+      })
+    }else{
+      this.setState({
+        bookmarkCount: count
+      })
+    }
+    
+  }
  
 
   render(){
@@ -362,7 +428,7 @@ class MyApp extends App {
     return <>
     <Provider store={store} >
       {
-        this.state.mounted && <div data-theme={this.state.theme} style={this.state.loginModal || this.state.forgotPasswordModal || this.state.footerModal || this.state.coursePrevieModal ? {height: '100%',overflow: 'hidden'} : {height: '100%',overflow: 'hidden'}}>
+        this.state.mounted && <div data-theme={this.state.theme} style={this.state.loginModal || this.state.forgotPasswordModal || this.state.footerModal || this.state.coursePrevieModal ? {height: 'calc(var(--vh, 1vh) * 100)',overflow: 'hidden'} : {height: '100%'}}>
           {
             window.innerWidth > 500 ? 
             <HeaderContainer 
@@ -380,6 +446,7 @@ class MyApp extends App {
             closeFilterExpandedStage={()=>this.closeFilterExpandedStage()}
             // openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
             hideSearchBar={this.hideSearchBar}
+            bookmarkCount={this.state.bookmarkCount}
            /> : 
             <HeaderMobile
             // toggleTheme={this.toggleTheme} 
@@ -432,6 +499,8 @@ class MyApp extends App {
             goingUp={this.state.goingUp}
             openCoursePreviewModal={()=>this._openCoursePreviewModal()}
             closeCoursePreviewModal={()=>this._closeCoursePreviewModal()}
+            addLocalBookmarks={(count)=>this._addLocalBookmarks(count)}
+            removeLocalBookmarks={(count)=>this._removeLocalBookmarks(count)}
          />
          {
             window.innerWidth > 500 ? 

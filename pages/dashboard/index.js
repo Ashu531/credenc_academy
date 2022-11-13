@@ -42,9 +42,10 @@ export default function Dashboard(props) {
           openLoginModal={()=>props?.openLoginModal()}
           openCoursePreviewModal={()=>props?.openCoursePreviewModal()}
           closeCoursePreviewModal={()=>props?.closeCoursePreviewModal()}
+          addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+          removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
         />}
         {isMobile && 
-        <div style={{height: '100%',overflow: 'hidden'}}>
           <DashboardMobile
           openFilterExpandedStage={props?.openFilterExpandedStage}
           filterExpandedStage={props?.filterExpandedStage}
@@ -71,8 +72,9 @@ export default function Dashboard(props) {
           setScrollUp={()=>props?.setScrollUp()}
           setScrollDown={()=>props?.setScrollDown()}
           goingUp={props?.goingUp}
+          addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+          removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
         />
-        </div>
         }
         </>
       }

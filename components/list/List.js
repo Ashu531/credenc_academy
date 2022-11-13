@@ -26,7 +26,8 @@ function List({
     openApplyNowModal,
     token,
     openLoginModal,
-    setLastElement
+    setLastElement,
+    removeLocalBookmarks
 }) {
 
   const listTypes = States.listTypes;
@@ -115,6 +116,7 @@ function List({
              openApplyNowModal={(item)=> openApplyNowModal(item)}
              token={token}
              openLoginModal={()=>openLoginModal()}
+             removeLocalBookmarks={()=>removeLocalBookmarks()}
             />
           })
         );

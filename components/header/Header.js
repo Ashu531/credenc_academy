@@ -14,6 +14,7 @@ import SearchBar from '../searchBar/SearchBar'
 import UrlService from "../../helper/urlService";
 import { useRouter } from 'next/router'
 import credencAcademy from '../../assets/images/icons/credencAcademy.svg'
+import bookmarkIconFilled from '../../assets/images/icons/filledBookmark.svg'
 const EdtechToken = 'credenc-edtech-authkey';
 
 export default function Header(props){
@@ -26,7 +27,7 @@ export default function Header(props){
 
   useEffect(()=>{
     _getAuthKey()
-  },[localStorage.getItem(EdtechToken)])
+  },[localStorage.getItem(EdtechToken),props?.bookmarkCount])
 
   const _getAuthKey=()=>{
     let authKey = localStorage.getItem(EdtechToken);
@@ -170,8 +171,14 @@ export default function Header(props){
          </div> */}
          {/* </Link>  */}
           {/* <Link href='bookmarks' className='nav-item bookmark' onClick={() => Mixpanel.track(MixpanelStrings.NAV_BOOKMARK_CLICKED)}> */}
-           <div className='icon-element' onClick={()=>_openBookmarkTab()}>
-           <Image src={ props?.theme === 'dark' ? bookmarkIconDark : bookmarkIcon} objectFit="cover" alt='bookmarkIcon' />
+           <div className='icon-element' onClick={()=>_openBookmarkTab()} style={{position:"relative"}}>
+           <Image src={ bookmarkIcon} height={25} width={25} objectFit="cover" alt='bookmarkIcon' />
+           {
+             props?.bookmarkCount >= 1 ? <span className="bookmark-count-container">
+             <span className="bookmark-count">{ props?.bookmarkCount >= 1 ?  props?.bookmarkCount : null}</span>
+            </span> : null
+           }
+           
            </div>
  
            {/* <div onClick={()=>props.toggleTheme()} style={{cursor:"pointer",paddingLeft:10}}>

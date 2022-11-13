@@ -38,6 +38,26 @@
             padding-right: 2rem;
             cursor: pointer;
           }
+          .bookmark-count-container{
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--inverseBackground);
+            position: absolute;
+            top: 0px;
+            right: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .bookmark-count{
+              color: var(--defaultBackground);
+              font-family:'Poppins';
+              font-weight: 600;
+              font-size: 8px;
+            }
+          }
+          
           .signin-button{
             border: 1px solid var(--defaultPrimaryColor);
             border-radius: 4px;
