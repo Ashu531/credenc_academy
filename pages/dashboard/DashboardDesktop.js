@@ -859,21 +859,6 @@ const _handleSearch=(e)=>{
     }
   }, [pageNumber]);
 
-  const _getCardData = async()=>{
-    this.coursesApiStatus.current.makeApiCall();
-    let pageNumber=0
-
-    let res = await axios.get(`${constant.API_URL.DEV}/search/?search=${props?.searchValue}/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
-    .then(res => {
-      this.coursesApiStatus.current.success();
-      return res.data;
-    })
-    .catch(err => {
-      this.coursesApiStatus.current.failed();
-      console.log(err);
-    });
-  }
-
   const _openApplyNowModal=(data)=>{
     setApplyNow(true)
     setDetailData(data)
@@ -1033,7 +1018,6 @@ const _handleSearch=(e)=>{
             dropList={[...Lists.sortByList]}
             selected={pageLoadSortState || sortState}
             onSelect={(item, i) => {
-              console.log(i,'i+++++')
               setPageNumber(1)
               setPageLoadSortState(null)
               setSortState(i)
@@ -1053,6 +1037,8 @@ const _handleSearch=(e)=>{
             token={props?.token}
             openLoginModal={()=>props?.openLoginModal()} 
             setLastElement={setLastCourse}
+            addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+            removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
           />
         </div>
       </div>

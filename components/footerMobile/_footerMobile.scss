@@ -22,6 +22,34 @@
         flex-direction: column;
     }
 
+    .bookmark-element-mobile{
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .bookmark-count-container-mobile{
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--inverseBackground);
+            position: absolute;
+            top: 0px;
+            right: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .bookmark-count-mobile{
+              color: var(--defaultBackground);
+              font-family:'Poppins';
+              font-weight: 600;
+              font-size: 8px;
+            }
+          }
+
+    }
+
     .mobile-footer-text{
         font-family:'Poppins';
         font-style: normal;

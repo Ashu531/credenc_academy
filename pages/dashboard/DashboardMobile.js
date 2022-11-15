@@ -1119,6 +1119,8 @@ const handleScrollData=()=>{
                           openApplyNowModal={()=> _openApplyNowModal(item)}
                           token={props?.token}
                           openLoginModal={()=>props?.openLoginModal()}
+                          addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+                          removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
                         />
                       </div>
                     )

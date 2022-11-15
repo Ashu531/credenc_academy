@@ -105,12 +105,18 @@ export default function FooterMobile(props){
                 </span>
             </div>
             <div className='mobile-footer-element' onClick={()=>navigateBookmarkPage()}>
+                <div className='bookmark-element-mobile'>
                 {
                     location.pathname === '/bookmarks' && !props?.loginModal ? 
                     <Image src={bookmarkSelected} objectFit="contain" alt='bookmarkIcon' height={18} width={18}/> :
                     <Image src={bookmarkIcon} objectFit="contain" alt='bookmarkIcon' height={18} width={18}/>
                 }
-                
+                {
+                    props?.bookmarkCount >= 1 ? <span className="bookmark-count-container-mobile">
+                    <span className="bookmark-count-mobile">{ props?.bookmarkCount >= 1 ?  props?.bookmarkCount : null}</span>
+                    </span> : null
+                }
+                </div>
                 <span className='mobile-footer-text'>
                     Bookmark
                 </span>

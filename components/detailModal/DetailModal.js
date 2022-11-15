@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react';
+import React,{useEffect, useState,useRef} from 'react';
 import Image from "next/image";
 import courseLogo from '../../assets/images/logo/courseLogo.svg';
 import axios from "axios";
@@ -58,8 +58,12 @@ export default function DetailModal(props){
       show : false,
       data : {}
     })
+    const [leftCardAlign,setLeftAlign] = useState(false);
     let [loading, setLoading] = useState(true);
-    let [color, setColor] = useState("#000000");
+  
+
+    const modalRef = useRef();
+    const cardRef = useRef();
 
     const myLoader = ({ src, width, quality }) => {
         if(src && src.length > 0){
@@ -337,6 +341,7 @@ export default function DetailModal(props){
         show: true,
         data: data
       })
+      // getCardAlignment()
     }
 
     const _handleIntructorHoverHide=()=>{
@@ -346,11 +351,24 @@ export default function DetailModal(props){
       })
     }
 
+    const getCardAlignment=()=>{
+      if(cardRef && cardRef.current !== null){
+        console.log(cardRef?.current?.getBoundingClientRect(),"cardRef?.current?.getBoundingClientRect()++")
+        console.log(modalRef?.current?.getBoundingClientRect(),"modalRef?.current?.getBoundingClientRect()++")
+        if(cardRef?.current?.getBoundingClientRect().left > modalRef?.current?.getBoundingClientRect().width/3){
+          setLeftAlign(true)
+        }
+        else{
+          setLeftAlign(false)
+        }
+      }
+    }
+
     return(
         <>
         {
             mounted && !loading ?
-       <div className='detail-modal-container' style={ window.innerWidth<=500 ? {width:'100%',height:'90vh'} : null }>
+       <div className='detail-modal-container' style={ window.innerWidth<=500 ? {width:'100%',height:'90vh'} : null } ref={modalRef}>
            
          <div className='detail-modal-content'>
           <div style={{display:"flex",flexDirection:'row',width:'100%'}}>
@@ -525,15 +543,19 @@ export default function DetailModal(props){
                          {
                            window.innerWidth > 500 ? 
                            <div style={{width: 40,height: 40,position:"relative",cursor:"pointer"}} onMouseEnter={()=>_handleIntructorHover(item)} onMouseLeave={()=>_handleIntructorHoverHide()} >
-                              <a href={item?.linkedin_link} target="_blank" rel="noreferrer">
+                              <a 
+                              href={item?.linkedin_link} 
+                              target="_blank" rel="noreferrer">
                                 <div style={instructorContent?.show && item?.id === instructorContent?.data?.id ? {width: 45,height: 45,position:'relative',zIndex: 9,border: '1.5px solid #00CB9C',borderRadius: '50%',transition: 'all 0.07s ease-out'} : {width: 40,height: 40,position:'relative'}}>
                                     <Image loader={myLoader} src={item?.profile_photo ? item?.profile_photo : profileIcon} layout='fill' alt='avatar' style={{borderRadius: '50%'}} objectFit='contain'/> 
                                 </div>
                               </a>
                               {
                                 instructorContent?.show && item?.id === instructorContent?.data?.id ? 
-                                <a href={item?.linkedin_link} target="_blank" rel="noreferrer">
-                                <div className='instructor-hover-container'>
+                                <a
+                                 href={item?.linkedin_link} 
+                                 target="_blank" rel="noreferrer">
+                                <div className='instructor-hover-container' ref={cardRef} style={index > 6 ? {position: 'fixed',right: 0} : null}>
                                 <div className='instructor-hover-content' style={{width: '80%'}}>
                                   <span className="instructor-hover-name">{item?.name.length > 22 ? item?.name.substring(0,22)+'...' : item?.name}</span>
                                   <span className="instructor-hover-designation">{item?.designation}</span>
@@ -548,6 +570,9 @@ export default function DetailModal(props){
                            </div>
                            
                            :
+                           <a 
+                              href={item?.linkedin_link} 
+                              target="_blank" rel="noreferrer" style={{textDecoration: 'none'}}>
                            <div className="instructor-content">
                            <div className='instructor-info-container'>
                               <div className="instructor-info-image">
@@ -563,6 +588,7 @@ export default function DetailModal(props){
                               </div>
                            </div>
                          </div>
+                         </a>
                          }
                         </span>
                         )
@@ -616,7 +642,7 @@ export default function DetailModal(props){
              : null 
             }
          >
-            <div className='detail-modal-footer-section-left'>
+            <div className='detail-modal-footer-section-left' style={window.innerWidth < 500 ? {width: '51%'} : null}>
                 <span className='price-text'>
                 {courseData?.finance_display[0] ? `₹${courseData?.finance_display[0]}` : 'Price Unknown'}
                 </span>

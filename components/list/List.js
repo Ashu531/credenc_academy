@@ -27,7 +27,8 @@ function List({
     token,
     openLoginModal,
     setLastElement,
-    removeLocalBookmarks
+    removeLocalBookmarks,
+    addLocalBookmarks
 }) {
 
   const listTypes = States.listTypes;
@@ -66,6 +67,8 @@ function List({
                 openApplyNowModal={(item)=> openApplyNowModal(item)}
                 token={token}
                 openLoginModal={()=>openLoginModal()}
+                addLocalBookmarks={(count)=>addLocalBookmarks(count)}
+                removeLocalBookmarks={()=>removeLocalBookmarks()}
               />
             </div> : 
                <CourseCard 
@@ -75,6 +78,8 @@ function List({
                 openApplyNowModal={(item)=> openApplyNowModal(item)}
                 token={token}
                 openLoginModal={()=>openLoginModal()}
+                addLocalBookmarks={(count)=>addLocalBookmarks(count)}
+                removeLocalBookmarks={()=>removeLocalBookmarks()}
                />
           })
         );
