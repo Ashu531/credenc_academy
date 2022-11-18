@@ -249,6 +249,13 @@ const removeUpvote = async (item) => {
   })
 }
 
+const _goToDetailPage=(id)=>{
+  router.push({
+    pathname: `/details`,
+    query: {course_id : id}
+  })
+}
+
  return(
       <>
       {
@@ -297,7 +304,7 @@ const removeUpvote = async (item) => {
             <Image loader={myLoader} src={props?.data?.educator[0]?.logo && props?.data?.educator[0]?.logo.length > 0 ? props?.data?.educator[0]?.logo : defaultEducator } objectFit="cover"  height={!isCardOpen ? 82 : 60} width={!isCardOpen ? 82 : 60} alt='instituteLogo' style={{borderRadius: '50%'}}/>
             <span className='institute-name'>{props?.data?.educator[0]?.name.length > 30 ? props?.data?.educator[0]?.name.substring(0,30) + '...' : props?.data?.educator[0]?.name}</span>
         </div>
-        <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} onClick={()=> props?.openDetailModal()}>
+        <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} onClick={()=> _goToDetailPage(props?.data?.id)}>
           <div className='course-name' onMouseEnter={()=>setCourseNameTooltip(true)} onMouseLeave={()=>setCourseNameTooltip(false)}>
             { props?.data?.course_name && props?.data?.course_name.length > 50 ? props?.data?.course_name.substring(0, 50) + '...' : props?.data?.course_name} 
           </div>
@@ -315,7 +322,7 @@ const removeUpvote = async (item) => {
           <span className='course-price-content' style={!isCardOpen ? null : {marginTop: 22,marginBottom: 14}}>
           {props?.data?.price_list?.length > 0 ? 
             <span className='course-pay'>{props?.data?.price_list[0]}</span>
-          : <span className='course-pay'>Price Model</span>}
+          :  <span className='course-pay'>Price Model</span>}
             <span className='course-price'>{props?.data?.finance_display[0] === "Free" || props?.data?.finance_display[0] === 0 || !props?.data?.finance_display[0] ? "Unknown" : ` ₹${props?.data?.finance_display[0]}` }</span>
           </span>
       </div>
