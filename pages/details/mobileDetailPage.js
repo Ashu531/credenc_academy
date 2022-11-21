@@ -132,8 +132,6 @@ export default function DetailPageMobile(props){
          
       }
 
-    //   let count = props?.detailData?.program_type.length * 5;
-    //  console.log(props?.detailData?.program_type.length,"count+++")
     return(
         <div className='detail-page-mobile'>
             {
@@ -160,14 +158,15 @@ export default function DetailPageMobile(props){
            }
            
             <div className='detail-page-content-mobile'>
-            <div style={{position:'relative'}}>
-                {/* <div style={{width: }}> */}
+            {/* <div style={{position:'relative'}}>
+                <div style={{width: }}>
                     <Image src={titleFrame} height={32} width={100} objectFit='contain' />
-                {/* </div> */}
-                <span className='detail-page-content-heading' style={{position:'absolute',left: 0}}>
+                </div>
+                
+            </div> */}
+            <div className='detail-page-content-heading'>
                     {props?.detailData?.program_type}
-                </span> 
-            </div>
+            </div> 
                   
               
                <div className='detail-page-content-course-name' style={{paddingTop: 10,fontSize: 28}}>
@@ -252,7 +251,7 @@ export default function DetailPageMobile(props){
                        <Image src={costIcon} height={28} width={28} objectFit='contain' />
                        <div className='detail-page-content-educator-info-header'>Starting Cost</div>
                    </div>
-                   <div className='detail-page-content-educator-info-subheader'>₹{props?.detailData?.finance_display && props?.detailData?.finance_display.length > 0 ? props?.detailData?.finance_display[0] : ''}</div>
+                   <div className='detail-page-content-educator-info-subheader' style={{textAlign:'right'}}>₹{props?.detailData?.finance_display && props?.detailData?.finance_display.length > 0 ? props?.detailData?.finance_display[0] : ''}</div>
                </div>
                </div>
             </div>
@@ -289,31 +288,35 @@ export default function DetailPageMobile(props){
               </div>
               
             </div>
-            <div style={styles}>
-                {/* <div style={{display:'contents'}}>
-                <Image src={tableBackground} height={'100%'} width={'100%'} objectFit='contain' />
-                </div> */}
+            {
+              props?.toolData.usps &&  props?.toolData?.usps.length > 0 ? 
+              <div style={styles}>
+              {/* <div style={{display:'contents'}}>
+              <Image src={tableBackground} height={'100%'} width={'100%'} objectFit='contain' />
+              </div> */}
              <div className='detail-page-mobile-benefit-section'>
-                 <div className='detail-page-mobile-benefit-content'>
-                    <div className='detail-page-mobile-benefit-content-header'>
-                        The Benefits You Will Get
-                    </div>
-                    {
-                      props?.toolData.usps &&  props?.toolData?.usps.length > 0 && props?.toolData?.usps.map((item,index)=>{
-                          return(
-                            <div className='detail-page-mobile-benefit-info' key={index}>
-                                <Image src={benefitBullet} width={17} height={20} objectFit='contain' />
-                                <div className='detail-page-mobile-benefit-info-header'>
-                                    {item}
-                                </div>
-                            </div>
-                        )
-                           
-                        })
-                    }
-                 </div>
+               <div className='detail-page-mobile-benefit-content'>
+                  <div className='detail-page-mobile-benefit-content-header'>
+                      The Benefits You Will Get
+                  </div>
+                  {
+                    props?.toolData.usps &&  props?.toolData?.usps.length > 0 && props?.toolData?.usps.map((item,index)=>{
+                        return(
+                          <div className='detail-page-mobile-benefit-info' key={index}>
+                              <Image src={benefitBullet} width={17} height={20} objectFit='contain' />
+                              <div className='detail-page-mobile-benefit-info-header'>
+                                  {item}
+                              </div>
+                          </div>
+                      )
+                         
+                      })
+                  }
+               </div>
               </div>
-            </div>
+             </div> : null
+            }
+           
 
             <div className='detail-page-mobile-intro'>
                 <div className='detail-page-mobile-intro-header' style={{position:'relative'}}>

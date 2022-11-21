@@ -1,39 +1,40 @@
-import React,{useEffect,useState} from 'react';
+import React,{useEffect,useState,useRef} from 'react';
 import { useRouter } from 'next/router';
 import { useMediaQuery } from "react-responsive";
 import DetailPageMobile from './mobileDetailPage'
 import DetailPageWeb from './webDetailPage'
 import axios from 'axios';
 import constant from '../../config/constant';
+import UrlService from "../../helper/urlService";
+import { NextPageContext } from "next";
 
 export default function DetailPage(props){
 
     let location = useRouter();
+    let nextURL=location?.asPath?.substring(1,location?.asPath?.length)
+    let urlService = useRef(new UrlService(nextURL));
     const [mounted, setMounted] = useState(false);
     const [detailData,setDetailData] = useState({})
     const [instructorData,setInstructorData] = useState({})
     const [priceOptions,setPriceOptions] = useState({})
     const [toolData,setToolData] = useState({})
     const [similarCourses,setSimilarCourses] = useState({})
-    const [courseId,setCourseId] = useState(0);
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const isDesktopOrLaptop = useMediaQuery({
       query: "(min-width: 500px)",
     });
 
     useEffect(() => {
-        _getCourseId()
-      }, []);
+      _getCourseId(location.query.course_id)
+    }, [location.query.course_id]); 
 
-    const _getCourseId=()=>{
-        if(location.query && location.query !== 'null' && location.query !== 'undefined'){
-            setCourseId(location.query.course_id)
-            _getDetailData(location.query.course_id)
-            _getInstructorData(location.query.course_id)
-            _getpaymentDetails(location.query.course_id)
-            _getToolData(location.query.course_id)
-            _getCardData(location.query.course_id)
-        }
+    const _getCourseId=(id)=>{
+            _getDetailData(id)
+            _getInstructorData(id)
+            _getpaymentDetails(id)
+            _getToolData(id)
+            _getCardData(id)
+       
     }  
 
     const _getDetailData=async(id)=>{
