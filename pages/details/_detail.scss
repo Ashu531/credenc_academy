@@ -721,3 +721,815 @@
 
   
 }
+
+
+
+.detail-page-web{
+    // width: 100%;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 9rem 0px 24px 0px; 
+
+    .detail-page-web-breadcrumb{
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 0px 24px 0px 24px;
+    }  
+
+    .detail-page-web-header{
+        // width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 24px;
+        // margin-right: 24px;
+        padding: 0px 24px 0px 24px;
+       
+        .detail-page-web-host{
+
+            display: flex;
+            flex-direction: 'column';
+            justify-content: space-between;
+            align-items: center;  
+
+        .detail-page-web-platform{
+            display: flex;
+            flex-direction: 'column';
+            justify-content: space-between;
+            align-items: flex-start; 
+            margin-left: 10px; 
+
+            .detail-page-web-platform-heading{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 18px;
+                color: var(--bodyColor);
+            }
+
+            .detail-page-web-platform-subHeading{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 14px;
+                line-height: 21px;
+                text-transform: uppercase;
+                color: var(--inverseBackground);
+            }
+        }
+    }
+
+        .detail-page-web-action-container{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            // padding: 12px;
+            gap: 10px;
+            // width: 44px;
+            // height: 44px;
+        }
+
+        .web-action-grey-container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+            gap: 10px;
+
+            width: 22px;
+            height: 22px;
+
+            /* Neutral BG/Light/Subdued */
+
+            background: #F7F7F7;
+            border-radius: 6px;
+        }
+    }
+
+    .detail-page-web-course-data-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-top: 48px;
+        padding: 0px 24px 0px 24px;
+
+        .course-data-left-container{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+
+
+            .detail-page-content-course-name{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 32px;
+                line-height: 120%;
+                color: #000000;
+            }
+
+            .detail-page-content-one-liner{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 15px;
+                line-height: 170%;
+                color: var(--primaryColor);
+            }
+
+            .detail-page-content-educator-heading{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 13px;
+                line-height: 20px;
+                text-align: center;
+                text-transform: uppercase;
+                color: var(--bodyColor);
+            }
+    
+            .detail-page-content-educator-container{
+                display: flex;
+                flex-direction: row;
+                
+    
+                .detail-page-content-educator-list{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    flex-wrap: wrap;
+    
+                    .detail-page-content-educator-name{
+                        font-family: 'Poppins';
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 15px;
+                        line-height: 22px;
+                        text-align: center;
+                        color: var(--inverseBackground);
+                    }
+                }
+               
+            }
+        }
+
+        .course-data-right-container{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-end;
+
+            .detail-page-content-heading{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 21px;
+                display: flex;
+                align-items: center;
+                color: var(--inverseBackground);
+            }
+
+            .detail-page-info-container{
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                    
+
+                    .detail-page-content-educator-details{
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 14px 20px;
+                        gap: 36px;
+                        background: var(--defaultBackground);
+                        border: 1px solid var(--insignificantStrokeColor);
+                        border-radius: 4px;
+                        width: 400px;
+                        margin-top: 12px;
+                
+                        .detail-page-content-educator-info{
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: flex-start;
+                            align-items: center;
+                        }
+            
+                        .detail-page-content-educator-info-header{
+                            font-family: 'Poppins';
+                            font-style: normal;
+                            font-weight: 500;
+                            font-size: 14px;
+                            line-height: 21px;
+                            text-transform: uppercase;
+                            color: var(--primaryColor);
+                            margin-left: 12px;
+                        }
+            
+                        .detail-page-content-educator-info-subheader{
+                            font-family: 'Poppins';
+                            font-style: normal;
+                            font-weight: 600;
+                            font-size: 14px;
+                            line-height: 21px;
+                            text-transform: uppercase;
+                            color: #8F14CC;
+                        }
+                    }
+            }
+        }
+    }
+
+    .detail-page-web-course-grey-section{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 60px 48px;
+        gap: 60px;
+        background: var(--subduedBackground);
+        margin-top: 60px;
+        width: 100%;
+
+        .detail-page-grey-left-content{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            width: 50%;
+        }
+
+        .detail-page-mobile-intro-header{
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 28px;
+            line-height: 140%;
+            text-transform: capitalize;
+            color: var(--inverseBackground);
+            display: flex;
+        }
+
+        .detail-page-mobile-intro-subHeader{
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 170%;
+            color: var(--primaryColor);
+            // margin-top: 16px;
+        }
+
+        .detail-page-mobile-intro-content{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        .detail-page-grey-right-content{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            width: 50%;
+
+            .detail-page-mobile-benefit-section{
+                // position: absolute;
+                // top: 0px;
+                // left: 0px;
+        
+                .detail-page-mobile-benefit-content{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    // padding: 44px 24px;
+                    gap: 40px;
+                    isolation: isolate;
+                    // background: var(--defaultBackground);
+        
+                    .detail-page-mobile-benefit-content-header{
+                        font-family: 'Poppins';
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 28px;
+                        line-height: 140%;
+                        text-transform: capitalize;
+                        color: var(--inverseBackground);
+                    }
+        
+                    .detail-page-mobile-benefit-info{
+        
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+        
+                        .detail-page-mobile-benefit-info-header{
+                            font-family: 'Poppins';
+                            font-style: normal;
+                            font-weight: 500;
+                            font-size: 15px;
+                            line-height: 22px;
+                            margin-left: 12px;
+                            // color: var(--defaultBackground);
+                        }
+        
+                    }
+        
+                   
+                }
+            }
+        }
+
+        .detail-page-mobile-module-content{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 16px 0px;
+            gap: 24px;
+    
+            .detail-page-mobile-module-content-header{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 15px;
+                line-height: 22px;
+                color: var(--inverseBackground);
+            }
+    
+            .detail-page-mobile-module-content-subheader{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 13px;
+                line-height: 20px;
+                letter-spacing: 0.02em;
+                color: var(--bodyColor);
+            }
+        }
+
+        .detail-page-mobile-module-bullet-section{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-left: 9%;
+    
+            .detail-page-mobile-module-bullet-section-header{
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
+    
+            .detail-page-mobile-module-bullet-section-header-text{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 15px;
+                line-height: 22px;
+                color: var(--primaryColor);
+                margin-left: 12px;
+            }
+        }
+
+        .detail-page-mobile-skill-container{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            gap: 15px;
+    
+            .detail-page-mobile-skill-content{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 21px;
+                color: var(--inverseBackground);
+            }
+        }
+
+        .detail-page-mobile-module-topic-section{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            margin-left: 16%;
+    
+            .detail-page-mobile-module-bullet-section-header-text{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 15px;
+                line-height: 22px;
+                color: var(--primaryColor);
+                margin-left: 12px;
+            }
+    
+           
+        }
+        .detail-page-mobile-module-bullet-section-topic-text{
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 21px;
+            color: var(--bodyColor);
+            margin-left: 23%;
+            margin-top: 5px;
+        }
+
+        .detail-page-mobile-instructor-card-container{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            width: 90%;
+            overflow: auto;
+            margin-top: 20px;
+           
+    
+            .detail-page-mobile-instructor-card{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 25px 15px;
+                gap: 15px;
+                isolation: isolate;
+                background: var(--defaultBackground);
+                border-radius: 6px;
+                min-width: 238px;
+                position: relative;
+    
+                .detail-page-mobile-instructor-card-name{
+                    font-family: 'Poppins';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 18px;
+                    line-height: 33px;
+                    display: flex;
+                    align-items: center;
+                    text-transform: capitalize;
+                }
+    
+                .detail-page-mobile-instructor-card-designation{
+                    font-family: 'Poppins';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 12px;
+                    line-height: 18px;
+                    color: var(--inverseBackground);
+                }
+    
+                .linkedlinLogoMobile{
+                    position: absolute;
+                    top: 12px;
+                    right: 12px;
+                }
+        
+            }
+        }
+
+        
+    }
+    .detail-page-mobile-price-options-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        overflow: auto;
+        margin-top: 24px;
+
+        .detail-page-mobile-price-options-card{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 24px;
+            gap: 12px;
+            background: var(--defaultBackground);
+            border: 1px solid #DDDDDD;
+            box-shadow: 6px 6px 0px #F7F7F7;
+            width: 300px;
+            border-radius: 6px;
+
+            .detail-page-mobile-price-options-card-header{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            
+
+            .detail-page-mobile-price-options-card-plan{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 15px;
+                line-height: 22px;
+                text-transform: uppercase;
+                color: var(--inverseBackground);
+            }
+
+            .detail-page-mobile-price-options-card-recommendation{
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                padding: 5px 6px;
+                gap: 10px;
+                background: #FAF1FE;
+                border-radius: 3px;
+
+                .detail-page-mobile-price-options-card-recommendation-text{
+                    font-family: 'Poppins';
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 10px;
+                    line-height: 15px;
+                    color: #8F14CC;
+                }
+            }
+        }
+                .detail-page-mobile-price-options-card-description{
+                    font-family: 'Poppins';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 12px;
+                    line-height: 18px;
+                    color: var(--bodyColor);
+            }
+
+            .detail-page-mobile-price-options-card-info{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+
+                .detail-page-mobile-price-options-card-info-heading{
+                    font-family: 'Poppins';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 14px;
+                    line-height: 21px;
+                    color: var(--inverseBackground);
+                }
+
+                .detail-page-mobile-price-options-card-info-subheading{
+                    font-family: 'Poppins';
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 14px;
+                    line-height: 21px;
+                    color: var(--inverseBackground);
+                }
+
+                .detail-page-mobile-price-options-card-nocost-emi{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: flex-start;
+                    padding: 5px 6px;
+                    gap: 10px;
+                    background: #EDF7E8;
+                    border-radius: 3px;
+
+                    .detail-page-mobile-price-options-card-nocost-emi-text{
+                        font-family: 'Poppins';
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 11px;
+                        line-height: 16px;
+                        color: #5FAE3A;
+                    }
+                }
+
+                .detail-page-mobile-price-options-card-info-amount-header{
+                    font-family: 'Poppins';
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 12px;
+                    line-height: 18px;
+                    text-transform: capitalize;
+                    color: var(--inverseBackground);
+                }
+
+                .detail-page-mobile-price-options-card-info-amount-text{
+                    font-family: 'Poppins';
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 18px;
+                    line-height: 27px;
+                    color: #8F14CC;
+                }
+            }
+        }
+    }
+
+    .detail-page-mobile-emi-content{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        .detail-page-mobile-emi-section{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+
+            .detail-page-mobile-emi-section-header{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 24px;
+                text-transform: uppercase;
+                color: #222222;
+            }
+
+            .detail-page-mobile-emi-section-nj-text{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 18px;
+                color: #8F14CC;
+            }
+
+            .detail-page-mobile-emi-section-start-text{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 12px;
+                line-height: 18px;
+                text-align: center;
+                color: #222222;
+            }
+
+            .detail-page-mobile-emi-section-price-text{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 20px;
+                line-height: 30px;
+                text-align: center;
+                color: #8F14CC;
+            }
+        }
+    }
+
+    .detail-page-mobile-nj-section{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 6px;
+        gap: 12px;
+        background: rgba(0, 203, 156, 0.1);
+        border-radius: 4px;
+        margin-top: 20px;
+
+        .detail-page-mobile-nj-section-text{
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 18px;
+             color: #009572;
+        }
+    }
+
+    .detail-page-mobile-intro{
+        background: var(--subduedBackground);
+        padding: 44px 24px 44px 24px;
+
+        .detail-page-mobile-intro-header{
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 28px;
+            line-height: 140%;
+            text-transform: capitalize;
+            color: var(--inverseBackground);
+            display: flex;
+        }
+
+        .detail-page-mobile-intro-subHeader{
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 170%;
+            color: var(--primaryColor);
+            // margin-top: 16px;
+        }
+
+        .detail-page-mobile-intro-content{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+    }
+
+    .detail-page-mobile-batch-card-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+ 
+        .detail-page-mobile-batch-card{
+             display: flex;
+             flex-direction: column;
+             align-items: flex-start;
+             padding: 16px;
+             gap: 24px;
+             background: #FFFFFF;
+             border-radius: 6px;
+             margin-top: 24px;
+             width: 400px;
+ 
+         .detail-page-mobile-batch-card-heading{
+             font-family: 'Poppins';
+             font-style: normal;
+             font-weight: 600;
+             font-size: 16px;
+             line-height: 24px;
+             display: flex;
+             align-items: center;
+             text-transform: uppercase;
+             color: var(--primaryColor);
+         }
+ 
+         .detail-page-mobile-batch-card-info{
+             display: flex;
+             flex-direction: row;
+             justify-content: space-between;
+             align-items: center;
+             width: 100%;
+ 
+             .detail-page-mobile-batch-card-info-header{
+                 font-family: 'Poppins';
+                 font-style: normal;
+                 font-weight: 500;
+                 font-size: 15px;
+                 line-height: 22px;
+                 text-align: center;
+                 color: var(--bodyColor);
+             }
+ 
+             .detail-page-mobile-batch-card-info-subheader{
+                 font-family: 'Poppins';
+                 font-style: normal;
+                 font-weight: 600;
+                 font-size: 15px;
+                 line-height: 22px;
+                 text-align: center;
+                 color: #000000;
+             }
+         }
+ 
+             .detail-page-mobile-batch-card-content{
+                 display: flex;
+                 flex-direction: column;
+                 align-items: flex-start;
+                 padding: 0px;
+                 gap: 8px;
+                 width: 100%;
+         }
+       }
+ 
+       .detail-page-mobile-batch-card-close{
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
+         align-items: center;
+         padding: 16px;
+         gap: 24px;
+         background: #FFFFFF;
+         border-radius: 6px;
+       }
+ 
+        .detail-page-mobile-batch-card-heading{
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 24px;
+            display: flex;
+            align-items: center;
+            text-transform: uppercase;
+            color: var(--primaryColor);
+        }
+     }
+}

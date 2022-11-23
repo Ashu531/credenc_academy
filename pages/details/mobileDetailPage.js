@@ -1,6 +1,5 @@
 import React,{useEffect,useState} from 'react';
 import Image from "next/image";
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import arrowIcon from '../../assets/images/icons/arrowIcon.svg';
 import clockIcon from '../../assets/images/icons/clockIcon.svg';
@@ -251,7 +250,7 @@ export default function DetailPageMobile(props){
                        <Image src={costIcon} height={28} width={28} objectFit='contain' />
                        <div className='detail-page-content-educator-info-header'>Starting Cost</div>
                    </div>
-                   <div className='detail-page-content-educator-info-subheader' style={{textAlign:'right'}}>₹{props?.detailData?.finance_display && props?.detailData?.finance_display.length > 0 ? props?.detailData?.finance_display[0] : ''}</div>
+                   <div className='detail-page-content-educator-info-subheader' style={{textAlign:'right'}}>{props?.detailData?.finance_display && props?.detailData?.finance_display.length > 0 ? `₹${props?.detailData?.finance_display[0]}` : 'Unknown'}</div>
                </div>
                </div>
             </div>
@@ -262,7 +261,7 @@ export default function DetailPageMobile(props){
               <div className='detail-page-mobile-intro-subHeader' style={{marginTop: 10}}>
                 {props?.detailData?.description}
               </div>
-              <div className='detail-page-mobile-intro-header' style={{marginTop: 40,fontSize: 22}}>
+              <div className='detail-page-mobile-intro-header' style={{marginTop: 40,fontSize: 22,flexDirection:'row !important'}}>
                 Am I Eligible<div style={{position:'relative'}}>
                 &nbsp;?&nbsp;
                     <div style={{position:'absolute',top: -12,left: 5}}>

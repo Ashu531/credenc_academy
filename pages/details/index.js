@@ -7,6 +7,7 @@ import axios from 'axios';
 import constant from '../../config/constant';
 import UrlService from "../../helper/urlService";
 import { NextPageContext } from "next";
+const EdtechToken = 'credenc-edtech-authkey';
 
 export default function DetailPage(props){
 
@@ -19,6 +20,7 @@ export default function DetailPage(props){
     const [priceOptions,setPriceOptions] = useState({})
     const [toolData,setToolData] = useState({})
     const [similarCourses,setSimilarCourses] = useState({})
+    const [token,setToken] = useState('')
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const isDesktopOrLaptop = useMediaQuery({
       query: "(min-width: 500px)",
@@ -26,7 +28,15 @@ export default function DetailPage(props){
 
     useEffect(() => {
       _getCourseId(location.query.course_id)
+      _retrieveData()
     }, [location.query.course_id]); 
+
+    const _retrieveData=()=>{
+     const localToken = localStorage.getItem(EdtechToken)
+     if(localToken && localToken.length > 0){
+        setToken(localToken)
+     }
+    }
 
     const _getCourseId=(id)=>{
             _getDetailData(id)
@@ -113,7 +123,26 @@ export default function DetailPage(props){
         mounted && 
         <>
         {isDesktopOrLaptop && 
-          <DetailPageWeb />
+          <DetailPageWeb
+            detailData={detailData} 
+            instructorData={instructorData} 
+            similarCourses={similarCourses} 
+            priceOptions={priceOptions} 
+            toolData={toolData} 
+            addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+            removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+            token={token}
+            openLoginModal={()=>props?.openLoginModal()}
+            addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+            removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+            openLoginModal={()=>props?.openLoginModal()}
+            handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
+            closeLoginModal={()=>props?.closeLoginModal()}
+            openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
+            forgotPasswordModal={props?.forgotPasswordModal}
+            handleLogin={()=>props?.handleLogin()}
+            loginModal={props?.loginModal}
+          />
         }
         {isMobile && 
           <DetailPageMobile 
@@ -124,7 +153,7 @@ export default function DetailPage(props){
                 toolData={toolData} 
                 addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
                 removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
-                token={props?.token}
+                token={token}
                 openLoginModal={()=>props?.openLoginModal()}
            />
         }
