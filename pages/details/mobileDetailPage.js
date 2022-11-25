@@ -28,6 +28,10 @@ import constantCurveIcon from '../../assets/images/icons/constantCurveIcon.svg'
 import skribbleIcon from '../../assets/images/icons/skribbleIcon.svg'
 import underlineSkribble from '../../assets/images/icons/underlineSkribble.svg'
 import titleFrame from '../../assets/images/icons/titleFrame.svg'
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import {withStyles, Typography } from "@material-ui/core";
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
 
 const styles = {
     width: "100%",
@@ -57,6 +61,24 @@ export default function DetailPageMobile(props){
         moduleId: 0,
         moduleShow: false,
     })
+
+    const breadcrumbs = [
+      <Link underline="hover" key="1" color="#4F4F4F" href="/" style={{fontSize: 13, fontFamily: 'Poppins', fontWeight: 400,}}>
+        Home
+      </Link>,
+      <Link
+        underline="hover"
+        key="2"
+        color="#4F4F4F"
+        href="/material-ui/getting-started/installation/"
+        style={{fontSize: 13, fontFamily: 'Poppins', fontWeight: 400,}}
+      >
+        Design
+      </Link>,
+      <CustomColor key="3">
+        Product Design
+      </CustomColor>,
+    ];
 
     useEffect(() => {
         if( props?.detailData && props?.detailData != null 
@@ -131,8 +153,23 @@ export default function DetailPageMobile(props){
          
       }
 
+    //   const handleButtonClick=()=>{
+    //     _openApplyNowModal()
+    // }
+
     return(
+      <>
+      { 
+       mounted &&
         <div className='detail-page-mobile'>
+          <div className='detail-page-web-breadcrumb' style={{marginTop: '6rem',padding: 24}}>
+           <Breadcrumbs
+                separator={<NavigateNextIcon fontSize="medium" />}
+                aria-label="breadcrumb"
+            >
+                {breadcrumbs}
+            </Breadcrumbs>
+           </div>
             {
                 props?.detailData?.platform?.logo ? 
                 <div className='detail-page-header-mobile-container'>
@@ -172,45 +209,55 @@ export default function DetailPageMobile(props){
                  {props?.detailData?.course_name}
                </div>
                {
-                props?.detailData?.platform?.one_liner ? 
+                props?.detailData?.one_liner ? 
                     <span className='detail-page-content-one-liner' style={{marginTop: 10}}>
-                    {props?.detailData?.platform?.one_liner}
+                    {props?.detailData?.one_liner}
                 </span> : null
                }
-               <div className='detail-page-content-educator' style={{marginTop: 40}}>
-                  <span className='detail-page-content-educator-heading'>
-                      TAUGHT BY
-                  </span>
-                  <div className='detail-page-content-educator-container' style={{marginTop: 10}}>
-                      {
-                        props?.detailData?.educator && props?.detailData?.educator.length > 0 &&  props?.detailData?.educator.map((item,index)=>{
-                              return(
-                                <div key={index+1} className='detail-page-content-educator-list'>
-                                     <Image loader={myLoader} src={item?.logo} priority={true} objectFit='contain' height={40} width={40} />
-                                     <div className='detail-page-content-educator-name' style={{marginLeft: 6}}>{item?.name}</div>
-                                </div>
-                              )
+               {
+                 props?.detailData?.educator && props?.detailData?.educator.length > 0 ?
+                    <div className='detail-page-content-educator' style={{marginTop: 40}}>
+                        <span className='detail-page-content-educator-heading'>
+                            TAUGHT BY
+                        </span>
+                        <div className='detail-page-content-educator-container' style={{marginTop: 10}}>
+                            {
+                              props?.detailData?.educator && props?.detailData?.educator.length > 0 &&  props?.detailData?.educator.map((item,index)=>{
+                                    return(
+                                      <div key={index+1} className='detail-page-content-educator-list'>
+                                          <Image loader={myLoader} src={item?.logo} priority={true} objectFit='contain' height={40} width={40} />
+                                          <div className='detail-page-content-educator-name' style={{marginLeft: 6}}>{item?.name}</div>
+                                      </div>
+                                    )
+                                  
+                                })
+                            }
+                          
+                        </div>
+                      </div> : null
+               }
+
+               {/* {
+                 props?.detailData?.platform && props?.detailData?.platform.length > 0 ? 
+
+                    <div className='detail-page-content-educator' style={{marginTop: 40}}>
+                      <span className='detail-page-content-educator-heading'>
+                          PARTNERS
+                      </span>
+                      <div className='detail-page-content-educator-container' style={{marginTop: 10}}>
+                        <div className='detail-page-content-educator-list'>
+                            {
+                              props?.detailData?.platform?.logo ?   <Image loader={myLoader} src={props?.detailData?.platform?.logo} objectFit='contain' height={40} width={40} /> : null 
+                            }
                             
-                          })
-                      }
-                     
-                  </div>
-               </div>
-               <div className='detail-page-content-educator' style={{marginTop: 40}}>
-                  <span className='detail-page-content-educator-heading'>
-                      PARTNERS
-                  </span>
-                  <div className='detail-page-content-educator-container' style={{marginTop: 10}}>
-                    <div className='detail-page-content-educator-list'>
-                        {
-                          props?.detailData?.platform?.logo ?   <Image loader={myLoader} src={props?.detailData?.platform?.logo} priority={true} objectFit='contain' height={40} width={40} /> : null 
-                        }
+                            <div className='detail-page-content-educator-name' style={{marginLeft: 6}}>{props?.detailData?.platform?.name}</div>
+                        </div>
                         
-                        <div className='detail-page-content-educator-name' style={{marginLeft: 6}}>{props?.detailData?.platform?.name}</div>
-                    </div>
-                     
-                  </div>
-               </div>
+                      </div>
+                    </div> : null
+               } */}
+               
+               
                <div style={{marginTop: 36}}>
                    <div className='divider' />
                <div className='detail-page-content-educator-details'>
@@ -487,7 +534,7 @@ export default function DetailPageMobile(props){
                             <div className='detail-page-mobile-instructor-card-name'>
                                 {item?.name}
                             </div>
-                            <div className='detail-page-mobile-instructor-card-designation'>
+                            <div className='detail-page-mobile-instructor-card-designation' style={{marginTop: -10}}>
                                 {item?.designation}
                             </div>
                             <div className='linkedlinLogoMobile'>
@@ -790,5 +837,21 @@ export default function DetailPageMobile(props){
              <ApplyNowModal detailData={detailData} closeApplyNowModal={()=>_closeApplyNowModal()} />
            </SlidingPanel>
         </div>
+        }
+        </>
+
     )
 }
+
+
+const CustomColor = withStyles({
+  root: {
+    fontSize: 13,
+    fontFamily: 'Poppins',
+    fontWeight: 400,
+  //   lineHeight: 20,
+    background: "-webkit-linear-gradient(94.15deg, #8F14CC 0%, #6602FC 99.97%)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent"
+  }
+})(Typography);

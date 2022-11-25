@@ -129,13 +129,10 @@ export default function DetailPage(props){
             similarCourses={similarCourses} 
             priceOptions={priceOptions} 
             toolData={toolData} 
-            addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
-            removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
             token={token}
             openLoginModal={()=>props?.openLoginModal()}
             addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
             removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
-            openLoginModal={()=>props?.openLoginModal()}
             handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
             closeLoginModal={()=>props?.closeLoginModal()}
             openForgotPasswordModal={()=>props?.openForgotPasswordModal()}

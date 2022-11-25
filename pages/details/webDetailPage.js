@@ -51,12 +51,6 @@ const styles = {
     backgroundImage: `url(${tableBackground.src})`,  
   };
 
-
-function handleClick(event) {
-    event.preventDefault();
-    console.info('You clicked a breadcrumb.');
-  }
-
 export default function WebDetailPage(props){
 
     let router = useRouter();
@@ -85,7 +79,7 @@ export default function WebDetailPage(props){
     }
 
     const breadcrumbs = [
-        <Link underline="hover" key="1" color="#4F4F4F" href="/" onClick={handleClick} style={{fontSize: 13, fontFamily: 'Poppins', fontWeight: 400,}}>
+        <Link underline="hover" key="1" color="#4F4F4F" href="/" style={{fontSize: 13, fontFamily: 'Poppins', fontWeight: 400,}}>
           Home
         </Link>,
         <Link
@@ -93,7 +87,6 @@ export default function WebDetailPage(props){
           key="2"
           color="#4F4F4F"
           href="/material-ui/getting-started/installation/"
-          onClick={handleClick}
           style={{fontSize: 13, fontFamily: 'Poppins', fontWeight: 400,}}
         >
           Design
@@ -472,7 +465,7 @@ export default function WebDetailPage(props){
                             
                         </div>
                     </div>
-                    <div className='detail-page-content-educator' style={{marginTop: 40}}>
+                    {/* <div className='detail-page-content-educator' style={{marginTop: 40}}>
                         <span className='detail-page-content-educator-heading'>
                             PARTNERS
                         </span>
@@ -486,7 +479,7 @@ export default function WebDetailPage(props){
                             </div>
                             
                         </div>
-                    </div>
+                    </div> */}
                   </div>
                   <div className='course-data-right-container'>
                         <div className='detail-page-content-heading'>
