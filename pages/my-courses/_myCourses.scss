@@ -1,0 +1,62 @@
+.my-course-container{
+    width: 100vw;
+    min-height: 100vh;
+    flex: 1;
+    background: var(--defaultBackground);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+      .my-course-content{
+        width: 100%;
+
+        .my-course-header-web{
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            top: 10rem;
+    
+            .my-course-header{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 19px;
+                color: var(--inverseBackground);
+            }
+         }
+
+        .card-list-content{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+            // margin-top: 15rem;
+            // padding: 0px 30px 30px 30px;
+        }
+      }   
+}
+
+
+@media only screen and (max-width: 500px) {
+    .my-course-header-mobile{
+       display: flex;
+       justify-content: flex-start;
+       align-items: flex-start;
+
+       .my-course-header-mobile{
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 22px;
+        color: var(--bodyColor);
+       }
+    }
+  }
+

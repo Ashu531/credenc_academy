@@ -31,6 +31,9 @@ import LoginModalContainer from '../../components/loginModal/LoginModalContainer
 import ForgotPasswordModal from '../../components/forgotPasswordModal/ForgotPasswordModal'
 import SearchBar from '../../components/searchBar/SearchBar'
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
+import HomeSkeleton from "../../components/homePageSkeleton/homeSkeleton"
+import Skeleton from '@mui/material/Skeleton';
+import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
 
 const subjectKey = 'credenc-edtech-subject';
 const compareKey = 'credenc-marketplace-compares';
@@ -132,6 +135,7 @@ function DashboardDesktop(props) {
   const [pageNumber, setPageNumber] = useState(1);
   const [cardActionTaken,setCardActionTaken] = useState(false)
   const [nextPage,setNextPage] = useState(true)
+  const [successApplyModal,setSuccessApplyModal] = useState(false)
   
 
   let observer = useRef(
@@ -875,6 +879,14 @@ const _handleSearch=(e)=>{
   const _handleCardActionTaken=()=>{
     setCardActionTaken(true)
   }
+
+  const _closeSuccessApplyModal=()=>{
+    setSuccessApplyModal(false)
+  }
+
+  const _openSuccessApplyModal=()=>{
+    setSuccessApplyModal(true)
+  }
   
  return(
         <div>      
@@ -1105,19 +1117,30 @@ const _handleSearch=(e)=>{
          </div> 
 
        <div className="course-navbar" style={searchRef && searchRef?.current !== null && searchRef?.current?.getBoundingClientRect().y <= -196 ? { position: 'fixed',top: '8vh',background: '#FFFFFF',zIndex: 9999,boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.1)',padding: '1rem 5rem 0rem 5rem'} : {padding: '0.8rem 5rem 0rem 5rem'}}>
-        <Navbar 
-            toggleFilterModal={openFilterModal} 
-            openSubjectModal={openSubjectModal} 
-            closeSubjectModal={closeSubjectModal} 
-            subCategories={subCategory} 
-            selectedCategory={selectedCategory} 
-            setSubCategoriesData={setSubCategoriesData} 
-            subjectData={subjectData}
-            selectedSubject={selectedSubject} 
-            selectSubject={selectSubject}
-            theme={props.newTheme}
-            appliedFiltersCount={appliedFiltersCount.current}
-        />
+        {
+          subCategory && subCategory.length > 0 ?
+            <Navbar 
+              toggleFilterModal={openFilterModal} 
+              openSubjectModal={openSubjectModal} 
+              closeSubjectModal={closeSubjectModal} 
+              subCategories={subCategory} 
+              selectedCategory={selectedCategory} 
+              setSubCategoriesData={setSubCategoriesData} 
+              subjectData={subjectData}
+              selectedSubject={selectedSubject} 
+              selectSubject={selectSubject}
+              theme={props.newTheme}
+              appliedFiltersCount={appliedFiltersCount.current}
+            /> :
+          <div style={{display:'flex',justifyContent:'flex-start',padding: 24}}>
+              {Array.from({length: 11}, (x, i) => {
+                  return <div style={{marginRight: 30}}>
+                            <Skeleton variant="rectangular" width={90} height={23} key={i}/>
+                          </div>
+              })}
+          </div>
+        }
+        
        </div>
        {/* <FilterModal filterModal={filterModal} toggleFilterModal={closeFilterModal}/> */}
        <div className="course-content">
@@ -1157,9 +1180,12 @@ const _handleSearch=(e)=>{
              
            })
          }
+         {/* <HomeSkeleton /> */}
        </div> : 
-        <div style={{marginTop: '-5rem'}}>
-        <Error type={ Lists.errorTypes.EMPTY } />
+        <div className="course-card-container">
+          {Array.from({length: 4}, (x, i) => {
+                  return <HomeSkeleton key={i} />;
+          })}
         </div>
        }
        
@@ -1315,7 +1341,15 @@ const _handleSearch=(e)=>{
         backdropClicked={() => setApplyNow(false)}
         size={30}
       >
-        <ApplyNowModal detailData={detailData} closeApplyNowModal={()=>_closeApplyNowModal()} />
+        <ApplyNowModal detailData={detailData} closeApplyNowModal={()=>_closeApplyNowModal()} openSuccessApplyModal={()=>_openSuccessApplyModal()}/>
+      </SlidingPanel>
+      <SlidingPanel
+        type={'right'}
+        isOpen={successApplyModal}
+        backdropClicked={() => setSuccessApplyModal(false)}
+        size={30}
+      >
+        <SuccessApplyModal closeSuccessApplyModal={()=>_closeSuccessApplyModal()} />
       </SlidingPanel>
       {
         props?.loginModal ? 

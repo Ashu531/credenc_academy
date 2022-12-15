@@ -17,12 +17,12 @@ const bookmarkKey = 'credenc-marketplace-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 const EdtechAuthKey = 'credenc-edtech-authkey';
 
-export default function Bookmarks(props){
+export default function MyCourses(props){
 
     let location = useRouter();
-    const bookmarkApiStatus = useRef(new ApiStatus());
+    const coursesApiStatus = useRef(new ApiStatus());
+    const listTypes = States.listTypes;
     const [courses, setCourses] = useState([]);
-    const [bookmarkCard, setBookmarkCard] = useState('')
     const [token, setToken] = useState('')
     const [detailModal, setDetailModal] = useState(false);
     const [detailData,setDetailData] = useState({});
@@ -34,62 +34,35 @@ export default function Bookmarks(props){
       setMounted(true);
     }, []);
 
-    const getBookmarkedCourses = async (authToken) => {
-        bookmarkApiStatus.current.makeApiCall();
+    const getMyCourses = async (authToken) => {
+        coursesApiStatus.current.makeApiCall();
 
-
-        let storedBookmarks = localStorage.getItem(bookmarkKey) 
-        let bookmark = [];
-        if(storedBookmarks && storedBookmarks.length > 0){
-          bookmark = JSON.parse(storedBookmarks)
-         }
-
-        const getIds = () => {
-          return bookmark.map(id => `id=${id}`).join('&');
-        }
-
-        if (!authToken) {
-
-          const res = await axios.get(`${constant.API_URL.DEV}/bookmark/list/?${getIds()}`)
-            .then(res => {
-              bookmarkApiStatus.current.success();
-              setCourses(res.data.data);
-              return res;
-            })
-            .catch(err => {
-              bookmarkApiStatus.current.failed();
-              console.log(err);
-            });
-          
-            return res ? res : [];
-        } else {
-          const res = await axios.get(`${constant.API_URL.DEV}/bookmark/list/`, {
+         const res = await axios.get(`${constant.API_URL.DEV}/my_courses/`, {
             headers: {
               'Authorization': `Bearer ${authToken}`
             }
           })
             .then(res => {
-              bookmarkApiStatus.current.success();
+              coursesApiStatus.current.success();
               setCourses(res.data.data);
-              return res;
+               return res;
             })
             .catch(err => {
-              bookmarkApiStatus.current.failed();
+              coursesApiStatus.current.failed();
               console.log(err);
             });
           
             return res ? res : [];
-        }
+        
       }
 
 
   useEffect( () => {
         let authToken = localStorage.getItem(EdtechAuthKey);
         setToken(authToken)
-        bookmarkApiStatus.current.start();
-        getBookmarkedCourses(authToken);
-        
-      }, []);
+        coursesApiStatus.current.start();
+        getMyCourses(authToken);
+    }, []);
 
   const openDetailModal = (data)=>{
       setDetailModal(!detailModal);
@@ -121,22 +94,22 @@ export default function Bookmarks(props){
       <> 
       {
         mounted && 
-        <div className='bookmark-container'>
-            <div className='bookmark-content'>
+        <div className='my-course-container'>
+            <div className='my-course-content'>
               {
                 window.innerWidth < 500 ?
-                <div className='bookmark-header-mobile'>
-                  <span className='bookmark-header-mobile' style={{paddingLeft: 20}}>
-                        Showing all bookmarked courses
+                <div className='my-course-header-mobile'>
+                  <span className='my-course-header-mobile' style={{paddingLeft: 20}}>
+                  My Courses
                     </span>
                 </div>
                   : 
-                  <div className='bookmark-header-web'>
-                    <span className='bookmark-header' style={{paddingLeft: 60}}>
-                        Bookmarks
+                  <div className='my-course-header-web'>
+                    <span className='my-course-header' style={{paddingLeft: 60}}>
+                        My Courses
                     </span>
-                    <span className='bookmark-header' style={{paddingRight: 60}}>
-                        Showing all bookmarked courses
+                    <span className='my-course-header' style={{paddingRight: 60}}>
+                    Click on the course to know about application status
                     </span>
                 </div>
               }
@@ -145,12 +118,11 @@ export default function Bookmarks(props){
                 style={ window.innerWidth < 500 ? {marginTop: '6rem',gap: 10,padding: '0rem 0rem 8rem 0rem',display:'block'} : courses && courses.length > 0 ? {gap: 10, position: "absolute", top: '14rem', left: '60px', paddingBottom: '6rem'} : {gap: 10}}
                 >
                   <List
-                      type={States.listTypes.BOOKMARK_CARDS}
+                      type={listTypes?.HORIZONTAL_CARDS}
                       list={courses}
-                      listApiStatus={bookmarkApiStatus}
+                      listApiStatus={coursesApiStatus}
                       openDetailModal={(item)=>openDetailModal(item)} 
                       openApplyNowModal={(item)=> _openApplyNowModal(item)}
-                      bookmarkCard={bookmarkCard}
                       detailData={detailData} 
                       token={token}
                       openLoginModal={()=>props?.openLoginModal()} 

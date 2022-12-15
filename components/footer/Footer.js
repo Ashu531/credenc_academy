@@ -42,12 +42,12 @@ export default function Footer(props){
                 </span> */}
             </div>
             <div style={{width: '25%',height:'100%'}} onClick={()=>props.toggleFooterModal()}/>
-        <div className='footer-disclaimer' onClick={()=>props.toggleFooterModal()}>
-            <span className='footer-disclaimer-text'>
-                Expand
-            </span>
-            <Image src={goUpIcon} objectFit="cover" alt='goUpIcon'/>
-        </div>
-        </div>
+                <div className='footer-disclaimer' onClick={()=>props.toggleFooterModal()}>
+                    <span className='footer-disclaimer-text'>
+                        Expand
+                    </span>
+                    <Image src={goUpIcon} objectFit="cover" alt='goUpIcon'/>
+                </div>
+            </div>
     )
 }

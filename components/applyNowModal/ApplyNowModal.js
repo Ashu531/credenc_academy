@@ -19,6 +19,7 @@ import constant from '../../config/constant';
 import moment from 'moment'
 import closeIcon from '../../assets/images/icons/close-icon-grey.svg'
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+const EdtechAuthKey = 'credenc-edtech-authkey';
 
 export default function ApplyNowModal(props){
 
@@ -29,6 +30,12 @@ export default function ApplyNowModal(props){
     const [number,setNumber] = useState('')
     const [gender,setGender] = useState('')
     const [dob,setDob] = useState(new Date())
+    const [token,setToken] = useState('');
+
+    useEffect(()=>{
+        let authToken = localStorage.getItem(EdtechAuthKey);
+        setToken(authToken)
+    },[])
 
     const handleChange = (newValue) => {
         let date = moment(newValue.$d).format('L');
@@ -40,16 +47,21 @@ export default function ApplyNowModal(props){
       };
 
     const handleSubmit=async()=>{
-        let res = await axios.post(`${constant.API_URL.DEV}/userform/`, {
+        let res = await axios.post(`${constant.API_URL.DEV}/userform/`,{
             'email': email.toString(),
             'full_name': name.toString(),
             'phone_number' : number.toString(),
             'gender': gender.toString(),
             'dob': dob,
             'course_id': props?.detailData?.id,
+          }, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
           })
         .then(res => {
             props.closeApplyNowModal()
+            props.openSuccessApplyModal()
           return res.data;
         })
         .catch(err => {

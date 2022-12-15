@@ -1532,4 +1532,32 @@
             color: var(--primaryColor);
         }
      }
+
+     .detail-page-web-intro-header{
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 28px;
+        line-height: 140%;
+        text-transform: capitalize;
+        color: var(--inverseBackground);
+        display: flex;
+    }
+
+    .detail-page-web-intro-subHeader{
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 170%;
+        color: var(--primaryColor);
+        // margin-top: 16px;
+    }
+
+    .detail-page-web-intro-content{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
 }

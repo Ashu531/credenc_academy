@@ -15,7 +15,7 @@
         font-weight: 500;
         font-size: 14px;
         color: var(--bodyColor);
-
+        margin-left: 30px;
     }
 
     .footer-disclaimer{
@@ -25,6 +25,7 @@
         align-items: center;
         padding-right: 23px;
         cursor: pointer;
+        margin-right: 30px;
     }
 
     .footer-disclaimer-text{
@@ -33,11 +34,9 @@
         font-weight: 400;
         font-size: 14px;
         line-height: 19px;
-/* identical to box height */
-
-text-align: right;
-color: var(--bodyColor);
-padding-right: 10px;
+        text-align: right;
+        color: var(--bodyColor);
+        padding-right: 24px;
     }
 
     .footer-elemental-content{

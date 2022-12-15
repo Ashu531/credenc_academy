@@ -46,6 +46,7 @@ function List({
 
   if(renderListType(listTypes.HORIZONTAL_CARDS)){
     if(listApiStatus.current.isPending()){
+      console.log(list,"list.lenght")
       return (
         Array(3).fill(null).map((item, i) => (
          
@@ -55,6 +56,7 @@ function List({
     } 
     
     else if(listApiStatus.current.hasCompleted()){
+      console.log(list,"list.lenght")
       if(list && list.length > 0){
         return (
           list.map((item, i) => {
@@ -89,10 +91,12 @@ function List({
     } 
     
     else if(listApiStatus.current.hasFailed()){
+      console.log("list.lenght123")
       return <Error type={ Lists.errorTypes.CRASH } />;
     } 
     
     else {
+      console.log(list,"list.lenght531")
       return <Error type={ Lists.errorTypes.CRASH } />;
     }
   }

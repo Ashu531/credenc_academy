@@ -1,0 +1,41 @@
+.cardContainerWeb{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    .cardContentWeb{
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        padding: 12px;
+
+        background: var(--defaultBackground);
+
+        border: 1px solid var(--insignificantStrokeColor);
+        border-radius: 16px;
+        min-width: 32.5em;
+
+        .platformIcon{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .headerContainer{
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .courseContent{
+            margin-top: 20px;
+        }
+
+        .priceContent{
+            margin-top: 20px;
+        }
+    }
+}

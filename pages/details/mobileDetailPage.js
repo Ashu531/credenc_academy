@@ -31,7 +31,8 @@ import titleFrame from '../../assets/images/icons/titleFrame.svg'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import {withStyles, Typography } from "@material-ui/core";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
+import Link from "next/link";
 
 const styles = {
     width: "100%",
@@ -66,16 +67,7 @@ export default function DetailPageMobile(props){
       <Link underline="hover" key="1" color="#4F4F4F" href="/" style={{fontSize: 13, fontFamily: 'Poppins', fontWeight: 400,}}>
         Home
       </Link>,
-      <Link
-        underline="hover"
-        key="2"
-        color="#4F4F4F"
-        href="/material-ui/getting-started/installation/"
-        style={{fontSize: 13, fontFamily: 'Poppins', fontWeight: 400,}}
-      >
-        Design
-      </Link>,
-      <CustomColor key="3">
+      <CustomColor key="2">
         Product Design
       </CustomColor>,
     ];

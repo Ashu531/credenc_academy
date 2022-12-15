@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import axios from "axios";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -41,6 +41,7 @@ import ForgotPasswordModal from '../../components/forgotPasswordModal/ForgotPass
 import upvoteLogoDark from '../../assets/images/icons/thumbs-up-dark.svg'
 import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
 import upvoteLogo from '../../assets/images/icons/upvote.svg'
+import Link from "next/link";
 
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
@@ -79,31 +80,18 @@ export default function WebDetailPage(props){
     }
 
     const breadcrumbs = [
-        <Link underline="hover" key="1" color="#4F4F4F" href="/" style={{fontSize: 13, fontFamily: 'Poppins', fontWeight: 400,}}>
-          Home
+        <Link key="1" href="/">
+          <span style={{fontSize: 13, fontFamily: 'Poppins', fontWeight: 400,color: '#4F4F4F',cursor: 'pointer'}}>
+           Home
+          </span>
         </Link>,
-        <Link
-          underline="hover"
-          key="2"
-          color="#4F4F4F"
-          href="/material-ui/getting-started/installation/"
-          style={{fontSize: 13, fontFamily: 'Poppins', fontWeight: 400,}}
-        >
-          Design
-        </Link>,
-        <CustomColor key="3">
+        <CustomColor key="2">
           Product Design
         </CustomColor>,
       ];
 
       useEffect(() => {
-        if( props?.detailData && props?.detailData != null 
-            && props?.instructorData && props?.instructorData != null 
-            && props?.similarCourses && props?.similarCourses != null
-            && props?.priceOptions && props?.priceOptions != null
-            && props?.toolData && props?.toolData != null
-            ){
-                console.log(props?.detailData,"props?.detailData+++")
+        if( props?.detailData && props?.detailData != null ){
                 setMounted(true)
                 _handleLocalItems()
         }
@@ -349,7 +337,6 @@ export default function WebDetailPage(props){
       }
 
       const handleButtonClick=()=>{
-          console.log("coming+++")
           _openApplyNowModal()
       }
 
@@ -393,6 +380,7 @@ export default function WebDetailPage(props){
             mounted &&
 
         <div className='detail-page-web'>
+          <div style={{display:'flex',alignItems:'center'}}>
            <div className='detail-page-web-breadcrumb'>
            <Breadcrumbs
                 separator={<NavigateNextIcon fontSize="medium" />}
@@ -402,7 +390,9 @@ export default function WebDetailPage(props){
             </Breadcrumbs>
            </div>
            <div className='detail-page-web-header'>
-                <div className='detail-page-web-host'>
+             {
+              props?.detailData?.platform?.logo !== null ? 
+               <div className='detail-page-web-host'>
                 <Image loader={myLoader} src={props?.detailData?.platform?.logo} alt='platform-icon' height={38} width={38} objectFit="contain" />
                    <div className='detail-page-web-platform' style={{flexDirection: 'column'}}>
                        <span className='detail-page-web-platform-heading'>
@@ -412,7 +402,9 @@ export default function WebDetailPage(props){
                          {props?.detailData?.platform?.name}
                        </span>
                    </div>
-                </div>
+                </div> : null
+             }
+                
                 <div className='detail-page-web-action-container'>
                    <div className='web-action-grey-container' onClick={()=>_handleCardBookmark(props?.detailData)} style={bookmarkVisible === true ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)",cursor:'pointer'} : {cursor: 'pointer'}}>
                     <Image src={bookmarkVisible === true  ? selectedBookmark : bookmarkIcon  } width={20} height={20} objectFit='contain' />
@@ -435,6 +427,7 @@ export default function WebDetailPage(props){
                    </div>
                 </div>
             </div>
+            </div>
            <div className='detail-page-web-course-data-container'>
                   <div className='course-data-left-container'>
                     <div className='detail-page-content-course-name'>
@@ -455,8 +448,11 @@ export default function WebDetailPage(props){
                                 props?.detailData?.educator && props?.detailData?.educator.length > 0 &&  props?.detailData?.educator.map((item,index)=>{
                                     return(
                                         <div key={index+1} className='detail-page-content-educator-list'>
-                                            <Image loader={myLoader} src={item?.logo} priority={true} objectFit='contain' height={40} width={40} />
-                                            <div className='detail-page-content-educator-name' style={{marginLeft: 6}}>{item?.name}</div>
+                                          {
+                                            item?.logo !== null ? 
+                                            <Image loader={myLoader} src={item?.logo} priority={true} objectFit='contain' height={40} width={40} /> : null
+                                          }
+                                          <div className='detail-page-content-educator-name' style={{marginLeft: 6}}>{item?.name}</div>
                                         </div>
                                     )
                                     
@@ -574,7 +570,7 @@ export default function WebDetailPage(props){
             {
                props?.detailData?.eligibility && props?.detailData?.eligibility.length > 0 ?
                 <div style={styles}>
-                                <div className='detail-page-mobile-intro-header' style={{marginTop: 40,fontSize: 22,display:'flex'}}>
+                                <div className='detail-page-web-intro-header' style={{marginTop: 40,fontSize: 22,display:'flex',marginLeft: 24}}>
                                     Am I Eligible<div style={{position:'relative'}}>
                                     &nbsp;?&nbsp;
                                         <div style={{position:'absolute',top: -12,left: 5}}>
@@ -586,11 +582,11 @@ export default function WebDetailPage(props){
                                     {
                                         props?.detailData?.eligibility && props?.detailData?.eligibility.length > 0 && props?.detailData?.eligibility.map((content,index)=>{
                                             return(
-                                            <div className='detail-page-mobile-intro-content' style={{marginTop: 10,display: 'flex',marginBottom: 10}} key={index}>
-                                                <div>
+                                            <div className='detail-page-web-intro-content' style={{marginTop: 10,display: 'flex',marginBottom: 10,marginLeft: 24}} key={index}>
+                                                <div style={{marginTop: 5}}>
                                                 <Image src={arrowIcon} height={12} width={19} objectFit='contain' />
                                                 </div>
-                                                <div className='detail-page-mobile-intro-subHeader' style={{marginLeft: 8}}>
+                                                <div className='detail-page-web-intro-subHeader' style={{marginLeft: 8}}>
                                                 {content}
                                                 </div>
                                             </div>
@@ -629,7 +625,7 @@ export default function WebDetailPage(props){
                                             </div>
                                         </div>
                                     </div>
-                                    <div style={{display:'flex',justifyContent:'flex-end',cursor:'pointer'}} onClick={()=>_handleTopicOpen(item)}>
+                                    <div style={{display:'flex',justifyContent:'flex-end',cursor:'pointer'}} onClick={()=> item.sub_module && item.sub_module.length > 0 ? _handleTopicOpen(item) : null}>
                                     <Image src={caretDown} width={15} height={12} objectFit='contain' style={item.id === topicOpen.topicId && topicOpen.topicShow ? {transform: "rotate(180deg)"} : null}/>
                                     </div>
                                 </div> 

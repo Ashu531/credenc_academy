@@ -73,28 +73,6 @@ export default function Header(props){
       return;
     }
 
-    // if(item.id === 2){
-    //   // Mixpanel.track(MixpanelStrings.PRIVACY_POLICY_TRIGGERED);
-    //   try {
-    //     window.open(`/privacy`, '_blank');
-    //   } catch (err) {
-    //     console.log(err, "PRIVACY ERROR")
-    //   }
-    //   return;
-    // }
-
-    // if(item.id === 3){
-    //   // Mixpanel.track(MixpanelStrings.MY_REVIEWS_TRIGGERED);
-    //   // navigateToProfilePage('reviews');
-    //   return;
-    // }
-
-    // if(item.id === 4){
-    //   // Mixpanel.track(MixpanelStrings.MY_UPVOTES_TRIGGERED);
-    //   // navigateToProfilePage('upvotes');
-    //   return;
-    // }
-
     if(item.id === 1){
       // Mixpanel.track(MixpanelStrings.LOGOUT_TRIGGERED);
       props?.logoutUser()
@@ -142,19 +120,26 @@ export default function Header(props){
     })
   }
 
+  const _openMyCourseTab=()=>{
+    if(token && token.length > 0){
+      router.push({
+        pathname: `/my-courses`
+      })
+    }else{
+      props.openLoginModal(); 
+    }
+    
+  }
+
     return(
         <div className='navbar-wrapper'>
         
         <div className='navbar'>
-         
-
-            <div  style={{cursor:"pointer",paddingTop: 10,paddingBottom: 5}} onClick={()=>_goToHome()}>
+         <div  style={{cursor:"pointer",paddingTop: 10,paddingBottom: 5}} onClick={()=>_goToHome()}>
             <Image src={credencAcademy} objectFit="cover" alt='credencLogo' />
             </div>
-        
-
           {
-            props?.showSearchBar && router.asPath !== '/privacy/' ?
+            props?.showSearchBar && router.asPath !== '/privacy/' && router.asPath !== '/my-courses/' && router.asPath !== '/bookmarks/' ?
               <div style={props?.showSearchBar ? {width : '25%',zIndex: 99999} : null} >
                 <SearchBar showSearchBar={props?.showSearchBar} search={props?.searchValue} handleSearch={(e)=>_handleSearch(e)} />
               </div> 
@@ -162,15 +147,7 @@ export default function Header(props){
           }
         
          <div className='user-elements'>
-           {/* <Link> */}
-         {/* <div 
-         className='icon-element' 
-         onClick={()=>props?.toggleFilterExpandedStage()}
-         >
-           <Image src={projectorIcon} objectFit="cover" alt='projectorIcon' />
-         </div> */}
-         {/* </Link>  */}
-          {/* <Link href='bookmarks' className='nav-item bookmark' onClick={() => Mixpanel.track(MixpanelStrings.NAV_BOOKMARK_CLICKED)}> */}
+           <div className='header-text' onClick={()=>_openMyCourseTab()}>My Courses</div>
            <div className='icon-element' onClick={()=>_openBookmarkTab()} style={{position:"relative"}}>
            <Image src={ bookmarkIcon} height={25} width={25} objectFit="cover" alt='bookmarkIcon' />
            {
