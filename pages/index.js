@@ -59,6 +59,7 @@ export default function Home(props) {
       closeCoursePreviewModal={()=>props?.closeCoursePreviewModal()}
       addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
       removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+      closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
     />
     }
    </>

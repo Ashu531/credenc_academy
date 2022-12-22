@@ -44,6 +44,7 @@ export default function Dashboard(props) {
           closeCoursePreviewModal={()=>props?.closeCoursePreviewModal()}
           addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
           removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+          closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
         />}
         {isMobile && 
           <DashboardMobile
@@ -74,6 +75,7 @@ export default function Dashboard(props) {
           goingUp={props?.goingUp}
           addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
           removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+          closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
         />
         }
         </>

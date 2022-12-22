@@ -121,16 +121,16 @@ export default function Header(props){
   }
 
   const _openMyCourseTab=()=>{
-    if(token && token.length > 0){
-      router.push({
-        pathname: `/my-courses`
-      })
-    }else{
-      props.openLoginModal(); 
-    }
+    // if(token && token.length > 0){
+    //   router.push({
+    //     pathname: `/my-courses`
+    //   })
+    // }else{
+    //   props.openLoginModal(); 
+    // }
     
   }
-
+  
     return(
         <div className='navbar-wrapper'>
         
@@ -140,7 +140,7 @@ export default function Header(props){
             </div>
           {
             props?.showSearchBar && router.asPath !== '/privacy/' && router.asPath !== '/my-courses/' && router.asPath !== '/bookmarks/' ?
-              <div style={props?.showSearchBar ? {width : '25%',zIndex: 99999} : null} >
+              <div style={props?.showSearchBar ? {width : '25%',zIndex: 99999,marginLeft: 30} : null} >
                 <SearchBar showSearchBar={props?.showSearchBar} search={props?.searchValue} handleSearch={(e)=>_handleSearch(e)} />
               </div> 
           : null

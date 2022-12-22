@@ -33,6 +33,8 @@ export default function LoginModal({
   closeLoginModal,
   openForgotPasswordModal,
   handleLogin,
+  setUserEmail,
+  setUserLoginState,
   // theme
 }) {
 
@@ -87,11 +89,11 @@ export default function LoginModal({
         return false;
       }
       
-      let passwordError = validatePassword(passwordInputState.value);
-      if(passwordError){
-        setFormError(Strings.EMAIL_OR_PASSWORD_INCORRECT);
-        return false;
-      }
+      // let passwordError = validatePassword(passwordInputState.value);
+      // if(passwordError){
+      //   setFormError(Strings.EMAIL_OR_PASSWORD_INCORRECT);
+      //   return false;
+      // }
     } 
     else {
       let nameError = validateName(nameInputState);
@@ -106,33 +108,36 @@ export default function LoginModal({
         return false;
       }
       
-      let passwordError = validatePassword(passwordInputState.value);
-      if(passwordError){
-        setFormError(passwordError);
-        return false;
-      }
+      // let passwordError = validatePassword(passwordInputState.value);
+      // if(passwordError){
+      //   setFormError(passwordError);
+      //   return false;
+      // }
       
-      let confirmPasswordError = validateConfirmPassword(passwordInputState.value, confirmPassInputState.value);
-      if(confirmPasswordError){
-        setFormError(confirmPasswordError);
-        return false;
-      }
+      // let confirmPasswordError = validateConfirmPassword(passwordInputState.value, confirmPassInputState.value);
+      // if(confirmPasswordError){
+      //   setFormError(confirmPasswordError);
+      //   return false;
+      // }
     }
 
     return true;
   }
 
   const signUp = async () => {
-    const response = await axios.post(`${constant.API_URL.DEV}/signup/`, {
+    const response = await axios.post(`${constant.API_URL.DEV}/signup_otp/`, {
       full_name: nameInputState.trim(),
-      password: passwordInputState.value.trim(),
-      password2: confirmPassInputState.value.trim(),
+      // password: passwordInputState.value.trim(),
+      // password2: confirmPassInputState.value.trim(),
       email: emailInputState.toLowerCase().trim()
     }).then(res => {
       setAuthApiStatus(ApiStatus.SUCCESS);
       setFormSegment(modalStates.LOGIN);
+      setUserEmail(emailInputState.toLowerCase().trim())
       setHeader(res?.message)
-      setTimeout(() => location.reload(), 100)
+      openForgotPasswordModal()
+      setUserLoginState(2)
+      // setTimeout(() => location.reload(), 100)
     })
     .catch(err => {
       console.log(err); 
@@ -161,18 +166,20 @@ export default function LoginModal({
   }
 
   const signIn = async () => {
-    const response = await axios.post(`${constant.API_URL.DEV}/login/`, {
-      password: passwordInputState.value.trim(),
+    const response = await axios.post(`${constant.API_URL.DEV}/login_otp/`, {
+      // password: passwordInputState.value.trim(),
       email: emailInputState.toLowerCase().trim()
     })
     .then(res => {
       try{
         console.log(res);
-        dispatchLogin(res.data.tokens);
+        // dispatchLogin(res.data.tokens);
         setAuthApiStatus(ApiStatus.SUCCESS);
-        setTimeout(() => location.reload(), 100)
+        // setTimeout(() => location.reload(), 100)
+        setUserEmail(emailInputState.toLowerCase().trim())
         handleModalClose();
-        handleLogin()
+        openForgotPasswordModal()
+        setUserLoginState(1)
         return res.data;
       } catch(e) {
         console.log(e);
@@ -183,13 +190,13 @@ export default function LoginModal({
       setFormError(err?.response?.data?.message || '')
     })
 
-    if (response?.response === "Successfully LoggedIn") {
+    // if (response?.response === "Successfully LoggedIn") {
 
-      let currentBookmarks = JSON.parse(localStorage.getItem(bookmarkKey));
-      // currentBookmarks = currentBookmarks?.split(',');
-      let res = await addBookmarkToBackend(currentBookmarks, response?.tokens?.access);
-      if (res?.status) localStorage.removeItem(bookmarkKey);
-    }
+    //   let currentBookmarks = JSON.parse(localStorage.getItem(bookmarkKey));
+    //   // currentBookmarks = currentBookmarks?.split(',');
+    //   let res = await addBookmarkToBackend(currentBookmarks, response?.tokens?.access);
+    //   if (res?.status) localStorage.removeItem(bookmarkKey);
+    // }
   }
 
   const handleSubmit = async () => {
@@ -417,22 +424,22 @@ export default function LoginModal({
             value={emailInputState}
             handleInput={(value) => setEmailInputState(value)}
           />
-          <Input
+          {/* <Input
             placeholder="Password"
             type={passwordInputState.type}
             trailingIcon={passwordInputState.trailingIcon}
             value={passwordInputState.value}
             handleInput={(value) => setPasswordInputState({ ...passwordInputState, value: value })}
             onTrailingIconClick={showHidePassword}
-          />
-          <div className="subtext-container">
+          /> */}
+          {/* <div className="subtext-container">
             <div onClick={openForgotPasswordModal}>{Strings.FORGOT_PASSWORD}</div>
-          </div>
+          </div> */}
         </div>}
         {showSegment(modalStates.SIGNUP) && <div className="form-container">
           {formError && <div className='error-container'>{formError}</div>}
           <Input
-            placeholder="Name"
+            placeholder="Full Name"
             value={nameInputState}
             handleInput={(value) => setNameInputState(value)}
           />
@@ -441,7 +448,7 @@ export default function LoginModal({
             value={emailInputState}
             handleInput={(value) => setEmailInputState(value)}
           />
-          <Input
+          {/* <Input
             placeholder="Password"
             type={passwordInputState.type}
             trailingIcon={passwordInputState.trailingIcon}
@@ -454,7 +461,7 @@ export default function LoginModal({
             type={confirmPassInputState.type}
             value={confirmPassInputState.value}
             handleInput={(value) => setConfirmPassInputState({ ...confirmPassInputState, value: value })}
-          />
+          /> */}
         </div>}
         <div className="auth-container">
           <span className='privacy'>

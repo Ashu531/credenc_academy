@@ -19,11 +19,11 @@ import { useRouter } from 'next/router'
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 
-export default function CourseCard(props){
+export default function MyCourseCard(props){
 
   let router = useRouter();
   const [mounted, setMounted] = useState(false);
-  const [compareButtonVisible, setCompareButtonVisible] = useState({display: 'none'});
+//   const [compareButtonVisible, setCompareButtonVisible] = useState({display: 'none'});
   const [courseNameTooltip, setCourseNameTooltip] = useState(false)
   const [isCardOpen,setIsCardOpen] = useState(false)
   const [bookmarkVisible, setBookmarkVisible] = useState(null)
@@ -261,26 +261,12 @@ const _goToDetailPage=(id)=>{
       {
         mounted && 
         <div 
-          className = {!isCardOpen ? "card-container" : "card-container card-container-open"}
-          style={window.innerWidth <= 500 ? {minWidth: 0,padding: 0} : !isCardOpen ? null : {padding:0} }
-        
-          onMouseEnter={e => {
-            setCompareButtonVisible({display: 'flex',flexDirection:"row"});
-            if(window.innerWidth > 500){
-              setIsCardOpen(true)
-            }
-            
-            }} 
-          onMouseLeave={e => {
-            setCompareButtonVisible({display: 'none'})
-            if(window.innerWidth > 500){
-              setIsCardOpen(false)
-            }
-          }} 
+          className="card-container"
+          style={window.innerWidth <= 500 ? {minWidth: 0,padding: 0} : {padding:0} } 
         >
         <div 
         className='card-header' 
-        style={!isCardOpen && window.innerWidth > 500 ? null : {paddingLeft:12,paddingRight: 12}}
+        style={!isCardOpen && window.innerWidth > 500 ? {padding: 12} : {paddingLeft:12,paddingRight: 12}}
         >
           <Image loader={myLoader} src={props?.data?.platform?.logo ? props?.data?.platform?.logo : defaultPlatform} height={36} width={36} alt='courseLogo' style={{borderRadius: '50%'}} objectFit="contain"/>
           <div className='card-header-end-content'>
@@ -329,33 +315,42 @@ const _goToDetailPage=(id)=>{
 
     {  window.innerWidth > 500 ? 
     <div 
-    className='course-button-content' style={{...compareButtonVisible,marginLeft:0}}>
+    className='course-button-content' 
+    // style={{...compareButtonVisible,marginLeft:0}}
+    >
+        <div className='course-detail-button' onClick={()=> props?.openDetailModal()} style={{padding:0,gap:0}}>
+          <span className='course-detail-text'>
+            Enrollment Status
+          </span>
+          <span className='course-detail-approved-text'>
+            Approved
+          </span>
+      </div>
+      <div className='divider' />
       <div 
       className='course-compare-buttton' 
       onClick={()=>{ props?.openApplyNowModal() }}
       >
         <span className='add-to-compare-text'>
-          Apply now
+          Apply for loan
         </span>
       </div>
-      <div className='course-detail-button' onClick={()=> props?.openDetailModal()} style={{flexDirection:'row'}}>
-          <span className='course-detail-text'>
-            Details
-          </span>
-           <Image src={ props.theme === 'dark' ? arrowRightDark : arrowRight} objectFit="contain" alt='arrowRight'/>
-      </div>
-      </div> : <div className='course-button-content-mobile' style={ window.innerWidth <= 500 ? {padding: '12px 24px'} : null }>
+    </div> : 
+    <div className='course-button-content-mobile' style={ window.innerWidth <= 500 ? {padding: '12px 12px',flexDirection: 'column',alignItems:'flex-start'} : null }>
+             
+            <div className='course-detail-button-mobile' onClick={()=> props?.openDetailModal()} style={{padding: 0,gap: 0}}>
+              <span className='course-detail-text-mobile'>
+                Enrollment Status
+              </span>
+                <span className='course-detail-approved-text'>
+                Approved
+                </span>
+              </div>
               <div className='course-compare-buttton-mobile' onClick={()=> props?.openApplyNowModal() }>
                 <span className='add-to-compare-text-mobile'>
-                Apply now
+                Apply for loan
                 </span>
-              </div>
-              <div className='course-detail-button-mobile' onClick={()=> props?.openDetailModal()} style={{flexDirection:'row'}}>
-              <span className='course-detail-text-mobile'>
-                Details
-                </span>
-                <Image src={arrowRight} objectFit="contain" height={18} width={18} alt='arrowRight'/>
-              </div>
+            </div>
       </div>}
 
     </div>

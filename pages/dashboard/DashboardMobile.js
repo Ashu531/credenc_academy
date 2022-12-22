@@ -32,6 +32,8 @@ import SearchMobile from '../../components/searchBarMobile/SearchBar'
 import sortingIcon from '../../assets/images/icons/filterSortMobile.svg';
 import backArrowDark from '../../assets/images/icons/backArrowDark.svg'
 import InfiniteScroll from 'react-infinite-scroll-component';
+import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
+import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer"
 
 const compareKey = 'credenc-marketplace-compares';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
@@ -132,7 +134,8 @@ function DashboardMobile(props) {
   const cardRef = useRef();
   const prevScrollY = useRef(0);
   const [nextPage,setNextPage] = useState(true)
-
+  const [userEmail,setUserEmail] = useState('')
+  const [loginState,setLoginState]=useState(0);
   const [goingUp, setGoingUp] = useState(false);
 
   let observer = useRef(
@@ -890,6 +893,14 @@ const handleScrollData=()=>{
   handleFilteredData()
 }
 
+const _setUserEmail=(data)=>{
+  setUserEmail(data)
+}
+
+const _setUserLoginState=(data)=>{
+  setLoginState(data)
+}
+
    return(
         <div className="dashboard-mobile">
           <div 
@@ -1241,20 +1252,25 @@ const handleScrollData=()=>{
         props?.loginModal ? 
         <div style={{width: '100%',height: '100%'}}>
         <LoginModalContainer
-          closeLoginModal={()=>props?.closeLoginModal()}
-          openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
-          forgotPasswordModal={props?.forgotPasswordModal}
-          handleLogout={props?.handleLogout}
-          handleLogin={()=>props?.handleLogin()}
-        /> 
+         closeLoginModal={()=>props?.closeLoginModal()}
+         openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
+         forgotPasswordModal={props?.forgotPasswordModal}
+         theme={props?.theme}
+         handleLogin={()=>props?.handleLogin()}
+         setUserEmail={(data)=>_setUserEmail(data)}
+         setUserLoginState={(data)=>_setUserLoginState(data)}
+        />
         </div>
         : null
       }
       {
         props?.forgotPasswordModal ? 
-        <ForgotPasswordModal
+        <SigninModalContainer
         handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
-        theme={props?.theme}
+        closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
+        userEmail={userEmail}
+        openLoginModal={()=>props?.openLoginModal()}
+        loginState={loginState}
         />
         : null
       }

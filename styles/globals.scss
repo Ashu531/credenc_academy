@@ -2,7 +2,7 @@
 * {
   margin: 0;
   padding: 0;
-  -webkit-tap-highlight-color: transparent;
+  // -webkit-tap-highlight-color: white;
 }
 
 html{
@@ -140,4 +140,5 @@ body {
 @import '../pages/details/detail';
 @import '../components/homePageSkeleton/homeSkeleton';
 @import '../components/successApplyModal/successApplyModal.scss';
-@import '../pages/my-courses/myCourses'
+@import '../pages/my-courses/myCourses';
+@import '../components/my-courses-card/myCoursesCard'

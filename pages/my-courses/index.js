@@ -13,6 +13,7 @@ import DetailModal from '../../components/detailModal/DetailModal'
 import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
+import MyCourseCard from '../../components/my-courses-card/My-Courses-Card'
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 const EdtechAuthKey = 'credenc-edtech-authkey';
@@ -117,7 +118,7 @@ export default function MyCourses(props){
                 <div className='card-list-content' 
                 style={ window.innerWidth < 500 ? {marginTop: '6rem',gap: 10,padding: '0rem 0rem 8rem 0rem',display:'block'} : courses && courses.length > 0 ? {gap: 10, position: "absolute", top: '14rem', left: '60px', paddingBottom: '6rem'} : {gap: 10}}
                 >
-                  <List
+                  {/* <List
                       type={listTypes?.HORIZONTAL_CARDS}
                       list={courses}
                       listApiStatus={coursesApiStatus}
@@ -127,7 +128,23 @@ export default function MyCourses(props){
                       token={token}
                       openLoginModal={()=>props?.openLoginModal()} 
                       removeLocalBookmarks={()=>props?.removeLocalBookmarks()}
-                  />
+                  /> */}
+                   {courses && courses.map((item,index)=>{
+                    return(
+                      <div key={index}>
+                        <MyCourseCard 
+                          index={index}
+                          data={item} 
+                          openDetailModal={()=>_openDetailModal(item)}
+                          openApplyNowModal={()=> _openApplyNowModal(item)}
+                          token={props?.token}
+                          openLoginModal={()=>props?.openLoginModal()}
+                          addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+                          removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                        />
+                      </div>
+                    )
+                 })}
                 </div>
             </div>
             <SlidingPanel

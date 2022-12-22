@@ -15,6 +15,7 @@ import Strings from "../../config/states";
 import axios from "axios";
 import Image from "next/image";
 import constant from "../../config/constant";
+const bookmarkKey = 'credenc-marketplace-bookmarks';
 // import { Mixpanel } from "../../../services/Mixpanel";
 // import MixpanelStrings from "../../../../values/mixpanelStrings";
 
@@ -22,7 +23,12 @@ export default function ForgotPasswordModal({
   handleClose,
   handleBack,
   handleForgotPasswordEnd,
-  theme
+  theme,
+  userEmail,
+  closeForgotPasswordModal,
+  dispatchLogin,
+  openLoginModal,
+  loginState
 }) {
   
   const modalStates = States.forgotPasswordModalStates;
@@ -46,6 +52,10 @@ export default function ForgotPasswordModal({
       values: ['', '', '', '', '', '']
   });
 
+  useEffect(()=>{
+    setEmailInputState(userEmail)
+  },[])
+
   const showHidePassword = () => {
     if (passwordInputState.hide) {
       setPasswordInputState({
@@ -66,52 +76,58 @@ export default function ForgotPasswordModal({
 
   const validate = () => {
     setFormError(null);
-    if(modalState === modalStates.ENTER_EMAIL){
-      let emailError = validateEmail(emailInputState);
-      if(emailError){
-        setFormError(emailError);
-        return false;
-      }
-    }
+    // if(modalState === modalStates.ENTER_EMAIL){
+    //   let emailError = validateEmail(emailInputState);
+    //   if(emailError){
+    //     setFormError(emailError);
+    //     return false;
+    //   }
+    // }
 
-    else if(modalState === modalStates.ENTER_OTP){
+    // else if(modalState === modalStates.ENTER_OTP){
       let otpError = validateOtp(otp.values);
       if(otpError){
         setFormError(otpError);
         return false;
       }
-    }
+    
 
-    else {
-      let passwordError = validatePassword(passwordInputState.value);
-      if(passwordError){
-        setFormError(passwordError);
-        return false;
-      }
+    // else {
+    //   let passwordError = validatePassword(passwordInputState.value);
+    //   if(passwordError){
+    //     setFormError(passwordError);
+    //     return false;
+    //   }
 
-      let confirmPasswordError = validateConfirmPassword(passwordInputState.value, confirmPassInputState.value);
-      if(confirmPasswordError){
-        setFormError(confirmPasswordError);
-        return false;
-      }
-    }
+    //   let confirmPasswordError = validateConfirmPassword(passwordInputState.value, confirmPassInputState.value);
+    //   if(confirmPasswordError){
+    //     setFormError(confirmPasswordError);
+    //     return false;
+    //   }
+    // }
 
     return true;
   }
 
   const handleSendOTP = async () => {
+    console.log(loginState,"loginAT")
     // Mixpanel.track(MixpanelStrings.SEND_OTP_FORGOT_PASSWORD, {
     //   'email_forgot_password' : emailInputState.toString(),
     // })
     if(validate()){
-      let res = await axios.post(`${constant.API_URL.DEV}/send_forgot_password_otp/`, {
-        'email': emailInputState.toString()
+      let res = await axios.post(`${constant.API_URL.DEV}/signup_new/`, {
+        'email': emailInputState.toString(),
+        "otp" : otp.values.join('')
       })
       .then(res => {
         if(res['data']['error'] && res['data']['error'] != '')
           setFormError(res['data']['error']);
-        else
-          setModalState(modalStates.ENTER_OTP);
+        else{
+          // dispatchLogin(res.data.tokens);
+          // setModalState(modalStates.NEW_PASSWORD);
+          closeForgotPasswordModal()
+          openLoginModal()
+          }
       })
       .catch(err => {
         setFormError(err.response.data.error);
@@ -132,20 +148,34 @@ export default function ForgotPasswordModal({
     // })
 
     if(validate()){
-      let res = await axios.post(`${constant.API_URL.DEV}/verify_forgot_password_otp/`, {
+      let response = await axios.post(`${constant.API_URL.DEV}/login_verify/`, {
         'email': emailInputState.toString(),
         "otp" : otp.values.join('')
       })
       .then(res => {
         if(res['data']['error'] && res['data']['error'] != '')
           setFormError(res['data']['error']);
-        else
-          setModalState(modalStates.NEW_PASSWORD);
+        else{
+        dispatchLogin(res.data.tokens);
+        // setModalState(modalStates.NEW_PASSWORD);
+        closeForgotPasswordModal()
+        }
+          
       })
       .catch(err => {
+        console.log(err,"error+++")
         setFormError(err.response.data.error);
       });
+      if (response?.response === "Successfully LoggedIn") {
+
+        let currentBookmarks = JSON.parse(localStorage.getItem(bookmarkKey));
+        // currentBookmarks = currentBookmarks?.split(',');
+        let res = await addBookmarkToBackend(currentBookmarks, response?.tokens?.access);
+        if (res?.status) localStorage.removeItem(bookmarkKey);
+      }
     }
+
+    
   }
 
   const setNewPassword = async () => {
@@ -182,34 +212,39 @@ export default function ForgotPasswordModal({
   }
 
   const handleBackClick = () => {
-    if(modalState === modalStates.ENTER_EMAIL){
-      handleForgotPasswordEnd();
-    } else if(modalState === modalStates.ENTER_OTP){
-      setModalState(modalStates.ENTER_EMAIL);
-    } else {
-      setModalState(modalStates.ENTER_EMAIL);
-    }
+    // if(modalState === modalStates.ENTER_EMAIL){
+    //   handleForgotPasswordEnd();
+    // } else if(modalState === modalStates.ENTER_OTP){
+    //   handleForgotPasswordEnd();
+    // } else {
+    //   setModalState(modalStates.ENTER_EMAIL);
+    // }
+    handleForgotPasswordEnd();
   }
 
   const renderState = (state) => {
     return state === modalState;
   }
 
-  useEffect(() => {
-    setFormError(null);
-    if(modalState === modalStates.ENTER_EMAIL){
-      setHeader(Strings.FORGOT_PASSWORD_HEADER);
-      setSubtitle(Strings.FORGOT_PASSWORD_SUBTITLE);
-    }
-    else if(modalState === modalStates.ENTER_OTP){
-      setHeader(Strings.ENTER_OTP_HEADER);
-      setSubtitle(Strings.ENTER_OTP_SUBTITLE);
-    }
-    else if(modalState === modalStates.NEW_PASSWORD){
-      setHeader(Strings.NEW_PASSWORD_HEADER);
-      setSubtitle(Strings.NEW_PASSWORD_SUBTITLE);
-    }
-  }, [modalState]);
+  // useEffect(() => {
+  //   setFormError(null);
+  //   if(modalState === modalStates.ENTER_EMAIL){
+  //     setHeader(Strings.FORGOT_PASSWORD_HEADER);
+  //     setSubtitle(Strings.FORGOT_PASSWORD_SUBTITLE);
+  //   }
+  //   else if(modalState === modalStates.ENTER_OTP){
+  //     setHeader(Strings.ENTER_OTP_HEADER);
+  //     setSubtitle(Strings.ENTER_OTP_SUBTITLE);
+  //   }
+  //   else if(modalState === modalStates.NEW_PASSWORD){
+  //     setHeader(Strings.NEW_PASSWORD_HEADER);
+  //     setSubtitle(Strings.NEW_PASSWORD_SUBTITLE);
+  //   }
+  // }, [modalState]);
+
+  useEffect(()=>{
+   setModalState(modalStates.ENTER_OTP)
+  },[])
 
   const goToLogin=()=>{
     handleForgotPasswordEnd();
@@ -249,10 +284,10 @@ export default function ForgotPasswordModal({
         </div> :
         <div className='forgot-modal-header'>
             <span className='forgot-pass-text'>
-              Forgot Your Password?
+              OTP Confirmation
             </span>
             <span className='generate-otp-text'>
-              Enter your Email to generate an OTP
+              Enter your OTP here
             </span>
        </div>
         }
@@ -278,10 +313,10 @@ export default function ForgotPasswordModal({
             handleChange={handleOtp}
           />
           <div style={{height: '1.6rem'}}></div>
-          <Button text="Submit" linearGradient='green' classes="btn-secondary small-wrapper-colored" onClick={verifyOtp} />
+          <Button text="Submit" linearGradient='green' classes="btn-secondary small-wrapper-colored" onClick={loginState === 1 ? verifyOtp : handleSendOTP} />
         </div>}
 
-          {renderState(modalStates.NEW_PASSWORD) && <div className='reset-password-container'>
+          {/* {renderState(modalStates.NEW_PASSWORD) && <div className='reset-password-container'>
           <Input
             placeholder="Password"
             type={passwordInputState.type}
@@ -299,7 +334,7 @@ export default function ForgotPasswordModal({
           <div style={{height: '1.6rem'}}></div>
           <Button text="Set New Password" linearGradient='green' classes="btn-secondary small-wrapper-colored" onClick={setNewPassword} />
           </div>
-        }
+        } */}
         {
           renderState(modalStates.PASSWORD_SUCCESS) ? 
           <Button text="Log In" linearGradient='green' classes="btn-secondary success-button" onClick={goToLogin} /> : null

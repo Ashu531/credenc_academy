@@ -34,6 +34,7 @@ import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
 import HomeSkeleton from "../../components/homePageSkeleton/homeSkeleton"
 import Skeleton from '@mui/material/Skeleton';
 import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
+import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer"
 
 const subjectKey = 'credenc-edtech-subject';
 const compareKey = 'credenc-marketplace-compares';
@@ -136,6 +137,8 @@ function DashboardDesktop(props) {
   const [cardActionTaken,setCardActionTaken] = useState(false)
   const [nextPage,setNextPage] = useState(true)
   const [successApplyModal,setSuccessApplyModal] = useState(false)
+  const [userEmail,setUserEmail] = useState('')
+  const [loginState,setLoginState]=useState(0);
   
 
   let observer = useRef(
@@ -834,6 +837,7 @@ useEffect(() => {
 }, []);
 
 const _handleSearch=(e)=>{
+  console.log(e,"e.length")
   if(e && e.length > 0){
     props?.openFilterExpandedStage()
     props?._showSearchBar()
@@ -886,6 +890,14 @@ const _handleSearch=(e)=>{
 
   const _openSuccessApplyModal=()=>{
     setSuccessApplyModal(true)
+  }
+
+  const _setUserEmail=(data)=>{
+    setUserEmail(data)
+  }
+
+  const _setUserLoginState=(data)=>{
+    setLoginState(data)
   }
   
  return(
@@ -1360,14 +1372,20 @@ const _handleSearch=(e)=>{
          forgotPasswordModal={props?.forgotPasswordModal}
          theme={props?.theme}
          handleLogin={()=>props?.handleLogin()}
+         setUserEmail={(data)=>_setUserEmail(data)}
+         setUserLoginState={(data)=>_setUserLoginState(data)}
         /> 
         </div>
         : null
       }
       {
         props?.forgotPasswordModal ? 
-        <ForgotPasswordModal
+        <SigninModalContainer
         handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
+        closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
+        userEmail={userEmail}
+        openLoginModal={()=>props?.openLoginModal()}
+        loginState={loginState}
         />
         : null
       }

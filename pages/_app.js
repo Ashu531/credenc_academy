@@ -269,6 +269,7 @@ class MyApp extends App {
   }
 
   _handleSearch=(e)=>{
+    console.log(e,"event++++")
     this.setState({
       search: e
     },()=>{
@@ -501,6 +502,7 @@ class MyApp extends App {
             closeCoursePreviewModal={()=>this._closeCoursePreviewModal()}
             addLocalBookmarks={(count)=>this._addLocalBookmarks(count)}
             removeLocalBookmarks={(count)=>this._removeLocalBookmarks(count)}
+            closeForgotPasswordModal={()=>this.closeForgotPasswordModal()}
          />
          {
             window.innerWidth > 500 ? 

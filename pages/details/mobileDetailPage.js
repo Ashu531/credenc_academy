@@ -64,8 +64,10 @@ export default function DetailPageMobile(props){
     })
 
     const breadcrumbs = [
-      <Link underline="hover" key="1" color="#4F4F4F" href="/" style={{fontSize: 13, fontFamily: 'Poppins', fontWeight: 400,}}>
+      <Link key="1" href="/">
+        <span style={{fontSize: 13, fontFamily: 'Poppins', fontWeight: 400,color: '#4F4F4F',cursor: 'pointer'}}>
         Home
+        </span>
       </Link>,
       <CustomColor key="2">
         Product Design
@@ -163,7 +165,7 @@ export default function DetailPageMobile(props){
             </Breadcrumbs>
            </div>
             {
-                props?.detailData?.platform?.logo ? 
+                props?.detailData?.platform?.logo !== null ?  
                 <div className='detail-page-header-mobile-container'>
                 <div className='detail-page-mobile-header'>
                    <Image loader={myLoader} src={props?.detailData?.platform?.logo} alt='platform-icon' height={38} width={38} objectFit="contain" />
@@ -217,7 +219,11 @@ export default function DetailPageMobile(props){
                               props?.detailData?.educator && props?.detailData?.educator.length > 0 &&  props?.detailData?.educator.map((item,index)=>{
                                     return(
                                       <div key={index+1} className='detail-page-content-educator-list'>
-                                          <Image loader={myLoader} src={item?.logo} priority={true} objectFit='contain' height={40} width={40} />
+                                          {/* <Image loader={myLoader} src={item?.logo} priority={true} objectFit='contain' height={40} width={40} /> */}
+                                          {
+                                            item?.logo !== null ? 
+                                            <Image loader={myLoader} src={item?.logo} priority={true} objectFit='contain' height={40} width={40} /> : null
+                                          }
                                           <div className='detail-page-content-educator-name' style={{marginLeft: 6}}>{item?.name}</div>
                                       </div>
                                     )
