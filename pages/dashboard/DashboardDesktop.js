@@ -838,10 +838,10 @@ useEffect(() => {
 
 const _handleSearch=(e)=>{
   console.log(e,"e.length")
-  if(e && e.length > 0){
-    props?.openFilterExpandedStage()
-    props?._showSearchBar()
-  }
+  // if(e && e.length > 0){
+  //   props?.openFilterExpandedStage()
+  //   props?._showSearchBar()
+  // }
     // else{
     //   props.closeFilterExpandedStage()
     // }
@@ -1124,7 +1124,7 @@ const _handleSearch=(e)=>{
             transform: 'translateY(0)',
           }}
           >
-              <SearchBar searchbarWidth={searchbarWidth} search={props.searchValue} handleSearch={(e)=>_handleSearch(e)}/>
+              <SearchBar searchbarWidth={searchbarWidth} search={props.searchValue} handleSearch={(e)=>_handleSearch(e)} selectSearch={(e)=>props?.selectSearch(e)}/>
           </div>
          </div> 
 

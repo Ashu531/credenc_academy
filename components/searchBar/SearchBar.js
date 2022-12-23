@@ -11,7 +11,7 @@ import { minWidth } from "@mui/system";
 export default function SearchBar(props) {
 
   const [searchQuery,setSearchQuery] = useState([]);
-  const [searchValue,setSearchValue] = useState('');
+  const [dropDownClose,setDropDownClose] = useState(false);
 
   const myLoader = ({ src, width, quality }) => {
     if(src && src.length > 0){
@@ -22,18 +22,20 @@ export default function SearchBar(props) {
  }
 
   const _autocompleteQuery=async(e)=>{
-    setSearchValue(e);
-    if(searchValue && searchValue.length > 0){
+      props?.handleSearch(e)
       await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`)
       .then(response => response.data.data)
-      .then(data => setSearchQuery(data))
-    }
+      .then(data => {
+        setSearchQuery(data)
+      })
+
   }
 
   const handleOnSelect = (item) => {
     // the item selected
     // console.log("enter detected",item);
-    props?.handleSearch(item)
+    setDropDownClose(true)
+    props?.selectSearch(item)
   };
 
   return (
@@ -98,10 +100,10 @@ export default function SearchBar(props) {
                 </span>
             </div>
           }
-          value={props.showSearchBar ? props?.search.length > 30 ? props?.search.substring(0,30) + '...' : props?.search : searchValue}
+          value={props?.search}
           onChange={ (e) =>_autocompleteQuery(e.target.value)}
           onSelect={(val) => handleOnSelect(val)}
-          open={searchValue && searchValue.length > 0 ? true : false}
+          open={dropDownClose ? false : true}
           wrapperProps={{ style: { 
             position: 'absolute',
             top: 0,
@@ -115,7 +117,8 @@ export default function SearchBar(props) {
              style : {
               width: '25%',
               height: 48,
-              borderRadius: 30,
+              borderTopRightRadius: 30,
+             borderTopLeftRadius: 30,
               position:'fixed',
               /* border-color: white; */
               border: '0px solid #ffffff',
@@ -128,8 +131,7 @@ export default function SearchBar(props) {
             style : {
              width: '25%',
              height: 48,
-             borderTopRightRadius: 30,
-             borderTopLeftRadius: 30,
+             borderRadius: 30,
              position:'fixed',
              /* border-color: white; */
              border: '0px solid #ffffff',
@@ -150,6 +152,7 @@ export default function SearchBar(props) {
               border: '0px solid #ffffff',
               /* left: 30px; */
               paddingLeft: 30,
+              
           }
           }:
           {
@@ -161,26 +164,40 @@ export default function SearchBar(props) {
              /* border-color: white; */
              border: '0px solid white',
              /* left: 30px; */
-             paddingLeft: 30
+             paddingLeft: 30,
+           
          }
          }
         }
-          menuStyle={props.showSearchBar ? {
-            // position:'fixed',
-            // left: 4,
-            // right: 0,
-            // top: 48,
-            width:'100%',
+          menuStyle={props.showSearchBar ? props.search && props.search.length > 0 ?  {
             border: '1px solid #ffffff',
             background: '#ffffff',
             minWidth: 'unset',
-            marginTop: 48,
-          }:{
-            width:'100%',
+            marginTop: 55,
+          } : {
             border: '1px solid #ffffff',
             background: '#ffffff',
             minWidth: 'unset',
-            marginTop: 48,
+            marginTop: 55,
+            position:'absolute',
+            left: 20,
+            top: 0
+          }: props.search && props.search.length > 0 ? {
+            width:'92%',
+            border: '1px solid #ffffff',
+            background: '#ffffff',
+            minWidth: 'unset',
+            marginTop: 45,
+          }
+          :{
+            width:'92%',
+            border: '1px solid #ffffff',
+            background: '#ffffff',
+            minWidth: 'unset',
+            marginTop: 45,
+            position:'absolute',
+            left: 20,
+            top: 0
           }}
         />
       </div>

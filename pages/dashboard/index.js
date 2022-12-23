@@ -45,6 +45,7 @@ export default function Dashboard(props) {
           addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
           removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
           closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
+          selectSearch={(e)=>props?.selectSearch(e)}
         />}
         {isMobile && 
           <DashboardMobile
@@ -76,6 +77,7 @@ export default function Dashboard(props) {
           addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
           removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
           closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
+          selectSearch={(e)=>props?.selectSearch(e)}
         />
         }
         </>

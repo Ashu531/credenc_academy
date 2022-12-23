@@ -269,7 +269,6 @@ class MyApp extends App {
   }
 
   _handleSearch=(e)=>{
-    console.log(e,"event++++")
     this.setState({
       search: e
     },()=>{
@@ -421,6 +420,14 @@ class MyApp extends App {
     }
     
   }
+
+   _selectSearch=(e)=>{
+    if(e && e.length > 0){
+      this.openFilterExpandedStage()
+      this._showSearchBar()
+      this._handleSearch(e)
+    }
+  }
  
 
   render(){
@@ -448,6 +455,7 @@ class MyApp extends App {
             // openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
             hideSearchBar={this.hideSearchBar}
             bookmarkCount={this.state.bookmarkCount}
+            selectSearch={(e)=>this._selectSearch(e)}
            /> : 
             <HeaderMobile
             // toggleTheme={this.toggleTheme} 
@@ -503,6 +511,7 @@ class MyApp extends App {
             addLocalBookmarks={(count)=>this._addLocalBookmarks(count)}
             removeLocalBookmarks={(count)=>this._removeLocalBookmarks(count)}
             closeForgotPasswordModal={()=>this.closeForgotPasswordModal()}
+            selectSearch={(e)=>this._selectSearch(e)}
          />
          {
             window.innerWidth > 500 ? 

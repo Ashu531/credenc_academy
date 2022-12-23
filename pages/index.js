@@ -60,6 +60,7 @@ export default function Home(props) {
       addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
       removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
       closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
+      selectSearch={(e)=>props?.selectSearch(e)}
     />
     }
    </>
