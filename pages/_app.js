@@ -269,6 +269,7 @@ class MyApp extends App {
   }
 
   _handleSearch=(e)=>{
+    console.log(e,"e+++")
     this.setState({
       search: e
     },()=>{

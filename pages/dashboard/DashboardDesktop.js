@@ -837,15 +837,21 @@ useEffect(() => {
 }, []);
 
 const _handleSearch=(e)=>{
-  console.log(e,"e.length")
-  // if(e && e.length > 0){
-  //   props?.openFilterExpandedStage()
-  //   props?._showSearchBar()
-  // }
+  if(e?.course_id){
+    location.push({
+      pathname: '/details',
+      query: { course_id: e?.course_id },
+    })
+    props?._showSearchBar()
+  }
+  else if(e?.name && e?.name?.length > 0){
+    props?.openFilterExpandedStage()
+    props?._showSearchBar()
+  }
     // else{
     //   props.closeFilterExpandedStage()
     // }
-   props?.handleSearch(e)
+   props?.handleSearch(e?.name)
   }
 
   useEffect(() => {

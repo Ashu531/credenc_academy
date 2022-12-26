@@ -92,8 +92,13 @@ export default function Header(props){
   }
 
   const _handleSearch=(e)=>{
-
-    if(e.length === 0){
+    if(e?.course_id){
+      router.push({
+        pathname: '/details',
+        query: { course_id: e?.course_id },
+      })
+    }
+    else if(e.length === 0){
       props?.closeFilterExpandedStage()
       props?.hideSearchBar()
       }
