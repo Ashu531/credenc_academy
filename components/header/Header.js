@@ -144,7 +144,7 @@ export default function Header(props){
             <Image src={credencAcademy} objectFit="cover" alt='credencLogo' />
             </div>
           {
-            props?.showSearchBar && router.asPath !== '/privacy/' && router.asPath !== '/my-courses/' && router.asPath !== '/bookmarks/' ?
+            props?.showSearchBar && router.asPath !== '/privacy/' && router.asPath !== '/my-courses/' && router.asPath !== '/bookmarks/' && router.asPath !== '/details/' ?
               <div style={props?.showSearchBar ? {width : '25%',zIndex: 99999,marginLeft: 30} : null} >
                 <SearchBar showSearchBar={props?.showSearchBar} search={props?.searchValue} handleSearch={(e)=>_handleSearch(e)} selectSearch={(e)=>props?.selectSearch(e)} />
               </div> 
@@ -152,7 +152,7 @@ export default function Header(props){
           }
         
          <div className='user-elements'>
-           <div className='header-text' onClick={()=>_openMyCourseTab()}>My Courses</div>
+           {/* <div className='header-text' onClick={()=>_openMyCourseTab()}>My Courses</div> */}
            <div className='icon-element' onClick={()=>_openBookmarkTab()} style={{position:"relative"}}>
            <Image src={ bookmarkIcon} height={25} width={25} objectFit="cover" alt='bookmarkIcon' />
            {

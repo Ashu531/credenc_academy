@@ -13,6 +13,7 @@ import DetailModal from '../../components/detailModal/DetailModal'
 import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
+import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer";
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 const EdtechAuthKey = 'credenc-edtech-authkey';
@@ -29,6 +30,8 @@ export default function Bookmarks(props){
     const [applyNow, setApplyNow] = useState(false)
     const [mounted, setMounted] = useState(false);
     const [cardActionTaken,setCardActionTaken] = useState(false)
+    const [userEmail,setUserEmail] = useState('')
+    const [loginState,setLoginState]=useState(0);
 
     useEffect(() => {
       setMounted(true);
@@ -117,6 +120,14 @@ export default function Bookmarks(props){
     setCardActionTaken(true)
   }
 
+  const _setUserEmail=(data)=>{
+    setUserEmail(data)
+  }
+
+  const _setUserLoginState=(data)=>{
+    setLoginState(data)
+  }
+
     return(
       <> 
       {
@@ -190,14 +201,20 @@ export default function Bookmarks(props){
               forgotPasswordModal={props?.forgotPasswordModal}
               theme={props?.theme}
               handleLogin={()=>props?.handleLogin()}
+              setUserEmail={(data)=>_setUserEmail(data)}
+              setUserLoginState={(data)=>_setUserLoginState(data)}
               /> 
               </div>
               : null
             }
             {
               props?.forgotPasswordModal ? 
-              <ForgotPasswordModal
-              handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
+              <SigninModalContainer
+                handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
+                closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
+                userEmail={userEmail}
+                openLoginModal={()=>props?.openLoginModal()}
+                loginState={loginState}
               />
               : null
             }    

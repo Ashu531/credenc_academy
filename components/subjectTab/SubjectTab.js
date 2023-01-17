@@ -1,6 +1,13 @@
-import React from 'react';
+import React,{useState} from 'react';
+import constant from '../../config/constant';
 
 export default function SubjectTab(props){
+
+    const [subjectHover,setSubjectHover] = useState(null)
+
+    const _subjectAction=(item)=>{
+        props.setSubCategoriesData(item)
+    }
 
     return(
         <>
@@ -8,25 +15,20 @@ export default function SubjectTab(props){
                 props?.title?.map((item,index)=>{
                     return(
                         <div className='goal-tab' 
-                        key={index} 
-                        style={
-                            props?.theme === 'light' ? 
-                            props?.selectedCategory === item.name 
-                            ? 
-                            {background: "#F7F7F7",borderRadius: 6 }
-                            :
-                            { background: "#FFFFFF",borderRadius: 6}
-                            :
-                            props?.selectedCategory === item.name 
-                            ? 
-                            {background: "#141414",borderRadius: 6 }
-                            :
-                            { background: "#0A0A0A",borderRadius: 6}
+                            key={index} 
+                            style={
+                                props?.selectedCategory === item.name || subjectHover === item
+                                ? 
+                                {background: "#ffffff",borderRadius: 6,color: '#b100cd',border:'1px solid #b100cd'}
+                                :
+                                {background: "#b100cd",borderRadius: 6,color:'#ffffff'}
+                            
                         } 
-
-                        onClick={()=>props.setSubCategoriesData(item)}
+                            onMouseEnter={()=>setSubjectHover(item)}
+                            onMouseLeave={()=>setSubjectHover(null)}
+                            onClick={()=>_subjectAction(item)}
                         >
-                        <span className='subject-title-text'>{item.name}</span>
+                            <span className='subject-title-text' style={subjectHover === item || props?.selectedCategory === item.name  ? {color: '#b100cd'} : {color: '#ffffff'}}>{item.name}</span>
                         </div>
                     )
                 })

@@ -1141,7 +1141,7 @@ const _setUserLoginState=(data)=>{
                
                 <div className='search-section-mobile' style={  props.searchValue.length > 0 ? {position: "fixed",top: 0,bottom: '100%'} : props?.goingUp ? {position: "fixed",bottom: '0rem'}  : !props.searchValue && filterValues.length > 0 && (filterValues[0] === "subject" || filterValues[0] === "min_price" || filterValues[0] === "sort_by_relevance") ? {position: "fixed",bottom: '6rem'} : !props.searchValue && filterValues.length > 0 ? {position: "fixed",bottom: '0rem'} : null }>
                 <div style={{width: '100%',boxShadow: 'rgba(17, 12, 46, 0.15) 0px 48px 100px 0px',background: '#FFFFFF' }}>
-                  <SearchMobile handleOpenMobileSearch={() => props?.handleOpenMobileSearch()} searchValue={props?.searchValue} clearSearch={()=>props?.clearSearch()} toggleFilterVisible={()=>props?.toggleFilterVisible()} openFilterVisible={()=>props?.openFilterVisible()}/>
+                  <SearchMobile handleOpenMobileSearch={() => props?.handleOpenMobileSearch()} searchValue={props?.searchValue} clearSearch={()=>props?.clearSearch()} toggleFilterVisible={()=>props?.toggleFilterVisible()} openFilterVisible={()=>props?.openFilterVisible()} closeFilterVisible={()=>props?.closeFilterVisible()}/>
                 </div>
               </div>
               </div>

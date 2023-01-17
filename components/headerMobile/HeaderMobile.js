@@ -34,7 +34,7 @@ export default function HeaderMobile(props){
       }
  
     return(
-        <div className='mobile-header' style={location.pathname == '/search' || props?.searchValue.length > 0 || props?.hideMobileHeader === true ? {opacity: 0} : null}>
+        <div className='mobile-header' style={location.pathname == '/search' || props?.searchValue.length > 0 || props?.hideMobileHeader === true ? {display: 'none'} : null}>
             <div className='mobile-header_container'>
                 <div onClick={()=>_goToHome()}>
                     <Image src={props.theme === 'dark' ? credencLogoLight : credencLogo} objectFit="cover" alt='credencLogo' />

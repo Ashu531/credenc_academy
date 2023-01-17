@@ -8,47 +8,20 @@ import queryIcon from '../../assets/images/icons/queryIcon.svg'
 import { useRouter } from 'next/router'
 import mobileSearchIcon from '../../assets/images/icons/mobileSearchIcon.svg'
 import caretLeftDark from '../../assets/images/icons/caretLeftDark.svg'
-
-const items = [
-  {
-    id: 0,
-    name: "Cobol",
-  },
-  {
-    id: 1,
-    name: "JavaScript",
-  },
-  {
-    id: 2,
-    name: "Basic",
-  },
-  {
-    id: 3,
-    name: "PHP",
-  },
-  {
-    id: 4,
-    name: "Java",
-  },
-  {
-    id: 5,
-    name: "ReactJs",
-  },
-  {
-    id: 6,
-    name: "NodeJs",
-  },
-  {
-    id: 7,
-    name: "Python beginner Course",
-  },
-];
+import searchImage from '../../assets/images/icons/searchIcon.svg';
 
 export default function SearchBar(props) {
 
   const [searchQuery,setSearchQuery] = useState([])
-  const [initialQuery,setInitialQuery] = useState(false)
+  const [searchString,setSearchString] = useState('')
+ 
   let location = useRouter();
+
+  useEffect(()=>{
+    if(props?.searchValue && props?.searchValue.length > 0){
+     setSearchString(props?.searchValue)
+    }
+  },[])
 
   const myLoader = ({ src, width, quality }) => {
     if(src && src.length > 0){
@@ -58,17 +31,11 @@ export default function SearchBar(props) {
     }
  }
 
-  const handleOnSearch = (string, results) => {
-    // onSearch will have as the first callback parameter
-    // the string searched and for the second the results.
-    _autocompleteQuery(string)
-  };
-
-  const _autocompleteQuery = async(e)=>{
+  const _autocompleteQuery = async(e,results)=>{
     let res = await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`)
     .then(res => {
       // this.coursesApiStatus.current.success();
-      setSearchQuery(res.data.data)
+      _fuseData(res.data.data,e)
       return res.data;
     })
     .catch(err => {
@@ -77,32 +44,37 @@ export default function SearchBar(props) {
     });
   }
 
- 
-
-  const handleOnHover = (result) => {
-    // the item hovered
-    // console.log(result);
-  };
+  const _fuseData=(data,e)=>{
+    let intialQuery = {
+      id: 0,
+      logo : searchImage,
+      name: e,
+    }
+    let autocompleteArray = data ? data : [];
+    autocompleteArray.unshift(intialQuery)
+    setSearchQuery(data)
+    setSearchString(e)
+  }
 
   const handleOnSelect = (item) => {
     // the item selected
     // console.log("enter detected",item);
   
-    props?.handleSearch(item?.name)
+    
     location.push({
       pathname: `/`
     })
-    props?.openFilterVisible()
-    setInitialQuery(true)
-  };
+    if(!item?.course_id){
+     props?.handleSearch(item?.name)
+     props?.openFilterVisible()
+    }else {
+      location.push({
+        pathname: '/details',
+        query: { course_id: item?.course_id },
+      })
+    }
+    
 
-  const handleOnFocus = (e) => {
-    // console.log("Focused",e?.target?.value);
-    // props?.handleOpenMobileSearch()
-    // location.push('/search');
-    location.push({
-      pathname: `/search`
-    })
   };
 
   const formatResult = (item) => {
@@ -119,21 +91,33 @@ export default function SearchBar(props) {
     </div> 
     // return (<p dangerouslySetInnerHTML={{__html: '<strong>'+item+'</strong>'}}></p>); //To format result as html
   };
+  
 
   const _handleBack=()=>{
-    location.push({
-      pathname: `/`
-    })
+    location.push('/')
     props?.clearSearch()
-    props?.toggleFilterVisible()
+    setSearchString('')
+    props?.closeFilterVisible()
   }
 
   const _handleFreshSearch=()=>{
-    props?.clearSearch()
+    // props?.clearSearch()
+    setSearchString('')
     location.push({
       pathname: `/search`
     })
   }
+
+  const handleOnFocus = (e) => {
+    // console.log("Focused",e?.target?.value);
+    // props?.handleOpenMobileSearch()
+    // location.push('/search');
+    location.push({
+      pathname: `/search`
+    })
+  };
+
+
 
   
 
@@ -145,13 +129,13 @@ export default function SearchBar(props) {
         <Image src={caretLeftDark} className="search-icon-icon" objectFit="cover" height={20} width={20} />
       </div>
       <div className="search-bar-mobile">
-        <ReactSearchAutocomplete
+      <ReactSearchAutocomplete
           items={searchQuery}
-          onSearch={handleOnSearch}
-          onHover={handleOnHover}
+          onSearch={_autocompleteQuery}
           onSelect={handleOnSelect}
           onFocus={handleOnFocus}
-          inputSearchString={props?.searchValue}
+          inputDebounce={500}
+          inputSearchString={searchString}
           autoFocus={location.pathname == '/search' ? true : false}
           showNoResults={false}
           formatResult={formatResult}

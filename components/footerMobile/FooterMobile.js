@@ -86,7 +86,7 @@ export default function FooterMobile(props){
     if(filterValues.length > 0 && filterValues[0] === 'min_price'){
         props?.closeFilterVisible()
     }
-console.log(location,'location+++')
+
     return(
         <div className='mobile-footer' style={location.pathname === '/search/' || location.pathname === '/details' || (filterValues.length > 0 && location.pathname !== '/bookmarks' && location.pathname !== '/') ? {opacity: 0} : props?.filterModalVisible ? {zIndex: 0} : null }>
             <div className='mobile-footer-container'>

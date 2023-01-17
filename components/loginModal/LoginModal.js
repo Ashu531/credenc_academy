@@ -16,11 +16,12 @@ import Strings from "../../config/strings";
 import axios from "axios";
 import ApiStatus from "../../config/apiStatus";
 import { CircularProgress, Link } from "@mui/material";
-import GoogleLogin from "react-google-login";
+// import GoogleLogin from "react-google-login";
 import constant from '../../config/constant'
 import Image from "next/image";
 import { useRouter } from 'next/router'
 import { useTheme } from "@emotion/react";
+import { GoogleLogin,GoogleOAuthProvider } from '@react-oauth/google';
 
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 
@@ -228,7 +229,7 @@ export default function LoginModal({
     setAuthApiStatus(ApiStatus.PENDING);
 
     let googleLogInRes = await axios.post(`${constant.API_URL.DEV}/google/`, {
-      auth_token: response.tokenId,
+      auth_token: response.credential,
     })
     .then(res => {
       try{
@@ -485,22 +486,24 @@ export default function LoginModal({
           </div>
           <div className="social-icons-container" style={window.innerWidth <= 500 ? {padding: 0} : null }>
             <div>
+            <GoogleOAuthProvider clientId={constant.GOOGLE_CLIENT_ID}>
               <GoogleLogin
-                clientId={`${constant.GOOGLE_CLIENT_ID}`}
+                // clientId={`${constant.GOOGLE_CLIENT_ID}`}
                 onSuccess={onGoogleLoginSuccess}
                 onFailure={onGoogleLoginSuccess}
-                render={renderProps => (
-                  <div 
-                  className='social-icon' 
-                  style={{ display:"flex",justifyContent:"center",alignItems:'center' }} 
-                  onClick={() => {
-                    renderProps.onClick(); 
-                    // Mixpanel.track(MixpanelStrings.GOOGLE_LOGIN)
-                    }}>
-                      <Image src={googleIcon} objectFit="cover" />
-                  </div>
-                )}
+                // render={renderProps => (
+                //   <div 
+                //   className='social-icon' 
+                //   style={{ display:"flex",justifyContent:"center",alignItems:'center' }} 
+                //   onClick={() => {
+                //     renderProps.onClick(); 
+                //     // Mixpanel.track(MixpanelStrings.GOOGLE_LOGIN)
+                //     }}>
+                //       <Image src={googleIcon} objectFit="cover" />
+                //   </div>
+                // )}
               />
+            </GoogleOAuthProvider>
             </div>
             {/* <div 
             className='social-icon' 

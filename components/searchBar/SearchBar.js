@@ -25,7 +25,7 @@ export default function SearchBar(props) {
     }else{
         return '..'
     }
- }
+ } 
 
   const _autocompleteQuery=async(e,results)=>{
      
@@ -43,8 +43,15 @@ export default function SearchBar(props) {
       logo : searchImage,
       name: e,
     }
-    let autocompleteArray = data;
-    autocompleteArray.unshift(intialQuery)
+    let autocompleteArray = data ? data : [];
+    if(autocompleteArray && autocompleteArray.length > 0){
+      autocompleteArray.push(intialQuery)
+    }else{
+      console.log(autocompleteArray,"autocompleteArray+++")
+      autocompleteArray=[]
+      autocompleteArray.unshift(intialQuery)
+    }
+  
     setSearchQuery(data)
     setSearchString(e)
   }
@@ -79,7 +86,7 @@ export default function SearchBar(props) {
           items={searchQuery}
           onSearch={_autocompleteQuery}
           onSelect={handleOnSelect}
-          inputDebounce={800}
+          inputDebounce={500}
           inputSearchString={searchString}
           autoFocus
           showNoResults={false}

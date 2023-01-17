@@ -138,6 +138,7 @@ export default function DetailPage(props){
             openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
             forgotPasswordModal={props?.forgotPasswordModal}
             handleLogin={()=>props?.handleLogin()}
+            closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
             loginModal={props?.loginModal}
           />
         }

@@ -114,6 +114,7 @@ export default function ForgotPasswordModal({
     // Mixpanel.track(MixpanelStrings.SEND_OTP_FORGOT_PASSWORD, {
     //   'email_forgot_password' : emailInputState.toString(),
     // })
+    console.log(emailInputState,"emailInputState++++")
     if(validate()){
       let res = await axios.post(`${constant.API_URL.DEV}/signup_new/`, {
         'email': emailInputState.toString(),

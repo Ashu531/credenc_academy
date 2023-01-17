@@ -5,7 +5,7 @@ const constant= {
       DEV: "https://edtech.credenc.com"
     },
     BASE_URL:{
-      PROD: "https://skillrush.credenc.com/?",
+      PROD: "https://credencacademy.com/?",
       DEV: "http://localhost:3000/?"
     },
     COURSES:{
@@ -24,7 +24,7 @@ const constant= {
        },
      ]
     },
-    GOOGLE_CLIENT_ID: '285634072201-v2q013h1k89t67i0auhjmj4lr3rn0jur.apps.googleusercontent.com',
+    GOOGLE_CLIENT_ID: '164051831244-qe9r7cupd87rtg31quk7uf4dagtsmd7o.apps.googleusercontent.com',
     LINKEDIN_API: {
       clientId: '78exnrgmc9bd3d',
       redirectUrl: 'http://localhost:3000',

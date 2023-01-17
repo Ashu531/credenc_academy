@@ -42,6 +42,7 @@ import upvoteLogoDark from '../../assets/images/icons/thumbs-up-dark.svg'
 import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
 import upvoteLogo from '../../assets/images/icons/upvote.svg'
 import Link from "next/link";
+import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer";
 
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
@@ -70,6 +71,8 @@ export default function WebDetailPage(props){
         moduleId: 0,
         moduleShow: false,
     })
+    const [userEmail,setUserEmail] = useState('')
+    const [loginState,setLoginState]=useState(0);
 
     const myLoader = ({ src, width, quality }) => {
         if(src && src.length > 0){
@@ -374,13 +377,21 @@ export default function WebDetailPage(props){
        
     }
 
+    const _setUserEmail=(data)=>{
+      setUserEmail(data)
+    }
+  
+    const _setUserLoginState=(data)=>{
+      setLoginState(data)
+    }
+
     return(
         <>
         {
             mounted &&
 
         <div className='detail-page-web'>
-          <div style={{display:'flex',alignItems:'center'}}>
+          <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'flex-start',padding: '0px 24px 0px 24px'}}>
            <div className='detail-page-web-breadcrumb'>
            <Breadcrumbs
                 separator={<NavigateNextIcon fontSize="medium" />}
@@ -1014,16 +1025,22 @@ export default function WebDetailPage(props){
                     forgotPasswordModal={props?.forgotPasswordModal}
                     theme={props?.theme}
                     handleLogin={()=>props?.handleLogin()}
+                    setUserEmail={(data)=>_setUserEmail(data)}
+                    setUserLoginState={(data)=>_setUserLoginState(data)}
                 /> 
                 </div>
                 : null
             }
             {
-                props?.forgotPasswordModal ? 
-                <ForgotPasswordModal
+              props?.forgotPasswordModal ? 
+              <SigninModalContainer
                 handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
-                />
-                : null
+                closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
+                userEmail={userEmail}
+                openLoginModal={()=>props?.openLoginModal()}
+                loginState={loginState}
+              />
+              : null
             }
             <SlidingPanel
                 type={'right'}
