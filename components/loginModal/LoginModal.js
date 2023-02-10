@@ -6,6 +6,7 @@ import linkedinIcon from "../../assets/images/icons/linkedin-icon.svg";
 import closeIcon from '../../assets/images/icons/close-icon-white.svg';
 import closeIconLight from '../../assets/images/icons/crossIcon.svg';
 import credencLogo from '../../assets/images/icons/credenc-logo.svg';
+import credencAcademy from '../../assets/images/icons/credencAcademy.svg'
 import Input from "../input/Input";
 import Button from "../button/Button";
 import SegmentedBar from "../segementedBar/SegmentedBar";
@@ -472,7 +473,17 @@ export default function LoginModal({
               } : null}
               >{header}</div>
             </div> 
-        : null
+        : 
+            <div className="header-container">
+              <Image src={credencAcademy} alt='credencAcademy' />
+              <div className="headline" style={ error ? {
+                fontFamily: 'Poppins',
+                fontWeight: 500,
+                fontSize: 12,
+                color: 'red'
+              } : null}
+              >Welcome To Credenc</div>
+          </div>
         }
         
         {showSegment(modalStates.LOGIN) && <div className="form-container">
