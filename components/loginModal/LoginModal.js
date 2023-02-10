@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState,useRef } from "react";
 import passVisibleIcon from "../../assets/images/icons/eye.svg";
 import passNotVisibleIcon from "../../assets/images/icons/eye-close.svg";
 import googleIcon from "../../assets/images/icons/google-icon.svg";
@@ -22,6 +22,7 @@ import Image from "next/image";
 import { useRouter } from 'next/router'
 import { useTheme } from "@emotion/react";
 import { GoogleLogin,GoogleOAuthProvider } from '@react-oauth/google';
+import UrlService from "../../helper/urlService";
 
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 
@@ -56,7 +57,10 @@ export default function LoginModal({
   const [error,setErrorMsg] = useState(false)
 
   const [authApiStatus, setAuthApiStatus] = useState(ApiStatus.NOT_STARTED);
+  const [externalUser,setExternalUser] = useState(false);
   let location = useRouter();
+  let nextURL=location?.asPath?.substring(2,location?.asPath?.length)
+  let urlService = useRef(new UrlService(nextURL));
 
   const showHidePassword = () => {
     if (passwordInputState.hide) {
@@ -237,6 +241,7 @@ export default function LoginModal({
         setAuthApiStatus(ApiStatus.SUCCESS);
         handleModalClose();
         handleLogin()
+        _goToHome()
         if (res?.status) localStorage.removeItem(bookmarkKey);
         return res.data;
       } catch(e) {
@@ -386,6 +391,50 @@ export default function LoginModal({
     setTheme(theme)
   }
 
+  useEffect(()=>{
+
+    if(!location.isReady) return;
+
+    if(location?.query && Object.keys(location?.query).length > 0){
+        if(location?.query?.partner_key && location?.query?.partner_key.length > 0){
+          setExternalUser(true)
+        _getEmailFromThirdParty(location?.query)
+      }
+    }
+    
+  },[location.isReady])
+
+  const _getEmailFromThirdParty=async(query)=>{
+    let routerKeys = Object.values(query);
+
+    let data = {
+      partnerkey: routerKeys[0].replace(/\s/g, ''),
+      ui: routerKeys[1],
+      session: routerKeys[2]
+    }
+   
+    let response = await axios.post(`${constant.API_URL.DEV}/partnerdata/`,data
+     )
+    .then(res => {
+    try{
+      setEmailInputState(res.data.data)
+      return res.data;
+    } catch(e) {
+      console.log(e);
+    }
+  })
+  .catch(err => {
+    console.log(err,"error")
+  })
+  }
+
+  const _goToHome=()=>{
+    location.replace({
+      pathname: '/',
+      query: {},
+   }).then(() => location.reload())  
+  }
+
   return (
     <div className="login-modal" onClick={handleModalClose}>
       <div 
@@ -402,28 +451,37 @@ export default function LoginModal({
           <Image src={credencLogo} objectFit="cover"/>
           {/* <div style={{textDecoration: 'none', color: '#FFFFFF', fontSize: '21px'}}>BETA</div> */}
         </Link>
-        <div className="segment-container" style={window.innerWidth <= 500 ? {marginTop: '1rem'} : null}>
-          <SegmentedBar
-            items={['Sign In', 'Sign Up']}
-            handleTabNumber={(i) => setFormSegment(i)}
-            theme={theme}
-          />
-        </div>
-        <div className="header-container">
-          <div className="headline" style={ error ? {
-            fontFamily: 'Poppins',
-            fontWeight: 500,
-            fontSize: 12,
-            color: 'red'
-          } : null}
-          >{header}</div>
-        </div>
+        {
+          externalUser === false ? 
+              <div className="segment-container" style={window.innerWidth <= 500 ? {marginTop: '1rem'} : null}>
+                <SegmentedBar
+                  items={['Sign In', 'Sign Up']}
+                  handleTabNumber={(i) => setFormSegment(i)}
+                  theme={theme}
+                />
+              </div> : null
+        }
+        {
+          externalUser === false ? 
+            <div className="header-container">
+              <div className="headline" style={ error ? {
+                fontFamily: 'Poppins',
+                fontWeight: 500,
+                fontSize: 12,
+                color: 'red'
+              } : null}
+              >{header}</div>
+            </div> 
+        : null
+        }
+        
         {showSegment(modalStates.LOGIN) && <div className="form-container">
           {formError && <div className='error-container'>{formError}</div>}
           <Input
             placeholder="Email"
             value={emailInputState}
             handleInput={(value) => setEmailInputState(value)}
+            disabled={externalUser ? true : false}
           />
           {/* <Input
             placeholder="Password"
@@ -479,12 +537,19 @@ export default function LoginModal({
           </span>
           {!isApiInProgress() && <Button text={buttonState.text} linearGradient='green' classes="btn-secondary small-wrapper-colored" onClick={handleSubmit} />}
           {isApiInProgress() && <CircularProgress />}
-          <div className="or-divider">
-            <div className="divider"></div>
-              {buttonState.divider}
-            <div className="divider"></div>
-          </div>
-          <div className="social-icons-container" style={window.innerWidth <= 500 ? {padding: 0} : null }>
+          {
+             externalUser === false ? 
+              <div className="or-divider">
+                <div className="divider"></div>
+                  {buttonState.divider}
+                <div className="divider"></div>
+              </div>
+             : null
+          }
+          
+          {
+            externalUser === false ? 
+            <div className="social-icons-container" style={window.innerWidth <= 500 ? {padding: 0} : null }>
             <div>
             <GoogleOAuthProvider clientId={constant.GOOGLE_CLIENT_ID}>
               <GoogleLogin
@@ -511,7 +576,9 @@ export default function LoginModal({
             onClick={showPopup}>
                   <Image src={linkedinIcon} objectFit="cover" />
             </div> */}
-          </div>
+          </div> : null
+          }
+          
         </div>
       </div>
     </div>

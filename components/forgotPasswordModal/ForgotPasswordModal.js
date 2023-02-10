@@ -15,7 +15,9 @@ import Strings from "../../config/states";
 import axios from "axios";
 import Image from "next/image";
 import constant from "../../config/constant";
+import { useRouter } from 'next/router'
 const bookmarkKey = 'credenc-marketplace-bookmarks';
+
 // import { Mixpanel } from "../../../services/Mixpanel";
 // import MixpanelStrings from "../../../../values/mixpanelStrings";
 
@@ -46,7 +48,7 @@ export default function ForgotPasswordModal({
   const passwordInputInitialState = States.passwordInputInitialState;
   const [passwordInputState, setPasswordInputState] = useState({ ...passwordInputInitialState });
   const [confirmPassInputState, setConfirmPassInputState] = useState({ ...passwordInputInitialState });
-
+  let location = useRouter();
   const [otp, setOtp] = useState({
       generated: false,
       values: ['', '', '', '', '', '']
@@ -158,6 +160,7 @@ export default function ForgotPasswordModal({
           setFormError(res['data']['error']);
         else{
         dispatchLogin(res.data.tokens);
+        _goToHome()
         // setModalState(modalStates.NEW_PASSWORD);
         closeForgotPasswordModal()
         }
@@ -251,9 +254,27 @@ export default function ForgotPasswordModal({
     handleForgotPasswordEnd();
   }
 
-  // useEffect(() => {
-  //   changeNavbarVisibility(false)
-  // }, [])
+  const _goToHome=()=>{
+
+    let routerKeys = Object.values(location.query);
+    console.log(routerKeys,"routerKeys")
+
+    location.replace({
+      pathname: '/',
+      query: {
+        min_price: 0,
+        max_price: routerKeys[3],
+      },
+   }).then(() => location.reload())  
+  }
+  useEffect(() => {
+    if(!location.isReady) return;
+
+    if(location?.query && Object.keys(location?.query).length > 0){
+
+    }
+
+  }, [location.isReady])
 
   return (
     <div className="modal" onClick={handleForgotPasswordEnd}>

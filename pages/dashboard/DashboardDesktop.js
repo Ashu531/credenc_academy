@@ -37,9 +37,7 @@ import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyMo
 import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer"
 
 const subjectKey = 'credenc-edtech-subject';
-const compareKey = 'credenc-marketplace-compares';
-const bookmarkKey = 'credenc-marketplace-bookmarks';
-const UpvoteKey = 'credenc-edtech-upvote'
+
 
 const queries = {
   PROFESSION: 'profession',
@@ -905,6 +903,16 @@ const _handleSearch=(e)=>{
   const _setUserLoginState=(data)=>{
     setLoginState(data)
   }
+
+  useEffect(()=>{
+
+    let externalUser = urlService.current.hasEntry("partner_key")
+    if(nextURL && nextURL.length > 0 && props?.token === null){
+      if(externalUser === true){
+        props?.openLoginModal()
+      }
+    }
+  },[])
   
  return(
         <div>      

@@ -531,6 +531,7 @@ class MyApp extends App {
             closeLoginModal={()=>this.closeLoginModal()}
             loginModal={this.state.loginModal}
             bookmarkCount={this.state.bookmarkCount}
+            closeFilterVisible={()=>this.closeFilterVisible()}
             />
          }
         <SlidingPanel

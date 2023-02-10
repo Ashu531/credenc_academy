@@ -901,6 +901,16 @@ const _setUserLoginState=(data)=>{
   setLoginState(data)
 }
 
+useEffect(()=>{
+
+  let externalUser = urlService.current.hasEntry("partner_key")
+  if(nextURL && nextURL.length > 0 && props?.token === null){
+    if(externalUser === true){
+      props?.openLoginModal()
+    }
+  }
+},[])
+
    return(
         <div className="dashboard-mobile">
           <div 
