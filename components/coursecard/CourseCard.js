@@ -18,6 +18,7 @@ import { useRouter } from 'next/router'
 // import theme from '../../scripts/reducers/theme';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
+const EdtechToken = 'credenc-edtech-authkey';
 
 export default function CourseCard(props){
 
@@ -256,6 +257,16 @@ const _goToDetailPage=(id)=>{
   })
 }
 
+const _handleApplyAction=()=>{
+  let token = localStorage.getItem(EdtechToken)
+  if(token && token.length > 0){
+    props?.openApplyNowModal()
+  }else{
+    props?.openLoginModal()
+  }
+  
+}
+
  return(
       <>
       {
@@ -330,26 +341,56 @@ const _goToDetailPage=(id)=>{
     {  window.innerWidth > 500 ? 
     <div 
     className='course-button-content' style={{...compareButtonVisible,marginLeft:0}}>
-      <div 
-      className='course-compare-buttton' 
-      onClick={()=>{ props?.openApplyNowModal() }}
-      >
-        <span className='add-to-compare-text'>
-          Apply now
-        </span>
-      </div>
+      {
+        props?.data?.applied?.course_applied === true ? 
+        <div className='track-button-content' style={{border:'1px solid #00CB9C'}}>
+          <div className='track-text'>
+            Track Application
+          </div>
+        </div>
+        : 
+        <div 
+          className='course-compare-buttton' 
+          onClick={()=> _handleApplyAction()}
+          >
+            <span className='add-to-compare-text'>
+              Apply now
+            </span>
+        </div>
+      }
+     
+      
       <div className='course-detail-button' onClick={()=> props?.openDetailModal()} style={{flexDirection:'row'}}>
           <span className='course-detail-text'>
             Details
           </span>
            <Image src={ props.theme === 'dark' ? arrowRightDark : arrowRight} objectFit="contain" alt='arrowRight'/>
       </div>
-      </div> : <div className='course-button-content-mobile' style={ window.innerWidth <= 500 ? {padding: '12px 24px'} : null }>
-              <div className='course-compare-buttton-mobile' onClick={()=> props?.openApplyNowModal() }>
-                <span className='add-to-compare-text-mobile'>
-                Apply now
-                </span>
-              </div>
+      </div> : 
+      <div className='course-button-content-mobile' style={ window.innerWidth <= 500 ? {padding: '12px 24px'} : null }>
+              {
+                  props?.data?.applied?.course_applied === true ? 
+                  <div 
+                    className='track-button-content' 
+                     style={{border:'1px solid #00CB9C'}} 
+                     onClick={()=>{
+                       let status = true
+                       props?.openDetailModal(status)
+                       }}>
+                    <div className='track-text'>
+                      Track Application
+                    </div>
+                  </div>
+                  : 
+                  <div 
+                  className='course-compare-buttton-mobile'
+                    onClick={()=> _handleApplyAction()}
+                    >
+                      <span className='add-to-compare-text-mobile'>
+                        Apply now
+                      </span>
+                  </div>
+              }
               <div className='course-detail-button-mobile' onClick={()=> props?.openDetailModal()} style={{flexDirection:'row'}}>
               <span className='course-detail-text-mobile'>
                 Details

@@ -181,6 +181,25 @@ padding: 7px;
     position: relative;
     bottom: 0px;
 
+    .track-button-content{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 8px 12px;
+        gap: 10px;
+        border-radius: 5px;
+
+        .track-text{
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 21px;
+            color: #000000;
+        }
+    }
+
 }
 
 .course-compare-buttton{

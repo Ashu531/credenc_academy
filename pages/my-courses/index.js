@@ -65,7 +65,7 @@ export default function MyCourses(props){
         getMyCourses(authToken);
     }, []);
 
-  const openDetailModal = (data)=>{
+  const _openDetailModal = (data)=>{
       setDetailModal(!detailModal);
       setDetailData(data);
     }
@@ -160,6 +160,7 @@ export default function MyCourses(props){
                 theme={props.theme}
                 closeDetailModal={()=>closeDetailModal(detailData)}
                 handleCardActionTaken={()=>_handleCardActionTaken()}
+                status={true}
               />
             </SlidingPanel>
             <SlidingPanel

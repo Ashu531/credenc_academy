@@ -1,20 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from "next/image";
 import axios from "axios";
-import courseLogo from '../../assets/images/logo/courseLogo.svg';
 import bookmarkIcon from '../../assets/images/icons/bookmark.svg'
 import bookmarkIconDark from '../../assets/images/icons/bookmark-dark.svg'
-import instituteLogo from '../../assets/images/logo/instituteLogo.svg'
 import upvoteLogo from '../../assets/images/icons/upvote.svg'
 import upvoteLogoDark from '../../assets/images/icons/thumbs-up-dark.svg'
-import arrowRight from '../../assets/images/icons/arrowRight.svg'
-import arrowRightDark from '../../assets/images/icons/arrow-right-dark.svg'
-import States from '../../values/states';
 import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
 import defaultEducator from '../../assets/images/icons/defaultEducator.svg'
 import defaultPlatform from '../../assets/images/icons/defaultPlatform.svg'
 import constant from '../../config/constant';
 import { useRouter } from 'next/router'
+import arrowRightDark from '../../assets/images/icons/arrowRight.svg'
 // import theme from '../../scripts/reducers/theme';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
@@ -318,39 +314,30 @@ const _goToDetailPage=(id)=>{
     className='course-button-content' 
     // style={{...compareButtonVisible,marginLeft:0}}
     >
-        <div className='course-detail-button' onClick={()=> props?.openDetailModal()} style={{padding:0,gap:0}}>
+        <div className='course-detail-button' onClick={()=> props?.openDetailModal()} style={{padding:0,gap:0}} style={{border:'1px solid #00CB9C'}}>
           <span className='course-detail-text'>
-            Enrollment Status
+            Track Application
           </span>
-          <span className='course-detail-approved-text'>
-            Approved
+        </div>
+      <div className='course-detail-button' onClick={()=> props?.openDetailModal()} style={{flexDirection:'row'}}>
+          <span className='course-detail-text'>
+            Details
           </span>
-      </div>
-      <div className='divider' />
-      <div 
-      className='course-compare-buttton' 
-      onClick={()=>{ props?.openApplyNowModal() }}
-      >
-        <span className='add-to-compare-text'>
-          Apply for loan
-        </span>
+           <Image src={arrowRightDark} objectFit="contain" alt='arrowRight'/>
       </div>
     </div> : 
     <div className='course-button-content-mobile' style={ window.innerWidth <= 500 ? {padding: '12px 12px',flexDirection: 'column',alignItems:'flex-start'} : null }>
-             
-            <div className='course-detail-button-mobile' onClick={()=> props?.openDetailModal()} style={{padding: 0,gap: 0}}>
-              <span className='course-detail-text-mobile'>
-                Enrollment Status
-              </span>
-                <span className='course-detail-approved-text'>
-                Approved
+              <div className='course-detail-button-mobile' onClick={()=> props?.openDetailModal()} style={{padding: 0,gap: 0}}>
+                <span className='course-detail-text'>
+                  Track Application
                 </span>
               </div>
-              <div className='course-compare-buttton-mobile' onClick={()=> props?.openApplyNowModal() }>
-                <span className='add-to-compare-text-mobile'>
-                Apply for loan
+              <div className='course-detail-button' onClick={()=> props?.openDetailModal()} style={{flexDirection:'row'}}>
+                <span className='course-detail-text'>
+                  Details
                 </span>
-            </div>
+                <Image src={arrowRightDark} objectFit="contain" alt='arrowRight'/>
+              </div>
       </div>}
 
     </div>

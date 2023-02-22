@@ -19,7 +19,9 @@ import constant from '../../config/constant';
 import moment from 'moment'
 import closeIcon from '../../assets/images/icons/close-icon-grey.svg'
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import Checkbox from '@mui/material/Checkbox';
 const EdtechAuthKey = 'credenc-edtech-authkey';
+const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
 export default function ApplyNowModal(props){
 
@@ -28,14 +30,55 @@ export default function ApplyNowModal(props){
     const [name,setName] = useState('')
     const [email,setEmail] = useState('')
     const [number,setNumber] = useState('')
-    const [gender,setGender] = useState('')
+    const [gender,setGender] = useState('Male')
     const [dob,setDob] = useState(new Date())
     const [token,setToken] = useState('');
+    const [clearData,setClearData] = useState(false);
+    const [thirdPartyData,setThirdPartyData] = useState({})
 
     useEffect(()=>{
         let authToken = localStorage.getItem(EdtechAuthKey);
         setToken(authToken)
+        _getProfileData(authToken)
     },[])
+
+    const _getProfileData=async(authToken)=>{
+        await axios.get(`${constant.API_URL.DEV}/profiles/`, {
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+            })
+            .then(res => {
+                _setThirdPartyFields(res.data)
+                setThirdPartyData(res.data)
+                _setThirdPartyUser(res.data)
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    const _setThirdPartyUser=(data)=>{
+        localStorage.setItem(EdtechPartnerKey,JSON.stringify(data.partner_key));
+    }
+
+    const _setThirdPartyFields=(info)=>{
+        setEmail(info.email);
+        setName(info.full_name);
+        setNumber(info.phone_number)
+    }
+
+    const _handleChecked=(event)=>{
+
+        if(event === true){
+            setClearData(true);
+            setName('');
+            setEmail('');
+        }else{
+            setName(thirdPartyData.full_name);
+            setEmail(thirdPartyData.email);
+        }
+    }
 
     const handleChange = (newValue) => {
         let date = moment(newValue.$d).format('L');
@@ -47,6 +90,7 @@ export default function ApplyNowModal(props){
       };
 
     const handleSubmit=async()=>{
+
         let res = await axios.post(`${constant.API_URL.DEV}/userform/`,{
             'email': email.toString(),
             'full_name': name.toString(),
@@ -60,8 +104,9 @@ export default function ApplyNowModal(props){
             }
           })
         .then(res => {
+            let courseName = res.data.course
             props.closeApplyNowModal()
-            props.openSuccessApplyModal()
+            props.openSuccessApplyModal(courseName)
           return res.data;
         })
         .catch(err => {
@@ -102,6 +147,19 @@ export default function ApplyNowModal(props){
                     </span>
                   </div>
                   <div className='form-content'>
+                      <div className='label-section'>
+                          <div className='label-header'>
+                          Student Details
+                          </div>
+                          <div className='check-section'>
+                              <div>
+                                    <Checkbox onChange={(e)=> _handleChecked(e.target.checked)} />
+                              </div>
+                              <div className='check-section-content'>
+                                    Enrolling Someone Else?
+                              </div>
+                          </div>
+                      </div>
                    <div className='name-content'>
                     <span className='label-text'>
                        Full Name*

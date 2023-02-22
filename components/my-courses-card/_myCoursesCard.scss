@@ -171,7 +171,7 @@
     
     .course-button-content{
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: space-between;
         align-items: flex-start;
         padding: 12px 8px;
@@ -206,11 +206,12 @@
     
     .course-detail-button{
         display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        // padding: 12px 24px;
-        // gap: 10px;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 8px 12px;
+        gap: 10px;
+        border-radius: 5px;
     }
     
     .course-detail-text{
@@ -504,11 +505,13 @@
         
         .course-detail-button{
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
+            flex-direction: row;
+            justify-content: center;
             align-items: center;
-            padding: 12px 24px;
+            padding: 8px 12px;
             gap: 10px;
+            background: #FFFFFF;
+            border-radius: 5px;
         }
         
         .course-detail-text{

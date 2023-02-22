@@ -137,6 +137,7 @@ function DashboardDesktop(props) {
   const [successApplyModal,setSuccessApplyModal] = useState(false)
   const [userEmail,setUserEmail] = useState('')
   const [loginState,setLoginState]=useState(0);
+  const [courseName,setCourseName] = useState('')
   
 
   let observer = useRef(
@@ -892,8 +893,9 @@ const _handleSearch=(e)=>{
     setSuccessApplyModal(false)
   }
 
-  const _openSuccessApplyModal=()=>{
+  const _openSuccessApplyModal=(data)=>{
     setSuccessApplyModal(true)
+    setCourseName(data)
   }
 
   const _setUserEmail=(data)=>{
@@ -1367,7 +1369,7 @@ const _handleSearch=(e)=>{
         backdropClicked={() => setApplyNow(false)}
         size={30}
       >
-        <ApplyNowModal detailData={detailData} closeApplyNowModal={()=>_closeApplyNowModal()} openSuccessApplyModal={()=>_openSuccessApplyModal()}/>
+        <ApplyNowModal detailData={detailData} closeApplyNowModal={()=>_closeApplyNowModal()} openSuccessApplyModal={(courseName)=>_openSuccessApplyModal(courseName)}/>
       </SlidingPanel>
       <SlidingPanel
         type={'right'}
@@ -1375,7 +1377,7 @@ const _handleSearch=(e)=>{
         backdropClicked={() => setSuccessApplyModal(false)}
         size={30}
       >
-        <SuccessApplyModal closeSuccessApplyModal={()=>_closeSuccessApplyModal()} />
+        <SuccessApplyModal closeSuccessApplyModal={()=>_closeSuccessApplyModal()} courseName={courseName} />
       </SlidingPanel>
       {
         props?.loginModal ? 

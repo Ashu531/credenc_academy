@@ -27,6 +27,8 @@ import defaultEducator from '../../assets/images/icons/defaultEducator.svg'
 import defaultPlatform from '../../assets/images/icons/defaultPlatform.svg'
 import DotLoader from "react-spinners/DotLoader";
 import LinkedlnLogo from '../../assets/images/icons/linkedin-icon.svg';
+import approvedIcon from '../../assets/images/icons/approvedIcon.svg'
+import stopWatchIcon from '../../assets/images/icons/stopWatchIcon.svg'
 const EdtechTheme = 'EdtechTheme';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
@@ -426,10 +428,61 @@ export default function DetailModal(props){
                             </a>
                         </div>
                 </div>
+               </div>
+              <div style={{width: '100%',background: '#FFFFFF',flex: 1}} />
             </div>
-            <div style={{width: '100%',background: '#FFFFFF',flex: 1}} />
-            </div>
-            <div className='detail-modal-banner'  
+
+            {
+              props?.status === true ? 
+              <div className='application-status-content'>
+              <div className='application-status-header'>
+                <div className='application-status-text'>
+                  Application Status
+                </div>
+              </div>
+              <div className='application-status-section'>
+                  <div className='application-status-stripe'>
+                      <div className='application-image-content'>
+                          <Image src={approvedIcon} width={20} height={20} objectFit="contain" />
+                          <div className='label-text'>
+                             Applied
+                          </div>
+                      </div>
+                      <div className='sublabel-text'>
+                         June 20, 2022 at 14:01:33
+                      </div>
+                  </div>
+                  <div className='application-status-stripe'>
+                      <div className='application-image-content'>
+                          <Image src={stopWatchIcon} width={18} height={18} objectFit="contain" />
+                          <div className='label-text'>
+                            Loan Processing
+                          </div>
+                      </div>
+                      <div className='sublabel-text' style={{color: '#138808'}}>
+                         In Progress
+                      </div>
+                  </div>
+
+                  <div className='application-status-stripe'>
+                      <div className='application-image-content'>
+                          <Image src={stopWatchIcon} width={18} height={18} objectFit="contain" />
+                          <div className='label-text'>
+                            Enrollment
+                          </div>
+                      </div>
+                      <div className='sublabel-text' style={{color: '#E12D2B'}}>
+                        Pending
+                      </div>
+                  </div>
+              </div>
+            </div> : 
+            null
+            }
+
+            
+
+            {/* <div className='detail-modal-banner'  
             // style={ window.innerWidth <= 500 ? {width:'100%'} : null }
             >
                 { courseData?.enrollment_start_date && courseData?.enrollment_start_date.length > 0 ?
@@ -440,15 +493,15 @@ export default function DetailModal(props){
                     Next batch starts on soon
                   </span>
                 } 
-            </div>
+            </div> */}
             <div className='detail-modal-middle-section'>
-              <div className='detail-modal-course-content'>
+              <div className='detail-modal-course-content' style={props?.status === true ? null : {marginTop: '11rem'}}>
                 <div className='detail-modal-course-container'>
                     <span className='heading1'>
-                    {courseData?.course_name}
+                      {courseData?.course_name}
                     </span>
                     <span className='heading2'>
-                    {courseData?.description}
+                      {courseData?.description}
                     </span>
                 </div>
                 <div className='detail-modal-course-overview'>

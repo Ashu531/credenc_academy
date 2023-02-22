@@ -137,6 +137,8 @@ function DashboardMobile(props) {
   const [userEmail,setUserEmail] = useState('')
   const [loginState,setLoginState]=useState(0);
   const [goingUp, setGoingUp] = useState(false);
+  const [successApplyModal,setSuccessApplyModal] = useState(false)
+  const [courseName,setCourseName] = useState('')
 
   let observer = useRef(
     new IntersectionObserver(
@@ -901,6 +903,15 @@ const _setUserLoginState=(data)=>{
   setLoginState(data)
 }
 
+const _closeSuccessApplyModal=()=>{
+  setSuccessApplyModal(false)
+}
+
+const _openSuccessApplyModal=(data)=>{
+  setSuccessApplyModal(true)
+  setCourseName(data)
+}
+
 useEffect(()=>{
 
   let externalUser = urlService.current.hasEntry("partner_key")
@@ -1230,8 +1241,16 @@ useEffect(()=>{
             backdropClicked={() => setApplyNow(false)}
             size={30}
           >
-             <ApplyNowModal detailData={detailData} closeApplyNowModal={()=>_closeApplyNowModal()} />
+             <ApplyNowModal detailData={detailData} closeApplyNowModal={()=>_closeApplyNowModal()} openSuccessApplyModal={(courseName)=>_openSuccessApplyModal(courseName)}/>
            </SlidingPanel>
+           <SlidingPanel
+            type={'right'}
+            isOpen={successApplyModal}
+            backdropClicked={() => setSuccessApplyModal(false)}
+            size={30}
+            >
+            <SuccessApplyModal closeSuccessApplyModal={()=>_closeSuccessApplyModal()} courseName={courseName} />
+          </SlidingPanel>
          {
            props?.subjectDropdownMobile ? 
            <FloatActionButton

@@ -127,7 +127,7 @@
            align-items: flex-start;
            padding: 24px 24px 0px 24px;
            gap: 12px;
-           margin-top: 11rem;
+        //    margin-top: 11rem;
        }
 
        .detail-modal-course-container{
@@ -478,6 +478,83 @@
         height: 1.5px;
         margin-top: 12px;
         margin-bottom: 12px;
+       }
+
+       .application-status-content{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 24px 24px;
+            gap: 24px;
+            background: #F9F9F9;
+            margin-top: 12vh;
+
+            .application-status-header{
+                width: 100%;
+                display: flex;
+                justify-content: flex-start;
+                align-items: flex-start;
+
+                .application-status-text{
+                    font-family: 'Poppins';
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 16px;
+                    line-height: 24px;
+                    text-transform: uppercase;
+                    color: #2E3749;
+                }
+            }
+
+            .application-status-section{
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0px;
+                gap: 12px;
+                isolation: isolate;
+                width: 100%;
+
+                .application-status-stripe{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 100%;
+                    padding: 0px;
+                    gap: 8px;
+
+                    .application-image-content{
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        padding: 0px;
+                        gap: 10px;
+
+                        .label-text{
+                            font-family: 'Poppins';
+                            font-style: normal;
+                            font-weight: 400;
+                            font-size: 14px;
+                            line-height: 21px;
+                            color: #000000;
+                        }
+
+                        
+                    }
+                    .sublabel-text{
+                        font-family: 'Poppins';
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 13px;
+                        line-height: 20px;
+                        text-align: right;
+                        color: #000000;
+                    }
+                }
+            }
        }
 
     }
