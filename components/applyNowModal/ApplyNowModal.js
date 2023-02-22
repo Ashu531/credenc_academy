@@ -156,7 +156,7 @@ export default function ApplyNowModal(props){
                                     <Checkbox onChange={(e)=> _handleChecked(e.target.checked)} />
                               </div>
                               <div className='check-section-content'>
-                                    Enrolling Someone Else?
+                                    Enrolling For Someone Else?
                               </div>
                           </div>
                       </div>
@@ -165,7 +165,7 @@ export default function ApplyNowModal(props){
                        Full Name*
                     </span>
                     <span style={{width: '100%'}}>
-                    <Input placeholder="Full Name" handleInput={(e)=>handleName(e)} value={name} type='text' />
+                    <Input required={true} placeholder="Full Name" handleInput={(e)=>handleName(e)} value={name} type='text' />
                     </span>
                    </div>
                    <div className='contact-content' style={window.innerWidth <= 500 ? {display:"flex",flexDirection:'column',justifyContent:'flex-start',alignItems:'flex-start',width:'100%'} : {display:"flex",width:'100%'}}>
@@ -173,13 +173,13 @@ export default function ApplyNowModal(props){
                         <span className='label-text'>
                         Mobile Number*
                         </span>
-                        <Input placeholder='Mobile Number' handleInput={(e)=>handleNumber(e)} value={number} lenght={10} />
+                        <Input required={true} placeholder='Mobile Number' handleInput={(e)=>handleNumber(e)} value={number} lenght={10} />
                      </div>
                      <div className='email-content' style={window.innerWidth >  500 ? {width: '50%'} : {width:'100%'}}>
                         <span className='label-text'>
                         Email ID*
                         </span>
-                        <Input placeholder='Email Id' handleInput={(e)=>handleEmail(e)} value={email} type='text'/>
+                        <Input required={true} placeholder='Email Id' handleInput={(e)=>handleEmail(e)} value={email} type='text'/>
                      </div>
                    </div>
                    <div className='contact-content' style={window.innerWidth <= 500 ? {display:"flex",flexDirection:'column',justifyContent:'flex-start',alignItems:'flex-start',width:'100%'} : {display:"flex",width:'100%'}}>

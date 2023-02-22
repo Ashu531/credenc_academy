@@ -21,6 +21,7 @@ export default function DetailPage(props){
     const [toolData,setToolData] = useState({})
     const [similarCourses,setSimilarCourses] = useState({})
     const [token,setToken] = useState('')
+    const [startingCost,setStartingCost] = useState({})
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const isDesktopOrLaptop = useMediaQuery({
       query: "(min-width: 500px)",
@@ -44,7 +45,7 @@ export default function DetailPage(props){
             _getpaymentDetails(id)
             _getToolData(id)
             _getCardData(id)
-       
+            _getStartingCost(id)
     }  
 
     const _getDetailData=async(id)=>{
@@ -117,6 +118,21 @@ export default function DetailPage(props){
           });
     }
 
+    const _getStartingCost=async(id)=>{
+      let res = await axios.get(`${constant.API_URL.DEV}/course/starting_cost/${id}/`)
+        .then(res => {
+          // this.coursesApiStatus.current.success();
+          console.log(res.data,"res.data+++")
+          setStartingCost(res.data)
+          setMounted(true);
+          return res.data;
+        })
+        .catch(err => {
+          // this.coursesApiStatus.current.failed();
+          console.log(err);
+        });
+  }
+
     return(
     <>
     {
@@ -130,6 +146,7 @@ export default function DetailPage(props){
             priceOptions={priceOptions} 
             toolData={toolData} 
             token={token}
+            startingCost={startingCost}
             openLoginModal={()=>props?.openLoginModal()}
             addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
             removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
@@ -148,7 +165,8 @@ export default function DetailPage(props){
                 instructorData={instructorData} 
                 similarCourses={similarCourses} 
                 priceOptions={priceOptions} 
-                toolData={toolData} 
+                toolData={toolData}
+                startingCost={startingCost} 
                 addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
                 removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
                 token={token}

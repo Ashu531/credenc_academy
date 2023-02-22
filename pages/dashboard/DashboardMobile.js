@@ -139,6 +139,7 @@ function DashboardMobile(props) {
   const [goingUp, setGoingUp] = useState(false);
   const [successApplyModal,setSuccessApplyModal] = useState(false)
   const [courseName,setCourseName] = useState('')
+  const [trackStatus,setTrackStatus] = useState(false)
 
   let observer = useRef(
     new IntersectionObserver(
@@ -922,6 +923,10 @@ useEffect(()=>{
   }
 },[])
 
+const _enableTrackStatus=()=>{
+  setTrackStatus(true);
+}
+
    return(
         <div className="dashboard-mobile">
           <div 
@@ -1153,6 +1158,7 @@ useEffect(()=>{
                           openLoginModal={()=>props?.openLoginModal()}
                           addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
                           removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                          enableTrackStatus={()=>_enableTrackStatus()}
                         />
                       </div>
                     )
@@ -1233,6 +1239,7 @@ useEffect(()=>{
            handleCardActionTaken={()=>_handleCardActionTaken()}
            openLoginModal={()=>props?.openLoginModal()}
            token={props?.token}
+           status={trackStatus}
            />
          </SlidingPanel>
          <SlidingPanel

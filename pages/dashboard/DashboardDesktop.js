@@ -138,6 +138,7 @@ function DashboardDesktop(props) {
   const [userEmail,setUserEmail] = useState('')
   const [loginState,setLoginState]=useState(0);
   const [courseName,setCourseName] = useState('')
+  const [trackStatus,setTrackStatus] = useState(false)
   
 
   let observer = useRef(
@@ -915,6 +916,10 @@ const _handleSearch=(e)=>{
       }
     }
   },[])
+
+  const _enableTrackStatus=()=>{
+    setTrackStatus(true);
+  }
   
  return(
         <div>      
@@ -1079,6 +1084,7 @@ const _handleSearch=(e)=>{
             setLastElement={setLastCourse}
             addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
             removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+            enableTrackStatus={()=>_enableTrackStatus()}
           />
         </div>
       </div>
@@ -1192,6 +1198,7 @@ const _handleSearch=(e)=>{
                  openLoginModal={()=>props?.openLoginModal()}
                  addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
                  removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                 enableTrackStatus={()=>_enableTrackStatus()}
                />
             </div> :
                <CourseCard 
@@ -1204,6 +1211,7 @@ const _handleSearch=(e)=>{
                   openLoginModal={()=>props?.openLoginModal()}
                   addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
                   removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                  enableTrackStatus={()=>_enableTrackStatus()}
               />
              
            })
@@ -1361,6 +1369,7 @@ const _handleSearch=(e)=>{
         openLoginModal={()=>props?.openLoginModal()}
         handleCardActionTaken={()=>_handleCardActionTaken()}
         openDetailModal={()=>openDetailModal()}
+        status={trackStatus}
         />
       </SlidingPanel>
       <SlidingPanel

@@ -267,6 +267,11 @@ const _handleApplyAction=()=>{
   
 }
 
+const _handleTrackItem=()=>{
+  props?.enableTrackStatus()
+  props?.openDetailModal()
+}
+
  return(
       <>
       {
@@ -334,7 +339,7 @@ const _handleApplyAction=()=>{
           {props?.data?.price_list?.length > 0 ? 
             <span className='course-pay'>{props?.data?.price_list[0]}</span>
           :  <span className='course-pay'>Price Model</span>}
-            <span className='course-price'>{props?.data?.finance_display[0] === "Free" || props?.data?.finance_display[0] === 0 || !props?.data?.finance_display[0] ? "Unknown" : ` ₹${props?.data?.finance_display[0]}` }</span>
+            <span className='course-price'>{props?.data?.final_pricing}</span>
           </span>
       </div>
 
@@ -343,7 +348,7 @@ const _handleApplyAction=()=>{
     className='course-button-content' style={{...compareButtonVisible,marginLeft:0}}>
       {
         props?.data?.applied?.course_applied === true ? 
-        <div className='track-button-content' style={{border:'1px solid #00CB9C'}}>
+        <div className='track-button-content' style={{border:'1px solid #00CB9C'}} onClick={()=> _handleTrackItem()}>
           <div className='track-text'>
             Track Application
           </div>
@@ -373,10 +378,7 @@ const _handleApplyAction=()=>{
                   <div 
                     className='track-button-content' 
                      style={{border:'1px solid #00CB9C'}} 
-                     onClick={()=>{
-                       let status = true
-                       props?.openDetailModal(status)
-                       }}>
+                     onClick={()=> _handleTrackItem()}>
                     <div className='track-text'>
                       Track Application
                     </div>

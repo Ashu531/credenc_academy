@@ -1,5 +1,6 @@
 import React,{useEffect, useState,useRef} from 'react';
 import Image from "next/image";
+import Link from "next/Link";
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
 import successGif from '../../assets/json/successModal.json';
 import closeIcon from '../../assets/images/icons/close-icon-grey.svg';
@@ -143,7 +144,7 @@ export default function SuccessApplyModal(props){
                                 <span className='submit-footer-text' style={{color: '#000000'}}>Chat with us</span>
                             </div>
                         : 
-                        <a href='/my-courses' style={{textDecoration: 'none',cursor: "pointer"}}>
+                        <Link href='/my-courses' style={{textDecoration: 'none',cursor: "pointer"}}>
                           <div 
                           className='button-container'
                           style={{
@@ -162,7 +163,7 @@ export default function SuccessApplyModal(props){
                                   Go to my course
                               </span>
                           </div>
-                        </a>
+                        </Link>
                        }
                        
                        

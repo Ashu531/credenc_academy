@@ -28,7 +28,8 @@ function List({
     openLoginModal,
     setLastElement,
     removeLocalBookmarks,
-    addLocalBookmarks
+    addLocalBookmarks,
+    enableTrackStatus
 }) {
 
   const listTypes = States.listTypes;
@@ -69,6 +70,7 @@ function List({
                 openLoginModal={()=>openLoginModal()}
                 addLocalBookmarks={(count)=>addLocalBookmarks(count)}
                 removeLocalBookmarks={()=>removeLocalBookmarks()}
+                enableTrackStatus={()=>enableTrackStatus()}
               />
             </div> : 
                <CourseCard 
@@ -80,6 +82,7 @@ function List({
                 openLoginModal={()=>openLoginModal()}
                 addLocalBookmarks={(count)=>addLocalBookmarks(count)}
                 removeLocalBookmarks={()=>removeLocalBookmarks()}
+                enableTrackStatus={()=>enableTrackStatus()}
                />
           })
         );
@@ -124,6 +127,7 @@ function List({
              token={token}
              openLoginModal={()=>openLoginModal()}
              removeLocalBookmarks={()=>removeLocalBookmarks()}
+             enableTrackStatus={()=>enableTrackStatus()}
             />
           })
         );

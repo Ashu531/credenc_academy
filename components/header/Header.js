@@ -126,13 +126,13 @@ export default function Header(props){
   }
 
   const _openMyCourseTab=()=>{
-    // if(token && token.length > 0){
-    //   router.push({
-    //     pathname: `/my-courses`
-    //   })
-    // }else{
-    //   props.openLoginModal(); 
-    // }
+    if(token && token.length > 0){
+      router.push({
+        pathname: `/my-courses`
+      })
+    }else{
+      props.openLoginModal(); 
+    }
     
   }
   
@@ -152,7 +152,7 @@ export default function Header(props){
           }
         
          <div className='user-elements'>
-           {/* <div className='header-text' onClick={()=>_openMyCourseTab()}>My Courses</div> */}
+           <div className='header-text' onClick={()=>_openMyCourseTab()}>My Courses</div>
            <div className='icon-element' onClick={()=>_openBookmarkTab()} style={{position:"relative"}}>
            <Image src={ bookmarkIcon} height={25} width={25} objectFit="cover" alt='bookmarkIcon' />
            {

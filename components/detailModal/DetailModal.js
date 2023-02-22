@@ -449,7 +449,7 @@ export default function DetailModal(props){
                           </div>
                       </div>
                       <div className='sublabel-text'>
-                         June 20, 2022 at 14:01:33
+                      {moment(courseData?.applied?.enroll_date).format("MMM Do YY")}
                       </div>
                   </div>
                   <div className='application-status-stripe'>
@@ -700,14 +700,19 @@ export default function DetailModal(props){
                 {courseData?.finance_display[0] ? `₹${courseData?.finance_display[0]}` : 'Price Unknown'}
                 </span>
             </div>
-            <div className='detail-modal-footer-section-right' 
-            style={ window.innerWidth <= 500 ? {width:'88%'} : null } onClick={()=>_handleApplyModal()}>
+            {
+              props?.status === true ? 
+              <div /> :
+              <div className='detail-modal-footer-section-right' 
+                style={ window.innerWidth <= 500 ? {width:'88%'} : null } onClick={()=>_handleApplyModal()}>
                 <span className='apply-now-button'>
                     <span className='apply-now-button-text'>
                         Apply Now
                     </span>
                 </span>
-             </div>
+             </div> 
+            }
+            
          </div>
          {/* {
              window.innerWidth <= 500 ?  */}

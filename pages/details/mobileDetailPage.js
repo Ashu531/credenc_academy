@@ -287,7 +287,7 @@ export default function DetailPageMobile(props){
                        <Image src={chartIcon} height={28} width={28} objectFit='contain' />
                        <div className='detail-page-content-educator-info-header'>LEVEL</div>
                    </div>
-                   <div className='detail-page-content-educator-info-subheader'>Intermediate - Advanced</div>
+                   <div className='detail-page-content-educator-info-subheader'>{props?.detailData?.start_level} - {props?.detailData?.end_level}</div>
                </div>
                <div className='divider' />
                <div className='detail-page-content-educator-details'>
@@ -295,7 +295,7 @@ export default function DetailPageMobile(props){
                        <Image src={costIcon} height={28} width={28} objectFit='contain' />
                        <div className='detail-page-content-educator-info-header'>Starting Cost</div>
                    </div>
-                   <div className='detail-page-content-educator-info-subheader' style={{textAlign:'right'}}>{props?.detailData?.finance_display && props?.detailData?.finance_display.length > 0 ? `₹${props?.detailData?.finance_display[0]}` : 'Unknown'}</div>
+                   <div className='detail-page-content-educator-info-subheader' style={{textAlign:'right'}}>{ props?.startingCost ? `₹ ${props?.startingCost?.starting_cost?.amount}` : props?.detailData?.finance_display && props?.detailData?.finance_display.length > 0 ? `₹${props?.detailData?.finance_display[0]}` : 'Unknown'}</div>
                </div>
                </div>
             </div>
@@ -584,92 +584,104 @@ export default function DetailPageMobile(props){
               </div>
               </div>
               <div className='detail-page-mobile-price-options-container'>
-                <div className='detail-page-mobile-price-options-card'>
-                  <div className='detail-page-mobile-price-options-card-header'>
-                      <div className='detail-page-mobile-price-options-card-plan' style={{display:'flex'}}>
-                      3 Month EMI
-                      <div style={{position:'relative'}}>
-                        &nbsp;EMI
-                      <div style={{position:'absolute',top: -12,right: -16}}>
-                        <Image src={questionDoodle} height={25} width={19} objectFit='contain' />
-                      </div>
-                     </div>
-                      </div>
-                      <div className='detail-page-mobile-price-options-card-recommendation'>
-                          <div className='detail-page-mobile-price-options-card-recommendation-text'>Recommended!</div>
-                      </div>
-                  </div>
-                  <div className='detail-page-mobile-price-options-card-description'>
-                  Pay ₹ 22,500 per month for 3 months with no interest cost and only pay interest of ₹ 2,500 per intallment if you miss the payment.
-                  </div>
-                  <div className='detail-page-mobile-price-options-card-info'>
-                   <div className='detail-page-mobile-price-options-card-info-heading'>
-                     Monthly Installment
-                   </div>
-                   <div className='detail-page-mobile-price-options-card-info-subheading'>
-                    ₹ 22,500
-                   </div>
-                  </div>
-                  <div className='detail-page-mobile-price-options-card-info'>
-                   <div className='detail-page-mobile-price-options-card-info-heading'>
-                   No. Installment
-                   </div>
-                   <div className='detail-page-mobile-price-options-card-info-subheading'>
-                   3
-                   </div>
-                  </div>
-                  <div className='detail-page-mobile-price-options-card-info'>
-                   <div className='detail-page-mobile-price-options-card-info-heading'>
-                   Interest
-                   </div>
-                   <div className='detail-page-mobile-price-options-card-info-subheading'>
-                    0
-                   </div>
-                  </div>
-                  <div className='detail-page-mobile-price-options-card-info'>
-                   <div className='detail-page-mobile-price-options-card-info-heading'>
-                   Down Payment
-                   </div>
-                   <div className='detail-page-mobile-price-options-card-info-subheading'>
-                    0
-                   </div>
-                  </div>
-                  <div className='detail-page-mobile-price-options-card-info'>
-                   <div className='detail-page-mobile-price-options-card-info-heading'>
-                   GST@18
-                   </div>
-                   <div className='detail-page-mobile-price-options-card-info-subheading'>
-                   ₹ 12,125
-                   </div>
-                  </div>
-                  <div className='detail-page-mobile-price-options-card-info'>
-                   <div className='detail-page-mobile-price-options-card-info-heading'>
-                   Discount
-                   </div>
-                   <div className='detail-page-mobile-price-options-card-info-subheading'>
-                    10%
-                   </div>
-                  </div>
-                  <div className='detail-page-mobile-price-options-card-info' style={{marginTop:12}}>
-                    <div style={{display:'flex',flexDirection:'column'}}>
-                      <div className='detail-page-mobile-price-options-card-info-amount-header'>
-                      Total Amount
-                      </div>
-                      <div className='detail-page-mobile-price-options-card-info-amount-text'>
-                      ₹ 79,650/mo
-                      </div>
-                    </div>
-                    <div className='detail-page-mobile-price-options-card-nocost-emi'>
-                        <div className='detail-page-mobile-price-options-card-nocost-emi-text'>
-                        NO COST EMI
+              
+                {
+                  props?.priceOptions?.emi_options && props?.priceOptions?.emi_options.map((item,index)=>{ 
+                    return(
+                      <div className='detail-page-mobile-price-options-card'>
+                          <div className='detail-page-mobile-price-options-card-header'>
+                            <div className='detail-page-mobile-price-options-card-plan' style={{display:'flex'}}>
+                            {item.noOfInstallment} Month EMI
+                            <div style={{position:'relative'}}>
+                              &nbsp;EMI
+                            <div style={{position:'absolute',top: -12,right: -16}}>
+                              <Image src={questionDoodle} height={25} width={19} objectFit='contain' />
+                            </div>
+                          </div>
+                            </div>
+                            {
+                              index === 0 ?
+                              <div className='detail-page-mobile-price-options-card-recommendation'>
+                                <div className='detail-page-mobile-price-options-card-recommendation-text'>Recommended!</div>
+                              </div> : null
+                            }
+                            
                         </div>
-                    </div>
-                  </div>
-                </div>
+                        <div className='detail-page-mobile-price-options-card-description'>
+                          Pay ₹ {item.emiAmount} per month for {item.noOfInstallment} months with no interest cost.
+                        </div>
+                        <div className='detail-page-mobile-price-options-card-info'>
+                          <div className='detail-page-mobile-price-options-card-info-heading'>
+                            Monthly Installment
+                          </div>
+                          <div className='detail-page-mobile-price-options-card-info-subheading'>
+                            ₹ {item.emiAmount}
+                          </div>
+                        </div>
+                          <div className='detail-page-mobile-price-options-card-info'>
+                            <div className='detail-page-mobile-price-options-card-info-heading'>
+                            No. Installment
+                            </div>
+                            <div className='detail-page-mobile-price-options-card-info-subheading'>
+                            {item.noOfInstallment}
+                            </div>
+                          </div>
+                          {/* <div className='detail-page-mobile-price-options-card-info'>
+                            <div className='detail-page-mobile-price-options-card-info-heading'>
+                            Interest
+                            </div>
+                            <div className='detail-page-mobile-price-options-card-info-subheading'>
+                              0
+                            </div>
+                          </div> */}
+                          <div className='detail-page-mobile-price-options-card-info'>
+                            <div className='detail-page-mobile-price-options-card-info-heading'>
+                            Down Payment
+                            </div>
+                            <div className='detail-page-mobile-price-options-card-info-subheading'>
+                            {item.downPayment}
+                            </div>
+                          </div>
+                          {/* <div className='detail-page-mobile-price-options-card-info'>
+                            <div className='detail-page-mobile-price-options-card-info-heading'>
+                            GST@18
+                            </div>
+                            <div className='detail-page-mobile-price-options-card-info-subheading'>
+                            ₹ 12,125
+                            </div>
+                          </div>
+                          <div className='detail-page-mobile-price-options-card-info'>
+                            <div className='detail-page-mobile-price-options-card-info-heading'>
+                            Discount
+                            </div>
+                            <div className='detail-page-mobile-price-options-card-info-subheading'>
+                              10%
+                            </div>
+                          </div> */}
+                          <div className='detail-page-mobile-price-options-card-info' style={{marginTop:12}}>
+                            <div style={{display:'flex',flexDirection:'column'}}>
+                              <div className='detail-page-mobile-price-options-card-info-amount-header'>
+                              Total Amount
+                              </div>
+                              <div className='detail-page-mobile-price-options-card-info-amount-text'>
+                              ₹ {item.financeAmount}/mo
+                              </div>
+                            </div>
+                            <div className='detail-page-mobile-price-options-card-nocost-emi'>
+                                <div className='detail-page-mobile-price-options-card-nocost-emi-text'>
+                                NO COST EMI
+                                </div>
+                            </div>
+                          </div>
+                       </div>
+                    )
+                  })
+                }
+              
               </div>
             </div>
             
-            <div className='detail-page-mobile-intro'>
+            {/* <div className='detail-page-mobile-intro'>
                 <div className='detail-page-mobile-intro-header' style={{position:'relative'}}>
                 Batch you can enrol in
                 <div style={{position: 'absolute',top: 10}}>
@@ -774,7 +786,7 @@ export default function DetailPageMobile(props){
                     </div>
                    </div>
                 </div>
-            </div>
+            </div> */}
 
             <div className='detail-page-mobile-intro' style={{background: '#FFFFFF'}}>
                 <div className='detail-page-mobile-intro-header' style={{fontSize: 24,display:'flex'}}>

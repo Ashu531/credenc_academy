@@ -314,7 +314,7 @@ const _goToDetailPage=(id)=>{
     className='course-button-content' 
     // style={{...compareButtonVisible,marginLeft:0}}
     >
-        <div className='course-detail-button' onClick={()=> props?.openDetailModal()} style={{padding:0,gap:0}} style={{border:'1px solid #00CB9C'}}>
+        <div className='course-detail-button' onClick={()=> props?.openDetailModal()} style={{gap:0,border:'1px solid #00CB9C'}}>
           <span className='course-detail-text'>
             Track Application
           </span>
@@ -326,8 +326,8 @@ const _goToDetailPage=(id)=>{
            <Image src={arrowRightDark} objectFit="contain" alt='arrowRight'/>
       </div>
     </div> : 
-    <div className='course-button-content-mobile' style={ window.innerWidth <= 500 ? {padding: '12px 12px',flexDirection: 'column',alignItems:'flex-start'} : null }>
-              <div className='course-detail-button-mobile' onClick={()=> props?.openDetailModal()} style={{padding: 0,gap: 0}}>
+    <div className='course-button-content-mobile' style={ window.innerWidth <= 500 ? {padding: '12px 12px',flexDirection: 'row',alignItems:'center'} : null }>
+              <div className='course-detail-button-mobile' onClick={()=> props?.openDetailModal()} style={{padding: 8,gap: 0,border:'1px solid #00CB9C',borderRadius: 4}}>
                 <span className='course-detail-text'>
                   Track Application
                 </span>
