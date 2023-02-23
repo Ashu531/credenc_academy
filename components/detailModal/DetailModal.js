@@ -701,7 +701,7 @@ export default function DetailModal(props){
                 </span>
             </div>
             {
-              props?.status === true ? 
+              props?.status === true || courseData?.applied === true ? 
               <div /> :
               <div className='detail-modal-footer-section-right' 
                 style={ window.innerWidth <= 500 ? {width:'88%'} : null } onClick={()=>_handleApplyModal()}>

@@ -43,6 +43,7 @@ import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
 import upvoteLogo from '../../assets/images/icons/upvote.svg'
 import Link from "next/link";
 import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer";
+import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
 
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
@@ -61,6 +62,8 @@ export default function WebDetailPage(props){
     const [detailData,setDetailData] = useState({});
     const [detailModal,setDetailModal] = useState(false)
     const [applyNow, setApplyNow] = useState(false)
+    const [courseName,setCourseName] = useState('')
+    const [successModal,setSuccessModal] = useState(false);
     const [cardActionTaken,setCardActionTaken] = useState(false)
     const [bookmarkVisible, setBookmarkVisible] = useState(null)
     const [upvoted,setUpvoted] = useState(null)
@@ -390,8 +393,14 @@ export default function WebDetailPage(props){
       setLoginState(data)
     }
 
-    console.log(props?.detailData,"props?.detailData+++")
-    console.log(props?.priceOptions,"props?.detailData+++")
+    const _openSuccessApplyModal=(data)=>{
+      setSuccessModal(true)
+      setCourseName(data)
+    }
+
+    const _closeSuccessApplyModal=()=>{
+      setSuccessModal(false);
+    }
 
     return(
         <>
@@ -440,8 +449,8 @@ export default function WebDetailPage(props){
                       width={'172px'} 
                       height={'44px'} 
                       linearGradient={'linear-gradient(94.15deg, #FF00DD 0%, #5100FF 99.97%)'}
-                      text='Apply Now'
-                      handleButtonClick={()=>handleButtonClick()}
+                      text={ props?.detailData.applied === true ? 'Applied' : 'Apply Now'}
+                      handleButtonClick={()=> props?.detailData.applied ? null : handleButtonClick()}
                     />
                    </div>
                 </div>
@@ -792,7 +801,7 @@ export default function WebDetailPage(props){
                       props?.priceOptions?.emi_options && props?.priceOptions?.emi_options.map((item,index)=>{
                         return(
                         
-                      <div className='detail-page-mobile-price-options-card'>
+                      <div className='detail-page-mobile-price-options-card' key={index}>
                       <div className='detail-page-mobile-price-options-card-header'>
                           <div className='detail-page-mobile-price-options-card-plan' style={{display:'flex'}}>
                           {item.noOfInstallment} Month EMI
@@ -1085,8 +1094,16 @@ export default function WebDetailPage(props){
                 backdropClicked={() => setApplyNow(false)}
                 size={30}
             >
-                <ApplyNowModal detailData={detailData} closeApplyNowModal={()=>_closeApplyNowModal()} />
+                <ApplyNowModal detailData={detailData} closeApplyNowModal={()=>_closeApplyNowModal()} detailData={props?.detailData} courseName={courseName} openSuccessApplyModal={(courseName)=>_openSuccessApplyModal(courseName)}  />
            </SlidingPanel>
+           <SlidingPanel
+            type={'right'}
+            isOpen={successModal}
+            backdropClicked={() => setSuccessModal(false)}
+            size={30}
+          >
+            <SuccessApplyModal closeSuccessApplyModal={()=>_closeSuccessApplyModal()} courseName={courseName} />
+          </SlidingPanel>
             
         </div>
         }

@@ -31,6 +31,7 @@ import titleFrame from '../../assets/images/icons/titleFrame.svg'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import {withStyles, Typography } from "@material-ui/core";
 import Breadcrumbs from '@mui/material/Breadcrumbs';
+import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
 // import Link from '@mui/material/Link';
 import Link from "next/link";
 
@@ -55,6 +56,8 @@ export default function DetailPageMobile(props){
     const [detailData,setDetailData] = useState({});
     const [detailModal,setDetailModal] = useState(false)
     const [applyNow, setApplyNow] = useState(false)
+    const [courseName,setCourseName] = useState('')
+    const [successModal,setSuccessModal] = useState(false);
     const [cardActionTaken,setCardActionTaken] = useState(false)
     const [topicOpen,setTopicOpen] = useState({
         topicId: 0,
@@ -145,6 +148,15 @@ export default function DetailPageMobile(props){
             })
           }
          
+      }
+
+      const _openSuccessApplyModal=(data)=>{
+        setSuccessModal(true)
+        setCourseName(data)
+      }
+  
+      const _closeSuccessApplyModal=()=>{
+        setSuccessModal(false);
       }
 
     //   const handleButtonClick=()=>{
@@ -588,7 +600,7 @@ export default function DetailPageMobile(props){
                 {
                   props?.priceOptions?.emi_options && props?.priceOptions?.emi_options.map((item,index)=>{ 
                     return(
-                      <div className='detail-page-mobile-price-options-card'>
+                      <div className='detail-page-mobile-price-options-card' key={index}>
                           <div className='detail-page-mobile-price-options-card-header'>
                             <div className='detail-page-mobile-price-options-card-plan' style={{display:'flex'}}>
                             {item.noOfInstallment} Month EMI
@@ -846,6 +858,14 @@ export default function DetailPageMobile(props){
           >
              <ApplyNowModal detailData={detailData} closeApplyNowModal={()=>_closeApplyNowModal()} />
            </SlidingPanel>
+           <SlidingPanel
+            type={'right'}
+            isOpen={successModal}
+            backdropClicked={() => setSuccessModal(false)}
+            size={30}
+          >
+            <SuccessApplyModal closeSuccessApplyModal={()=>_closeSuccessApplyModal()} courseName={courseName} />
+          </SlidingPanel>
         </div>
         }
         </>

@@ -49,7 +49,11 @@ export default function DetailPage(props){
     }  
 
     const _getDetailData=async(id)=>{
-        let res = await axios.get(`${constant.API_URL.DEV}/course/detail_one/${id}/`)
+        let res = await axios.get(`${constant.API_URL.DEV}/course/detail_one/${id}/`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
           .then(res => {
             // this.coursesApiStatus.current.success();
             setDetailData(res.data.data)

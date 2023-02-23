@@ -377,7 +377,7 @@ const _handleTrackItem=()=>{
                   props?.data?.applied?.course_applied === true ? 
                   <div 
                     className='track-button-content' 
-                     style={{border:'1px solid #00CB9C'}} 
+                     style={{border:'1px solid #00CB9C',padding: 12,borderRadius: 4}} 
                      onClick={()=> _handleTrackItem()}>
                     <div className='track-text'>
                       Track Application
