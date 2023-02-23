@@ -557,7 +557,7 @@ export default function WebDetailPage(props){
                                         <Image src={costIcon} height={28} width={28} objectFit='contain' />
                                         <div className='detail-page-content-educator-info-header'>Starting Cost</div>
                                     </div>
-                                    <div className='detail-page-content-educator-info-subheader' style={{textAlign:'right'}}>{ props?.startingCost ? `₹ ${props?.startingCost?.starting_cost?.amount}` : props?.detailData?.finance_display && props?.detailData?.finance_display.length > 0 ? `₹${props?.detailData?.finance_display[0]}` : 'Unknown'}</div>
+                                    <div className='detail-page-content-educator-info-subheader' style={{textAlign:'right'}}>{ props?.startingCost ? `₹ ${props?.startingCost?.starting_cost?.amount}/month` : props?.detailData?.finance_display && props?.detailData?.finance_display.length > 0 ? `₹${props?.detailData?.finance_display[0]}` : 'Unknown'}</div>
                                 </div>
                             </div>
                         </div>
@@ -651,7 +651,7 @@ export default function WebDetailPage(props){
                                         </div>
                                         <div style={{display:'flex',flexDirection: 'column', justifyContent:'flex-start',alignItems:'flex-start',marginLeft: 16}}>
                                             <div className='detail-page-mobile-module-content-header'>
-                                                {item.title_sub}
+                                                {item.title_sub} | {item.heading}
                                             </div>
                                             <div className='detail-page-mobile-module-content-subheader'>
                                                 {item.sub_module.length} Modules{item.duration ? item.duration : ''}
@@ -671,26 +671,36 @@ export default function WebDetailPage(props){
                                                     <div className='detail-page-mobile-module-bullet-section-header'>
                                                         <Image src={moduleSquareBullets} height={12} width={12} objectFit='contain' />
                                                         <div className='detail-page-mobile-module-bullet-section-header-text'>
-                                                            Module {point+1}
+                                                            {data.title} | {data.sub_topics.length === 1 ? data.sub_topics[0] : ''}
                                                         </div>
                                                     </div>
-                                                    <div style={{cursor:'pointer'}}>
-                                                    <Image src={caretDown} width={15} height={12} objectFit='contain' onClick={()=>_handleModuleOpen(item,data)} style={data.id === topicOpen.moduleId && topicOpen.moduleShow ? {transform: "rotate(180deg)"} : null}/>
-                                                    </div>
+                                                    {
+                                                      data.sub_topics.length > 1 ?
+                                                      <div style={{cursor:'pointer'}}>
+                                                        <Image src={caretDown} width={15} height={12} objectFit='contain' onClick={()=>_handleModuleOpen(item,data)} style={data.id === topicOpen.moduleId && topicOpen.moduleShow ? {transform: "rotate(180deg)"} : null}/>
+                                                      </div> 
+                                                    : null
+                                                    }
+                                                    
                                                 </div>
                                                 {
                                                   topicOpen.topicShow && topicOpen.topicId === item.id && topicOpen.moduleShow && topicOpen.moduleId === data.id ?  
-                                                   <div style={{display:'flex',flexDirection:'column',margin: '12px 0px'}}>
-                                                    <div className='detail-page-mobile-module-topic-section'>
-                                                        <Image src={moduleArrowBullets} height={12} width={12} objectFit='contain' />
-                                                        <div className='detail-page-mobile-module-bullet-section-header-text'>
-                                                            Topic 1
-                                                        </div>
-                                                    </div>
-                                                    <div className='detail-page-mobile-module-bullet-section-topic-text'>
-                                                        {data.title}
-                                                    </div>
-                                                   </div>  : null
+                                                   data.sub_topics.length > 1 && data.sub_topics.map((info,serial)=>{
+                                                        return(
+                                                          <div style={{display:'flex',flexDirection:'column'}} key={serial}>
+                                                            {/* <div className='detail-page-mobile-module-topic-section'>
+                                                                <Image src={moduleArrowBullets} height={12} width={12} objectFit='contain' />
+                                                                <div className='detail-page-mobile-module-bullet-section-header-text'>
+                                                                    Topic 1
+                                                                </div>
+                                                            </div> */}
+                                                            <div className='detail-page-mobile-module-bullet-section-topic-text'>
+                                                                {info}
+                                                            </div>
+                                                          </div>
+                                                        )
+                                                   })
+                                                     : null
                                                 }
                                                   
                                            </div>
@@ -798,7 +808,7 @@ export default function WebDetailPage(props){
                     <div className='detail-page-mobile-nj-section'>
                         <Image src={njIcon} objectFit='contain' height={21} width={23} />
                         <div className='detail-page-mobile-nj-section-text'>
-                            You have a Pre-Approved Loan of Rs. 20 lacs from NJ Capital
+                            You have a Pre-Approved Loan from NJ Capital
                         </div>
                     </div>
                     <div className='detail-page-mobile-price-options-container'>
@@ -841,7 +851,7 @@ export default function WebDetailPage(props){
                       No. Installment
                       </div>
                       <div className='detail-page-mobile-price-options-card-info-subheading'>
-                      3
+                      {item.noOfInstallment}
                       </div>
                       </div>
                       {/* <div className='detail-page-mobile-price-options-card-info'>
@@ -882,7 +892,7 @@ export default function WebDetailPage(props){
                           Total Amount
                           </div>
                           <div className='detail-page-mobile-price-options-card-info-amount-text'>
-                          ₹ {item.financeAmount}/mo
+                          ₹ {item.financeAmount}
                           </div>
                           </div>
                           <div className='detail-page-mobile-price-options-card-nocost-emi'>
@@ -1015,40 +1025,43 @@ export default function WebDetailPage(props){
                         </div>
                     </div>
                </div> */}
-
-               <div className='detail-page-mobile-intro' style={styles}>
-                <div className='detail-page-mobile-intro-header' style={{fontSize: 24,display:'flex',flexDirection:'row'}}>
-                    Other 
-                    <div style={{position:'relative'}}>
-                    &nbsp;courses&nbsp;
-                        <div style={{position: 'absolute',top: 10}}>
-                      <Image src={underlineSkribble} width={71} height={6} objectFit='contain' />
+              {
+                  props?.similarCourses.length > 0 ?
+                    <div className='detail-page-mobile-intro' style={styles}>
+                    <div className='detail-page-mobile-intro-header' style={{fontSize: 24,display:'flex',flexDirection:'row'}}>
+                        Other 
+                        <div style={{position:'relative'}}>
+                        &nbsp;courses&nbsp;
+                            <div style={{position: 'absolute',top: 10}}>
+                          <Image src={underlineSkribble} width={71} height={6} objectFit='contain' />
+                        </div>
+                            </div> you can take
+                        
                     </div>
-                        </div> you can take
-                    
-                </div>
-                <div className='detail-page-mobile-intro-subHeader' style={{marginTop: 10}}>
-                    You can find other available options for the course and enroll according to your availability
-                </div>
-                <div className='detail-page-mobile-card-container' style={{display:'flex',marginTop: 20,gap: 20,overflow:'auto'}}>
-                {props?.similarCourses.length > 0 && props?.similarCourses.map((item,index)=>{
-                    return(
-                      <div key={index}>
-                        <CourseCard 
-                          index={index}
-                          data={item} 
-                          openDetailModal={()=>_openDetailModal(item)}
-                          openApplyNowModal={()=> _openApplyNowModal(item)}
-                          token={props?.token}
-                          openLoginModal={()=>props?.openLoginModal()}
-                          addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
-                          removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
-                        />
-                      </div>
-                    )
-                 })}
-                </div>
-            </div>
+                    <div className='detail-page-mobile-intro-subHeader' style={{marginTop: 10}}>
+                        You can find other available options for the course and enroll according to your availability
+                    </div>
+                    <div className='detail-page-mobile-card-container' style={{display:'flex',marginTop: 20,gap: 20,overflow:'auto'}}>
+                    {props?.similarCourses.length > 0 && props?.similarCourses.map((item,index)=>{
+                        return(
+                          <div key={index}>
+                            <CourseCard 
+                              index={index}
+                              data={item} 
+                              openDetailModal={()=>_openDetailModal(item)}
+                              openApplyNowModal={()=> _openApplyNowModal(item)}
+                              token={props?.token}
+                              openLoginModal={()=>props?.openLoginModal()}
+                              addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+                              removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                            />
+                          </div>
+                        )
+                    })}
+                    </div>
+                </div> : null
+              }
+               
 
             {
                 props?.loginModal ? 

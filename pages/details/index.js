@@ -155,6 +155,8 @@ export default function DetailPage(props){
         });
   }
 
+  console.log(toolData,"detailData+++")
+
     return(
     <>
     {

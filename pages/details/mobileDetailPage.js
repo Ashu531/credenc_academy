@@ -396,7 +396,7 @@ export default function DetailPageMobile(props){
                                         </div>
                                         <div style={{display:'flex',flexDirection: 'column', justifyContent:'flex-start',alignItems:'flex-start',marginLeft: 16}}>
                                             <div className='detail-page-mobile-module-content-header'>
-                                                {item.title_sub}
+                                                {item.title_sub} | {item.heading}
                                             </div>
                                             <div className='detail-page-mobile-module-content-subheader'>
                                                 {item.sub_module.length} Modules{item.duration ? item.duration : ''}
@@ -404,7 +404,7 @@ export default function DetailPageMobile(props){
                                         </div>
                                     </div>
                                     <div style={{width:'5%',display:'flex',justifyContent:'flex-end'}} onClick={()=>_handleTopicOpen(item)}>
-                                    <Image src={caretDown} width={15} height={12} objectFit='contain' style={item.id === topicOpen.topicId && topicOpen.topicShow ? {transform: "rotate(180deg)"} : null}/>
+                                      <Image src={caretDown} width={15} height={12} objectFit='contain' style={item.id === topicOpen.topicId && topicOpen.topicShow ? {transform: "rotate(180deg)"} : null}/>
                                     </div>
                                 </div> 
                                 {
@@ -416,26 +416,35 @@ export default function DetailPageMobile(props){
                                                     <div className='detail-page-mobile-module-bullet-section-header'>
                                                         <Image src={moduleSquareBullets} height={12} width={12} objectFit='contain' />
                                                         <div className='detail-page-mobile-module-bullet-section-header-text'>
-                                                            Module {point+1}
+                                                        {data.title} | {data.sub_topics.length === 1 ? data.sub_topics[0] : ''}
                                                         </div>
                                                     </div>
-                                                    <div>
-                                                    <Image src={caretDown} width={15} height={12} objectFit='contain' onClick={()=>_handleModuleOpen(item,data)} style={data.id === topicOpen.moduleId && topicOpen.moduleShow ? {transform: "rotate(180deg)"} : null}/>
-                                                    </div>
+                                                    {
+                                                      data.sub_topics.length > 1 ? 
+                                                      <div>
+                                                        <Image src={caretDown} width={15} height={12} objectFit='contain' onClick={()=>_handleModuleOpen(item,data)} style={data.id === topicOpen.moduleId && topicOpen.moduleShow ? {transform: "rotate(180deg)"} : null}/>
+                                                      </div> : null
+                                                    }
+                                                   
                                                 </div>
                                                 {
                                                   topicOpen.topicShow && topicOpen.topicId === item.id && topicOpen.moduleShow && topicOpen.moduleId === data.id ?  
-                                                   <div style={{display:'flex',flexDirection:'column',margin: '12px 0px'}}>
-                                                    <div className='detail-page-mobile-module-topic-section'>
-                                                        <Image src={moduleArrowBullets} height={12} width={12} objectFit='contain' />
-                                                        <div className='detail-page-mobile-module-bullet-section-header-text'>
-                                                            Topic 1
-                                                        </div>
-                                                    </div>
-                                                    <div className='detail-page-mobile-module-bullet-section-topic-text'>
-                                                        {data.title}
-                                                    </div>
-                                                   </div>  : null
+                                                  data.sub_topics.length > 1 && data.sub_topics.map((info,serial)=>{
+                                                    return(
+                                                      <div style={{display:'flex',flexDirection:'column',margin: '12px 0px'}}>
+                                                        {/* <div className='detail-page-mobile-module-topic-section'>
+                                                            <Image src={moduleArrowBullets} height={12} width={12} objectFit='contain' />
+                                                            <div className='detail-page-mobile-module-bullet-section-header-text'>
+                                                                Topic 1
+                                                            </div>
+                                                        </div> */}
+                                                          <div className='detail-page-mobile-module-bullet-section-topic-text'>
+                                                              {data.title}
+                                                          </div>
+                                                      </div>
+                                                    )
+                                                  })
+                                                     : null
                                                 }
                                                   
                                            </div>
@@ -592,7 +601,7 @@ export default function DetailPageMobile(props){
               <div className='detail-page-mobile-nj-section'>
               <Image src={njIcon} objectFit='contain' height={21} width={23} />
               <div className='detail-page-mobile-nj-section-text'>
-                You have a Pre-Approved Loan of Rs. 20 lacs from NJ Capital
+                You have a Pre-Approved Loan from NJ Capital
               </div>
               </div>
               <div className='detail-page-mobile-price-options-container'>
