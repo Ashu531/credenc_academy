@@ -28,8 +28,8 @@ export default function DetailPage(props){
     });
 
     useEffect(() => {
-      _getCourseId(location.query.course_id)
       _retrieveData()
+      
     }, [location.query.course_id]); 
 
     const _retrieveData=()=>{
@@ -37,10 +37,11 @@ export default function DetailPage(props){
      if(localToken && localToken.length > 0){
         setToken(localToken)
      }
+     _getCourseId(location?.query?.course_id,localToken)
     }
 
-    const _getCourseId=(id)=>{
-            _getDetailData(id)
+    const _getCourseId=(id,localToken)=>{
+            _getDetailData(id,localToken)
             _getInstructorData(id)
             _getpaymentDetails(id)
             _getToolData(id)
@@ -48,10 +49,12 @@ export default function DetailPage(props){
             _getStartingCost(id)
     }  
 
-    const _getDetailData=async(id)=>{
+    const _getDetailData=async(id,localToken)=>{
+
+      if(localToken && localToken.length > 0){
         let res = await axios.get(`${constant.API_URL.DEV}/course/detail_one/${id}/`, {
           headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${localToken}`
           }
         })
           .then(res => {
@@ -64,6 +67,21 @@ export default function DetailPage(props){
             // this.coursesApiStatus.current.failed();
             console.log(err);
           });
+      }else{
+        let res = await axios.get(`${constant.API_URL.DEV}/course/detail_one/${id}/`)
+          .then(res => {
+            // this.coursesApiStatus.current.success();
+            setDetailData(res.data.data)
+            setMounted(true);
+            return res.data;
+          })
+          .catch(err => {
+            // this.coursesApiStatus.current.failed();
+            console.log(err);
+          });
+      }
+      
+        
     }
 
     const _getInstructorData=async(id)=>{

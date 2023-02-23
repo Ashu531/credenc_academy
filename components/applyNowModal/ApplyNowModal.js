@@ -35,6 +35,7 @@ export default function ApplyNowModal(props){
     const [token,setToken] = useState('');
     const [clearData,setClearData] = useState(false);
     const [thirdPartyData,setThirdPartyData] = useState({})
+    const [apiResponse,setApiResponse] = useState('')
 
     useEffect(()=>{
         let authToken = localStorage.getItem(EdtechAuthKey);
@@ -107,6 +108,8 @@ export default function ApplyNowModal(props){
             let courseName = res.data.course
             props.closeApplyNowModal()
             props.openSuccessApplyModal(courseName)
+
+            // setApiResponse(res.data.message)
           return res.data;
         })
         .catch(err => {
@@ -238,6 +241,9 @@ export default function ApplyNowModal(props){
                             </Stack>
                         </LocalizationProvider>
                      </div>
+                   </div>
+                   <div style={{fontSize: 16,color: "red",textAlign: 'left',fontFamily: "Poppins",marginTop: 20}}>
+                       {apiResponse}
                    </div>
                   </div>
                   <div className='apply-now-footer'  

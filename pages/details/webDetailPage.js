@@ -343,11 +343,16 @@ export default function WebDetailPage(props){
       }
 
       const handleButtonClick=()=>{
-        if(props?.token && props?.token.length > 0){
-          _openApplyNowModal()
-        }else{
-          props?.openLoginModal()
-        }
+        
+          if(props?.token && props?.token.length > 0){
+            if(props?.detailData.applied === false){
+              _openApplyNowModal(props?.detailData)
+            }
+          }else{
+            props?.openLoginModal()
+          }
+        
+       
           
       }
 
@@ -450,7 +455,7 @@ export default function WebDetailPage(props){
                       height={'44px'} 
                       linearGradient={'linear-gradient(94.15deg, #FF00DD 0%, #5100FF 99.97%)'}
                       text={ props?.detailData.applied === true ? 'Applied' : 'Apply Now'}
-                      handleButtonClick={()=> props?.detailData.applied ? null : handleButtonClick()}
+                      handleButtonClick={()=> handleButtonClick()}
                     />
                    </div>
                 </div>
@@ -1094,7 +1099,7 @@ export default function WebDetailPage(props){
                 backdropClicked={() => setApplyNow(false)}
                 size={30}
             >
-                <ApplyNowModal detailData={detailData} closeApplyNowModal={()=>_closeApplyNowModal()} detailData={props?.detailData} courseName={courseName} openSuccessApplyModal={(courseName)=>_openSuccessApplyModal(courseName)}  />
+                <ApplyNowModal closeApplyNowModal={()=>_closeApplyNowModal()} detailData={props?.detailData} courseName={courseName} openSuccessApplyModal={(courseName)=>_openSuccessApplyModal(courseName)}  />
            </SlidingPanel>
            <SlidingPanel
             type={'right'}
