@@ -323,6 +323,7 @@
         justify-content: flex-start;
         overflow: auto;
         margin-top: 24px;
+        gap: 12px;
 
         .detail-page-mobile-price-options-card{
             display: flex;
@@ -333,7 +334,7 @@
             background: var(--defaultBackground);
             border: 1px solid #DDDDDD;
             box-shadow: 6px 6px 0px #F7F7F7;
-            width: 300px;
+            min-width: 260px;
             border-radius: 6px;
 
             .detail-page-mobile-price-options-card-header{
@@ -1215,6 +1216,7 @@
         margin-top: 24px;
         gap: 10px;
 
+
         .detail-page-mobile-price-options-card{
             display: flex;
             flex-direction: column;
@@ -1224,7 +1226,7 @@
             background: var(--defaultBackground);
             border: 1px solid #DDDDDD;
             box-shadow: 6px 6px 0px #F7F7F7;
-            width: 300px;
+            width: 260px;
             border-radius: 6px;
 
             .detail-page-mobile-price-options-card-header{

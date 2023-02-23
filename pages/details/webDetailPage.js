@@ -658,9 +658,13 @@ export default function WebDetailPage(props){
                                             </div>
                                         </div>
                                     </div>
-                                    <div style={{display:'flex',justifyContent:'flex-end',cursor:'pointer'}} onClick={()=> item.sub_module && item.sub_module.length > 0 ? _handleTopicOpen(item) : null}>
-                                    <Image src={caretDown} width={15} height={12} objectFit='contain' style={item.id === topicOpen.topicId && topicOpen.topicShow ? {transform: "rotate(180deg)"} : null}/>
-                                    </div>
+                                    {
+                                      item.sub_module.length > 0 ? 
+                                      <div style={{display:'flex',justifyContent:'flex-end',cursor:'pointer'}} onClick={()=> item.sub_module && item.sub_module.length > 0 ? _handleTopicOpen(item) : null}>
+                                        <Image src={caretDown} width={15} height={12} objectFit='contain' style={item.id === topicOpen.topicId && topicOpen.topicShow ? {transform: "rotate(180deg)"} : null}/>
+                                      </div> : null
+                                    }
+                                    
                                 </div> 
                                 {
                                    topicOpen.topicShow && topicOpen.topicId === item.id ? 
@@ -819,7 +823,7 @@ export default function WebDetailPage(props){
                       <div className='detail-page-mobile-price-options-card' key={index}>
                       <div className='detail-page-mobile-price-options-card-header'>
                           <div className='detail-page-mobile-price-options-card-plan' style={{display:'flex'}}>
-                          {item.noOfInstallment} Month EMI
+                          {item.noOfInstallment} Month
                           <div style={{position:'relative'}}>
                               &nbsp;EMI
                           <div style={{position:'absolute',top: -12,right: -16}}>

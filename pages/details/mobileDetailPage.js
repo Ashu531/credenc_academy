@@ -612,7 +612,7 @@ export default function DetailPageMobile(props){
                       <div className='detail-page-mobile-price-options-card' key={index}>
                           <div className='detail-page-mobile-price-options-card-header'>
                             <div className='detail-page-mobile-price-options-card-plan' style={{display:'flex'}}>
-                            {item.noOfInstallment} Month EMI
+                            {item.noOfInstallment} Month
                             <div style={{position:'relative'}}>
                               &nbsp;EMI
                             <div style={{position:'absolute',top: -12,right: -16}}>
