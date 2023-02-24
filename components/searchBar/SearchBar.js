@@ -91,7 +91,7 @@ export default function SearchBar(props) {
           autoFocus
           showNoResults={false}
           formatResult={formatResult}
-          placeholder="Search by anything!"
+          placeholder="Search for Courses"
           styling={{
             height: '46px',
             fontFamily: 'Poppins',

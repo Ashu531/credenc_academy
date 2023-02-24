@@ -51,7 +51,7 @@ export default function PrivacyPolicy(props) {
     let location = useRouter();
 
     const getWebsiteLink = (url) => {
-        return <a style={{color: 'white', fontStyle: 'italic'}} href={url} target='_blank' rel="noreferrer noopener">skillrush.credenc.com</a>
+        return <a style={{color: '#000000', fontStyle: 'italic',textDecoration: 'none'}} href={url} target='_blank' rel="noreferrer noopener">skillrush.credenc.com</a>
     };
 
     const renderUnderLine = () => <span className='underline'></span>
@@ -95,7 +95,7 @@ export default function PrivacyPolicy(props) {
         <h3 className='heading' style={{textAlign:"center"}}>Privacy Policy</h3>
         <span className='date'>This Privacy Policy was last revised on 11 April, 2022</span>
         <span className='para'>
-            This Privacy Policy <b>(“Policy”)</b> explains how {getWebsiteLink('https://skillrush.credenc.com/')}, also 
+            This Privacy Policy <b>(“Policy”)</b> explains how {getWebsiteLink('https://credencacademy.com/?')}, also 
             known as skillrush, owned and operated by Credenc Web Technologies 
             Private Limited <b>(“Company”, “Credenc”, “we”, “us”, “our”)</b> collects and 
             uses your information <b>(“User”, “you”, “your”)</b> in relation to your access 

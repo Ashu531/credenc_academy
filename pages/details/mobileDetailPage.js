@@ -398,9 +398,13 @@ export default function DetailPageMobile(props){
                                             <div className='detail-page-mobile-module-content-header'>
                                                 {item.title_sub} | {item.heading}
                                             </div>
-                                            <div className='detail-page-mobile-module-content-subheader'>
-                                                {item.sub_module.length} Modules{item.duration ? item.duration : ''}
-                                            </div>
+                                            {
+                                              item.sub_module.length > 0 ? 
+                                                <div className='detail-page-mobile-module-content-subheader'>
+                                                  {item.sub_module.length} Modules{item.duration ? item.duration : ''}
+                                              </div> : null
+                                            }
+                                            
                                         </div>
                                     </div>
                                     <div style={{width:'5%',display:'flex',justifyContent:'flex-end'}} onClick={()=>_handleTopicOpen(item)}>
@@ -431,7 +435,7 @@ export default function DetailPageMobile(props){
                                                   topicOpen.topicShow && topicOpen.topicId === item.id && topicOpen.moduleShow && topicOpen.moduleId === data.id ?  
                                                   data.sub_topics.length > 1 && data.sub_topics.map((info,serial)=>{
                                                     return(
-                                                      <div style={{display:'flex',flexDirection:'column',margin: '12px 0px'}}>
+                                                      <div style={{display:'flex',flexDirection:'column',margin: '12px 0px'}} key={serial}>
                                                         {/* <div className='detail-page-mobile-module-topic-section'>
                                                             <Image src={moduleArrowBullets} height={12} width={12} objectFit='contain' />
                                                             <div className='detail-page-mobile-module-bullet-section-header-text'>
@@ -439,7 +443,7 @@ export default function DetailPageMobile(props){
                                                             </div>
                                                         </div> */}
                                                           <div className='detail-page-mobile-module-bullet-section-topic-text'>
-                                                              {data.title}
+                                                              {info.title}
                                                           </div>
                                                       </div>
                                                     )

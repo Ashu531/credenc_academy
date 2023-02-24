@@ -653,9 +653,14 @@ export default function WebDetailPage(props){
                                             <div className='detail-page-mobile-module-content-header'>
                                                 {item.title_sub} | {item.heading}
                                             </div>
-                                            <div className='detail-page-mobile-module-content-subheader'>
-                                                {item.sub_module.length} Modules{item.duration ? item.duration : ''}
-                                            </div>
+                                            {
+                                              item.sub_module.length > 0 ? 
+                                              <div className='detail-page-mobile-module-content-subheader'>
+                                                  {item.sub_module.length} Modules{item.duration ? item.duration : ''}
+                                              </div> 
+                                              : null
+                                            }
+                                            
                                         </div>
                                     </div>
                                     {

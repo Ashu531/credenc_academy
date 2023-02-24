@@ -9,8 +9,8 @@ export default function Banner(){
     return(
         <div className='banner'>
         <div className='text-content'>
-        <h1 className='heading'>Be the next you!</h1>
-        <h2 className='sub-header'>Find your course from 20,000 hand picked courses</h2>
+        <h1 className='heading'>From Learners to Leaders</h1>
+        <h2 className='sub-header'>Develop new skills with our hand-picked/curated courses from across the world</h2>
         </div>
         </div>
     )

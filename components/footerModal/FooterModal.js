@@ -68,7 +68,7 @@ export default function FooterModal(props){
                     </a>
                     {/* <div className='socialMediaDiv1'><button className='socialMediaDiv1Button'>A product by Credenc</button></div> */}
                     <div className='socialMediaDiv2'>
-                     With Credenc Academy, you don&apos;t just compare Courses. You understand it. Narrow down choices. Avoid pitfalls and make better decisions.
+                    At Credenc Academy find your dream course among our carefully selected offerings. You can now compare courses to make better decisions. #KeepLearning
                      </div>
                      <div style={{cursor:"pointer"}}>
                         <a href='https://www.facebook.com/CredencIndia/' target='_blank'  rel="noreferrer">
@@ -106,7 +106,7 @@ export default function FooterModal(props){
                     </a> */}
                 </div>
 
-                <div className='subjectDiv' style={{marginRight: '16%'}}>
+                <div className='subjectDiv'>
                     <p className='paraHeading'>Domain</p>
                         <a href={`${constant.BASE_URL.PROD}&domain=Technology`} className='removeLine'>
                              <p className='para'>Technology</p>
@@ -129,7 +129,7 @@ export default function FooterModal(props){
                     <p className='paraHeading'>Contact</p>
                     <div className='iconContent'>
                       <Image src={mailIcon} height={21} width={21} objectFit='contain' />
-                      <span className='iconText' style={{marginLeft: 5}}>care@redenc.com</span>
+                      <span className='iconText' style={{marginLeft: 5}}>academy@credenc.com</span>
                     </div>
                     <div className='iconContent' style={{marginTop: 10}}>
                       <Image src={callIcon} height={21} width={21} objectFit='contain' />

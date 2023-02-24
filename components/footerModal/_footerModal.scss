@@ -96,11 +96,13 @@
 
     .programAndSubjectDiv{
       display: flex;
-      width: 67%;
+      width: 100%;
+      justify-content: space-evenly;
     }
 
     .programDiv{
-      margin-right: 16%;
+      display: flex;
+      flex-direction: column;
     }
 
     .paraHeading{
@@ -159,6 +161,7 @@
       flex-direction: column;
       // justify-content: center;
       align-items: flex-start;
+      width: 40%;
 
       .iconContent{
         display: flex;
