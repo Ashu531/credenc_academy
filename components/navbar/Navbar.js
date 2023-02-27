@@ -13,7 +13,6 @@ export default function SubjectNavbar(props){
    
     const [leftScrollView,setLeftScrollView] = useState(false)
     const [rightScrollView,setRightScrollView] = useState(false)
-    const [subjectModalVisible,setSubjectModalVisible] = useState(false)
     
     const ref = useRef(null);
 
@@ -46,21 +45,6 @@ export default function SubjectNavbar(props){
 
     return(
         <div className='subject-navbar'> 
-        {/* <div className='subject-tab' onMouseEnter={()=> setSubjectModalVisible(true)} onMouseLeave={()=> setSubjectModalVisible(false)}>
-        <span className='all-subject-text'> {props?.selectedSubject.name && props?.selectedSubject.name !== "All" ? props?.selectedSubject.name.length > 10 ? props?.selectedSubject.name.substring(0,10) + '...' : props?.selectedSubject.name : "All Subjects"}</span>
-         <Image src={ props.theme === 'dark' ? dropdownIconDark : dropdownIcon} objectFit="cover" alt='dropdownIcon' style={subjectModalVisible ? {transform: "rotate(180deg)"} : null}/>
-
-         {
-            subjectModalVisible ? 
-             <div className="dashboard-subject-modal" >
-                <SubjectDropdown  
-                    categories={props?.subjectData} 
-                    selectedSubject={props?.selectedSubject} 
-                    selectSubject={props?.selectSubject}
-                />
-            </div> : null
-         }
-        </div> */}
         {
             leftScrollView === true ?  <div className="navbar-arrow-container" onClick={() => scroll(-800)} style={{position:'absolute',left:48,zIndex: 999,background: '#FFFFFF'}}>
             <Image src={caretRight} objectFit="cover" style={{transform: "rotate(180deg)"}} height={14} width={14} alt='caretRight' />

@@ -131,7 +131,7 @@ function DashboardDesktop(props) {
   const courseTypeRef = useRef(null);
   const navbarRef = useRef(null)
   // const [compareTextVisible,setCompareTextVisible] = useState('');
-  const [pageNumber, setPageNumber] = useState(1);
+
   const [cardActionTaken,setCardActionTaken] = useState(false)
   const [nextPage,setNextPage] = useState(true)
   const [successApplyModal,setSuccessApplyModal] = useState(false)
@@ -139,17 +139,20 @@ function DashboardDesktop(props) {
   const [loginState,setLoginState]=useState(0);
   const [courseName,setCourseName] = useState('')
   const [trackStatus,setTrackStatus] = useState(false)
+  const pageNumber = useRef(1);
   
-
   let observer = useRef(
     new IntersectionObserver(
       (entries) => {
         const first = entries[0];
-        if (first.isIntersecting === true) {
-            setPageNumber((pn) => pn > 0 ? pn + 1 : pn);
+        if (first.isIntersecting === true && nextPage === true) {
+          // setPageNumber((pn) => pn > 0 ? pn + 1 : pn);
+          pageNumber.current = pageNumber.current > 0 ? pageNumber.current + 1 : pageNumber.current
         }
       })
   );
+
+  
 
   useEffect(() => {
     setMounted(true);
@@ -179,27 +182,8 @@ function DashboardDesktop(props) {
     
  const getDataFromBaseUrl=()=>{
 
-  // let urlSubjectQuery = urlService.current.getValueFromEntry('domain')
   let urlSubCategoryQuery = urlService.current.getValueFromEntry('subject')
 
-    // if(urlSubjectQuery && Object.keys(urlSubjectQuery).length !== 0){
-    //  let data={
-    //     name: urlSubjectQuery
-    //   }
-    //   if(urlSubCategoryQuery  && Object.keys(urlSubCategoryQuery).length !== 0){
-    //     setSelectedCategory(urlSubCategoryQuery)
-    //   }else{
-    //     setSelectedCategory(urlSubCategoryQuery)
-    //   }
-    //   setSelectedSubject(data)
-    //   getCardData(data)
-    // }else{
-    //   let data={
-    //     name: "All"
-    //   }
-
-     
-    // }
     if(urlSubCategoryQuery  && Object.keys(urlSubCategoryQuery).length !== 0){
       setSelectedCategory(urlSubCategoryQuery)
     }else{
@@ -233,15 +217,16 @@ function DashboardDesktop(props) {
   const getCardData=()=>{
 
     updateBrowserUrl()
-
-    setPageNumber(1);
-
+    
+    if(pageNumber.current > 1){
+        pageNumber.current = 1
+    }
     handleCardData()
   }
 
   const handleCardData=()=>{
     coursesApiStatus.current.start();
-    handleFilteredData(false);
+    handleFilteredData(true);
   }
 
   const _getSubjectDetails=(item)=>{
@@ -253,6 +238,7 @@ function DashboardDesktop(props) {
     }else{
       urlService.current.addEntry('domain', item.name);
     }
+    
     
     getCardData(item)
   }
@@ -500,8 +486,9 @@ function DashboardDesktop(props) {
     // exiting before updating
     if (mobileFiltersState) return;
 
-    if (pageNumber > 1) {
-      setPageNumber(1);
+    if (pageNumber.current > 1) {
+      
+      pageNumber.current = 1
     } else {
       coursesApiStatus.current.start();
       handleFilteredData();
@@ -509,8 +496,9 @@ function DashboardDesktop(props) {
   }
 
   const handleApplyButton = () => {
-    if (pageNumber > 1) {
-      setPageNumber(1);
+    if (pageNumber.current > 1) {
+      
+      pageNumber.current = 1
     } else {
       coursesApiStatus.current.start();
       handleFilteredData();
@@ -533,16 +521,19 @@ function DashboardDesktop(props) {
     urlService.current.changeEntry(queries.MAX_PRICE, max);
     
     if (window.innerWidth > 500) {
-      if (pageNumber > 1) {
-        setPageNumber(1)
-      } else handleFilteredData();
+      if (pageNumber.current > 1) {
+        
+        pageNumber.current = 1
+      } else {
+        handleFilteredData();
+      }
+      
     }
   }
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
 
   const handleSearchClicked = async (forcePageNumber = 0) => {
-
     const getParams = () => {
       return `?${urlService.current.getUpdatedUrl()}`;
     }
@@ -552,7 +543,7 @@ function DashboardDesktop(props) {
     let res;
     let token = props?.token;
     if (token === null || !token) {
-      res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
+      res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber.current > 0 ? `&page_no=${pageNumber.current}` : ''}`)
         .then(res => {
           coursesApiStatus.current.success();
           return res.data;
@@ -562,7 +553,7 @@ function DashboardDesktop(props) {
           console.log(err);
         });
     } else {
-      res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`, {
+      res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber.current > 0 ? `&page_no=${pageNumber.current}` : ''}`, {
         headers: {
           'Authorization': `Bearer ${!!token ? token : ''}`
         }
@@ -590,19 +581,20 @@ function DashboardDesktop(props) {
    
     let res = await handleSearchClicked();
     // if (forcePageNumber === 1) setForcePageNumber(0);
-    if(!res.next){
-      setNextPage(false)
-    }else{
+    if(res?.next === true){
       setNextPage(true)
+    }else{
+      setNextPage(false)
     }
 
-    if (pageNumber <= 1 || updatePageNumber === false) {
+    if (pageNumber.current <= 1 || updatePageNumber === false) {
       // setCourses([...res.data]);
       setCourseCardData([...res.data])
     } else {
       // setCourses([...courseCardData, ...res.data]);
       setCourseCardData([...courseCardData, ...res.data])
     }
+
     setMaxPrice(Math.floor(parseFloat(res.max_price)));
     setTotalCourses(res.count);
     // handlePageNumber(res);
@@ -675,8 +667,11 @@ function DashboardDesktop(props) {
     // })
     urlService.current.removeAll();
     updateBrowserUrl();
-    if (pageNumber !== 1)
-      setPageNumber(1);
+    if (pageNumber.current !== 1){
+      
+      pageNumber.current = 1
+    }
+      
 
     else {
       if (makeApiCall) {
@@ -734,10 +729,11 @@ function DashboardDesktop(props) {
         props?._showSearchBar()
       }
 
-      if (pageNumber > 1) {
-        setPageNumber(1);
+      if (pageNumber.current > 1) {
+        
+        pageNumber.current = 1
       } else {
-        handleFilteredData();
+        handleFilteredData(false);
       }
    }
   }, [location?.query]);
@@ -748,8 +744,9 @@ function DashboardDesktop(props) {
       urlService.current.removeEntry('course_type_sub');
       urlService.current.changeEntry(queries.COURSE_TYPE, Lists.courseTypes[courseType]);
       updateBrowserUrl();
-      if (pageNumber > 1) {
-        setPageNumber(1);
+      if (pageNumber.current > 1) {
+        
+        pageNumber.current = 1
       }
       coursesApiStatus.current.start();
       handleFilteredData(false); 
@@ -758,20 +755,20 @@ function DashboardDesktop(props) {
     }
   }, [courseType]);
 
-  useEffect(() => {
-    const currentElement = lastCourse;
-    const currentObserver = observer.current;
+  // useEffect(() => {
+  //   const currentElement = lastCourse;
+  //   const currentObserver = observer.current;
 
-    if (currentElement) {
-      currentObserver.observe(currentElement);
-    }
+  //   if (currentElement) {
+  //     currentObserver.observe(currentElement);
+  //   }
 
-    return () => {
-      if (currentElement) {
-        currentObserver.unobserve(currentElement);
-      }
-    };
-  }, [lastCourse]);
+  //   return () => {
+  //     if (currentElement) {
+  //       currentObserver.unobserve(currentElement);
+  //     }
+  //   };
+  // }, [lastCourse]);
 
   useEffect(() => {
     if (!isMount) {
@@ -782,8 +779,9 @@ function DashboardDesktop(props) {
       coursesApiStatus.current.start();
       updateBrowserUrl();
 
-      if (pageNumber > 1) {
-        setPageNumber(1);
+      if (pageNumber.current > 1) {
+        
+        pageNumber.current = 1
       } else {
         handleFilteredData(false);
       }
@@ -855,23 +853,39 @@ const _handleSearch=(e)=>{
   }
 
   useEffect(() => {
-    if (pageNumber > 1) {
-      setPageNumber(1);
-    } 
-    handleFilteredData();
-  
+   
+      if (pageNumber.current > 1) {
+        pageNumber.current = 1
+        // handleFilteredData();
+      } 
   }, [props?.searchValue]);
 
 
   useEffect(() => {
+    
     if(nextPage === true){
       coursesApiStatus.current.start();
-      handleFilteredData();
-      // if (pageNumber === 1) {
-      //   applyFilters();
-      // }
+      handleFilteredData(true);
+      if (pageNumber.current === 1) {
+        applyFilters();
+      }
     }
-  }, [pageNumber]);
+  }, [pageNumber.current]);
+
+  useEffect(() => {
+    
+    const currentElement = lastCourse;
+    const currentObserver = observer.current;
+    if (currentElement) {
+      currentObserver.observe(currentElement);
+    }
+
+    return () => {
+      if (currentElement) {
+        currentObserver.unobserve(currentElement);
+      }
+    };
+  }, [lastCourse]);
 
   const _openApplyNowModal=(data)=>{
     setApplyNow(true)
@@ -920,7 +934,7 @@ const _handleSearch=(e)=>{
   const _enableTrackStatus=()=>{
     setTrackStatus(true);
   }
-  
+
  return(
         <div>      
 {
@@ -1030,7 +1044,7 @@ const _handleSearch=(e)=>{
               theme={theme}
               // bgColor='#16181A'
               handleTabNumber={(i) => {
-                setPageNumber(1)
+                pageNumber.current = 1
                 setCourseType(i)
                 // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypes[i])
               }}
@@ -1063,7 +1077,7 @@ const _handleSearch=(e)=>{
             dropList={[...Lists.sortByList]}
             selected={pageLoadSortState || sortState}
             onSelect={(item, i) => {
-              setPageNumber(1)
+              pageNumber.current = 1
               setPageLoadSortState(null)
               setSortState(i)
               // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
@@ -1132,8 +1146,8 @@ const _handleSearch=(e)=>{
      <div className="dashboard-upper-section">
         <div className='banner' ref={searchRef}> 
           <div className='text-content'>
-          <h1 className='heading'>Be the next you!</h1>
-          <h2 className='sub-header'>Find your course from 20,000 hand picked courses</h2>
+          <h1 className='heading'>From Learners to Leaders</h1>
+          <h2 className='sub-header'>Develop new skills with our hand-picked/curated courses from across the world</h2>
           </div>
           <div
           style={{
@@ -1215,7 +1229,7 @@ const _handleSearch=(e)=>{
               />
              
            })
-         }
+        }
          {/* <HomeSkeleton /> */}
        </div> : 
         <div className="course-card-container">
@@ -1229,7 +1243,7 @@ const _handleSearch=(e)=>{
        </div>
        </div>
     </div>
-}
+  } 
       
         <SlidingPanel
         type={'left'}

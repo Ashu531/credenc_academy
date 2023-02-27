@@ -848,7 +848,10 @@ const _getSubCategoryDetails=(item)=>{
 }
 
 useEffect(() => {
-  handleFilteredData(false)
+  if (pageNumber > 1) {
+    setPageNumber(1)
+    // handleFilteredData();
+  }
   
  }, [props?.searchValue]);
 

@@ -77,6 +77,12 @@ export default function WebDetailPage(props){
     const [userEmail,setUserEmail] = useState('')
     const [loginState,setLoginState]=useState(0);
 
+    useEffect(() => {
+      window.onpopstate = () => {
+        router.push('/')
+     }
+  }, [router]);
+
     const myLoader = ({ src, width, quality }) => {
         if(src && src.length > 0){
           return `${src}?w=${width}&q=${quality || 75}`

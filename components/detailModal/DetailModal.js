@@ -80,6 +80,7 @@ export default function DetailModal(props){
      },[])
 
     useEffect(()=>{
+        console.log(props?.detailData,"props?.detailData++++")
         _handlePreviewData(props?.detailData)
     },[])
 
@@ -697,7 +698,7 @@ export default function DetailModal(props){
          >
             <div className='detail-modal-footer-section-left' style={window.innerWidth < 500 ? {width: '51%'} : null}>
                 <span className='price-text'>
-                {courseData?.finance_display[0] ? `₹${courseData?.finance_display[0]}` : 'Price Unknown'}
+                { props?.detailData?.final_pricing.length > 0 ? props?.detailData?.final_pricing : courseData?.finance_display[0] ? `₹${courseData?.finance_display[0]}` : 'Price Unknown'}
                 </span>
             </div>
             {

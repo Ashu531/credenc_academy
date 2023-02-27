@@ -41,7 +41,8 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
     "sass": "^1.52.3",
-    "use-local-storage": "^2.3.6"
+    "use-local-storage": "^2.3.6",
+    "yup": "^1.0.1"
   },
   "devDependencies": {
     "@svgr/webpack": "^6.3.1",

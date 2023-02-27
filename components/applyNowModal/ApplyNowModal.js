@@ -20,6 +20,8 @@ import moment from 'moment'
 import closeIcon from '../../assets/images/icons/close-icon-grey.svg'
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import Checkbox from '@mui/material/Checkbox';
+import applyNowSchema from '../../helper/models/applyNowModel';
+import { Alert } from 'antd';
 const EdtechAuthKey = 'credenc-edtech-authkey';
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
@@ -35,7 +37,7 @@ export default function ApplyNowModal(props){
     const [token,setToken] = useState('');
     const [clearData,setClearData] = useState(false);
     const [thirdPartyData,setThirdPartyData] = useState({})
-    const [apiResponse,setApiResponse] = useState('')
+    const [error,setError] = useState('')
 
     useEffect(()=>{
         let authToken = localStorage.getItem(EdtechAuthKey);
@@ -92,14 +94,35 @@ export default function ApplyNowModal(props){
 
     const handleSubmit=async()=>{
 
+        let data = {
+            email: email.toString(),
+            full_name: name.toString(),
+            phone_number : number ? number.toString() : number,
+            gender: gender.toString(),
+            dob: dob,
+            course_id: props?.detailData?.id,
+        }
+
+        let currentDate = moment("13/04/2008", "DD/MM/YYYY");
+        let result = moment(dob, "DD/MM/YYYY").diff(currentDate, 'days');
+        if(result > 5400){
+            setError("Please Enter Date of Birth");
+            return;
+        }
+
+        let Schema = applyNowSchema;
+
+        const isValid = await Schema.isValid(data);
+
+        if (isValid) {
         let res = await axios.post(`${constant.API_URL.DEV}/userform/`,{
             'email': email.toString(),
             'full_name': name.toString(),
             'phone_number' : number.toString(),
             'gender': gender.toString(),
             'dob': dob,
-            'course_id': props?.detailData?.id,
-          }, {
+            'course_id': props?.detailData?.id
+        }, {
             headers: {
               'Authorization': `Bearer ${token}`
             }
@@ -109,13 +132,17 @@ export default function ApplyNowModal(props){
             props.closeApplyNowModal()
             props.openSuccessApplyModal(courseName)
 
-            // setApiResponse(res.data.message)
           return res.data;
         })
         .catch(err => {
           // this.coursesApiStatus.current.failed();
           console.log(err);
         });
+    }else{
+        Schema.validate(data).catch(function (err) {
+            setError(err.errors[0])
+        })
+    }
     } 
 
     const handleName=(e)=>{
@@ -124,6 +151,7 @@ export default function ApplyNowModal(props){
     }
 
     const handleNumber=(e)=>{
+        setError("")
         let result = e.replace(/[^0-9]/gi, '');
         setNumber(result)
     }
@@ -176,7 +204,7 @@ export default function ApplyNowModal(props){
                         <span className='label-text'>
                         Mobile Number*
                         </span>
-                        <Input required={true} placeholder='Mobile Number' handleInput={(e)=>handleNumber(e)} value={number} lenght={10} />
+                        <Input placeholder='Mobile Number' handleInput={(e)=>handleNumber(e)} value={number} lenght={10} />
                      </div>
                      <div className='email-content' style={window.innerWidth >  500 ? {width: '50%'} : {width:'100%'}}>
                         <span className='label-text'>
@@ -242,9 +270,17 @@ export default function ApplyNowModal(props){
                         </LocalizationProvider>
                      </div>
                    </div>
-                   <div style={{fontSize: 16,color: "red",textAlign: 'left',fontFamily: "Poppins",marginTop: 20}}>
-                       {apiResponse}
-                   </div>
+                    {
+                        error && error.length > 0 ? 
+                                        <Alert
+                                            message="Error"
+                                            description={error}
+                                            type="error"
+                                            showIcon
+                                        /> : 
+                                        null
+                    }
+                   
                   </div>
                   <div className='apply-now-footer'  
                        style={ 
