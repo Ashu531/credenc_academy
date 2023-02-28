@@ -136,6 +136,7 @@ export default function ApplyNowModal(props){
         })
         .catch(err => {
           // this.coursesApiStatus.current.failed();
+          setError(err?.data?.message)
           console.log(err);
         });
     }else{

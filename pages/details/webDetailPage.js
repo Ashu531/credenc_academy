@@ -76,6 +76,10 @@ export default function WebDetailPage(props){
     })
     const [userEmail,setUserEmail] = useState('')
     const [loginState,setLoginState]=useState(0);
+    const [applied,setApplied] = useState({
+      state: false,
+      id: 0
+    });
 
     useEffect(() => {
       window.onpopstate = () => {
@@ -351,7 +355,13 @@ export default function WebDetailPage(props){
       const handleButtonClick=()=>{
         
           if(props?.token && props?.token.length > 0){
-            if(props?.detailData.applied === false){
+            if(applied?.state === false){
+              if((props?.detailData?.applied === false)){
+                _openApplyNowModal(props?.detailData)
+              }
+            }else if(applied?.state === true && applied.id === props?.detailData.id){
+
+            }else{
               _openApplyNowModal(props?.detailData)
             }
           }else{
@@ -413,6 +423,15 @@ export default function WebDetailPage(props){
       setSuccessModal(false);
     }
 
+    const _handleAppliedStage=(courseId)=>{
+      setApplied({
+        state: true,
+        id: courseId
+      })
+    }
+
+    console.log(applied,"applied",props.detailData)
+
     return(
         <>
         {
@@ -449,10 +468,22 @@ export default function WebDetailPage(props){
                     <Image src={bookmarkVisible === true  ? selectedBookmark : bookmarkIcon  } width={20} height={20} objectFit='contain' />
                    </div>
                    <div 
-                     className='web-action-grey-container'
-                     onClick={()=> _handleUpvote(props?.detailData)}
-                     style={upvoted ? {background: 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)',cursor:'pointer'} : {cursor:'pointer'}}
-                     >
+                      className='web-action-grey-container'
+                      onClick={()=> _handleUpvote(props?.detailData)}
+                      style={upvoted ? { 
+                        background: 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)',
+                        cursor:'pointer',
+                        flexDirection: 'row',
+                        gap: 0,
+                        width: 42
+                      } : {
+                        cursor:'pointer',
+                        flexDirection: 'row',
+                        gap: 0,
+                        width: 42
+                      }}
+                   >
+                    <span className='count-text' style={upvoted ? {color: '#FFFFFF'} : null}>{toggleUpvote ? props?.detailData?.up_votes + 1 : props?.detailData?.up_votes}</span>
                     <Image src={upvoted ? upvoteLogoDark : upvoteLogo} width={20} height={20} objectFit='contain' />
                    </div>
                    <div>
@@ -460,7 +491,7 @@ export default function WebDetailPage(props){
                       width={'172px'} 
                       height={'44px'} 
                       linearGradient={'linear-gradient(94.15deg, #FF00DD 0%, #5100FF 99.97%)'}
-                      text={ props?.detailData.applied === true ? 'Applied' : 'Apply Now'}
+                      text={((props?.detailData?.applied === true) || (applied?.state === true && applied?.id === props?.detailData?.id)) ? 'Applied' : 'Apply Now'}
                       handleButtonClick={()=> handleButtonClick()}
                     />
                    </div>
@@ -1069,6 +1100,7 @@ export default function WebDetailPage(props){
                               openLoginModal={()=>props?.openLoginModal()}
                               addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
                               removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                              applied={applied}
                             />
                           </div>
                         )
@@ -1127,7 +1159,12 @@ export default function WebDetailPage(props){
                 backdropClicked={() => setApplyNow(false)}
                 size={30}
             >
-                <ApplyNowModal closeApplyNowModal={()=>_closeApplyNowModal()} detailData={props?.detailData} courseName={courseName} openSuccessApplyModal={(courseName)=>_openSuccessApplyModal(courseName)}  />
+                <ApplyNowModal 
+                  closeApplyNowModal={()=>_closeApplyNowModal()} 
+                  detailData={props?.detailData} courseName={courseName} 
+                  openSuccessApplyModal={(courseName)=>_openSuccessApplyModal(courseName)}  
+                  handleAppliedStage={(id)=>_handleAppliedStage(id)}
+                />
            </SlidingPanel>
            <SlidingPanel
             type={'right'}

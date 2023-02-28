@@ -272,11 +272,6 @@ const _handleTrackItem=()=>{
   props?.openDetailModal()
 }
 
-
-if(props.applied.id === props.data.id){
-  console.log(props.applied,props.data,'data+++')
-}
-
  return(
       <>
       {
@@ -317,7 +312,7 @@ if(props.applied.id === props.data.id){
               style={upvoted ? {background: 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)'} : null}
               >
                   <span className='count-text' style={upvoted ? {color: '#FFFFFF'} : null}>{toggleUpvote ? props?.data.up_votes + 1 : props?.data.up_votes}</span>
-                  <Image src={ upvoted ? upvoteLogoDark : upvoteLogo} objectFit="cover" alt='upvoteLogo' height={20} width={20} />
+                  <Image src={ upvoted ? upvoteLogoDark : upvoteLogo} objectFit="contain" alt='upvoteLogo' height={20} width={20} />
               </div>
           </div>
         </div>
@@ -361,10 +356,10 @@ if(props.applied.id === props.data.id){
         : 
         <div 
           className='course-compare-buttton' 
-          onClick={()=> !props?.applied.status ? _handleApplyAction() : null}
+          onClick={()=> !props?.applied.state ? _handleApplyAction() : null}
           >
             <span className='add-to-compare-text'>
-              { props?.applied?.status && props?.applied?.id === props?.data?.id ? "Applied" : "Apply Now" }
+              { props?.applied?.state && props?.applied?.id === props?.data?.id ? "Applied" : "Apply Now" }
             </span>
         </div>
       }
@@ -391,10 +386,10 @@ if(props.applied.id === props.data.id){
                   : 
                   <div 
                   className='course-compare-buttton-mobile'
-                    onClick={()=> !props?.applied.status ? _handleApplyAction() : null}
+                    onClick={()=> !props?.applied.state ? _handleApplyAction() : null}
                     >
                       <span className='add-to-compare-text-mobile'>
-                      { props?.applied?.status && props?.applied?.id === props?.data?.id ? "Applied" : "Apply Now" }
+                      { props?.applied?.state === true && props?.applied?.id === props?.data?.id ? "Applied" : "Apply Now" }
                       </span>
                   </div>
               }

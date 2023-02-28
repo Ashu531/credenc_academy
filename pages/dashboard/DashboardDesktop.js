@@ -141,7 +141,7 @@ function DashboardDesktop(props) {
   const [trackStatus,setTrackStatus] = useState(false)
   const [applied,setApplied] = useState({
     state: false,
-    id: null
+    id: 0
   });
   const pageNumber = useRef(1);
   
@@ -1095,6 +1095,7 @@ const _handleSearch=(e)=>{
             addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
             removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
             enableTrackStatus={()=>_enableTrackStatus()}
+            applied={applied}
           />
         </div>
       </div>

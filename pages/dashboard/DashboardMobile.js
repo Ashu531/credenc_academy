@@ -140,6 +140,10 @@ function DashboardMobile(props) {
   const [successApplyModal,setSuccessApplyModal] = useState(false)
   const [courseName,setCourseName] = useState('')
   const [trackStatus,setTrackStatus] = useState(false)
+  const [applied,setApplied] = useState({
+    state: false,
+    id: 0
+  });
 
   let observer = useRef(
     new IntersectionObserver(
@@ -930,6 +934,13 @@ const _enableTrackStatus=()=>{
   setTrackStatus(true);
 }
 
+const _handleAppliedStage=(courseId)=>{
+  setApplied({
+    state: true,
+    id: courseId
+  })
+}
+
    return(
         <div className="dashboard-mobile">
           <div 
@@ -1162,6 +1173,7 @@ const _enableTrackStatus=()=>{
                           addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
                           removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
                           enableTrackStatus={()=>_enableTrackStatus()}
+                          applied={applied}
                         />
                       </div>
                     )
@@ -1251,7 +1263,12 @@ const _enableTrackStatus=()=>{
             backdropClicked={() => setApplyNow(false)}
             size={30}
           >
-             <ApplyNowModal detailData={detailData} closeApplyNowModal={()=>_closeApplyNowModal()} openSuccessApplyModal={(courseName)=>_openSuccessApplyModal(courseName)}/>
+             <ApplyNowModal 
+                detailData={detailData} 
+                closeApplyNowModal={()=>_closeApplyNowModal()} 
+                openSuccessApplyModal={(courseName)=>_openSuccessApplyModal(courseName)}
+                handleAppliedStage={(id)=>_handleAppliedStage(id)}
+              />
            </SlidingPanel>
            <SlidingPanel
             type={'right'}
