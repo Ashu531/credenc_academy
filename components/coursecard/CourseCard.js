@@ -272,6 +272,11 @@ const _handleTrackItem=()=>{
   props?.openDetailModal()
 }
 
+
+if(props.applied.id === props.data.id){
+  console.log(props.applied,props.data,'data+++')
+}
+
  return(
       <>
       {
@@ -356,10 +361,10 @@ const _handleTrackItem=()=>{
         : 
         <div 
           className='course-compare-buttton' 
-          onClick={()=> _handleApplyAction()}
+          onClick={()=> !props?.applied.status ? _handleApplyAction() : null}
           >
             <span className='add-to-compare-text'>
-              Apply now
+              { props?.applied?.status && props?.applied?.id === props?.data?.id ? "Applied" : "Apply Now" }
             </span>
         </div>
       }
@@ -386,10 +391,10 @@ const _handleTrackItem=()=>{
                   : 
                   <div 
                   className='course-compare-buttton-mobile'
-                    onClick={()=> _handleApplyAction()}
+                    onClick={()=> !props?.applied.status ? _handleApplyAction() : null}
                     >
                       <span className='add-to-compare-text-mobile'>
-                        Apply now
+                      { props?.applied?.status && props?.applied?.id === props?.data?.id ? "Applied" : "Apply Now" }
                       </span>
                   </div>
               }

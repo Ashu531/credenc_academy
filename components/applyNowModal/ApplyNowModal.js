@@ -131,7 +131,7 @@ export default function ApplyNowModal(props){
             let courseName = res.data.course
             props.closeApplyNowModal()
             props.openSuccessApplyModal(courseName)
-
+            props?.handleAppliedStage(props?.detailData?.id)
           return res.data;
         })
         .catch(err => {
@@ -177,7 +177,15 @@ export default function ApplyNowModal(props){
                     No more work for you! Just review your pre-filled application and get enrolled!
                     </span>
                   </div>
-                  <div className='form-content'>
+                  
+                    {
+                        error && error.length > 0 ? 
+                        <div style={{marginTop: '15rem',padding: '10px 25px',width: '60%'}}>
+                            <Alert message={`Error: ${error}`} type="error" showIcon />
+                        </div> : null
+                    }
+                 
+                  <div className='form-content' style={error && error.length > 0 ? {marginTop: -10} : {marginTop: '15rem'}}>
                       <div className='label-section'>
                           <div className='label-header'>
                           Student Details
@@ -270,16 +278,6 @@ export default function ApplyNowModal(props){
                         </LocalizationProvider>
                      </div>
                    </div>
-                    {
-                        error && error.length > 0 ? 
-                                        <Alert
-                                            message="Error"
-                                            description={error}
-                                            type="error"
-                                            showIcon
-                                        /> : 
-                                        null
-                    }
                    
                   </div>
                   <div className='apply-now-footer'  
@@ -328,12 +326,12 @@ export default function ApplyNowModal(props){
                   </div>
               </div> 
               {
-             window.innerWidth <= 500 ? 
-             <span className='apply-modal-close-icon' onClick={()=>props.closeApplyNowModal()}>
-                 <Image src={closeIcon} objectFit='cover' height={20} width={20} />
-             </span>
-             : null
-         }
+                window.innerWidth <= 500 ? 
+                <span className='apply-modal-close-icon' onClick={()=>props.closeApplyNowModal()}>
+                    <Image src={closeIcon} objectFit='cover' height={20} width={20} />
+                </span>
+                : null
+              }
          </div>
         </>
     )

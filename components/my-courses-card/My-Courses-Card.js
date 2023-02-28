@@ -14,6 +14,7 @@ import arrowRightDark from '../../assets/images/icons/arrowRight.svg'
 // import theme from '../../scripts/reducers/theme';
 const bookmarkKey = 'credenc-marketplace-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
+const EdtechToken = 'credenc-edtech-authkey';
 
 export default function MyCourseCard(props){
 
@@ -25,6 +26,7 @@ export default function MyCourseCard(props){
   const [bookmarkVisible, setBookmarkVisible] = useState(null)
   const [upvoted,setUpvoted] = useState(null)
   const [toggleUpvote,setToggleUpvote] = useState(null)
+  const [authToken,setToken] = useState(null)
 
   const myLoader = ({ src, width, quality }) => {
     if(src && src.length > 0){
@@ -36,14 +38,25 @@ export default function MyCourseCard(props){
 
   useEffect(() => {
     setMounted(true);
-    if(props?.token && props?.token?.length > 0){
+
+    _retrieveToken()
+
+   
+   }, []);
+
+
+   const _retrieveToken=()=>{
+    let token = localStorage.getItem(EdtechToken)
+    setToken(token)
+
+    if(token && token?.length > 0){
       _handleBookmarkData()
     }else{
       _retrieveBookmarks()
     }
     
     _handleUpvoteData()
-   }, []);
+   }
 
 
    const _retrieveBookmarks=()=>{
@@ -77,40 +90,17 @@ export default function MyCourseCard(props){
    
     setBookmarkVisible(false)
     
-    if(props?.token && props?.token.length > 0){
+
       removeBookmarkFromBackend(item.code)
       props?.removeLocalBookmarks()
-    }else{
-      let bookmarkArray = [];
-      let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
-      if(bookmarkItem && bookmarkItem.length > 0){
-        bookmarkArray =  bookmarkItem.filter(data => data !== item.code )
-      }
-      props?.removeLocalBookmarks(bookmarkArray.length)
-      localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
-
-      if(router.pathname === "/bookmarks"){
-        setTimeout(() => location.reload(), 100)
-      }
-    }
-    
+ 
   }
   
   const _onAddToBookmark=(item)=>{
-    setBookmarkVisible(true)
-    if(props?.token && props?.token.length > 0){
+      setBookmarkVisible(true)
+
       addBookmarkToBackend(item.code)
       props?.addLocalBookmarks()
-    }else{
-      let bookmarkArray = [];
-      let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
-      if(bookmarkItem && bookmarkItem.length > 0){
-        bookmarkArray.push(...bookmarkItem)
-      }
-      bookmarkArray.push(item.code)
-      props?.addLocalBookmarks(bookmarkArray.length)
-      localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
-    }
     
   }
 
@@ -119,7 +109,7 @@ export default function MyCourseCard(props){
       "id": [`${id}`],
     }, {
       headers: {
-        'Authorization': `Bearer ${props?.token}`
+        'Authorization': `Bearer ${authToken}`
       },
     })
       .then(res => {
@@ -138,7 +128,7 @@ export default function MyCourseCard(props){
       "id": `${id}`,
     }, {
       headers: {
-        'Authorization': `Bearer ${props?.token}`
+        'Authorization': `Bearer ${authToken}`
       },
     })
       .then(res => {
@@ -164,7 +154,7 @@ export default function MyCourseCard(props){
    }
 
    const _handleUpvote=(item)=>{
-     if(props?.token && props?.token?.length > 0){
+     if(authToken && authToken?.length > 0){
       if(upvoted === true){
         _onRemoveToUpvote(item)
        }else{
@@ -208,7 +198,7 @@ export default function MyCourseCard(props){
         "is_up_vote": "true"
     }, {
         headers: {
-            'Authorization': `Bearer ${props?.token}`
+            'Authorization': `Bearer ${authToken}`
         },
     })
     .then(res => {
@@ -230,7 +220,7 @@ const removeUpvote = async (item) => {
       "is_up_vote": "false"
   }, {
       headers: {
-          'Authorization': `Bearer ${props?.token}`
+          'Authorization': `Bearer ${authToken}`
       },
   })
   .then(res => {

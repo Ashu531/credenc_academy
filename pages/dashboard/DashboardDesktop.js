@@ -139,6 +139,10 @@ function DashboardDesktop(props) {
   const [loginState,setLoginState]=useState(0);
   const [courseName,setCourseName] = useState('')
   const [trackStatus,setTrackStatus] = useState(false)
+  const [applied,setApplied] = useState({
+    state: false,
+    id: null
+  });
   const pageNumber = useRef(1);
   
   let observer = useRef(
@@ -755,21 +759,6 @@ function DashboardDesktop(props) {
     }
   }, [courseType]);
 
-  // useEffect(() => {
-  //   const currentElement = lastCourse;
-  //   const currentObserver = observer.current;
-
-  //   if (currentElement) {
-  //     currentObserver.observe(currentElement);
-  //   }
-
-  //   return () => {
-  //     if (currentElement) {
-  //       currentObserver.unobserve(currentElement);
-  //     }
-  //   };
-  // }, [lastCourse]);
-
   useEffect(() => {
     if (!isMount) {
       Lists.sortByList.forEach((item) => {
@@ -933,6 +922,13 @@ const _handleSearch=(e)=>{
 
   const _enableTrackStatus=()=>{
     setTrackStatus(true);
+  }
+
+  const _handleAppliedStage=(courseId)=>{
+    setApplied({
+      state: true,
+      id: courseId
+    })
   }
 
  return(
@@ -1213,6 +1209,7 @@ const _handleSearch=(e)=>{
                  addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
                  removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
                  enableTrackStatus={()=>_enableTrackStatus()}
+                 applied={applied}
                />
             </div> :
                <CourseCard 
@@ -1226,6 +1223,7 @@ const _handleSearch=(e)=>{
                   addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
                   removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
                   enableTrackStatus={()=>_enableTrackStatus()}
+                  applied={applied}
               />
              
            })
@@ -1392,7 +1390,12 @@ const _handleSearch=(e)=>{
         backdropClicked={() => setApplyNow(false)}
         size={30}
       >
-        <ApplyNowModal detailData={detailData} closeApplyNowModal={()=>_closeApplyNowModal()} openSuccessApplyModal={(courseName)=>_openSuccessApplyModal(courseName)}/>
+        <ApplyNowModal 
+          detailData={detailData} 
+          closeApplyNowModal={()=>_closeApplyNowModal()} 
+          openSuccessApplyModal={(courseName)=>_openSuccessApplyModal(courseName)}
+          handleAppliedStage={(id)=>_handleAppliedStage(id)}
+        />
       </SlidingPanel>
       <SlidingPanel
         type={'right'}

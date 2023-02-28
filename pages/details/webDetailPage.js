@@ -98,7 +98,7 @@ export default function WebDetailPage(props){
           </span>
         </Link>,
         <CustomColor key="2">
-          Product Design
+          {props?.detailData?.subject}
         </CustomColor>,
       ];
 
