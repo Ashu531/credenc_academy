@@ -76,9 +76,7 @@ export default function Header(props){
     if(item.id === 1){
       // Mixpanel.track(MixpanelStrings.LOGOUT_TRIGGERED);
       props?.logoutUser()
-      router.push('/')
-      // dispatchLogout();
-      // window.location.reload();
+      router.reload();
       return;
     }
   }

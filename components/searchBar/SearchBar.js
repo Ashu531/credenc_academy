@@ -47,7 +47,6 @@ export default function SearchBar(props) {
     if(autocompleteArray && autocompleteArray.length > 0){
       autocompleteArray.push(intialQuery)
     }else{
-      console.log(autocompleteArray,"autocompleteArray+++")
       autocompleteArray=[]
       autocompleteArray.unshift(intialQuery)
     }
@@ -77,6 +76,14 @@ export default function SearchBar(props) {
     </div> 
     // return (<p dangerouslySetInnerHTML={{__html: '<strong>'+item+'</strong>'}}></p>); //To format result as html
   };
+
+  const customSearch=()=>{
+    let data = {
+      name: searchString,
+      search: true
+    }
+    props?.handleSearch(data)
+  }
 
   return (
   
@@ -115,7 +122,11 @@ export default function SearchBar(props) {
           showClear={false}
         />
       </div>
-      <div className="search-icon-web-1" style={ props.showSearchBar ? {right: 9,top: 15} : null}>
+      <div 
+        className="search-icon-web-1" 
+        style={ props.showSearchBar ? {right: 9,top: 15} : null}
+        onClick={()=>customSearch()}
+      >
         <Image loader={myLoader} src={SearchIcon} className="search-icon-icon" objectFit="cover" height={18} width={18} />
       </div>
     </div>

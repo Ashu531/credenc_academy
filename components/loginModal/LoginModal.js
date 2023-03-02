@@ -430,12 +430,15 @@ export default function LoginModal({
   }
 
   const _goToHome=()=>{
-    location.replace({
-      pathname: '/',
-      query: {},
-   }).then(() => location.reload())  
+    if(location?.pathname === '/profile'){
+      location.replace({
+        pathname: '/',
+        query: {},
+     }).then(() => location.reload())
+    }
+      
   }
-
+console.log(location)
   return (
     <div className="login-modal" onClick={handleModalClose}>
       <div 

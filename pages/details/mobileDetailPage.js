@@ -65,6 +65,10 @@ export default function DetailPageMobile(props){
         moduleId: 0,
         moduleShow: false,
     })
+    const [applied,setApplied] = useState({
+      state: false,
+      id: 0
+    });
 
     const breadcrumbs = [
       <Link key="1" href="/">
@@ -73,7 +77,7 @@ export default function DetailPageMobile(props){
         </span>
       </Link>,
       <CustomColor key="2">
-        Product Design
+        {props?.detailData?.subject}
       </CustomColor>,
     ];
 
@@ -840,6 +844,7 @@ export default function DetailPageMobile(props){
                           openLoginModal={()=>props?.openLoginModal()}
                           addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
                           removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                          applied={applied}
                         />
                       </div>
                     )

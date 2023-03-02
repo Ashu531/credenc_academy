@@ -35,6 +35,7 @@ import HomeSkeleton from "../../components/homePageSkeleton/homeSkeleton"
 import Skeleton from '@mui/material/Skeleton';
 import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
 import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer"
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const subjectKey = 'credenc-edtech-subject';
 
@@ -150,7 +151,6 @@ function DashboardDesktop(props) {
       (entries) => {
         const first = entries[0];
         if (first.isIntersecting === true && nextPage === true) {
-          // setPageNumber((pn) => pn > 0 ? pn + 1 : pn);
           pageNumber.current = pageNumber.current > 0 ? pageNumber.current + 1 : pageNumber.current
         }
       })
@@ -824,6 +824,7 @@ useEffect(() => {
 }, []);
 
 const _handleSearch=(e)=>{
+
   if(e?.course_id){
     location.push({
       pathname: '/details',
@@ -834,6 +835,9 @@ const _handleSearch=(e)=>{
   else if(e?.name && e?.name?.length > 0){
     props?.openFilterExpandedStage()
     props?._showSearchBar()
+    if(e?.search === true){
+      handleFilteredData()
+    }
   }
     // else{
     //   props.closeFilterExpandedStage()
@@ -929,6 +933,12 @@ const _handleSearch=(e)=>{
       state: true,
       id: courseId
     })
+  }
+
+  const handleScrollData=()=>{
+    // setPageNumber(pageNumber.current+1)
+    pageNumber.current = pageNumber.current+1
+    handleFilteredData()
   }
 
  return(
@@ -1082,8 +1092,12 @@ const _handleSearch=(e)=>{
           <div style={{ flexGrow: 1 }}></div>
           <div className="text-container">Showing {totalCourses} Course{totalCourses === 1 ? '' : 's'}</div>
         </div>
-        <div className="list-container" style={{padding: '10rem 2.4rem 5rem 0rem'}}>
-          <List
+        <div 
+          className="list-container" 
+          id="scrollableDiv"
+          style={{padding: '10rem 2.4rem 2rem 0rem',height: 800, overflow: "auto"}}
+          >
+          {/* <List
             type={listTypes?.HORIZONTAL_CARDS}
             list={courseCardData}
             listApiStatus={coursesApiStatus}
@@ -1096,7 +1110,41 @@ const _handleSearch=(e)=>{
             removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
             enableTrackStatus={()=>_enableTrackStatus()}
             applied={applied}
-          />
+          /> */}
+          <InfiniteScroll
+                  dataLength={courseCardData.length} //This is important field to render the next data
+                  next={handleScrollData}
+                  hasMore={true}
+                  // loader={<h4>Loading...</h4>}
+                  style={{width: '100%',display:'flex',flexDirection:'row',gap: 10,flexWrap: 'wrap',overflow:'auto'}}
+                  // onScroll={handleScroll}
+                  scrollableTarget="scrollableDiv"
+                  endMessage={
+                    <p style={{ textAlign: 'center' }}>
+                      <b>Yay! You have seen it all</b>
+                    </p>
+                  }
+                  // below props only if you need pull down functionality
+                >
+                 {courseCardData && courseCardData.map((item,index)=>{
+                    return(
+                      <div key={index}>
+                        <CourseCard 
+                          index={index}
+                          data={item} 
+                          openDetailModal={()=>_openDetailModal(item)}
+                          openApplyNowModal={()=> _openApplyNowModal(item)}
+                          token={props?.token}
+                          openLoginModal={()=>props?.openLoginModal()}
+                          addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+                          removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                          enableTrackStatus={()=>_enableTrackStatus()}
+                          applied={applied}
+                        />
+                      </div>
+                    )
+                 })}
+                </InfiniteScroll>
         </div>
       </div>
       {window.innerWidth <= 500 && <div className='mobile-view-actions'>

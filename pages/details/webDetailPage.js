@@ -243,7 +243,6 @@ export default function WebDetailPage(props){
        }
     
        const _handleUpvote=(item)=>{
-           console.log(item,props.token,"item++++")
          if(props?.token && props?.token?.length > 0){
           if(upvoted === true){
             _onRemoveToUpvote(item)
@@ -430,8 +429,6 @@ export default function WebDetailPage(props){
       })
     }
 
-    console.log(applied,"applied",props.detailData)
-
     return(
         <>
         {
@@ -504,9 +501,9 @@ export default function WebDetailPage(props){
                             {props?.detailData?.course_name}
                     </div>
                     {
-                        props?.detailData?.platform?.one_liner ? 
+                      props?.detailData?.one_liner &&  props?.detailData?.one_liner.length > 0 ? 
                             <span className='detail-page-content-one-liner' style={{marginTop: 10}}>
-                            {props?.detailData?.platform?.one_liner}
+                            {props?.detailData?.one_liner}
                         </span> : null
                     }
                      <div className='detail-page-content-educator' style={{marginTop: 40}}>
@@ -717,11 +714,11 @@ export default function WebDetailPage(props){
                                                     <div className='detail-page-mobile-module-bullet-section-header'>
                                                         <Image src={moduleSquareBullets} height={12} width={12} objectFit='contain' />
                                                         <div className='detail-page-mobile-module-bullet-section-header-text'>
-                                                            {data.title} | {data.sub_topics.length === 1 ? data.sub_topics[0] : ''}
+                                                            {data.title} {data?.sub_topics && data?.sub_topics.length === 1 ? `| ${data?.sub_topics[0]}` : ''}
                                                         </div>
                                                     </div>
                                                     {
-                                                      data.sub_topics.length > 1 ?
+                                                    data.sub_topics &&  data.sub_topics.length > 1 ?
                                                       <div style={{cursor:'pointer'}}>
                                                         <Image src={caretDown} width={15} height={12} objectFit='contain' onClick={()=>_handleModuleOpen(item,data)} style={data.id === topicOpen.moduleId && topicOpen.moduleShow ? {transform: "rotate(180deg)"} : null}/>
                                                       </div> 

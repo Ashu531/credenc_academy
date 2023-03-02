@@ -229,7 +229,7 @@ class MyApp extends App {
     localStorage.removeItem(EdtechToken);
     this._clearUpvoteData()
     this._clearBookmarkData()
-    setTimeout(() => location.reload(), 100)
+    // setTimeout(() => location.reload(), 100)
   }
 
   selectedSubject=(item)=>{
@@ -269,7 +269,6 @@ class MyApp extends App {
   }
 
   _handleSearch=(e)=>{
-    console.log(e,"e+++")
     this.setState({
       search: e
     },()=>{

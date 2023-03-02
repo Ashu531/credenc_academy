@@ -258,11 +258,20 @@ const _goToDetailPage=(id)=>{
 }
 
 const _handleApplyAction=()=>{
+  
   let token = localStorage.getItem(EdtechToken)
   if(token && token.length > 0){
     props?.openApplyNowModal()
   }else{
-    props?.openLoginModal()
+    if(window.innerWidth <= 500 && router?.pathname === '/details'){
+      router.push({
+        pathname: `/`,
+      })
+      props?.openLoginModal()
+    }else{
+      props?.openLoginModal()
+    }
+    
   }
   
 }
