@@ -34,6 +34,7 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
 // import Link from '@mui/material/Link';
 import Link from "next/link";
+import MobileDetailSkeleton from '../../components/detailPageSkeletonMobile';
 
 const styles = {
     width: "100%",
@@ -170,6 +171,7 @@ export default function DetailPageMobile(props){
     return(
       <>
       { 
+      props?.detailData && props?.detailData != null ?
        mounted &&
         <div className='detail-page-mobile'>
           <div className='detail-page-web-breadcrumb' style={{marginTop: '6rem',padding: 24}}>
@@ -884,7 +886,8 @@ export default function DetailPageMobile(props){
           >
             <SuccessApplyModal closeSuccessApplyModal={()=>_closeSuccessApplyModal()} courseName={courseName} />
           </SlidingPanel>
-        </div>
+        </div> :
+        <MobileDetailSkeleton />
         }
         </>
 

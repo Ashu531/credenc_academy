@@ -59,7 +59,7 @@ export default function DetailPage(props){
         })
           .then(res => {
             // this.coursesApiStatus.current.success();
-            setDetailData(res.data.data)
+            setDetailData(res?.data?.data)
             setMounted(true);
             return res.data;
           })
@@ -89,7 +89,7 @@ export default function DetailPage(props){
           .then(res => {
             // this.coursesApiStatus.current.success();
             setInstructorData(res.data.data)
-            setMounted(true);
+            // setMounted(true);
             return res.data;
           })
           .catch(err => {
@@ -103,7 +103,7 @@ export default function DetailPage(props){
           .then(res => {
             // this.coursesApiStatus.current.success();
             setPriceOptions(res.data.data)
-            setMounted(true);
+            // setMounted(true);
             return res.data;
           })
           .catch(err => {
@@ -117,7 +117,7 @@ export default function DetailPage(props){
           .then(res => {
             // this.coursesApiStatus.current.success();
             setToolData(res.data.data)
-            setMounted(true);
+            // setMounted(true);
             return res.data;
           })
           .catch(err => {
@@ -131,7 +131,7 @@ export default function DetailPage(props){
           .then(res => {
             // this.coursesApiStatus.current.success();
             setSimilarCourses(res.data.data)
-            setMounted(true);
+            // setMounted(true);
             return res.data;
           })
           .catch(err => {
@@ -146,7 +146,7 @@ export default function DetailPage(props){
           // this.coursesApiStatus.current.success();
           console.log(res.data,"res.data+++")
           setStartingCost(res.data)
-          setMounted(true);
+          // setMounted(true);
           return res.data;
         })
         .catch(err => {
