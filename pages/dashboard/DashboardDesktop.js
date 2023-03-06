@@ -1406,7 +1406,7 @@ const _handleSearch=(e)=>{
                             disabled={false} 
                             onClick={_handleShowAllCourses}
                             classes='btn-apply'
-                            text= {`Show ${totalCourses} Courses`}
+                            text= {totalCourses ? `Show ${totalCourses} Courses` : `No Courses`}
                             type="Show"
                           />
                       </div>

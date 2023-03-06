@@ -25,7 +25,7 @@ import { useTheme } from "@emotion/react";
 import { GoogleLogin,GoogleOAuthProvider } from '@react-oauth/google';
 import UrlService from "../../helper/urlService";
 
-const bookmarkKey = 'credenc-marketplace-bookmarks';
+const bookmarkKey = 'credenc-edtech-bookmarks';
 
 export default function LoginModal({
   tokens,

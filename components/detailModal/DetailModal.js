@@ -30,7 +30,7 @@ import LinkedlnLogo from '../../assets/images/icons/linkedin-icon.svg';
 import approvedIcon from '../../assets/images/icons/approvedIcon.svg'
 import stopWatchIcon from '../../assets/images/icons/stopWatchIcon.svg'
 const EdtechTheme = 'EdtechTheme';
-const bookmarkKey = 'credenc-marketplace-bookmarks';
+const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 
 const spinnerCSS = {

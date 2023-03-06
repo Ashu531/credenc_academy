@@ -16,7 +16,7 @@ import axios from "axios";
 import Image from "next/image";
 import constant from "../../config/constant";
 import { useRouter } from 'next/router'
-const bookmarkKey = 'credenc-marketplace-bookmarks';
+const bookmarkKey = 'credenc-edtech-bookmarks';
 
 // import { Mixpanel } from "../../../services/Mixpanel";
 // import MixpanelStrings from "../../../../values/mixpanelStrings";

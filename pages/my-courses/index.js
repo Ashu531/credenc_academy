@@ -14,7 +14,7 @@ import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
 import MyCourseCard from '../../components/my-courses-card/My-Courses-Card'
-const bookmarkKey = 'credenc-marketplace-bookmarks';
+const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 const EdtechAuthKey = 'credenc-edtech-authkey';
 

@@ -16,7 +16,7 @@ import defaultPlatform from '../../assets/images/icons/defaultPlatform.svg'
 import constant from '../../config/constant';
 import { useRouter } from 'next/router'
 // import theme from '../../scripts/reducers/theme';
-const bookmarkKey = 'credenc-marketplace-bookmarks';
+const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 
 export default function CourseCard(props){

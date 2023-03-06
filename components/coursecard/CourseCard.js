@@ -16,7 +16,7 @@ import defaultPlatform from '../../assets/images/icons/defaultPlatform.svg'
 import constant from '../../config/constant';
 import { useRouter } from 'next/router'
 // import theme from '../../scripts/reducers/theme';
-const bookmarkKey = 'credenc-marketplace-bookmarks';
+const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 const EdtechToken = 'credenc-edtech-authkey';
 
@@ -251,10 +251,18 @@ const removeUpvote = async (item) => {
 }
 
 const _goToDetailPage=(id)=>{
-  router.push({
-    pathname: `/details`,
-    query: {course_id : id}
-  })
+  if(props?.detailPage === true){
+    router.replace({
+      pathname: `/details`,
+      query: {course_id : id}
+    }).then(()=>router.reload())
+  }else{
+    router.push({
+      pathname: `/details`,
+      query: {course_id : id}
+    })
+  }
+  
 }
 
 const _handleApplyAction=()=>{

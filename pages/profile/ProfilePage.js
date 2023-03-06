@@ -157,7 +157,7 @@ export default function ProfilePage({
         <>
         
           <div className='profile-page'>
-            <div className='profile-container' style={window.innerWidth > 500 ? {marginTop: '5rem'} : null}>
+            <div className='profile-container' style={window.innerWidth > 500 ? {marginTop: '10rem'} : null}>
               <div className='menu-column'>
                   <div 
                   className='menu-item'
@@ -170,7 +170,7 @@ export default function ProfilePage({
                   Edit Profile
                   </div>
                 <div className='hr'></div>
-                <div 
+                {/* <div 
                   className='menu-item'
                   onClick={() => {
                     _openResetPasswordPage()
@@ -180,7 +180,7 @@ export default function ProfilePage({
                   <span className={`border-left ${isActiveTab(routes.RESET_PASSWORD)}`}></span>
                   Reset Password
                   </div>
-                <div className='hr'></div>
+                <div className='hr'></div> */}
                 
                 <div 
                 className='menu-item'
@@ -196,7 +196,7 @@ export default function ProfilePage({
               </div>
               <div className='content-column' style={profilePages.privacyPolicy === true ? {overflow: 'scroll'} : null}>
                 {window.innerWidth > 500 && profilePages.editProfile === true && <EditProfile token={token} />}
-                {window.innerWidth > 500 && profilePages.resetPassword === true && <ResetPassword token={token} openForgotPasswordModal={()=>openForgotPasswordModal()} />}
+                {/* {window.innerWidth > 500 && profilePages.resetPassword === true && <ResetPassword token={token} openForgotPasswordModal={()=>openForgotPasswordModal()} />} */}
                 {window.innerWidth > 500 && profilePages.privacyPolicy === true && <PrivacyPolicy profilePage={true} />}
                 {window.innerWidth <= 500 && 
                 <ProfileMobilePage 

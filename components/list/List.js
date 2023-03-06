@@ -13,7 +13,7 @@ import Lists from '../../config/list';
 import Button from '../button/Button';
 import { Skeleton } from '@mui/material';
 import CourseCard from '../coursecard/CourseCard';
-const bookmarkKey = 'credenc-marketplace-bookmarks';
+const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 
 function List({

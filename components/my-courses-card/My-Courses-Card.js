@@ -12,7 +12,7 @@ import constant from '../../config/constant';
 import { useRouter } from 'next/router'
 import arrowRightDark from '../../assets/images/icons/arrowRight.svg'
 // import theme from '../../scripts/reducers/theme';
-const bookmarkKey = 'credenc-marketplace-bookmarks';
+const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 const EdtechToken = 'credenc-edtech-authkey';
 

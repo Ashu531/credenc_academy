@@ -36,7 +36,7 @@ import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyMo
 import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer"
 
 const compareKey = 'credenc-marketplace-compares';
-const bookmarkKey = 'credenc-marketplace-bookmarks';
+const bookmarkKey = 'credenc-edtech-bookmarks';
 const subjectKey = 'credenc-edtech-subject';
 const UpvoteKey = 'credenc-edtech-upvote'
 

@@ -21,7 +21,7 @@ import ApiStatus from "../config/apiStatus";
 const EdtechTheme = 'credenc-edtech-theme';
 const EdtechToken = 'credenc-edtech-authkey';
 const UpvoteKey = 'credenc-edtech-upvote'
-const bookmarkKey = 'credenc-marketplace-bookmarks';
+const bookmarkKey = 'credenc-edtech-bookmarks';
 
 class MyApp extends App {
 

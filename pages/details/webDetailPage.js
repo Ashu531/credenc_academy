@@ -44,12 +44,13 @@ import upvoteLogo from '../../assets/images/icons/upvote.svg'
 import Link from "next/link";
 import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer";
 import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
+import WebDetailSkeleton from '../../components/detailPageSkeletonWeb';
 
-const bookmarkKey = 'credenc-marketplace-bookmarks';
+const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 
 const styles = {
-    width: "100%",
+    // width: "100%",
     height: "100%",
     backgroundImage: `url(${tableBackground.src})`,  
   };
@@ -108,7 +109,6 @@ export default function WebDetailPage(props){
 
       useEffect(() => {
         if( props?.detailData && props?.detailData != null ){
-                setMounted(true)
                 _handleLocalItems()
         }
        
@@ -128,16 +128,19 @@ export default function WebDetailPage(props){
        const _retrieveBookmarks=()=>{
         let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
         if(tempBookmarkData && tempBookmarkData.length > 0){
-          if (tempBookmarkData.includes(props?.data?.code)){
+          console.log("coming1",tempBookmarkData,props?.detailData?.code)
+          if (tempBookmarkData.includes(props?.detailData?.code)){
+           
             setBookmarkVisible(true)
           }
           else
             setBookmarkVisible(false)
           }
+          setMounted(true)
         }  
     
        const _handleBookmarkData=()=>{
-          if(props?.data?.bookmarked === true){
+          if(props?.detailData?.bookmarked === true){
             setBookmarkVisible(true)
           }else{
             setBookmarkVisible(false)
@@ -431,8 +434,8 @@ export default function WebDetailPage(props){
 
     return(
         <>
-        {
-            mounted &&
+        { props?.detailData && props?.detailData != null ?
+            mounted && 
 
         <div className='detail-page-web'>
           <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'flex-start',padding: '0px 24px 0px 24px'}}>
@@ -458,7 +461,7 @@ export default function WebDetailPage(props){
                        </span>
                    </div>
                 </div> : null
-             }
+              }
                 
                 <div className='detail-page-web-action-container'>
                    <div className='web-action-grey-container' onClick={()=>_handleCardBookmark(props?.detailData)} style={bookmarkVisible === true ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)",cursor:'pointer'} : {cursor: 'pointer'}}>
@@ -494,7 +497,15 @@ export default function WebDetailPage(props){
                    </div>
                 </div>
             </div>
+            
             </div>
+            {
+               props?.detailData?.preview ? 
+               <div className='detail-page-mobile-banner' style={{display:'contents'}}>
+                 <Image loader={myLoader} src={props?.detailData?.preview} height={277} width={'100%'} objectFit="contain" />
+               </div> 
+               : null
+              }
            <div className='detail-page-web-course-data-container'>
                   <div className='course-data-left-container'>
                     <div className='detail-page-content-course-name'>
@@ -1098,6 +1109,7 @@ export default function WebDetailPage(props){
                               addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
                               removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
                               applied={applied}
+                              detailPage={true}
                             />
                           </div>
                         )
@@ -1171,9 +1183,10 @@ export default function WebDetailPage(props){
           >
             <SuccessApplyModal closeSuccessApplyModal={()=>_closeSuccessApplyModal()} courseName={courseName} />
           </SlidingPanel>
-            
         </div>
+        : <WebDetailSkeleton />
         }
+        
         </>
     )
 }

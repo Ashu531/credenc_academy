@@ -191,8 +191,8 @@ export default function ProfileNavMobile({
                     <div className='menu-column'  style={{padding: 0}}>
                         <div onClick={() => _openEditProfilePage()} className='menu-item'>Edit Profile<span className={`arrow-right`}>{'>'}</span></div>
                         <div className='hr'></div>
-                        <div onClick={() => _openResetPasswordPage()} className='menu-item'>Reset Password<span className={`arrow-right`}>{'>'}</span></div>
-                        <div className='hr'></div>
+                        {/* <div onClick={() => _openResetPasswordPage()} className='menu-item'>Reset Password<span className={`arrow-right`}>{'>'}</span></div>
+                        <div className='hr'></div> */}
                         <div onClick={() => _openPrivacyPolicyPage()} className='menu-item'>Privacy Policy<span className={`arrow-right`}>{'>'}</span></div>
                         <div className='hr'></div>
                         <div 
@@ -205,7 +205,7 @@ export default function ProfileNavMobile({
                 : 
                 <>
                     {profilePages.editProfile === true && <EditProfile token={token} setMobileLoginNavigation={()=>setMobileLoginNavigation()} />}
-                    {profilePages.resetPassword === true && <ResetPassword token={token} openForgotPasswordModal={()=>openForgotPasswordModal()} setMobileLoginNavigation={()=>setMobileLoginNavigation()}/>}
+                    {/* {profilePages.resetPassword === true && <ResetPassword token={token} openForgotPasswordModal={()=>openForgotPasswordModal()} setMobileLoginNavigation={()=>setMobileLoginNavigation()}/>} */}
                     {profilePages.privacyPolicy === true && <PrivacyPolicy profilePage={true} setMobileLoginNavigation={()=>setMobileLoginNavigation()}/>}
                 </>
             }
