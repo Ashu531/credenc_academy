@@ -575,9 +575,13 @@ function DashboardDesktop(props) {
     return res ? res : [];
   }
 
-  const handleFilteredData = async (updatePageNumber = true) => {
+  const handleFilteredData = async (updatePageNumber = true,e) => {
     coursesApiStatus.current.start();
     urlService.current.removeEntry('search');
+
+    if(e?.name && e?.name.length > 0){
+      urlService.current.addEntry('search', e.name);
+    }
 
     if(props?.searchValue && props?.searchValue?.length > 0){
       urlService.current.addEntry('search', props?.searchValue);
@@ -724,10 +728,14 @@ function DashboardDesktop(props) {
       // resetFilters(false);
       // urlService.current.changeEntry('subject', `${location.query}`);
 
-     
       if(!location.query.hasOwnProperty('subject') && !location.query.hasOwnProperty('domain')){
-        props.openFilterExpandedStage();
+        props?.openFilterExpandedStage();
       }
+
+      if(location.query.hasOwnProperty('partner_key')){
+        props?.closeFilterExpandedStage();
+      }
+
       if(location.query.hasOwnProperty('search')){
         props?.handleSearch(location?.query?.search)
         props?._showSearchBar()
@@ -833,16 +841,24 @@ const _handleSearch=(e)=>{
     props?._showSearchBar()
   }
   else if(e?.name && e?.name?.length > 0){
+    
     props?.openFilterExpandedStage()
     props?._showSearchBar()
     if(e?.search === true){
-      handleFilteredData()
+      pageNumber.current = pageNumber.current + 1; 
+      handleFilteredData(true,e?.name)
     }
   }
     // else{
     //   props.closeFilterExpandedStage()
     // }
-   props?.handleSearch(e?.name)
+   console.log(e,"desktop")
+   if(e?.name && e?.name.length > 0){
+    props?.handleSearch(e?.name)
+   }else{
+    props?.handleSearch(e)
+   }
+   
   }
 
   useEffect(() => {
@@ -1192,7 +1208,7 @@ const _handleSearch=(e)=>{
         <div className='banner' ref={searchRef}> 
           <div className='text-content'>
           <h1 className='heading'>From Learners to Leaders</h1>
-          <h2 className='sub-header'>Develop new skills with our hand-picked/curated courses from across the world</h2>
+          <h2 className='sub-header'>Develop new skills with our hand-picked courses from across the world</h2>
           </div>
           <div
           style={{

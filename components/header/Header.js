@@ -96,10 +96,10 @@ export default function Header(props){
         query: { course_id: e?.course_id },
       })
     }
-    else if(e.length === 0){
-      props?.closeFilterExpandedStage()
-      props?.hideSearchBar()
-      }
+    // else if(e.length === 0){
+    //   props?.closeFilterExpandedStage()
+    //   props?.hideSearchBar()
+    //   }
     else {
       props?.openFilterExpandedStage()
     }

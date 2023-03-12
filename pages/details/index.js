@@ -144,7 +144,6 @@ export default function DetailPage(props){
       let res = await axios.get(`${constant.API_URL.DEV}/course/starting_cost/${id}/`)
         .then(res => {
           // this.coursesApiStatus.current.success();
-          console.log(res.data,"res.data+++")
           setStartingCost(res.data)
           // setMounted(true);
           return res.data;

@@ -172,7 +172,7 @@ export default function DetailPageMobile(props){
       <>
       { 
       props?.detailData && props?.detailData != null ?
-       mounted &&
+      //  mounted &&
         <div className='detail-page-mobile'>
           <div className='detail-page-web-breadcrumb' style={{marginTop: '6rem',padding: 24}}>
            <Breadcrumbs
@@ -505,35 +505,39 @@ export default function DetailPageMobile(props){
                       <Image src={shortWaveIcon} width={57} height={6} objectFit='contain' />
                   </div>
                 </div>
-                <div className='detail-page-mobile-skill-container' style={{marginTop: 24}}>
+                <div 
+                  className='detail-page-skill-container' 
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    gap: 15,
+                    marginTop: 16
+                  }}
+                  
+                  >
                     {
                         props?.toolData?.skills && props?.toolData?.skills.length > 0 && props?.toolData?.skills.map((item,index)=>{
                             return(
-                                // <svg width="107" height="42" viewBox="0 0 107 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                // <path d="M1.46094 7.19753C17.2755 4.69933 59.7636 0.700514 103.199 4.6908" stroke="url(#paint0_linear_9426_43551)" stroke-width="1.75" stroke-linecap="round"/>
-                                // <path d="M4.48148 3C3.59976 8.44054 2.18842 23.0573 3.59675 38" stroke="url(#paint1_linear_9426_43551)" stroke-width="1.75" stroke-linecap="round"/>
-                                // <path d="M100.483 1.83594C102.1 7.8234 104.687 23.9095 102.105 40.3544" stroke="url(#paint2_linear_9426_43551)" stroke-width="1.75" stroke-linecap="round"/>
-                                // <path d="M105.629 38C89.4366 36.2145 45.9338 33.3565 1.46093 36.2084" stroke="url(#paint3_linear_9426_43551)" stroke-width="1.75" stroke-linecap="round"/>
-                                // <defs>
-                                // <linearGradient id="paint0_linear_9426_43551" x1="1.46094" y1="3" x2="28.082" y2="49.8553" gradientUnits="userSpaceOnUse">
-                                // <stop stop-color="#FF00DD"/>
-                                // <stop offset="1" stop-color="#5100FF"/>
-                                // </linearGradient>
-                                // <linearGradient id="paint1_linear_9426_43551" x1="3" y1="3" x2="19.3278" y2="12.5173" gradientUnits="userSpaceOnUse">
-                                // <stop stop-color="#FF00DD"/>
-                                // <stop offset="1" stop-color="#5100FF"/>
-                                // </linearGradient>
-                                // <linearGradient id="paint2_linear_9426_43551" x1="103.199" y1="1.83594" x2="82.5572" y2="21.8797" gradientUnits="userSpaceOnUse">
-                                // <stop stop-color="#FF00DD"/>
-                                // <stop offset="1" stop-color="#5100FF"/>
-                                // </linearGradient>
-                                // <linearGradient id="paint3_linear_9426_43551" x1="105.629" y1="35" x2="90.4484" y2="73.2772" gradientUnits="userSpaceOnUse">
-                                // <stop stop-color="#FF00DD"/>
-                                // <stop offset="1" stop-color="#5100FF"/>
-                                // </linearGradient>
-                                // </defs>
-                                // </svg>
-                                <div className='detail-page-mobile-skill-content' key={index}>
+                                <div 
+                                  className='detail-page-mobile-skill-content' 
+                                  key={index} 
+                                  style={{
+                                    borderRadius: 3,
+                                    padding: '6px 8px',
+                                    fontFamily: 'Poppins',
+                                    fontStyle: 'normal',
+                                    fontWeight: 500,
+                                    fontSize: 14,
+                                    // lineHeight: 21,
+                                    color: '#0A0A0A',
+                                    background: '#FFFFFF',
+                                    borderRadius: 3,
+                                    padding: '6px 10px',
+                                    width: 'max-content',
+                                  }} >
                                 {item}
                                </div>
                             )

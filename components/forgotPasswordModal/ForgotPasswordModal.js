@@ -256,16 +256,11 @@ export default function ForgotPasswordModal({
 
   const _goToHome=()=>{
 
-    let routerKeys = Object.values(location.query);
-    console.log(routerKeys,"routerKeys")
+    // let routerKeys = Object.values(location.query);
 
-    location.replace({
-      pathname: '/',
-      query: {
-        min_price: 0,
-        max_price: routerKeys[3],
-      },
-   }).then(() => location.reload())  
+    location.push({
+      pathname: '/'
+    })  
   }
   useEffect(() => {
     if(!location.isReady) return;

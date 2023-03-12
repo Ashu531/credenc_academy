@@ -128,7 +128,6 @@ export default function WebDetailPage(props){
        const _retrieveBookmarks=()=>{
         let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
         if(tempBookmarkData && tempBookmarkData.length > 0){
-          console.log("coming1",tempBookmarkData,props?.detailData?.code)
           if (tempBookmarkData.includes(props?.detailData?.code)){
            
             setBookmarkVisible(true)
@@ -435,7 +434,7 @@ export default function WebDetailPage(props){
     return(
         <>
         { props?.detailData && props?.detailData != null ?
-            mounted && 
+            // mounted && 
 
         <div className='detail-page-web'>
           <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'flex-start',padding: '0px 24px 0px 24px'}}>

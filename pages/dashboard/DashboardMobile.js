@@ -640,9 +640,10 @@ useEffect( () => {
   if (location?.query && Object.keys(location?.query).length > 0) {
     // resetFilters(false);
     // urlService.current.changeEntry('subject', `${location.query}`);
-    if(location.query.hasOwnProperty('subject') || location.query.hasOwnProperty('domain')){
+    if(location.query.hasOwnProperty('subject') || location.query.hasOwnProperty('domain') || location.query.hasOwnProperty('partner_key')){
       props?.closeFilterExpandedStage();
     }
+    
 
     if (pageNumber > 1) {
       setPageNumber(1);

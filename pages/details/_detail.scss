@@ -193,7 +193,29 @@
             justify-content: flex-start;
             align-items: flex-start;
         }
-    }
+        .detail-page-mobile-skill-container{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            
+    
+            .detail-page-mobile-skill-content{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 21px;
+                color: var(--inverseBackground);
+                background: #FFFFFF;
+                border-radius: 3px;
+                padding: 6px 10px;
+                width: max-content;
+
+            }
+        }    }
 
     .detail-page-mobile-instructor-card-container{
         display: flex;
@@ -612,28 +634,6 @@
                 line-height: 22px;
                 color: var(--inverseBackground);
             }
-        }
-    }
-
-    .detail-page-mobile-skill-container{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 15px;
-        background: #FFFFFF;
-        border-radius: 3px;
-        padding: 6px 8px;
-        width: max-content;
-
-        .detail-page-mobile-skill-content{
-            font-family: 'Poppins';
-            font-style: normal;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 21px;
-            color: var(--inverseBackground);
         }
     }
 
@@ -1127,14 +1127,11 @@
         .detail-page-mobile-skill-container{
             display: flex;
             flex-direction: row;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
-            background: #FFFFFF;
-            border-radius: 3px;
-            padding: 6px 10px;
-            width: max-content;
+           
     
             .detail-page-mobile-skill-content{
                 font-family: 'Poppins';
@@ -1143,6 +1140,10 @@
                 font-size: 14px;
                 line-height: 21px;
                 color: var(--inverseBackground);
+                background: #FFFFFF;
+                border-radius: 3px;
+                padding: 6px 10px;
+                width: max-content;
             }
         }
 

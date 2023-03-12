@@ -35,7 +35,7 @@ export default function Dashboard(props) {
           _showSearchBar={props?._showSearchBar}
           hideSearchBar={props?.hideSearchBar}
           searchValue={props?.searchValue}
-          handleSearch={props?.handleSearch}
+          handleSearch={(e)=>props?.handleSearch(e)}
           closeFilterExpandedStage={()=>props?.closeFilterExpandedStage()}
           searchData={props?.searchData}
           handleLogin={()=>props?.handleLogin()}

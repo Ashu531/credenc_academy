@@ -28,7 +28,8 @@ export default function SearchBar(props) {
  } 
 
   const _autocompleteQuery=async(e,results)=>{
-     
+      props?.handleSearch(e)
+
       await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`)
       .then(response => response.data.data)
       .then(data => {
@@ -85,10 +86,19 @@ export default function SearchBar(props) {
     props?.handleSearch(data)
   }
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      customSearch()
+    }
+  }
+
   return (
   
     <div className="search-model">
-      <div className="search">
+      <div 
+      className="search" 
+      onKeyDown={handleKeyDown}
+      >
         <ReactSearchAutocomplete
           items={searchQuery}
           onSearch={_autocompleteQuery}

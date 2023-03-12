@@ -269,6 +269,7 @@ class MyApp extends App {
   }
 
   _handleSearch=(e)=>{
+    console.log(e,"e+++")
     this.setState({
       search: e
     },()=>{
@@ -492,7 +493,7 @@ class MyApp extends App {
             _showSearchBar={this._showSearchBar}
             hideSearchBar={this.hideSearchBar}
             searchValue={this.state.search}
-            handleSearch={this._handleSearch}
+            handleSearch={(e)=>this._handleSearch(e)}
             closeFilterExpandedStage={()=>this.closeFilterExpandedStage()}
             searchData={this.state.searchData}
             handleLogout={()=>this._handleLogout()}
