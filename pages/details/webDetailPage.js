@@ -431,6 +431,8 @@ export default function WebDetailPage(props){
       })
     }
 
+    console.log(props?.startingCost,"cost++++")
+
     return(
         <>
         { props?.detailData && props?.detailData != null ?
@@ -601,7 +603,7 @@ export default function WebDetailPage(props){
                                         <Image src={costIcon} height={28} width={28} objectFit='contain' />
                                         <div className='detail-page-content-educator-info-header'>Starting Cost</div>
                                     </div>
-                                    <div className='detail-page-content-educator-info-subheader' style={{textAlign:'right'}}>{ props?.startingCost ? `₹ ${props?.startingCost?.starting_cost?.amount}/month` : props?.detailData?.finance_display && props?.detailData?.finance_display.length > 0 ? `₹${props?.detailData?.finance_display[0]}` : 'Unknown'}</div>
+                                    <div className='detail-page-content-educator-info-subheader' style={{textAlign:'right'}}>{ props?.startingCost?.starting_cost && props?.startingCost?.starting_cost.length > 0 ? `₹ ${props?.startingCost?.starting_cost[0]}` : props?.detailData?.finance_display && props?.detailData?.finance_display.length > 0 ? `₹${props?.detailData?.finance_display[0]}` : 'Unknown'}</div>
                                 </div>
                             </div>
                         </div>

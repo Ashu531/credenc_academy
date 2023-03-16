@@ -335,8 +335,13 @@ export default function DetailModal(props){
     }
 
     const _handleApplyModal=()=>{
+      if(props?.token && props?.token?.length > 0){
         props?.openDetailModal()
         props?.openApplyNowModal()
+      }else{
+        props?.openLoginModal()
+      }
+        
     }
 
     const _handleIntructorHover=(data)=>{
@@ -697,9 +702,17 @@ export default function DetailModal(props){
             }
          >
             <div className='detail-modal-footer-section-left' style={window.innerWidth < 500 ? {width: '51%'} : null}>
-                <span className='price-text'>
-                { props?.detailData?.final_pricing.length > 0 ? props?.detailData?.final_pricing : courseData?.finance_display[0] ? `₹${courseData?.finance_display[0]}` : 'Price Unknown'}
-                </span>
+                {
+                  props?.detailData?.base_price > 0 ?
+                    <span className='price-text'>
+                      { props?.detailData?.final_pricing.length > 0 ? props?.detailData?.final_pricing : 'Price Unknown'}
+                    </span>
+                    : 
+                    <span className='price-text'>
+                      { courseData?.finance_display[0] ? `₹${courseData?.finance_display[0]}` : 'Price Unknown'}
+                    </span> 
+                }
+                
             </div>
             {
               props?.status === true || courseData?.applied === true ? 

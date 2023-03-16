@@ -141,17 +141,38 @@ export default function DetailPage(props){
     }
 
     const _getStartingCost=async(id)=>{
-      let res = await axios.get(`${constant.API_URL.DEV}/course/starting_cost/${id}/`)
-        .then(res => {
-          // this.coursesApiStatus.current.success();
-          setStartingCost(res.data)
-          // setMounted(true);
-          return res.data;
+      if(token && token.length > 0){
+
+        let res = await axios.get(`${constant.API_URL.DEV}/course/starting_cost/${id}/`,{
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
         })
-        .catch(err => {
-          // this.coursesApiStatus.current.failed();
-          console.log(err);
-        });
+          .then(res => {
+            // this.coursesApiStatus.current.success();
+            setStartingCost(res?.data?.data)
+            // setMounted(true);
+            return res.data;
+          })
+          .catch(err => {
+            // this.coursesApiStatus.current.failed();
+            console.log(err);
+          });
+
+      }else{
+        let res = await axios.get(`${constant.API_URL.DEV}/course/starting_cost/${id}/`)
+          .then(res => {
+            // this.coursesApiStatus.current.success();
+            setStartingCost(res?.data?.data)
+            // setMounted(true);
+            return res.data;
+          })
+          .catch(err => {
+            // this.coursesApiStatus.current.failed();
+            console.log(err);
+          });
+      }
+     
   }
 
     return(

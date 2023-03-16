@@ -18,10 +18,14 @@ import Header from '../components/header/Header';
 import constant from '../config/constant';
 import axios from "axios";
 import ApiStatus from "../config/apiStatus";
+import ReactGA from 'react-ga';
 const EdtechTheme = 'credenc-edtech-theme';
 const EdtechToken = 'credenc-edtech-authkey';
 const UpvoteKey = 'credenc-edtech-upvote'
 const bookmarkKey = 'credenc-edtech-bookmarks';
+
+const TRACKING_ID = "UA-260405117-1"
+ReactGA.initialize(TRACKING_ID);
 
 class MyApp extends App {
 

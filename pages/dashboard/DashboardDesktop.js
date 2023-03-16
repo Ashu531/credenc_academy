@@ -36,7 +36,7 @@ import Skeleton from '@mui/material/Skeleton';
 import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
 import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer"
 import InfiniteScroll from 'react-infinite-scroll-component';
-
+import ReactGA from 'react-ga';
 const subjectKey = 'credenc-edtech-subject';
 
 
@@ -160,6 +160,7 @@ function DashboardDesktop(props) {
 
   useEffect(() => {
     setMounted(true);
+    ReactGA.pageview(window.location.pathname);
   }, []);
 
 
@@ -839,6 +840,12 @@ const _handleSearch=(e)=>{
       query: { course_id: e?.course_id },
     })
     props?._showSearchBar()
+
+    ReactGA.event({
+      category: e.course_id,
+      action: "test action",
+      label: "Detail Page",
+    })
   }
   else if(e?.name && e?.name?.length > 0){
     
@@ -848,15 +855,28 @@ const _handleSearch=(e)=>{
       pageNumber.current = pageNumber.current + 1; 
       handleFilteredData(true,e?.name)
     }
+
+    ReactGA.event({
+      category: e.name,
+      action: "test action",
+      label: "Search Page",
+    })
   }
-    // else{
-    //   props.closeFilterExpandedStage()
-    // }
-   console.log(e,"desktop")
+
    if(e?.name && e?.name.length > 0){
     props?.handleSearch(e?.name)
+    ReactGA.event({
+      category: e.name,
+      action: "test action",
+      label: "Search Page",
+    })
    }else{
     props?.handleSearch(e)
+    ReactGA.event({
+      category: e,
+      action: "test action",
+      label: "Search Page",
+    })
    }
    
   }

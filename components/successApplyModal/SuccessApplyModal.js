@@ -8,6 +8,7 @@ import njIcon from '../../assets/images/icons/njIcon.svg';
 import reservedImage from '../../assets/images/icons/reservedImage.svg'
 import chatIcon from '../../assets/images/icons/chatIcon.svg'
 import {ChatWidget} from "@papercups-io/chat-widget";
+import constant from '../../config/constant';
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
 export default function SuccessApplyModal(props){
@@ -31,9 +32,9 @@ export default function SuccessApplyModal(props){
                     <Image src={closeIcon} objectFit='cover' height={20} width={20} />
                 </span>
               </div>
-              <div className='success-apply-modal-content' style={{marginTop: 200}}>
+              <div className='success-apply-modal-content' style={thirdPartyUser === constant.PARTNER_KEY.NJ ? {marginTop: 200} : null}>
                 {
-                  thirdPartyUser === 'NJCRED01' ? 
+                  thirdPartyUser === constant.PARTNER_KEY.NJ ? 
                     <div className='success-apply-modal-gif'>
                       <Image src={reservedImage} width={150} height={68} objectFit='contain' />
                   </div>
@@ -50,7 +51,7 @@ export default function SuccessApplyModal(props){
                 }
 
                 {
-                  thirdPartyUser === 'NJCRED01' ? 
+                  thirdPartyUser === constant.PARTNER_KEY.NJ ? 
                     <div className='success-apply-modal-section' style={{width: '100%'}}>
                       <div className='reserved-header-content'>
                           <div className='reserved-header'>
@@ -156,7 +157,7 @@ export default function SuccessApplyModal(props){
                               gap: '10px',
                               // background: 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)',
                               borderRadius: '5px',
-                              border:'1px solid #00CB9C'
+                              border:'1px solid #00CB9C',
                           }}
                           >
                               <span className='submit-footer-text' style={{color: '#000000'}}>
@@ -168,7 +169,7 @@ export default function SuccessApplyModal(props){
                        
                        
                     </div>
-                     <div className='button-content' style={{cursor:'pointer',paddingRight: '5rem'}}>
+                     {/* <div className='button-content' style={{cursor:'pointer',paddingRight: '5rem'}}>
                        <div 
                          className='button-container'
                          style={{
@@ -186,7 +187,7 @@ export default function SuccessApplyModal(props){
                                 Apply for loan
                              </span>
                        </div>
-                   </div>
+                   </div> */}
                   </div>
                   </div>
               </div> 

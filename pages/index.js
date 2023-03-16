@@ -1,5 +1,6 @@
 import Dashboard from './dashboard'
 import React,{useState,useEffect} from "react"
+import Script from 'next/script'
 const EdtechToken = 'credenc-edtech-authkey';
 
 export default function Home(props) {
@@ -21,6 +22,19 @@ export default function Home(props) {
 
   return (
     <>
+    <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-31M56NX8K4"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-31M56NX8K4');
+        `}
+      </Script>
     {
     mounted &&  
     <Dashboard 
