@@ -130,7 +130,7 @@ export default function DetailModal(props){
     const _retrieveBookmarks=(item)=>{
             let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
             if(tempBookmarkData && tempBookmarkData.length > 0){
-                if (tempBookmarkData.includes(item?.id))
+                if (tempBookmarkData.includes(item?.code))
                 setBookmarkVisible(true)
 
                 else

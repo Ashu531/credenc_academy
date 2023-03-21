@@ -128,11 +128,15 @@ export default function ApplyNowModal(props){
             }
           })
         .then(res => {
-            let courseName = res.data.course
-            props.closeApplyNowModal()
-            props.openSuccessApplyModal(courseName)
-            props?.handleAppliedStage(props?.detailData?.id)
-          return res.data;
+            if(res?.data?.status === true){
+                let courseName = res.data.course
+                props.closeApplyNowModal()
+                props.openSuccessApplyModal(courseName)
+                props?.handleAppliedStage(props?.detailData?.id)
+              return res.data;
+            }else{
+                setError(res?.data?.message)
+            }
         })
         .catch(err => {
           // this.coursesApiStatus.current.failed();

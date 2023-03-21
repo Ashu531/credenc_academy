@@ -39,7 +39,6 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import ReactGA from 'react-ga';
 const subjectKey = 'credenc-edtech-subject';
 
-
 const queries = {
   PROFESSION: 'profession',
   COURSE_TYPE: 'course_type',
@@ -102,14 +101,14 @@ function DashboardDesktop(props) {
   const [mounted, setMounted] = useState(false);
   const [courseType, setCourseType] = useState(getTabNumber(queries.COURSE_TYPE, urlService) || 0);
 
-  const [courses, setCourses] = useState([]);
   const [maxPrice, setMaxPrice] = useState(0);
+  const [minPrice,setMinPrice] = useState(0)
   const [totalCourses, setTotalCourses] = useState(0);
 
   const [classModeList, setClassModeList] = useState([...Lists.classModes]);
   const [coursePaceList, setCoursePaceList] = useState([...Lists.coursePaceList]);
   const [costList, setCostList] = useState([...Lists.costList]);
-  const [costRange, setCostRange] = useState({ min: 0, max: maxPrice });
+  const [costRange, setCostRange] = useState({ min: minPrice, max: maxPrice });
   const [difficultyList, setDifficultyList] = useState([...Lists.difficultyList]);
   const [workExperienceList, setWorkExperienceList] = useState([...Lists.workExperiences]);
   const [financeOptionList, setFinanceOptionList] = useState([...Lists.financeOptions]);
@@ -120,17 +119,14 @@ function DashboardDesktop(props) {
   const [isAppliedCostSlider, setIsAppliedCostSlider] = useState(false);
   const [sortState, setSortState] = useState(0);
   const [pageLoadSortState, setPageLoadSortState] = useState(null);
-  const [search,setSearch] = useState('');
   const [courseTypesFloatState, setCourseTypesFloatState] = useState(0)
   const [mobileFiltersState, setMobileFiltersState] = useState(false)
-  const [showSearchBar, setShowSearchBar] = useState(false);
   const searchRef = useRef();
   const [searchbarWidth, setSearchBarWidth] = useState("41.0919%");
   const [applyNow, setApplyNow] = useState(false)
   let appliedFiltersCount = useRef(0);
   const [lastCourse, setLastCourse] = useState(null);
   const courseTypeRef = useRef(null);
-  const navbarRef = useRef(null)
   // const [compareTextVisible,setCompareTextVisible] = useState('');
 
   const [cardActionTaken,setCardActionTaken] = useState(false)
@@ -199,25 +195,25 @@ function DashboardDesktop(props) {
     getCardData()
   }
 
-  const getSubjectData=async()=>{
-    const response = await fetch(`${constant.API_URL.DEV}/subject/search/`)
-    const data = await response.json()
-    let totalSubjectCount = 0;
-    data?.data?.forEach(item=>{
-      totalSubjectCount += item.count
-    })
-    let totalSubjectData = data?.data;
+  // const getSubjectData=async()=>{
+  //   const response = await fetch(`${constant.API_URL.DEV}/subject/search/`)
+  //   const data = await response.json()
+  //   let totalSubjectCount = 0;
+  //   data?.data?.forEach(item=>{
+  //     totalSubjectCount += item.count
+  //   })
+  //   let totalSubjectData = data?.data;
   
-    totalSubjectData?.unshift(
-    {
-        "id": 0,
-        "name": "All",
-        "count": totalSubjectCount
-    }
-    )
-    localStorage.setItem(subjectKey,JSON.stringify(totalSubjectData[0]))
-    setSubjectData(totalSubjectData)
-  }
+  //   totalSubjectData?.unshift(
+  //   {
+  //       "id": 0,
+  //       "name": "All",
+  //       "count": totalSubjectCount
+  //   }
+  //   )
+  //   localStorage.setItem(subjectKey,JSON.stringify(totalSubjectData[0]))
+  //   setSubjectData(totalSubjectData)
+  // }
 
   const getCardData=()=>{
 
@@ -605,6 +601,7 @@ function DashboardDesktop(props) {
     }
 
     setMaxPrice(Math.floor(parseFloat(res.max_price)));
+    setMinPrice(Math.floor(parseFloat(res.min_price)))
     setTotalCourses(res.count);
     // handlePageNumber(res);
   }
@@ -695,7 +692,7 @@ function DashboardDesktop(props) {
     }, [100])
     setIsAppliedCostSlider(false)
 
-    setCostRange({ min: 0, max: maxPrice });
+    setCostRange({ min: minPrice, max: maxPrice });
 
     appliedFiltersCount.current = 0;
   }
@@ -841,53 +838,22 @@ const _handleSearch=(e)=>{
     })
     props?._showSearchBar()
 
-    ReactGA.event({
-      category: e.course_id,
-      action: "test action",
-      label: "Detail Page",
-    })
   }
-  else if(e?.name && e?.name?.length > 0){
+
+  if(e?.name && e?.name?.length > 0){
     
     props?.openFilterExpandedStage()
     props?._showSearchBar()
     if(e?.search === true){
-      pageNumber.current = pageNumber.current + 1; 
+      pageNumber.current = 1; 
       handleFilteredData(true,e?.name)
     }
-
-    ReactGA.event({
-      category: e.name,
-      action: "test action",
-      label: "Search Page",
-    })
-  }
-
-   if(e?.name && e?.name.length > 0){
     props?.handleSearch(e?.name)
-    ReactGA.event({
-      category: e.name,
-      action: "test action",
-      label: "Search Page",
-    })
-   }else{
-    props?.handleSearch(e)
-    ReactGA.event({
-      category: e,
-      action: "test action",
-      label: "Search Page",
-    })
-   }
+    }else{
+      props?.handleSearch(e)
+    }
    
   }
-
-  useEffect(() => {
-   
-      if (pageNumber.current > 1) {
-        pageNumber.current = 1
-        // handleFilteredData();
-      } 
-  }, [props?.searchValue]);
 
 
   useEffect(() => {
@@ -1006,7 +972,7 @@ const _handleSearch=(e)=>{
             filterState={costList}
             updateFilterState={updateFilterState}
             max={maxPrice}
-            min={0}
+            min={minPrice}
             getRange={handleCostRange}
             updateCostSlider={updateCostSlider}
             setIsAppliedCostSlider={() => setIsAppliedCostSlider(true)}
@@ -1025,12 +991,16 @@ const _handleSearch=(e)=>{
             updateFilterState={updateFilterState}
             theme={theme}
           /> */}
-          <Filter
-            item={{ name: 'Finance Options', type: filterList.FINANCE_OPTIONS }}
-            filterState={financeOptionList}
-            updateFilterState={updateFilterState}
-            theme={theme}
-          />
+          {
+            props?.thirdPartyUser != constant.PARTNER_KEY.NJ ? 
+            <Filter
+              item={{ name: 'Finance Options', type: filterList.FINANCE_OPTIONS }}
+              filterState={financeOptionList}
+              updateFilterState={updateFilterState}
+              theme={theme}
+            /> : null
+          }
+          
           {/* <Filter
             item={{ name: 'Course Language', type: filterList.COURSE_LANGUAGE }}
             filterState={languageList}
@@ -1168,7 +1138,7 @@ const _handleSearch=(e)=>{
                         <CourseCard 
                           index={index}
                           data={item} 
-                          openDetailModal={()=>_openDetailModal(item)}
+                          openDetailModal={()=>openDetailModal(item)}
                           openApplyNowModal={()=> _openApplyNowModal(item)}
                           token={props?.token}
                           openLoginModal={()=>props?.openLoginModal()}
@@ -1360,7 +1330,7 @@ const _handleSearch=(e)=>{
                         filterState={costList}
                         updateFilterState={updateFilterState}
                         max={maxPrice}
-                        min={0}
+                        min={minPrice}
                         getRange={handleCostRange}
                         updateCostSlider={updateCostSlider}
                         setIsAppliedCostSlider={() => setIsAppliedCostSlider(true)}
@@ -1379,12 +1349,16 @@ const _handleSearch=(e)=>{
                         updateFilterState={updateFilterState}
                         theme={theme}
                       /> */}
-                      <Filter
-                        item={{ name: 'Finance Options', type: filterList.FINANCE_OPTIONS }}
-                        filterState={financeOptionList}
-                        updateFilterState={updateFilterState}
-                        theme={theme}
-                      />
+                      {
+                        props?.thirdPartyUser != constant.PARTNER_KEY.NJ ? 
+                        <Filter
+                          item={{ name: 'Finance Options', type: filterList.FINANCE_OPTIONS }}
+                          filterState={financeOptionList}
+                          updateFilterState={updateFilterState}
+                          theme={theme}
+                        /> : null
+                      }
+                      
                       {/* <Filter
                         item={{ name: 'Course Language', type: filterList.COURSE_LANGUAGE }}
                         filterState={languageList}

@@ -23,6 +23,7 @@ const EdtechTheme = 'credenc-edtech-theme';
 const EdtechToken = 'credenc-edtech-authkey';
 const UpvoteKey = 'credenc-edtech-upvote'
 const bookmarkKey = 'credenc-edtech-bookmarks';
+const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
 const TRACKING_ID = "UA-260405117-1"
 ReactGA.initialize(TRACKING_ID);
@@ -233,6 +234,7 @@ class MyApp extends App {
     localStorage.removeItem(EdtechToken);
     this._clearUpvoteData()
     this._clearBookmarkData()
+    localStorage.removeItem(EdtechPartnerKey)
     // setTimeout(() => location.reload(), 100)
   }
 
@@ -273,7 +275,6 @@ class MyApp extends App {
   }
 
   _handleSearch=(e)=>{
-    console.log(e,"e+++")
     this.setState({
       search: e
     },()=>{

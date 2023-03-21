@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react"
 import DashboardDesktop from "./DashboardDesktop";
 import DashboardMobile from "./DashboardMobile";
 import { useMediaQuery } from "react-responsive";
-
+const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
 export default function Dashboard(props) {
   const [mounted, setMounted] = useState(false);
+  const [thirdPartyUser,setThirdPartyUser] = useState({})
   const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
   const isDesktopOrLaptop = useMediaQuery({
     query: "(min-width: 500px)",
@@ -13,7 +14,15 @@ export default function Dashboard(props) {
 
   useEffect(() => {
     setMounted(true);
+    _retrieveData()
   }, []);
+
+  const _retrieveData=()=>{
+    let partnerKey = JSON.parse(localStorage.getItem(EdtechPartnerKey));
+     if(partnerKey && partnerKey.length > 0){
+      setThirdPartyUser(partnerKey)
+     }
+  }
 
    return(
       <>
@@ -46,6 +55,7 @@ export default function Dashboard(props) {
           removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
           closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
           selectSearch={(e)=>props?.selectSearch(e)}
+          thirdPartyUser={thirdPartyUser}
         />}
         {isMobile && 
           <DashboardMobile
@@ -78,6 +88,7 @@ export default function Dashboard(props) {
           removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
           closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
           selectSearch={(e)=>props?.selectSearch(e)}
+          thirdPartyUser={thirdPartyUser}
         />
         }
         </>

@@ -431,7 +431,7 @@ export default function WebDetailPage(props){
       })
     }
 
-    console.log(props?.startingCost,"cost++++")
+    console.log(props?.thirdPartyUser,"props?.thirdPartyUser")
 
     return(
         <>
@@ -836,7 +836,9 @@ export default function WebDetailPage(props){
                     <div className='detail-page-mobile-intro-subHeader' style={{marginTop: 10}}>
                     Explore your pre-approved Loan and EMI Options! Have your pick and pay at your own discretion!
                     </div>
-                    <div className='detail-page-mobile-emi-content' style={{marginTop: 30}}>
+                    {
+                      props?.thirdPartyUser === constant.PARTNER_KEY.NJ ? 
+                      <div className='detail-page-mobile-emi-content' style={{marginTop: 30}}>
                         <div className='detail-page-mobile-emi-section'>
                             <div className='detail-page-mobile-emi-section-header'>
                             EMI PLANS
@@ -859,13 +861,18 @@ export default function WebDetailPage(props){
                             ₹{props?.startingCost?.starting_cost?.amount}/mo*
                             </div>
                         </div>
-                    </div>
-                    <div className='detail-page-mobile-nj-section'>
+                    </div> : <div />
+                    }
+                    {
+                      props?.thirdPartyUser === constant.PARTNER_KEY.NJ ? 
+                      <div className='detail-page-mobile-nj-section'>
                         <Image src={njIcon} objectFit='contain' height={21} width={23} />
                         <div className='detail-page-mobile-nj-section-text'>
                             You have a Pre-Approved Loan from NJ Capital
                         </div>
-                    </div>
+                    </div> : <div />
+                    }
+                    
                     <div className='detail-page-mobile-price-options-container'>
                     {
                       props?.priceOptions?.emi_options && props?.priceOptions?.emi_options.map((item,index)=>{

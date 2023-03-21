@@ -266,10 +266,12 @@ const _goToDetailPage=(id)=>{
 }
 
 const _handleApplyAction=()=>{
-  
   let token = localStorage.getItem(EdtechToken)
   if(token && token.length > 0){
-    props?.openApplyNowModal()
+    if(props?.applied?.id != props?.data?.id){
+      props?.openApplyNowModal()
+    }
+    
   }else{
     if(window.innerWidth <= 500 && router?.pathname === '/details'){
       router.push({
@@ -378,7 +380,7 @@ const _handleTrackItem=()=>{
         : 
         <div 
           className='course-compare-buttton' 
-          onClick={()=> !props?.applied.state ? _handleApplyAction() : null}
+          onClick={()=> _handleApplyAction()}
           >
             <span className='add-to-compare-text'>
               { props?.applied?.state && props?.applied?.id === props?.data?.id ? "Applied" : "Apply Now" }
@@ -408,7 +410,7 @@ const _handleTrackItem=()=>{
                   : 
                   <div 
                   className='course-compare-buttton-mobile'
-                    onClick={()=> !props?.applied.state ? _handleApplyAction() : null}
+                    onClick={()=> _handleApplyAction()}
                     >
                       <span className='add-to-compare-text-mobile'>
                       { props?.applied?.state === true && props?.applied?.id === props?.data?.id ? "Applied" : "Apply Now" }

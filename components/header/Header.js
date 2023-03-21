@@ -76,7 +76,13 @@ export default function Header(props){
     if(item.id === 1){
       // Mixpanel.track(MixpanelStrings.LOGOUT_TRIGGERED);
       props?.logoutUser()
-      router.reload();
+      if(router.pathname === '/profile'){
+        router.push({
+          pathname: '/'
+        })
+      }else{
+        router.reload();
+      }
       return;
     }
   }
@@ -104,7 +110,7 @@ export default function Header(props){
       props?.openFilterExpandedStage()
     }
     props?.handleSearch(e) 
-   
+
   }
 
   const _goToHome=()=>{

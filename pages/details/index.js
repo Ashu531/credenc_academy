@@ -8,6 +8,7 @@ import constant from '../../config/constant';
 import UrlService from "../../helper/urlService";
 import { NextPageContext } from "next";
 const EdtechToken = 'credenc-edtech-authkey';
+const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
 export default function DetailPage(props){
 
@@ -22,6 +23,7 @@ export default function DetailPage(props){
     const [similarCourses,setSimilarCourses] = useState({})
     const [token,setToken] = useState('')
     const [startingCost,setStartingCost] = useState({})
+    const [thirdPartyUser,setThirdPartyUser] = useState({})
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const isDesktopOrLaptop = useMediaQuery({
       query: "(min-width: 500px)",
@@ -37,6 +39,12 @@ export default function DetailPage(props){
      if(localToken && localToken.length > 0){
         setToken(localToken)
      }
+
+     let partnerKey = JSON.parse(localStorage.getItem(EdtechPartnerKey));
+     if(partnerKey && partnerKey.length > 0){
+      setThirdPartyUser(partnerKey)
+     }
+     
      _getCourseId(location?.query?.course_id,localToken)
     }
 
@@ -45,7 +53,7 @@ export default function DetailPage(props){
             _getInstructorData(id)
             _getpaymentDetails(id)
             _getToolData(id)
-            _getCardData(id)
+            _getCardData(id,localToken)
             _getStartingCost(id)
     }  
 
@@ -126,7 +134,24 @@ export default function DetailPage(props){
           });
     }
 
-    const _getCardData=async(id)=>{
+    const _getCardData=async(id,localToken)=>{
+      if(localToken && localToken.length > 0){
+        let res = await axios.get(`${constant.API_URL.DEV}/course/similar/${id}/`, {
+          headers: {
+            'Authorization': `Bearer ${localToken}`
+          }
+        })
+        .then(res => {
+          // this.coursesApiStatus.current.success();
+          setSimilarCourses(res.data.data)
+          // setMounted(true);
+          return res.data;
+        })
+        .catch(err => {
+          // this.coursesApiStatus.current.failed();
+          console.log(err);
+        });
+      }else{
         let res = await axios.get(`${constant.API_URL.DEV}/course/similar/${id}/`)
           .then(res => {
             // this.coursesApiStatus.current.success();
@@ -138,7 +163,9 @@ export default function DetailPage(props){
             // this.coursesApiStatus.current.failed();
             console.log(err);
           });
-    }
+      }
+      }
+        
 
     const _getStartingCost=async(id)=>{
       if(token && token.length > 0){
@@ -199,6 +226,7 @@ export default function DetailPage(props){
             handleLogin={()=>props?.handleLogin()}
             closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
             loginModal={props?.loginModal}
+            thirdPartyUser={thirdPartyUser}
           />
         }
         {isMobile && 
@@ -213,6 +241,7 @@ export default function DetailPage(props){
                 removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
                 token={token}
                 openLoginModal={()=>props?.openLoginModal()}
+                thirdPartyUser={thirdPartyUser}
            />
         }
         </>
