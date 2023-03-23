@@ -106,11 +106,9 @@ export default function Header(props){
     //   props?.closeFilterExpandedStage()
     //   props?.hideSearchBar()
     //   }
-    else {
-      props?.openFilterExpandedStage()
-    }
-    props?.handleSearch(e) 
 
+    props?.handleSearch(e) 
+    
   }
 
   const _goToHome=()=>{
@@ -139,6 +137,8 @@ export default function Header(props){
     }
     
   }
+
+  console.log(router,"router++++")
   
     return(
         <div className='navbar-wrapper'>
@@ -148,9 +148,9 @@ export default function Header(props){
             <Image src={credencAcademy} objectFit="cover" alt='credencLogo' />
             </div>
           {
-            props?.showSearchBar && router.asPath !== '/privacy/' && router.asPath !== '/my-courses/' && router.asPath !== '/bookmarks/' && router.asPath !== '/details/' ?
+            props?.showSearchBar && router.asPath !== '/privacy/' && router.asPath !== '/my-courses/' && router.asPath !== '/bookmarks/' && router.pathname !== '/details' ?
               <div style={props?.showSearchBar ? {width : '25%',zIndex: 99999,marginLeft: 30} : null} >
-                <SearchBar showSearchBar={props?.showSearchBar} search={props?.searchValue} handleSearch={(e)=>_handleSearch(e)} selectSearch={(e)=>props?.selectSearch(e)} />
+                <SearchBar showSearchBar={props?.showSearchBar} search={props?.searchValue} handleSearch={(e)=>_handleSearch(e)} selectSearch={(e)=>props?.selectSearch(e)} openFilterExpandedStage={()=>props?.openFilterExpandedStage()} />
               </div> 
           : null
           }

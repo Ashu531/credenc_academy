@@ -601,7 +601,7 @@ function DashboardDesktop(props) {
     }
 
     setMaxPrice(Math.floor(parseFloat(res.max_price)));
-    setMinPrice(Math.floor(parseFloat(res.min_price)))
+    setMinPrice(Math.floor(parseFloat(res.min_price)));
     setTotalCourses(res.count);
     // handlePageNumber(res);
   }
@@ -722,6 +722,7 @@ function DashboardDesktop(props) {
   }, [maxPrice]);
 
   useEffect( () => {
+    if(!location.isReady) return;
     if (location?.query && Object.keys(location?.query).length > 0) {
       // resetFilters(false);
       // urlService.current.changeEntry('subject', `${location.query}`);
@@ -740,13 +741,11 @@ function DashboardDesktop(props) {
       }
 
       if (pageNumber.current > 1) {
-        
         pageNumber.current = 1
-      } else {
-        handleFilteredData(false);
+        handleFilteredData();
       }
    }
-  }, [location?.query]);
+  }, [location.isReady]);
 
   useEffect(() => {
     if (!isMount) {
@@ -942,6 +941,13 @@ const _handleSearch=(e)=>{
     pageNumber.current = pageNumber.current+1
     handleFilteredData()
   }
+
+  useEffect(()=>{
+    if(props?.searchValue?.search === true){
+      pageNumber.current = 1;
+      handleFilteredData(true,props?.searchValue)
+    }
+  },[props?.searchValue])
 
  return(
         <div>      
@@ -1211,7 +1217,7 @@ const _handleSearch=(e)=>{
             transform: 'translateY(0)',
           }}
           >
-              <SearchBar searchbarWidth={searchbarWidth} search={props.searchValue} handleSearch={(e)=>_handleSearch(e)} selectSearch={(e)=>props?.selectSearch(e)}/>
+              <SearchBar searchbarWidth={searchbarWidth} search={props.searchValue} handleSearch={(e)=>_handleSearch(e)} selectSearch={(e)=>props?.selectSearch(e)} openFilterExpandedStage={()=>props?.openFilterExpandedStage()}/>
           </div>
          </div> 
 

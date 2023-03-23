@@ -21,7 +21,10 @@ class CustomDocument extends Document {
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
-        
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap"
+          rel="stylesheet"
+        />
         <link rel="icon" href="/favicon.ico" />
         </Head>
         <body style={{ fontFamily: "Poppins" }} >

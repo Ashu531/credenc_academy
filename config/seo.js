@@ -41,10 +41,6 @@ export default function SEO({
   return (
     <Head>
       <title>{title}</title>
-      <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap"
-          rel="stylesheet"
-      />
       {metaData.map(({ name, content }, i) => (
         <meta key={i} name={name} content={content} />
       ))}

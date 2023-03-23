@@ -24,7 +24,7 @@ import { useRouter } from 'next/router'
 import { useTheme } from "@emotion/react";
 import { GoogleLogin,GoogleOAuthProvider } from '@react-oauth/google';
 import UrlService from "../../helper/urlService";
-
+const EdtechPartnerKey = 'credenc-edtech-partner-key';
 const bookmarkKey = 'credenc-edtech-bookmarks';
 
 export default function LoginModal({
@@ -242,6 +242,7 @@ export default function LoginModal({
         setAuthApiStatus(ApiStatus.SUCCESS);
         handleModalClose();
         handleLogin()
+        _setThirdPartyUser(res.data)
         _goToHome()
         if (res?.status) localStorage.removeItem(bookmarkKey);
         return res.data;
@@ -266,6 +267,10 @@ export default function LoginModal({
 
     // dispatchLogin(response.tokenid);
   }
+
+  const _setThirdPartyUser=(data)=>{
+    localStorage.setItem(EdtechPartnerKey,JSON.stringify(data.partner_key));
+}
 
   const validateTokenAndObtainSession = ({ data, idToken }) => {
     const headers = {
@@ -438,7 +443,7 @@ export default function LoginModal({
     }
       
   }
-console.log(location)
+
   return (
     <div className="login-modal" onClick={handleModalClose}>
       <div 

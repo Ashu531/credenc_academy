@@ -19,12 +19,10 @@ function RangeInput({
     let scale = useRef(1);
 
     const calculateValue = (value, max=false) => {
-
         return value * scale.current + (max ? 0 : minValue);
     }
 
     const getValue = (value, type, max=false) => {
-
         const newValue = calculateValue(value, max);
 
         if(type === Lists.filters.COST){
@@ -40,7 +38,7 @@ function RangeInput({
     const [endValue, setEndValue] = useState(getValue(maxValue, type, true));
 
     const getSeekbarValues = ( minValue, maxValue) => {
-        console.log("SEEKBAR VALUES  -->", minValue, maxValue);  // --------------------------------------------------
+        console.log("SEEKBAR VALUES  -->", getValue(minValue, type));  // --------------------------------------------------
         setIsAppliedCostSlider(true);
         setStartValue(getValue(minValue, type));
         setEndValue(getValue(maxValue, type, true));
@@ -63,10 +61,10 @@ function RangeInput({
     
 
     useEffect(() => {
-        if (!!updateCostSlider) {
-            setStartValue(`INR ${minValue}`);
-            setEndValue(`INR ${maxValue}`);
-        }
+
+        setStartValue(`INR ${minValue}`);
+        setEndValue(`INR ${maxValue}`);
+
     },[updateCostSlider])
 
   return (

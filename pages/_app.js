@@ -50,7 +50,8 @@ class MyApp extends App {
      openMobileSearch: false,
      goingUp: false,
      coursePrevieModal: false,
-     bookmarkCount: 0
+     bookmarkCount: 0,
+
     };
     this.coursesApiStatus = React.createRef(new ApiStatus());
   }
@@ -277,13 +278,6 @@ class MyApp extends App {
   _handleSearch=(e)=>{
     this.setState({
       search: e
-    },()=>{
-      // if(e && e.length < 3){
-      //   this._getSmallQueryResult()
-      // }else{
-      //   this._getQueryResult()
-      // }
-      // this._getCardData(e)
     })
   }
 
@@ -291,57 +285,6 @@ class MyApp extends App {
     this.setState({
       search: ''
     })
-  }
-
-  _getSmallQueryResult=async(e)=>{
-    let res = await axios.get(`${constant.API_URL.DEV}/course/search/?query=${e}`)
-    .then(res => {
-      // this.coursesApiStatus.current.success();
-      console.log(res.data)
-      this.setState({
-        searchData: res.data
-      })
-      return res.data;
-    })
-    .catch(err => {
-      // this.coursesApiStatus.current.failed();
-      console.log(err);
-    });
-  }
-
-  _getQueryResult=async(e)=>{
-    let res = await axios.get(`${constant.API_URL.DEV}/course/search/?search=${e}`)
-    .then(res => {
-      // this.coursesApiStatus.current.success();
-      console.log(res.data)
-      this.setState({
-        searchData: res.data
-      })
-      return res.data;
-    })
-    .catch(err => {
-      // this.coursesApiStatus.current.failed();
-      console.log(err);
-    });
-  }
-
-  _getCardData = async(value)=>{
-
-    // this.coursesApiStatus.current.makeApiCall();
-    let pageNumber=0
-
-    let res = await axios.get(`${constant.API_URL.DEV}/search/?search=${value}/${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
-    .then(res => {
-      // this.coursesApiStatus.current.success();
-      this.setState({
-        searchData: res.data
-      })
-      return res.data;
-    })
-    .catch(err => {
-      // this.coursesApiStatus.current.failed();
-      console.log(err);
-    });
   }
 
   _openMobileSearch=()=>{

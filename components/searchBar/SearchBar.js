@@ -6,12 +6,16 @@ import axios from "axios";
 import constant from "../../config/constant";
 import queryIcon from '../../assets/images/icons/queryIcon.svg'
 import searchImage from '../../assets/images/icons/searchIcon.svg';
-
+import { useRouter } from 'next/router';
+import UrlService from "../../helper/urlService";
 
 export default function SearchBar(props) {
 
  const [searchQuery,setSearchQuery] = useState([])
  const [searchString,setSearchString] = useState('')
+ let location = useRouter();
+ let nextURL=location?.asPath?.substring(2,location?.asPath?.length)
+ let urlService = useRef(new UrlService(nextURL));
 
  useEffect(()=>{
    if(props?.search && props?.search.length > 0){
@@ -88,6 +92,7 @@ export default function SearchBar(props) {
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
+      props?.openFilterExpandedStage()
       customSearch()
     }
   }

@@ -17,6 +17,7 @@ import Image from "next/image";
 import constant from "../../config/constant";
 import { useRouter } from 'next/router'
 const bookmarkKey = 'credenc-edtech-bookmarks';
+const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
 // import { Mixpanel } from "../../../services/Mixpanel";
 // import MixpanelStrings from "../../../../values/mixpanelStrings";
@@ -112,11 +113,9 @@ export default function ForgotPasswordModal({
   }
 
   const handleSendOTP = async () => {
-    console.log(loginState,"loginAT")
     // Mixpanel.track(MixpanelStrings.SEND_OTP_FORGOT_PASSWORD, {
     //   'email_forgot_password' : emailInputState.toString(),
     // })
-    console.log(emailInputState,"emailInputState++++")
     if(validate()){
       let res = await axios.post(`${constant.API_URL.DEV}/signup_new/`, {
         'email': emailInputState.toString(),
@@ -160,6 +159,7 @@ export default function ForgotPasswordModal({
           setFormError(res['data']['error']);
         else{
         dispatchLogin(res.data.tokens);
+        _setThirdPartyUser(res.data)
         _goToHome()
         // setModalState(modalStates.NEW_PASSWORD);
         closeForgotPasswordModal()
@@ -181,6 +181,10 @@ export default function ForgotPasswordModal({
 
     
   }
+
+  const _setThirdPartyUser=(data)=>{
+    localStorage.setItem(EdtechPartnerKey,JSON.stringify(data.partner_key));
+}
 
   const setNewPassword = async () => {
     // Mixpanel.track(MixpanelStrings.SET_PASSWORD_FORGOT_PASSWORD, {
@@ -260,7 +264,10 @@ export default function ForgotPasswordModal({
 
     location.push({
       pathname: '/'
-    })  
+    },()=>{
+      location.reload() 
+    }) 
+    
   }
   useEffect(() => {
     if(!location.isReady) return;
@@ -270,6 +277,37 @@ export default function ForgotPasswordModal({
     }
 
   }, [location.isReady])
+
+  const resendOtp = async () => {
+    const response = await axios.post(`${constant.API_URL.DEV}/login_otp/`, {
+      // password: passwordInputState.value.trim(),
+      email: emailInputState.toLowerCase().trim()
+    })
+    .then(res => {
+      try{
+        console.log(res);
+        // dispatchLogin(res.data.tokens);
+        setAuthApiStatus(ApiStatus.SUCCESS);
+        // setTimeout(() => location.reload(), 100)
+
+        return res.data;
+      } catch(e) {
+        console.log(e);
+      }
+    })
+    .catch(err => {
+      setAuthApiStatus(ApiStatus.FAILED)
+      setFormError(err?.response?.data?.message || '')
+    })
+
+    // if (response?.response === "Successfully LoggedIn") {
+
+    //   let currentBookmarks = JSON.parse(localStorage.getItem(bookmarkKey));
+    //   // currentBookmarks = currentBookmarks?.split(',');
+    //   let res = await addBookmarkToBackend(currentBookmarks, response?.tokens?.access);
+    //   if (res?.status) localStorage.removeItem(bookmarkKey);
+    // }
+  }
 
   return (
     <div className="modal" onClick={handleForgotPasswordEnd}>
@@ -331,6 +369,9 @@ export default function ForgotPasswordModal({
           />
           <div style={{height: '1.6rem'}}></div>
           <Button text="Submit" linearGradient='green' classes="btn-secondary small-wrapper-colored" onClick={loginState === 1 ? verifyOtp : handleSendOTP} />
+          <div className='resend-otp' onClick={resendOtp}>
+            Resend OTP
+          </div>
         </div>}
 
           {/* {renderState(modalStates.NEW_PASSWORD) && <div className='reset-password-container'>

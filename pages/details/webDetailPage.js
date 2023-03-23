@@ -431,8 +431,6 @@ export default function WebDetailPage(props){
       })
     }
 
-    console.log(props?.thirdPartyUser,"props?.thirdPartyUser")
-
     return(
         <>
         { props?.detailData && props?.detailData != null ?
