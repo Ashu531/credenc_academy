@@ -14,6 +14,7 @@ import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
 import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer";
+import Head from 'next/head'
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 const EdtechAuthKey = 'credenc-edtech-authkey';
@@ -130,6 +131,10 @@ export default function Bookmarks(props){
 
     return(
       <> 
+      <Head>
+        <title>Bookmark Page</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       {
         mounted && 
         <div className='bookmark-container'>

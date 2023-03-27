@@ -448,7 +448,7 @@ export default function WebDetailPage(props){
            </div>
            <div className='detail-page-web-header'>
              {
-              props?.detailData?.platform?.logo !== null ? 
+              props?.detailData?.platform && props?.detailData?.platform?.logo !== null ? 
                <div className='detail-page-web-host'>
                 <Image loader={myLoader} src={props?.detailData?.platform?.logo} alt='platform-icon' height={38} width={38} objectFit="contain" />
                    <div className='detail-page-web-platform' style={{flexDirection: 'column'}}>
@@ -507,9 +507,14 @@ export default function WebDetailPage(props){
               }
            <div className='detail-page-web-course-data-container'>
                   <div className='course-data-left-container'>
-                    <div className='detail-page-content-course-name'>
+                    {
+                      props?.detailData?.course_name && props?.detailData?.course_name.length > 0 ? 
+                      <div className='detail-page-content-course-name'>
                             {props?.detailData?.course_name}
-                    </div>
+                      </div> :
+                      null
+                    }
+                    
                     {
                       props?.detailData?.one_liner &&  props?.detailData?.one_liner.length > 0 ? 
                             <span className='detail-page-content-one-liner' style={{marginTop: 10}}>
@@ -538,26 +543,16 @@ export default function WebDetailPage(props){
                             
                         </div>
                     </div>
-                    {/* <div className='detail-page-content-educator' style={{marginTop: 40}}>
-                        <span className='detail-page-content-educator-heading'>
-                            PARTNERS
-                        </span>
-                        <div className='detail-page-content-educator-container' style={{marginTop: 10}}>
-                            <div className='detail-page-content-educator-list'>
-                                {
-                                props?.detailData?.platform?.logo ?   <Image loader={myLoader} src={props?.detailData?.platform?.logo} priority={true} objectFit='contain' height={40} width={40} /> : null 
-                                }
-                                
-                                <div className='detail-page-content-educator-name' style={{marginLeft: 6}}>{props?.detailData?.platform?.name}</div>
-                            </div>
-                            
-                        </div>
-                    </div> */}
                   </div>
                   <div className='course-data-right-container'>
-                        <div className='detail-page-content-heading'>
+                    {
+                      props?.detailData?.program_type && props?.detailData?.program_type.length > 0 ?
+                      <div className='detail-page-content-heading'>
                             {props?.detailData?.program_type}
-                        </div> 
+                        </div> :
+                        null
+                    }
+                         
                         <div className='detail-page-info-container'>
                             <div className='detail-page-info-segement'>
                                 <div className='detail-page-content-educator-details'>
@@ -565,7 +560,7 @@ export default function WebDetailPage(props){
                                         <Image src={onlineIcon} height={28} width={28} objectFit='contain' />
                                         <div className='detail-page-content-educator-info-header'>MODE</div>
                                     </div>
-                                    <div className='detail-page-content-educator-info-subheader'>{props?.detailData?.class_modes && props?.detailData?.class_modes.length > 0 ? props?.detailData?.class_modes[0] : ''}</div>
+                                    <div className='detail-page-content-educator-info-subheader'>{props?.detailData?.class_modes && props?.detailData?.class_modes.length > 0 ? props?.detailData?.class_modes[0] : 'RECORDED'}</div>
                                 </div>
                             </div>
                             <div className='detail-page-info-segement'>
@@ -574,7 +569,7 @@ export default function WebDetailPage(props){
                                         <Image src={calendarIcon} height={28} width={28} objectFit='contain' />
                                         <div className='detail-page-content-educator-info-header'>DURATION</div>
                                     </div>
-                                    <div className='detail-page-content-educator-info-subheader'>{props?.detailData?.duration}</div>
+                                    <div className='detail-page-content-educator-info-subheader'>{props?.detailData?.duration && props?.detailData?.duration.length > 0 ? props?.detailData?.duration : '-'}</div>
                                 </div>
                             </div>
                             <div className='detail-page-info-segement'>
@@ -583,7 +578,7 @@ export default function WebDetailPage(props){
                                         <Image src={clockIcon} height={28} width={28} objectFit='contain' />
                                         <div className='detail-page-content-educator-info-header'>PACE</div>
                                     </div>
-                                    <div className='detail-page-content-educator-info-subheader'>{props?.detailData?.pace}</div>
+                                    <div className='detail-page-content-educator-info-subheader'>{props?.detailData?.pace && props?.detailData?.pace.length > 0 ? props?.detailData?.pace : '-'}</div>
                                 </div>
                             </div>
                             <div className='detail-page-info-segement'>
@@ -592,7 +587,7 @@ export default function WebDetailPage(props){
                                     <Image src={chartIcon} height={28} width={28} objectFit='contain' />
                                     <div className='detail-page-content-educator-info-header'>LEVEL</div>
                                 </div>
-                                <div className='detail-page-content-educator-info-subheader'>{props?.detailData?.start_level} - {props?.detailData?.end_level}</div>
+                                <div className='detail-page-content-educator-info-subheader'>{props?.detailData?.start_level && props?.detailData?.start_level.length > 0 ? props?.detailData?.start_level : ''} - {props?.detailData?.end_level && props?.detailData?.end_level.length > 0 ? props?.detailData?.end_level : ''}</div>
                             </div>
                             </div>
                             <div className='detail-page-info-segement'>
@@ -608,41 +603,45 @@ export default function WebDetailPage(props){
                   </div>
             </div>
             <div className='detail-page-web-course-grey-section' style={{flexDirection:'row'}}>
-              <div className='detail-page-grey-left-content'>
-                <div className='detail-page-mobile-intro-header'>
-                    Introduction
-                </div>
-                <div className='detail-page-mobile-intro-subHeader' style={{marginTop: 10,paddingRight: 50}}>
-                    {props?.detailData?.description}
-                </div>
-              </div>
-              <div className='detail-page-grey-right-content'>
                     {
-                        props?.toolData?.usps &&  props?.toolData?.usps.length > 0 ? 
-
-                        <div className='detail-page-mobile-benefit-section'>
-                        <div className='detail-page-mobile-benefit-content'>
-                            <div className='detail-page-mobile-benefit-content-header'>
-                                The Benefits You Will Get
-                            </div>
-                            {
-                                props?.toolData.usps &&  props?.toolData?.usps.length > 0 && props?.toolData?.usps.map((item,index)=>{
-                                    return(
-                                    <div className='detail-page-mobile-benefit-info' key={index}>
-                                        <Image src={benefitBullet} width={17} height={20} objectFit='contain' />
-                                        <div className='detail-page-mobile-benefit-info-header'>
-                                            {item}
-                                        </div>
-                                    </div>
-                                )
-                                    
-                                })
-                            }
+                      props?.detailData?.description && props?.detailData?.description.length > 0 ?
+                      <div className='detail-page-grey-left-content'>
+                        <div className='detail-page-mobile-intro-header'>
+                            Introduction
                         </div>
-
+                        <div className='detail-page-mobile-intro-subHeader' style={{marginTop: 10,paddingRight: 50}}>
+                            {props?.detailData?.description}
+                        </div>
+                      </div> : null
+                    }
+              
+              
+                    {
+                      props?.toolData?.usps &&  props?.toolData?.usps.length > 0 ? 
+                      <div className='detail-page-grey-right-content'>
+                          <div className='detail-page-mobile-benefit-section'>
+                          <div className='detail-page-mobile-benefit-content'>
+                              <div className='detail-page-mobile-benefit-content-header'>
+                                  The Benefits You Will Get
+                              </div>
+                              {
+                                  props?.toolData.usps &&  props?.toolData?.usps.length > 0 && props?.toolData?.usps.map((item,index)=>{
+                                      return(
+                                      <div className='detail-page-mobile-benefit-info' key={index}>
+                                          <Image src={benefitBullet} width={17} height={20} objectFit='contain' />
+                                          <div className='detail-page-mobile-benefit-info-header'>
+                                              {item}
+                                          </div>
+                                      </div>
+                                  )
+                                      
+                                  })
+                              }
+                          </div>
+                        </div>
                         </div> : null
                     }
-              </div>
+              
             </div>
             {
                props?.detailData?.eligibility && props?.detailData?.eligibility.length > 0 ?
@@ -674,7 +673,9 @@ export default function WebDetailPage(props){
                 </div> : null
             }
             <div className='detail-page-web-course-grey-section' style={{gap: 0,marginTop: 0}}>
-              <div className='detail-page-grey-left-content' style={{width: '50%'}}>
+              {
+                props?.toolData?.curriculum && props?.toolData?.curriculum.length > 0 ?
+                <div className='detail-page-grey-left-content' style={{width: '50%'}}>
                 <div className='detail-page-mobile-intro-header' style={{position:'relative'}}>
                   What you’ll learn
                   <div style={{position: 'absolute',top: 17}}>
@@ -766,7 +767,9 @@ export default function WebDetailPage(props){
                         )
                     })
                 }
-                </div>
+                </div> : null
+              }
+              
                 <div className='detail-page-grey-right-content' style={{marginLeft: 40}}>
                 {
                 props?.toolData?.skills && props?.toolData?.skills.length > 0 ? 
@@ -827,147 +830,150 @@ export default function WebDetailPage(props){
                 }
                 </div>
                 <div style={{...styles}}>
-                <div className='detail-page-mobile-intro'>
-                    <div className='detail-page-mobile-intro-header' style={{fontSize: 22}}>
-                    How Much Would You Pay?
-                    </div>
-                    <div className='detail-page-mobile-intro-subHeader' style={{marginTop: 10}}>
-                    Explore your pre-approved Loan and EMI Options! Have your pick and pay at your own discretion!
-                    </div>
-                    {
-                      props?.thirdPartyUser === constant.PARTNER_KEY.NJ ? 
-                      <div className='detail-page-mobile-emi-content' style={{marginTop: 30}}>
-                        <div className='detail-page-mobile-emi-section'>
-                            <div className='detail-page-mobile-emi-section-header'>
-                            EMI PLANS
-                            </div>
-                            <div className='detail-page-mobile-emi-section-nj-text'>
-                            Powered by NJ Capital
-                            </div>
-                        </div>
-                        <div className='detail-page-mobile-emi-section' style={{alignItems:'flex-start'}}>
-                        <div className='detail-page-mobile-emi-section-start-text' style={{display:'flex'}}>
-                        Starts <div style={{position:'relative'}}>
-                        &nbsp;from
-                            <div style={{position:'absolute',top: -12,right: -16}}>
-                                <Image src={questionDoodle} height={25} width={19} objectFit='contain' />
-                            </div>
-                            </div>
-                            
-                            </div>
-                            <div className='detail-page-mobile-emi-section-price-text'>
-                            ₹{props?.startingCost?.starting_cost?.amount}/mo*
-                            </div>
-                        </div>
-                    </div> : <div />
-                    }
-                    {
-                      props?.thirdPartyUser === constant.PARTNER_KEY.NJ ? 
-                      <div className='detail-page-mobile-nj-section'>
-                        <Image src={njIcon} objectFit='contain' height={21} width={23} />
-                        <div className='detail-page-mobile-nj-section-text'>
-                            You have a Pre-Approved Loan from NJ Capital
-                        </div>
-                    </div> : <div />
-                    }
-                    
-                    <div className='detail-page-mobile-price-options-container'>
-                    {
-                      props?.priceOptions?.emi_options && props?.priceOptions?.emi_options.map((item,index)=>{
-                        return(
-                        
-                      <div className='detail-page-mobile-price-options-card' key={index}>
-                      <div className='detail-page-mobile-price-options-card-header'>
-                          <div className='detail-page-mobile-price-options-card-plan' style={{display:'flex'}}>
-                          {item.noOfInstallment} Month
-                          <div style={{position:'relative'}}>
-                              &nbsp;EMI
+                {
+                  props?.priceOptions?.emi_options && props?.priceOptions?.emi_options.length > 0 ?
+                  <div className='detail-page-mobile-intro'>
+                  <div className='detail-page-mobile-intro-header' style={{fontSize: 22}}>
+                  How Much Would You Pay?
+                  </div>
+                  <div className='detail-page-mobile-intro-subHeader' style={{marginTop: 10}}>
+                  Explore your pre-approved Loan and EMI Options! Have your pick and pay at your own discretion!
+                  </div>
+                  {
+                    props?.thirdPartyUser === constant.PARTNER_KEY.NJ ? 
+                    <div className='detail-page-mobile-emi-content' style={{marginTop: 30}}>
+                      <div className='detail-page-mobile-emi-section'>
+                          <div className='detail-page-mobile-emi-section-header'>
+                          EMI PLANS
+                          </div>
+                          <div className='detail-page-mobile-emi-section-nj-text'>
+                          Powered by NJ Capital
+                          </div>
+                      </div>
+                      <div className='detail-page-mobile-emi-section' style={{alignItems:'flex-start'}}>
+                      <div className='detail-page-mobile-emi-section-start-text' style={{display:'flex'}}>
+                      Starts <div style={{position:'relative'}}>
+                      &nbsp;from
                           <div style={{position:'absolute',top: -12,right: -16}}>
                               <Image src={questionDoodle} height={25} width={19} objectFit='contain' />
                           </div>
                           </div>
-                          </div>
-                          {
-                            index === 0 ? 
-                            <div className='detail-page-mobile-price-options-card-recommendation'>
-                              <div className='detail-page-mobile-price-options-card-recommendation-text'>Recommended!</div>
-                          </div> : null
-                          }
                           
-                      </div>
-                      <div className='detail-page-mobile-price-options-card-description'>
-                      Pay ₹ {item.emiAmount} per month for {item.noOfInstallment} months with no interest cost.
-                      </div>
-                      <div className='detail-page-mobile-price-options-card-info'>
-                      <div className='detail-page-mobile-price-options-card-info-heading'>
-                          Monthly Installment
-                      </div>
-                      <div className='detail-page-mobile-price-options-card-info-subheading'>
-                          ₹ {item.emiAmount}
-                      </div>
-                      </div>
-                      <div className='detail-page-mobile-price-options-card-info'>
-                      <div className='detail-page-mobile-price-options-card-info-heading'>
-                      No. Installment
-                      </div>
-                      <div className='detail-page-mobile-price-options-card-info-subheading'>
-                      {item.noOfInstallment}
-                      </div>
-                      </div>
-                      {/* <div className='detail-page-mobile-price-options-card-info'>
-                      <div className='detail-page-mobile-price-options-card-info-heading'>
-                      Interest
-                      </div>
-                      <div className='detail-page-mobile-price-options-card-info-subheading'>
-                          0
-                      </div>
-                      </div> */}
-                      <div className='detail-page-mobile-price-options-card-info'>
-                      <div className='detail-page-mobile-price-options-card-info-heading'>
-                      Down Payment
-                      </div>
-                      <div className='detail-page-mobile-price-options-card-info-subheading'>
-                          {item.downPayment}
-                      </div>
-                      </div>
-                      {/* <div className='detail-page-mobile-price-options-card-info'>
-                      <div className='detail-page-mobile-price-options-card-info-heading'>
-                      GST@18
-                      </div>
-                      <div className='detail-page-mobile-price-options-card-info-subheading'>
-                      ₹ 12,125
-                      </div>
-                      </div> */}
-                      {/* <div className='detail-page-mobile-price-options-card-info'>
-                      <div className='detail-page-mobile-price-options-card-info-heading'>
-                      Discount
-                      </div>
-                      <div className='detail-page-mobile-price-options-card-info-subheading'>
-                          10%
-                      </div>
-                      </div> */}
-                      <div className='detail-page-mobile-price-options-card-info' style={{marginTop:12}}>
-                          <div style={{display:'flex',flexDirection:'column'}}>
-                          <div className='detail-page-mobile-price-options-card-info-amount-header'>
-                          Total Amount
                           </div>
-                          <div className='detail-page-mobile-price-options-card-info-amount-text'>
-                          ₹ {item.financeAmount}
-                          </div>
-                          </div>
-                          <div className='detail-page-mobile-price-options-card-nocost-emi'>
-                              <div className='detail-page-mobile-price-options-card-nocost-emi-text'>
-                              NO COST EMI
-                              </div>
+                          <div className='detail-page-mobile-emi-section-price-text'>
+                          ₹{props?.startingCost?.starting_cost?.amount}/mo*
                           </div>
                       </div>
+                  </div> : <div />
+                  }
+                  {
+                    props?.thirdPartyUser === constant.PARTNER_KEY.NJ ? 
+                    <div className='detail-page-mobile-nj-section'>
+                      <Image src={njIcon} objectFit='contain' height={21} width={23} />
+                      <div className='detail-page-mobile-nj-section-text'>
+                          You have a Pre-Approved Loan from NJ Capital
                       </div>
-                 
-                        )
-                      })
-                    }
-                  </div> 
-               </div>
+                  </div> : <div />
+                  }
+                  
+                  <div className='detail-page-mobile-price-options-container'>
+                  {
+                    props?.priceOptions?.emi_options && props?.priceOptions?.emi_options.map((item,index)=>{
+                      return(
+                      
+                    <div className='detail-page-mobile-price-options-card' key={index}>
+                    <div className='detail-page-mobile-price-options-card-header'>
+                        <div className='detail-page-mobile-price-options-card-plan' style={{display:'flex'}}>
+                        {item.noOfInstallment} Month
+                        <div style={{position:'relative'}}>
+                            &nbsp;EMI
+                        <div style={{position:'absolute',top: -12,right: -16}}>
+                            <Image src={questionDoodle} height={25} width={19} objectFit='contain' />
+                        </div>
+                        </div>
+                        </div>
+                        {
+                          index === 0 ? 
+                          <div className='detail-page-mobile-price-options-card-recommendation'>
+                            <div className='detail-page-mobile-price-options-card-recommendation-text'>Recommended!</div>
+                        </div> : null
+                        }
+                        
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-description'>
+                    Pay ₹ {item.emiAmount} per month for {item.noOfInstallment} months with no interest cost.
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-info'>
+                    <div className='detail-page-mobile-price-options-card-info-heading'>
+                        Monthly Installment
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-info-subheading'>
+                        ₹ {item.emiAmount}
+                    </div>
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-info'>
+                    <div className='detail-page-mobile-price-options-card-info-heading'>
+                    No. Installment
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-info-subheading'>
+                    {item.noOfInstallment}
+                    </div>
+                    </div>
+                    {/* <div className='detail-page-mobile-price-options-card-info'>
+                    <div className='detail-page-mobile-price-options-card-info-heading'>
+                    Interest
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-info-subheading'>
+                        0
+                    </div>
+                    </div> */}
+                    <div className='detail-page-mobile-price-options-card-info'>
+                    <div className='detail-page-mobile-price-options-card-info-heading'>
+                    Down Payment
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-info-subheading'>
+                        {item.downPayment}
+                    </div>
+                    </div>
+                    {/* <div className='detail-page-mobile-price-options-card-info'>
+                    <div className='detail-page-mobile-price-options-card-info-heading'>
+                    GST@18
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-info-subheading'>
+                    ₹ 12,125
+                    </div>
+                    </div> */}
+                    {/* <div className='detail-page-mobile-price-options-card-info'>
+                    <div className='detail-page-mobile-price-options-card-info-heading'>
+                    Discount
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-info-subheading'>
+                        10%
+                    </div>
+                    </div> */}
+                    <div className='detail-page-mobile-price-options-card-info' style={{marginTop:12}}>
+                        <div style={{display:'flex',flexDirection:'column'}}>
+                        <div className='detail-page-mobile-price-options-card-info-amount-header'>
+                        Total Amount
+                        </div>
+                        <div className='detail-page-mobile-price-options-card-info-amount-text'>
+                        ₹ {item.financeAmount}
+                        </div>
+                        </div>
+                        <div className='detail-page-mobile-price-options-card-nocost-emi'>
+                            <div className='detail-page-mobile-price-options-card-nocost-emi-text'>
+                            NO COST EMI
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+               
+                      )
+                    })
+                  }
+                </div> 
+                  </div> : null
+                }
                </div>
                {/* <div>
                     <div className='detail-page-mobile-intro'>
@@ -1086,7 +1092,7 @@ export default function WebDetailPage(props){
                     </div>
                </div> */}
               {
-                  props?.similarCourses.length > 0 ?
+                props?.similarCourses && props?.similarCourses.length > 0 ?
                     <div className='detail-page-mobile-intro' style={styles}>
                     <div className='detail-page-mobile-intro-header' style={{fontSize: 24,display:'flex',flexDirection:'row'}}>
                         Other 

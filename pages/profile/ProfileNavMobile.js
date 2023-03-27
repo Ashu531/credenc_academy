@@ -10,6 +10,7 @@ import constant from '../../config/constant';
 import EditProfile from './EditProfile'
 import ResetPassword from './ResetPassword'
 import PrivacyPolicy from '../privacy'
+import Head from 'next/head'
 
 export default function ProfileNavMobile({
     token, 
@@ -171,6 +172,10 @@ export default function ProfileNavMobile({
 
     return (
             <>
+            <Head>
+            <title>Profile Page</title>
+            <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
             {
                 mobileLoginNavigation ?  
                 <>

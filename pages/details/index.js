@@ -7,6 +7,7 @@ import axios from 'axios';
 import constant from '../../config/constant';
 import UrlService from "../../helper/urlService";
 import { NextPageContext } from "next";
+import Head from 'next/head'
 const EdtechToken = 'credenc-edtech-authkey';
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
@@ -204,6 +205,10 @@ export default function DetailPage(props){
 
     return(
     <>
+    <Head>
+      <title>Detail Page</title>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    </Head>
     {
         mounted && 
         <>

@@ -14,6 +14,7 @@ import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
 import MyCourseCard from '../../components/my-courses-card/My-Courses-Card'
+import Head from 'next/head'
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 const EdtechAuthKey = 'credenc-edtech-authkey';
@@ -92,7 +93,11 @@ export default function MyCourses(props){
   }
 
     return(
-      <> 
+      <>
+      <Head>
+        <title>Course Page</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head> 
       {
         mounted && 
         <div className='my-course-container'>

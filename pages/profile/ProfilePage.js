@@ -6,6 +6,7 @@ import PrivacyPolicy from '../privacy'
 import ForgotPasswordModal from '../../components/forgotPasswordModal/ForgotPasswordModal'
 import { useMediaQuery } from "react-responsive";
 import ProfileMobilePage from './ProfileNavMobile'
+import Head from 'next/head'
 const EdtechToken = 'credenc-edtech-authkey';
 
 export default function ProfilePage({
@@ -152,6 +153,10 @@ export default function ProfilePage({
   
   return (
     <>
+    <Head>
+      <title>Profile Page</title>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    </Head>
     {
         mounted && 
         <>
