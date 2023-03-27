@@ -137,8 +137,6 @@ export default function Header(props){
     }
     
   }
-
-  console.log(router,"router++++")
   
     return(
         <div className='navbar-wrapper'>

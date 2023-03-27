@@ -127,6 +127,7 @@ function DashboardDesktop(props) {
   let appliedFiltersCount = useRef(0);
   const [lastCourse, setLastCourse] = useState(null);
   const courseTypeRef = useRef(null);
+  const [cardApiSuccess,setCardApiSuccess] = useState(false)
   // const [compareTextVisible,setCompareTextVisible] = useState('');
 
   const [cardActionTaken,setCardActionTaken] = useState(false)
@@ -574,6 +575,7 @@ function DashboardDesktop(props) {
 
   const handleFilteredData = async (updatePageNumber = true,e) => {
     coursesApiStatus.current.start();
+    setCardApiSuccess(false)
     urlService.current.removeEntry('search');
 
     if(e?.name && e?.name.length > 0){
@@ -594,9 +596,11 @@ function DashboardDesktop(props) {
 
     if (pageNumber.current <= 1 || updatePageNumber === false) {
       // setCourses([...res.data]);
+      setCardApiSuccess(true)
       setCourseCardData([...res.data])
     } else {
       // setCourses([...courseCardData, ...res.data]);
+      setCardApiSuccess(true)
       setCourseCardData([...courseCardData, ...res.data])
     }
 
@@ -1138,7 +1142,9 @@ const _handleSearch=(e)=>{
                   }
                   // below props only if you need pull down functionality
                 >
-                 {courseCardData && courseCardData.map((item,index)=>{
+                 {
+                 courseCardData.length > 0 ?
+                 courseCardData && courseCardData.map((item,index)=>{
                     return(
                       <div key={index}>
                         <CourseCard 
@@ -1155,7 +1161,12 @@ const _handleSearch=(e)=>{
                         />
                       </div>
                     )
-                 })}
+                 })
+                :
+                courseCardData.length === 0 && cardApiSuccess ?
+                <Error type={ Lists.errorTypes.EMPTY } text={'No Result Found'} /> 
+                : null
+                }
                 </InfiniteScroll>
         </div>
       </div>
@@ -1291,6 +1302,8 @@ const _handleSearch=(e)=>{
         }
          {/* <HomeSkeleton /> */}
        </div> : 
+        courseCardData.length === 0 && cardApiSuccess ?
+        <Error type={ Lists.errorTypes.EMPTY } text={'No Result Found'} /> :
         <div className="course-card-container">
           {Array.from({length: 4}, (x, i) => {
                   return <HomeSkeleton key={i} />;
