@@ -1,0 +1,13 @@
+//robots.txt
+
+# Block all crawlers
+User-agent: *
+Disallow: /bookmarks
+Disallow: /my-courses
+Disallow: /details
+Disallow: /profile
+Disallow: /privacy
+
+# Allow all crawlers
+User-agent: *
+Allow: /

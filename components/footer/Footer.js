@@ -13,7 +13,9 @@ export default function Footer(props){
     }
 
     return(
-        <div className='footer' style={props.filterExpandedStage ? {position: 'absolute',bottom: '-5.8rem'} : null}>
+        <div className='footer' 
+        // style={props.filterExpandedStage ? {position: 'absolute',bottom: '-5.8rem'} : null}
+        >
             <div style={{paddingLeft: 23}} onClick={()=>props.toggleFooterModal()}>
             <h1 className='footer-credence-text'>
                 {props.title}

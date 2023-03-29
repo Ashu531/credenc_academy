@@ -267,28 +267,34 @@ const _goToDetailPage=(id)=>{
 
 const _handleApplyAction=()=>{
   let token = localStorage.getItem(EdtechToken)
-  if(token && token.length > 0){
-    if(props?.applied?.id != props?.data?.id){
-      props?.openApplyNowModal()
-    }
-    
-  }else{
-    if(window.innerWidth <= 500 && router?.pathname === '/details'){
-      router.push({
-        pathname: `/`,
-      })
-      props?.openLoginModal()
+  if(props?.data?.is_mooc === false){
+    if(token && token.length > 0){
+      if(props?.applied?.id != props?.data?.id){
+        props?.openApplyNowModal()
+      }
+      
     }else{
-      props?.openLoginModal()
+      if(window.innerWidth <= 500 && router?.pathname === '/details'){
+        router.push({
+          pathname: `/`,
+        })
+        props?.openLoginModal()
+      }else{
+        props?.openLoginModal()
+      }
+      
     }
-    
   }
+  
   
 }
 
 const _handleTrackItem=()=>{
-  props?.enableTrackStatus()
-  props?.openDetailModal()
+  if(props?.data?.is_mooc === false){
+    props?.enableTrackStatus()
+    props?.openDetailModal()
+  }
+  
 }
 
  return(
@@ -382,9 +388,18 @@ const _handleTrackItem=()=>{
           className='course-compare-buttton' 
           onClick={()=> _handleApplyAction()}
           >
+          {
+            props?.data?.is_mooc === true ? 
+            <a href={props?.data?.course_link} target="_blank" rel="noopener">
             <span className='add-to-compare-text'>
-              { props?.applied?.state && props?.applied?.id === props?.data?.id ? "Applied" : "Apply Now" }
+              Go To Course
             </span>
+            </a> :
+            <span className='add-to-compare-text'>
+            { props?.applied?.state && props?.applied?.id === props?.data?.id ? "Applied" : "Apply Now" }
+          </span>
+          }
+            
         </div>
       }
      
@@ -403,9 +418,18 @@ const _handleTrackItem=()=>{
                     className='track-button-content' 
                      style={{border:'1px solid #00CB9C',padding: 12,borderRadius: 4}} 
                      onClick={()=> _handleTrackItem()}>
-                    <div className='track-text'>
-                      Track Application
-                    </div>
+                       {
+                         props?.data?.is_mooc === true ?
+                            <a href={props?.data?.course_link} target="_blank" rel="noopener">
+                              <div className='track-text'>
+                              Go To Course
+                              </div>
+                            </a> :
+                          <div className='track-text'>
+                            Track Application
+                          </div>
+                       }
+                    
                   </div>
                   : 
                   <div 

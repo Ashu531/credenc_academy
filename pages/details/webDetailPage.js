@@ -354,7 +354,7 @@ export default function WebDetailPage(props){
       }
 
       const handleButtonClick=()=>{
-        
+        if(props?.detailData?.is_mooc === false){
           if(props?.token && props?.token.length > 0){
             if(applied?.state === false){
               if((props?.detailData?.applied === false)){
@@ -368,9 +368,7 @@ export default function WebDetailPage(props){
           }else{
             props?.openLoginModal()
           }
-        
-       
-          
+        }
       }
 
       const _handleTopicOpen=(data)=>{
@@ -485,15 +483,31 @@ export default function WebDetailPage(props){
                     <span className='count-text' style={upvoted ? {color: '#FFFFFF'} : null}>{toggleUpvote ? props?.detailData?.up_votes + 1 : props?.detailData?.up_votes}</span>
                     <Image src={upvoted ? upvoteLogoDark : upvoteLogo} width={20} height={20} objectFit='contain' />
                    </div>
-                   <div>
-                    <NewButton 
-                      width={'172px'} 
-                      height={'44px'} 
-                      linearGradient={'linear-gradient(94.15deg, #FF00DD 0%, #5100FF 99.97%)'}
-                      text={((props?.detailData?.applied === true) || (applied?.state === true && applied?.id === props?.detailData?.id)) ? 'Applied' : 'Apply Now'}
-                      handleButtonClick={()=> handleButtonClick()}
-                    />
-                   </div>
+                   {
+                     props?.detailData?.is_mooc === true ? 
+                        <a href={props?.detailData?.course_link} target="_blank" rel="noopener">
+                          <div>
+                            <NewButton 
+                              width={'172px'} 
+                              height={'44px'} 
+                              linearGradient={'linear-gradient(94.15deg, #FF00DD 0%, #5100FF 99.97%)'}
+                              text={"Go To Course"}
+                              // handleButtonClick={()=> handleButtonClick()}
+                            />
+                          </div>
+                        </a>
+                        :
+                        <div>
+                          <NewButton 
+                            width={'172px'} 
+                            height={'44px'} 
+                            linearGradient={'linear-gradient(94.15deg, #FF00DD 0%, #5100FF 99.97%)'}
+                            text={((props?.detailData?.applied === true) || (applied?.state === true && applied?.id === props?.detailData?.id)) ? 'Applied' : 'Apply Now'}
+                            handleButtonClick={()=> handleButtonClick()}
+                          />
+                        </div>
+                   }
+                   
                 </div>
             </div>
             

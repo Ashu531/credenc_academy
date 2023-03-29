@@ -717,6 +717,19 @@ export default function DetailModal(props){
             {
               props?.status === true || courseData?.applied === true ? 
               <div /> :
+              
+              courseData?.is_mooc === true ? 
+            <a href={props?.course_link} target="_blank" rel="noopener" style={{width: '60%'}}>
+              <div className='detail-modal-footer-section-right' 
+                  style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
+                  <span className='apply-now-button'>
+                      <span className='apply-now-button-text'>
+                          Go To Course
+                      </span>
+                  </span>
+              </div>
+              </a> :
+              
               <div className='detail-modal-footer-section-right' 
                 style={ window.innerWidth <= 500 ? {width:'88%'} : null } onClick={()=>_handleApplyModal()}>
                 <span className='apply-now-button'>

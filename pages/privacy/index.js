@@ -3,6 +3,7 @@ import pointerIcon from '../../assets/images/icons/caret-right-icon.svg';
 import Image from "next/image";
 import Header from '../../components/header/Header'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 // import { shouldNavbarVisible } from '../../services/shouldNavbarVisible';
 // import ProfileHeader from '../profilePage/ProfileHeader';
 
@@ -90,7 +91,11 @@ export default function PrivacyPolicy(props) {
     }, [location]);
 
   return (
-    
+    <>
+    <Head>
+        <title>Privacy Policy</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head> 
     <div className='privacy-policy' style={props.profilePage === true ? {display: 'block', paddingTop:'2rem'} : {display: 'block'}} >
         <h3 className='heading' style={{textAlign:"center"}}>Privacy Policy</h3>
         <span className='date'>This Privacy Policy was last revised on 11 April, 2022</span>
@@ -456,6 +461,6 @@ export default function PrivacyPolicy(props) {
              other related policies of the third-party websites linked through our Platform.
         </span>
     </div>
-    
+    </>
   )
 }
