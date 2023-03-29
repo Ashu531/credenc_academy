@@ -390,7 +390,7 @@ const _handleTrackItem=()=>{
           >
           {
             props?.data?.is_mooc === true ? 
-            <a href={props?.data?.course_link} target="_blank" rel="noopener">
+            <a href={props?.data?.course_link} target="_blank" rel="noreferrer">
             <span className='add-to-compare-text'>
               Go To Course
             </span>
@@ -420,7 +420,7 @@ const _handleTrackItem=()=>{
                      onClick={()=> _handleTrackItem()}>
                        {
                          props?.data?.is_mooc === true ?
-                            <a href={props?.data?.course_link} target="_blank" rel="noopener">
+                            <a href={props?.data?.course_link} target="_blank" rel="noreferrer">
                               <div className='track-text'>
                               Go To Course
                               </div>

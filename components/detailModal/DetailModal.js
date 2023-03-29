@@ -719,7 +719,7 @@ export default function DetailModal(props){
               <div /> :
               
               courseData?.is_mooc === true ? 
-            <a href={props?.course_link} target="_blank" rel="noopener" style={{width: '60%'}}>
+            <a href={props?.course_link} target="_blank" rel="noreferrer"style={{width: '60%'}}>
               <div className='detail-modal-footer-section-right' 
                   style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
                   <span className='apply-now-button'>

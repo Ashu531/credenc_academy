@@ -485,7 +485,7 @@ export default function WebDetailPage(props){
                    </div>
                    {
                      props?.detailData?.is_mooc === true ? 
-                        <a href={props?.detailData?.course_link} target="_blank" rel="noopener">
+                        <a href={props?.detailData?.course_link} target="_blank" rel="noreferrer">
                           <div>
                             <NewButton 
                               width={'172px'} 
