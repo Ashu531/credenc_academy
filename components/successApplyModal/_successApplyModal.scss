@@ -63,6 +63,28 @@
                 }
             }
 
+            .success-apply-modal-middle-section{
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                padding: 6px;
+                gap: 12px;
+                background: rgba(0, 203, 156, 0.1);
+                border-radius: 4px;
+                // margin-top: 20px;
+                width: 100%;
+
+                .success-apply-modal-middle-section-text{
+                    font-family: 'Poppins';
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 12px;
+                    line-height: 18px;
+                    color: #009572;
+                }
+            }
+
             .success-apply-modal-bottom-section{
                 width: 100%;
                 display: flex;

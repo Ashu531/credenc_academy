@@ -9,6 +9,7 @@ import reservedImage from '../../assets/images/icons/reservedImage.svg'
 import chatIcon from '../../assets/images/icons/chatIcon.svg'
 import {ChatWidget} from "@papercups-io/chat-widget";
 import constant from '../../config/constant';
+import credencAcademy from '../../assets/images/icons/credencAcademy.svg'
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
 export default function SuccessApplyModal(props){
@@ -86,6 +87,12 @@ export default function SuccessApplyModal(props){
                                     <div className='success-apply-modal-course-name'>
                                       Product Design from Scratch with Mentor Support.
                                     </div>
+                                  </div>
+                              </div>
+                              <div className='success-apply-modal-middle-section'>
+                                  <Image src={credencAcademy} objectFit='contain' height={31} width={63} />
+                                  <div className='success-apply-modal-middle-section-text'>
+                                      Credenc Loan is available for this course
                                   </div>
                               </div>
                               <div className='success-apply-modal-bottom-section'>

@@ -108,6 +108,23 @@ export default function DetailPage(props){
     }
 
     const _getpaymentDetails=async(id)=>{
+      if(token && token.length > 0){
+        let res = await axios.get(`${constant.API_URL.DEV}/course/price_options/${id}/`,{
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        .then(res => {
+          // this.coursesApiStatus.current.success();
+          setPriceOptions(res.data.data)
+          // setMounted(true);
+          return res.data;
+        })
+        .catch(err => {
+          // this.coursesApiStatus.current.failed();
+          console.log(err);
+        });
+      }else{
         let res = await axios.get(`${constant.API_URL.DEV}/course/price_options/${id}/`)
           .then(res => {
             // this.coursesApiStatus.current.success();
@@ -118,7 +135,9 @@ export default function DetailPage(props){
           .catch(err => {
             // this.coursesApiStatus.current.failed();
             console.log(err);
-          }); 
+          });
+      }
+         
     }
 
     const _getToolData=async(id)=>{

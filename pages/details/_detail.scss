@@ -469,6 +469,85 @@
                 }
             }
         }
+
+        .detail-page-mobile-lumpsum-content{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 24px;
+            gap: 16px;
+            background: var(--defaultBackground);
+
+            .detail-page-mobile-lumpsum-header{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 24px;
+                text-transform: uppercase;
+                color: #222222;
+            }
+
+            .detail-page-mobile-lumpsum-card{
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 24px;
+                gap: 32px;
+                background: #FFFFFF;
+                border: 1px solid #DDDDDD;
+                box-shadow: 6px 6px 0px #F7F7F7;
+
+                .detail-page-mobile-lumpsum-card-header{
+                    font-family: 'Poppins';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 12px;
+                    line-height: 18px;
+                    color: #717171;
+                }
+
+                .detail-page-mobile-lumpsum-card-detail{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    padding: 0px;
+                    gap: 63px;
+
+                    .detail-page-mobile-lumpsum-card-detail-label{
+                        font-family: 'Poppins';
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 14px;
+                        line-height: 21px;
+                        color: #000000;
+                    }
+
+                    .detail-page-mobile-lumpsum-card-detail-amount{
+                        font-family: 'Poppins';
+                        font-style: normal;
+                        font-weight: 600;
+                        font-size: 14px;
+                        line-height: 21px;
+                        color: #000000;
+                    }
+
+                    .detail-page-mobile-lumpsum-total-amount-header{
+                        font-family: 'Poppins';
+                        font-style: normal;
+                        font-weight: 500;
+                        font-size: 12px;
+                        line-height: 18px;
+                        text-align: center;
+                        color: #222222;
+                        margin-top: 16px;
+                    }
+                }
+            }
+        }
+        
     }
 
     .detail-page-mobile-batch-card-container{
@@ -1357,6 +1436,98 @@
                     font-size: 18px;
                     line-height: 27px;
                     color: #8F14CC;
+                }
+            }
+        }
+
+        .detail-page-mobile-lumpsum-content{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 24px;
+            gap: 16px;
+            // background: var(--defaultBackground);
+
+            .detail-page-mobile-lumpsum-header{
+                font-family: 'Poppins';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 24px;
+                text-transform: uppercase;
+                color: #222222;
+            }
+
+            .detail-page-mobile-lumpsum-card{
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 24px;
+                gap: 32px;
+                background: #FFFFFF;
+                border: 1px solid #DDDDDD;
+                box-shadow: 6px 6px 0px #F7F7F7;
+                border-radius: 6px;
+
+                .detail-page-mobile-lumpsum-card-header{
+                    font-family: 'Poppins';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 12px;
+                    line-height: 18px;
+                    color: #717171;
+                }
+
+                .detail-page-mobile-lumpsum-card-detail{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    padding: 0px;
+                    gap: 63px;
+                    width: 100%;
+
+                    .detail-page-mobile-lumpsum-card-detail-label{
+                        font-family: 'Poppins';
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 14px;
+                        line-height: 21px;
+                        color: #000000;
+                    }
+
+                    .detail-page-mobile-lumpsum-card-detail-amount{
+                        font-family: 'Poppins';
+                        font-style: normal;
+                        font-weight: 600;
+                        font-size: 14px;
+                        line-height: 21px;
+                        color: #000000;
+                    }
+
+                    
+                }
+
+                .detail-page-mobile-lumpsum-total-amount-header{
+                    font-family: 'Poppins';
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 12px;
+                    line-height: 18px;
+                    text-align: center;
+                    color: #222222;
+                    margin-top: 16px;
+                }
+                .detail-page-mobile-lumpsum-total-amount{
+                    font-family: 'Poppins';
+                    font-style: normal;
+                    font-weight: 700;
+                    font-size: 20px;
+                    line-height: 30px;
+                    text-align: center;
+                    color: #8F14CC;
+                    margin-top: -25px;
                 }
             }
         }

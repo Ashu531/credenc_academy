@@ -32,6 +32,7 @@ import stopWatchIcon from '../../assets/images/icons/stopWatchIcon.svg'
 const EdtechTheme = 'EdtechTheme';
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
+const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
 const spinnerCSS = {
     display: "block",
@@ -61,6 +62,7 @@ export default function DetailModal(props){
       data : {}
     })
     const [leftCardAlign,setLeftAlign] = useState(false);
+    const [thirdPartyUser,setThirdPartyUser] = useState(false);
     let [loading, setLoading] = useState(true);
   
 
@@ -76,12 +78,24 @@ export default function DetailModal(props){
      }
 
      useEffect(()=>{
-        setMounted(true);
+      _retrievePartnerKey()
+       
      },[])
 
-    useEffect(()=>{
-        console.log(props?.detailData,"props?.detailData++++")
-        _handlePreviewData(props?.detailData)
+   
+
+    const _retrievePartnerKey=()=>{
+ 
+      let partnerKey = JSON.parse(localStorage.getItem(EdtechPartnerKey));
+      if(partnerKey && partnerKey.length > 0){
+       setThirdPartyUser(partnerKey)
+      }
+      setMounted(true);
+      
+     }
+
+     useEffect(()=>{
+      _handlePreviewData(props?.detailData)
     },[])
 
     const _handlePreviewData=async(item)=>{
@@ -458,7 +472,9 @@ export default function DetailModal(props){
                       {moment(courseData?.applied?.enroll_date).format("MMM Do YY")}
                       </div>
                   </div>
-                  <div className='application-status-stripe'>
+                  {
+                    thirdPartyUser === constant.PARTNER_KEY.NJ ? 
+                    <div className='application-status-stripe'>
                       <div className='application-image-content'>
                           <Image src={stopWatchIcon} width={18} height={18} objectFit="contain" />
                           <div className='label-text'>
@@ -468,7 +484,9 @@ export default function DetailModal(props){
                       <div className='sublabel-text' style={{color: '#138808'}}>
                          In Progress
                       </div>
-                  </div>
+                    </div> : <div />
+                  }
+                 
 
                   <div className='application-status-stripe'>
                       <div className='application-image-content'>
@@ -477,9 +495,16 @@ export default function DetailModal(props){
                             Enrollment
                           </div>
                       </div>
+                      {
+                        thirdPartyUser === constant.PARTNER_KEY.NJ ? 
+                        <div className='sublabel-text' style={{color: '#E12D2B'}}>
+                            Pending 
+                      </div> : 
                       <div className='sublabel-text' style={{color: '#E12D2B'}}>
-                        Pending
-                      </div>
+                            In Progress 
+                     </div>
+                      }
+                      
                   </div>
               </div>
             </div> : 
@@ -703,7 +728,7 @@ export default function DetailModal(props){
          >
             <div className='detail-modal-footer-section-left' style={window.innerWidth < 500 ? {width: '51%'} : null}>
                 {
-                  props?.detailData?.base_price > 0 ?
+                  props?.detailData?.final_pricing && props?.detailData?.final_pricing.length > 0 ?
                     <span className='price-text'>
                       { props?.detailData?.final_pricing.length > 0 ? props?.detailData?.final_pricing : 'Price Unknown'}
                     </span>
