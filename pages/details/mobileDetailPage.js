@@ -35,6 +35,8 @@ import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyMo
 // import Link from '@mui/material/Link';
 import Link from "next/link";
 import MobileDetailSkeleton from '../../components/detailPageSkeletonMobile';
+import credencAcademy from '../../assets/images/icons/credencAcademy.svg';
+import constant from '../../config/constant';
 
 const styles = {
     width: "100%",
@@ -574,9 +576,7 @@ export default function DetailPageMobile(props){
            </div> : null
          }
 
-           {
-             props?.priceOptions?.emi_options && props?.priceOptions?.emi_options.length > 0 ?
-             <div className='detail-page-mobile-intro' style={{background: '#FFFFFF'}}>
+          <div className='detail-page-mobile-intro' style={{background: '#FFFFFF'}}>
              <div className='detail-page-mobile-intro-header' style={{fontSize: 22}}>
              How Much Would You Pay?
              </div>
@@ -603,16 +603,26 @@ export default function DetailPageMobile(props){
                     
                    </div>
                    <div className='detail-page-mobile-emi-section-price-text'>
-                   ₹10,423/mo*
+                   ₹{props?.startingCost?.starting_cost && props?.startingCost?.starting_cost.length > 0 ?  props?.startingCost?.starting_cost[0] : 'Unknown'}
                    </div>
                  </div>
              </div>
-             <div className='detail-page-mobile-nj-section'>
-             <Image src={njIcon} objectFit='contain' height={21} width={23} />
-             <div className='detail-page-mobile-nj-section-text'>
-               You have a Pre-Approved Loan from NJ Capital
-             </div>
-             </div>
+             {
+               props?.thirdPartyUser === constant.PARTNER_KEY.NJ ?
+               <div className='detail-page-mobile-nj-section'>
+                  <Image src={njIcon} objectFit='contain' height={21} width={23} />
+                  <div className='detail-page-mobile-nj-section-text'>
+                    You have a Pre-Approved Loan from NJ Capital
+                  </div>
+               </div> :
+               <div className='detail-page-mobile-nj-section'>
+                  <Image src={credencAcademy} objectFit='contain' height={31} width={63} />
+                      <div className='detail-page-mobile-nj-section-text'>
+                          Credenc Loan is available for this course
+                      </div>
+              </div>
+             }
+             
              <div className='detail-page-mobile-price-options-container'>
              
                {
@@ -707,10 +717,56 @@ export default function DetailPageMobile(props){
                    )
                  })
                }
-             
+             <div className='detail-page-mobile-price-options-container'>
+                   {
+                     props?.priceOptions?.price_options?.lumpsum && props?.priceOptions?.price_options?.lumpsum.map((item,index)=>{
+                       return(
+                         <div className='detail-page-mobile-lumpsum-content' key={index}>
+                           <div className='detail-page-mobile-lumpsum-header'>
+                             LUMPSUM
+                           </div>
+                           <div className='detail-page-mobile-lumpsum-card'>
+                              {/* <div className='detail-page-mobile-lumpsum-card-header'>
+                                *First 7 days free trial or any sort of disclaimer comes here. 
+                              </div> */}
+                              <div className='detail-page-mobile-lumpsum-card-detail'>
+                                <div className='detail-page-mobile-lumpsum-card-detail-label'>
+                                  Base Price
+                                </div>
+                                <div className='detail-page-mobile-lumpsum-card-detail-amount'>
+                                ₹{item.amount}
+                                </div>
+                              </div>
+                              <div className='detail-page-mobile-lumpsum-card-detail'>
+                                <div className='detail-page-mobile-lumpsum-card-detail-label'>
+                                Discount
+                                </div>
+                                <div className='detail-page-mobile-lumpsum-card-detail-amount'>
+                                ₹0
+                                </div>
+                              </div>
+                              <div className='detail-page-mobile-lumpsum-card-detail'>
+                                <div className='detail-page-mobile-lumpsum-card-detail-label'>
+                                Tax@18%
+                                </div>
+                                <div className='detail-page-mobile-lumpsum-card-detail-amount'>
+                                  Included in Base Price
+                                </div>
+                              </div>
+                              <div className='detail-page-mobile-lumpsum-total-amount-header'>
+                                Total Amount
+                              </div>
+                              <span className='detail-page-mobile-lumpsum-total-amount'>
+                              ₹{item.amount}
+                              </span>
+                           </div>
+                         </div>
+                       )
+                     })
+                   } 
+                  </div>
               </div>
-            </div> : null
-           }
+            </div> 
            
             
             {/* <div className='detail-page-mobile-intro'>
