@@ -366,8 +366,8 @@ const _handleTrackItem=()=>{
           :  <span className='course-pay'>Price Model</span>}
           {
             props?.data?.final_pricing && props?.data?.final_pricing.length > 0 ? 
-            <span className='course-price'>₹{props?.data?.final_pricing}</span>  :
-            <span className='course-price'>₹{props?.data?.finance_display[0]}</span> 
+            <span className='course-price'>{props?.data?.final_pricing > 0 ? `₹${props?.data?.final_pricing}` : 'Free'}</span>  :
+            <span className='course-price'>{props?.data?.finance_display[0] > 0 ? `₹${props?.data?.finance_display[0]}` : 'Free'}</span> 
           }
             
           </span>

@@ -269,8 +269,10 @@ export default function LoginModal({
   }
 
   const _setThirdPartyUser=(data)=>{
-    localStorage.setItem(EdtechPartnerKey,JSON.stringify(data.partner_key));
-}
+    if(data.partner_key && data.partner_key.length > 0){
+      localStorage.setItem(EdtechPartnerKey,JSON.stringify(data.partner_key));
+    }
+  }
 
   const validateTokenAndObtainSession = ({ data, idToken }) => {
     const headers = {

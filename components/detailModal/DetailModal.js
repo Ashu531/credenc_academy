@@ -723,18 +723,20 @@ export default function DetailModal(props){
              alignItems:'flex-start',
              background: '#F7F7F7',
             } 
-             : null 
+             : {
+               marginTop: 10
+             } 
             }
          >
             <div className='detail-modal-footer-section-left' style={window.innerWidth < 500 ? {width: '51%'} : null}>
                 {
                   props?.detailData?.final_pricing && props?.detailData?.final_pricing.length > 0 ?
                     <span className='price-text'>
-                      { props?.detailData?.final_pricing.length > 0 ? props?.detailData?.final_pricing : 'Price Unknown'}
+                      { props?.detailData?.final_pricing.length > 0 ? `₹${props?.detailData?.final_pricing}` : 'Free'}
                     </span>
                     : 
                     <span className='price-text'>
-                      { courseData?.finance_display[0] ? `₹${courseData?.finance_display[0]}` : 'Price Unknown'}
+                      { courseData?.finance_display[0] > 0 ? `₹${courseData?.finance_display[0]}` : 'Free'}
                     </span> 
                 }
                 
@@ -766,9 +768,8 @@ export default function DetailModal(props){
             }
             
          </div>
-         {/* {
-             window.innerWidth <= 500 ?  */}
-             <span 
+        
+         <span 
                 className='detail-modal-close-icon' 
                 onClick={()=>props.closeDetailModal()} 
                 style={
@@ -784,9 +785,8 @@ export default function DetailModal(props){
                 }}
             >
                  <Image src={closeIcon} objectFit='cover' height={20} width={20} />
-             </span>
-             : null
-         {/* } */}
+         </span>
+            
         </div>
          : 
          <div style={spinnerContainer}>
