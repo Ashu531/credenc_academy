@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from "next/image";
 import axios from "axios";
 import bookmarkIcon from '../../assets/images/icons/bookmark.svg'
+import arrowRight from '../../assets/images/icons/arrowRight.svg'
 import bookmarkIconDark from '../../assets/images/icons/bookmark-dark.svg'
-import upvoteLogo from '../../assets/images/icons/upvote.svg'
+// import upvoteLogo from '../../assets/images/icons/upvote.svg'
 import upvoteLogoDark from '../../assets/images/icons/thumbs-up-dark.svg'
 import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
 import defaultEducator from '../../assets/images/icons/defaultEducator.svg'
@@ -248,35 +249,28 @@ const _goToDetailPage=(id)=>{
         mounted && 
         <div 
           className="card-container"
-          style={window.innerWidth <= 500 ? {minWidth: 0,padding: 0} : {padding:0} } 
+          style={window.innerWidth <= 500 ? {minWidth: 0,padding: 0} : null } 
         >
-        <div 
-        className='card-header' 
-        style={!isCardOpen && window.innerWidth > 500 ? {padding: 12} : {paddingLeft:12,paddingRight: 12}}
-        >
+        <div className='card-header'>
           <Image loader={myLoader} src={props?.data?.platform?.logo ? props?.data?.platform?.logo : defaultPlatform} height={36} width={36} alt='courseLogo' style={{borderRadius: '50%'}} objectFit="contain"/>
+          {/* <Image loader={myLoader} src={props?.data?.educator[0]?.logo && props?.data?.educator[0]?.logo.length > 0 ? props?.data?.educator[0]?.logo : defaultEducator } objectFit="cover"  height={36} width={36} alt='instituteLogo' style={{borderRadius: '50%'}}/> */}
           <div className='card-header-end-content'>
                 <div className='grey-container' 
                      onClick={()=>_handleCardBookmark(props?.data)} 
-                      style={bookmarkVisible === true ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}
                 >
-                    <Image src={bookmarkVisible === true  ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={20} width={20}/>
+                    <Image src={bookmarkVisible === true  ? selectedBookmark : bookmarkIcon} objectFit="contain" alt='selectedBookmark' height={32} width={32}/>
                 </div>
-          <div 
+          {/* <div 
               className='grey-container' 
               onClick={()=> _handleUpvote(props?.data)}
               style={upvoted ? {background: 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)'} : null}
               >
                   <span className='count-text' style={upvoted ? {color: '#FFFFFF'} : null}>{toggleUpvote ? props?.data.up_votes + 1 : props?.data.up_votes}</span>
                   <Image src={ upvoted ? upvoteLogoDark : upvoteLogo} objectFit="cover" alt='upvoteLogo' height={20} width={20} />
-              </div>
+              </div> */}
           </div>
         </div>
-        <div  className = {!isCardOpen ? "card-image-content" : "card-image-content card-image-content-open"}  onClick={()=> props?.openDetailModal() } >
-            <Image loader={myLoader} src={props?.data?.educator[0]?.logo && props?.data?.educator[0]?.logo.length > 0 ? props?.data?.educator[0]?.logo : defaultEducator } objectFit="cover"  height={!isCardOpen ? 82 : 60} width={!isCardOpen ? 82 : 60} alt='instituteLogo' style={{borderRadius: '50%'}}/>
-            <span className='institute-name'>{props?.data?.educator[0]?.name.length > 30 ? props?.data?.educator[0]?.name.substring(0,30) + '...' : props?.data?.educator[0]?.name}</span>
-        </div>
-        <div className = {!isCardOpen ? "card-course-content" : "card-course-content open"} onClick={()=> _goToDetailPage(props?.data?.id)}>
+        <div className = {"card-course-content"} onClick={()=> _goToDetailPage(props?.data?.id)}>
           <div className='course-name' onMouseEnter={()=>setCourseNameTooltip(true)} onMouseLeave={()=>setCourseNameTooltip(false)}>
             { props?.data?.course_name && props?.data?.course_name.length > 50 ? props?.data?.course_name.substring(0, 50) + '...' : props?.data?.course_name} 
           </div>
@@ -285,24 +279,21 @@ const _goToDetailPage=(id)=>{
           <span className="course-name-tooltiptext">{props?.data?.course_name}</span>
           </div> : null
           }
-          <h2 className='course-duration' style={{height: '21px'}}>
-          {props?.data?.class_modes}
-          </h2>
-          <h2 className='course-duration'>
-          {props?.data?.duration}
-          </h2>
-          <span className='course-price-content' style={!isCardOpen ? null : {marginTop: 22,marginBottom: 14}}>
-          {props?.data?.price_list?.length > 0 ? 
-            <span className='course-pay'>{props?.data?.price_list[0]}</span>
-          :  <span className='course-pay'>Price Model</span>}
-           {
-             props?.data?.final_pricing && props?.data?.final_pricing.length > 0 ? 
-             <span className='course-price'>{props?.data?.final_pricing}</span> 
-             :
-             <span className='course-price'>{props?.data?.finance_display[0] === "Free" || props?.data?.finance_display[0] === 0 || !props?.data?.finance_display[0] ? "Unknown" : ` ₹${props?.data?.finance_display[0]}` }</span>
-           }
-            
-          </span>
+          <div className='course-detail-container'>
+            <div className='content-container'>
+                <h2 className='course-duration'>
+                  {props?.data?.class_modes}
+                </h2>
+            </div>
+            <div className='content-container' style={{marginLeft: 20}}>
+                <h2 className='course-duration'>
+                {props?.data?.duration}
+                </h2>
+            </div>
+          </div>
+          <div className='content-description'>
+            {props?.data?.one_liner.length > 50 ? props?.data?.one_liner.substring(0,90)+'...' : props?.data?.one_liner}
+          </div>
       </div>
 
     {  window.innerWidth > 500 ? 
@@ -310,16 +301,34 @@ const _goToDetailPage=(id)=>{
     className='course-button-content' 
     // style={{...compareButtonVisible,marginLeft:0}}
     >
-        <div className='course-detail-button' onClick={()=> props?.openDetailModal()} style={{gap:0,border:'1px solid #00CB9C'}}>
-          <span className='course-detail-text'>
-            Track Application
-          </span>
-        </div>
+     <div className='price-card-content'>
+        {
+          props?.data?.price_list?.length > 0 ? 
+            <div className='price-label'>
+            {props?.data?.price_list[0]}
+          </div>
+          :
+          <div className='price-label'>
+            Price Model
+          </div>
+        }
+        
+        {
+          props?.data?.final_pricing && props?.data?.final_pricing.length > 0 ? 
+          <div className='price-amount'>
+            {props?.data?.final_pricing > 0 ? `₹${props?.data?.final_pricing}*` : 'Free'}
+          </div> : 
+          <div className='price-amount'>
+            {props?.data?.finance_display[0] > 0 ? `₹${props?.data?.finance_display[0]}*` : 'Free'}
+          </div>
+        }
+        
+      </div>
       <div className='course-detail-button' onClick={()=> props?.openDetailModal()} style={{flexDirection:'row'}}>
           <span className='course-detail-text'>
-            Details
+            Quick View
           </span>
-           <Image src={arrowRightDark} objectFit="contain" alt='arrowRight'/>
+           <Image src={arrowRight} objectFit="contain" alt='arrowRight'/>
       </div>
     </div> : 
     <div className='course-button-content-mobile' style={ window.innerWidth <= 500 ? {padding: '12px 12px',flexDirection: 'row',alignItems:'center'} : null }>
@@ -330,9 +339,9 @@ const _goToDetailPage=(id)=>{
               </div>
               <div className='course-detail-button' onClick={()=> props?.openDetailModal()} style={{flexDirection:'row'}}>
                 <span className='course-detail-text'>
-                  Details
+                Quick View
                 </span>
-                <Image src={arrowRightDark} objectFit="contain" alt='arrowRight'/>
+                <Image src={arrowRight} objectFit="contain" alt='arrowRight'/>
               </div>
       </div>}
 

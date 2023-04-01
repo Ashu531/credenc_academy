@@ -7,7 +7,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import {withStyles, Typography } from "@material-ui/core";
 import Image from "next/image";
 import bookmarkIcon from '../../assets/images/icons/bookmark.svg';
-import upvoteIcon from '../../assets/images/icons/upvote.svg' 
+// import upvoteIcon from '../../assets/images/icons/upvote.svg' 
 import NewButton from '../../components/button/NewButton.js'
 import clockIcon from '../../assets/images/icons/clockIcon.svg';
 import calendarIcon from '../../assets/images/icons/calendarIcon.svg';
@@ -40,7 +40,7 @@ import LoginModalContainer from '../../components/loginModal/LoginModalContainer
 import ForgotPasswordModal from '../../components/forgotPasswordModal/ForgotPasswordModal'
 import upvoteLogoDark from '../../assets/images/icons/thumbs-up-dark.svg'
 import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
-import upvoteLogo from '../../assets/images/icons/upvote.svg'
+// import upvoteLogo from '../../assets/images/icons/upvote.svg'
 import Link from "next/link";
 import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer";
 import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
@@ -481,7 +481,7 @@ export default function WebDetailPage(props){
                       }}
                    >
                     <span className='count-text' style={upvoted ? {color: '#FFFFFF'} : null}>{toggleUpvote ? props?.detailData?.up_votes + 1 : props?.detailData?.up_votes}</span>
-                    <Image src={upvoted ? upvoteLogoDark : upvoteLogo} width={20} height={20} objectFit='contain' />
+                    {/* <Image src={upvoted ? upvoteLogoDark : upvoteLogo} width={20} height={20} objectFit='contain' /> */}
                    </div>
                    {
                      props?.detailData?.is_mooc === true ? 

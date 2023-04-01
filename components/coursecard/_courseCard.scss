@@ -1,100 +1,104 @@
-.card-container{
+    .card-container{
 
-box-sizing: border-box;
-display: flex;
-flex-direction: column;
-padding: 12px;
-
-background: var(--defaultBackground);
-
-border: 1px solid #b100cd !important;
-border-radius: 16px;
-min-width: 32.5em;
-// max-width: 40em;
-cursor: pointer;
-
-// &:hover{
-//     // transform: translateY(0);
-//     // transition: 0.5s;
-// }
-
-.card-header{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-    .card-header-end-content{
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-    }
-}
-
-.institute-name{
-    font-family:'Poppins';
-    font-style: normal;
-font-weight: 500;
-font-size: 12px;
-line-height: 18px;
-color: var(--bodyColor);
-margin-top: 10px;
-text-align: center;
-}
-
-.grey-container{
-display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-background: var(--subduedBackground);
-border-radius: 8px;
-padding: 8px;
-
-&:hover{
-    background: var(--defaultBackground);
-    border: 1px solid var(--insignificantStrokeColor);
-    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1);
-border-radius: 8px;
-margin: 0px;
-padding: 7px;
-}
-
-}
-.count-text{
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 21px;
-    color: var(--defaultColor);
-    margin-right: 5px;
-}
-.card-image-content{
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 1.5vh;
-    padding-bottom: 1.5vh;
-}
+    padding: 12px;
 
-.card-image-content-open{
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
-}
-.card-course-content{
-    padding: 0rem 1.25rem 1rem 1.25rem;
+    background: var(--defaultBackground);
+
+    border: 1px solid #b100cd !important;
+    border-radius: 16px;
+    min-width: 36.5em;
+    // max-width: 36.5em;
+    cursor: pointer;
+
+    // &:hover{
+    //     // transform: translateY(0);
+    //     // transition: 0.5s;
+    // }
+
+    .card-header{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        .card-header-end-content{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+    }
+
+    .institute-name{
+        font-family: 'Gloock';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 30px;
+        letter-spacing: 0.02em;
+        text-transform: capitalize;
+        color: var(--inverseBackground);
+        margin-top: 10px;
+        // text-align: center;
+    }
+
+    .grey-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        // background: var(--subduedBackground);
+        border-radius: 8px;
+        padding: 8px;
+
+    &:hover{
+        background: var(--defaultBackground);
+        border: 1px solid var(--insignificantStrokeColor);
+        box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin: 0px;
+        padding: 7px;
+    }
+
+    }
+    .count-text{
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 21px;
+        color: var(--defaultColor);
+        margin-right: 5px;
+    }
+    .card-image-content{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-top: 1.5vh;
+        padding-bottom: 1.5vh;
+    }
+
+    .card-image-content-open{
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+    }
+    .card-course-content{
+        padding: 0rem 1.25rem 1rem 1.25rem;
     // transition: 0.5s;
 
     .course-name{
-        font-family:'Poppins';
+        font-family: 'Gloock';
         font-style: normal;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 24px;
-        color: var(--contrastStrokeColor);
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 30px;
+        letter-spacing: 0.02em;
+        text-transform: capitalize;
+        color: var(--inverseBackground);
         height: 48px;
         max-width: 16.6em;
     }
@@ -118,32 +122,62 @@ padding: 7px;
         z-index: 999;
       }
       
+      .course-detail-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin-top: 15px;
 
-    .course-mode{
-        font-family:'Poppins';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 21px;
-        color: var(--bodyColor);
-        margin-top: 12px;
+        .content-container{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 5px 10px;
+            gap: 10px;
+            background: #EBF1FF;
+            border-radius: 3px;
+
+            .course-mode{
+                font-family:'Poppins';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 21px;
+                color: var(--bodyColor);
+                margin-top: 12px;
+            }
+            .course-duration{
+                font-family:'Poppins';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 21px;
+                color: var(--bodyColor);
+                margin-top: 4px;
+            }
+        }
     }
-    .course-duration{
-        font-family:'Poppins';
+
+    .content-description{
+        font-family: 'Work Sans';
         font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 21px;
-        color: var(--bodyColor);
-        margin-top: 4px;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 150%;
+        color: var(--inverseBackground);
+        margin-top: 10px;
+        height: 18px;
     }
+
+    
     .course-price-content{
 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    margin-top: 36px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin-top: 36px;
 
         .course-pay{
             font-family:'Poppins';
@@ -174,9 +208,9 @@ padding: 7px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 8px;
+    padding: 18px 0px;
     // gap: 8px;
-    background: var(--subduedBackground);
+    // background: var(--subduedBackground);
     border-radius: 0px 0px 16px 16px; 
     position: relative;
     bottom: 0px;
@@ -197,6 +231,32 @@ padding: 7px;
             font-size: 14px;
             line-height: 21px;
             color: #000000;
+        }
+    }
+
+    .price-card-content{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        .price-label{
+            font-family: 'Work Sans';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 14px;
+            color: #CACACA;
+        }
+
+        .price-amount{
+            font-family: 'Work Sans';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 21px;
+            color: #034FE2;
+            margin-top: 5px;
         }
     }
 
@@ -336,31 +396,34 @@ color: var(--defaultBackground);
     }
     
     .institute-name{
-        font-family:'Poppins';
+        font-family: 'Gloock';
         font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 18px;
-    color: var(--bodyColor);
-    margin-top: 10px;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 30px;
+        letter-spacing: 0.02em;
+        text-transform: capitalize;
+        color: var(--inverseBackground);
+        margin-top: 10px;
+        // text-align: center;
     }
     
     .grey-container{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background: var(--subduedBackground);
-    border-radius: 8px;
-    padding: 8px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        // background: var(--subduedBackground);
+        border-radius: 8px;
+        padding: 8px;
     
     &:hover{
         background: var(--defaultBackground);
         border: 1px solid var(--insignificantStrokeColor);
         box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    margin: 0px;
-    padding: 7px;
+        border-radius: 8px;
+        margin: 0px;
+        padding: 7px;
     }
     
     }
@@ -387,16 +450,18 @@ color: var(--defaultBackground);
         padding-bottom: 0px !important;
     }
     .card-course-content{
-        padding: 0rem 1.25rem 1rem 1.25rem;
+        padding: 0rem 1.25rem 1rem 0rem;
         // transition: 0.5s;
     
         .course-name{
-            font-family:'Poppins';
+            font-family: 'Gloock';
             font-style: normal;
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 24px;
-            color: var(--contrastStrokeColor);
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 30px;
+            letter-spacing: 0.02em;
+            text-transform: capitalize;
+            color: var(--inverseBackground);
             max-width: 17.7em;
         }
     
@@ -477,7 +542,7 @@ color: var(--defaultBackground);
         align-items: center;
         padding: 12px 8px;
         // gap: 8px;
-        background: var(--subduedBackground);
+        // background: var(--subduedBackground);
         border-radius: 0px 0px 16px 16px; 
         position: relative;
         bottom: 0px;

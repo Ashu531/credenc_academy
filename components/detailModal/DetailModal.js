@@ -6,7 +6,7 @@ import constant from '../../config/constant';
 import bookmarkIcon from '../../assets/images/icons/bookmark.svg'
 import bookmarkIconDark from '../../assets/images/icons/bookmark-dark.svg'
 import instituteLogo from '../../assets/images/logo/instituteLogo.svg'
-import upvoteLogo from '../../assets/images/icons/upvote.svg'
+// import upvoteLogo from '../../assets/images/icons/upvote.svg'
 import upvoteLogoDark from '../../assets/images/icons/thumbs-up-dark.svg'
 import globeIcon from '../../assets/images/icons/globeLightIcon.svg';
 import globeIconDark from '../../assets/images/icons/globe.svg';
@@ -425,7 +425,7 @@ export default function DetailModal(props){
                     style={upvoteVisible ? {marginLeft:8,background : 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)'} : {marginLeft:8}}  
                     onClick={()=> _handleUpvoteTrigger(courseData) }
                     >
-                        <div className='upvote-container'>
+                        {/* <div className='upvote-container'>
                             <span className='upvote-text' style={ upvoteVisible ? window.innerWidth <= 500 ?  {marginTop:1,color: '#FFFFFF'} : {color: '#FFFFFF'} : null} >
                             {upvoteCount}
                             </span>
@@ -435,7 +435,7 @@ export default function DetailModal(props){
                                 height={window.innerWidth <= 500 ? 30 : 18 }
                                 objectFit="cover" 
                             />
-                        </div>
+                        </div> */}
                     </div>
                         <div className='header-action-container' style={{marginLeft:8}}>
                             <a href={courseData?.platform?.link} target='_blank' rel="noreferrer">

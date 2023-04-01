@@ -26,6 +26,8 @@ class CustomDocument extends Document {
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap"
           rel="stylesheet"
         />
+        <link href="https://fonts.googleapis.com/css2?family=Gloock&display=swap" rel="stylesheet" />
+        <link href='https://fonts.googleapis.com/css?family=Work Sans' rel='stylesheet' />
         <link rel="icon" href="/favicon.ico" />
         </Head>
         <body style={{ fontFamily: "Poppins" }} >

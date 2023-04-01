@@ -5,7 +5,7 @@ import courseLogo from '../../assets/images/logo/courseLogo.svg';
 import bookmarkIcon from '../../assets/images/icons/bookmark.svg'
 import bookmarkIconDark from '../../assets/images/icons/bookmark-dark.svg'
 import instituteLogo from '../../assets/images/logo/instituteLogo.svg'
-import upvoteLogo from '../../assets/images/icons/upvote.svg'
+// import upvoteLogo from '../../assets/images/icons/upvote.svg'
 import upvoteLogoDark from '../../assets/images/icons/thumbs-up-dark.svg'
 import arrowRight from '../../assets/images/icons/arrowRight.svg'
 import arrowRightDark from '../../assets/images/icons/arrow-right-dark.svg'
@@ -271,14 +271,14 @@ const removeUpvote = async (item) => {
                 >
                     <Image src={bookmarkVisible === true  ? selectedBookmark : props.theme === 'dark' ? bookmarkIconDark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={20} width={20}/>
                 </div>
-          <div 
+          {/* <div 
               className='grey-container' 
               onClick={()=> _handleUpvote(props?.data)}
               style={upvoted ? {background: 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)'} : null}
               >
                   <span className='count-text' style={upvoted ? {color: '#FFFFFF'} : null}>{toggleUpvote ? props?.data.up_votes + 1 : props?.data.up_votes}</span>
                   <Image src={ upvoted ? upvoteLogoDark : upvoteLogo} objectFit="cover" alt='upvoteLogo' height={20} width={20} />
-              </div>
+              </div> */}
           </div>
         </div>
         <div  className = {!isCardOpen ? "card-image-content" : "card-image-content card-image-content-open"}  onClick={()=> props?.openDetailModal() } >

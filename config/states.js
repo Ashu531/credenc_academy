@@ -10,7 +10,6 @@ import bookmarkedIcon from '../assets/images/icons/bookmark.svg';
 import bookmarkedIconWhite from '../assets/images/icons/bookmark.svg';
 import bookmarkIconWhite from '../assets/images/icons/bookmark.svg';
 // import upvoteIconWhite from '../assets/images/icons/arrow-up-white.svg';
-import upvotedIconWhite from '../assets/images/icons/upvote.svg';
 
 import Strings from './strings';
 

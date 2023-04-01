@@ -156,7 +156,7 @@ export default function Header(props){
          <div className='user-elements'>
            <div className='header-text' onClick={()=>_openMyCourseTab()}>My Courses</div>
            <div className='icon-element' onClick={()=>_openBookmarkTab()} style={{position:"relative"}}>
-           <Image src={ bookmarkIcon} height={25} width={25} objectFit="cover" alt='bookmarkIcon' />
+           <Image src={ bookmarkIcon} height={32} width={32} objectFit="cover" alt='bookmarkIcon' />
            {
              props?.bookmarkCount >= 1 ? <span className="bookmark-count-container">
              <span className="bookmark-count">{ props?.bookmarkCount >= 1 ?  props?.bookmarkCount : null}</span>
