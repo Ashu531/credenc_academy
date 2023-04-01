@@ -21,7 +21,7 @@ export default function SearchBar(props) {
    if(props?.search && props?.search.length > 0){
     setSearchString(props?.search)
    }
- },[])
+ },[props?.search])
 
  const myLoader = ({ src, width, quality }) => {
     if(src && src.length > 0){

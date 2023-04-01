@@ -74,7 +74,7 @@ export default function Dashboard(props) {
           filterModalVisible={props?.filterModalVisible}
           handleLogin={()=>props?.handleLogin()}
           searchValue={props?.searchValue}
-          handleSearch={props?.handleSearch}
+          handleSearch={(e)=>props?.handleSearch(e)}
           closeFilterExpandedStage={()=>props?.closeFilterExpandedStage()}
           openFilterVisible={()=>props?.openFilterVisible()}
           handleOpenMobileSearch={()=>props?.handleOpenMobileSearch()}

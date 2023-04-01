@@ -42,6 +42,8 @@ import ReactGA from 'react-ga';
 import Image from "next/image";
 import CredencFeatures from "../../components/credencFeatures/credencFeatures"
 import bannerImage from '../../assets/images/icons/bannerImage.svg'
+import BrowseCategories from "../../components/browseCategory/Categories"
+import CourseTrivia from "../../components/courseTrivia/CourseTrivia"
 
 const styles = {
     // width: "100%",
@@ -609,8 +611,8 @@ function DashboardDesktop(props) {
     setCardApiSuccess(false)
     urlService.current.removeEntry('search');
 
-    if(e?.name && e?.name.length > 0){
-      urlService.current.addEntry('search', e.name);
+    if(e && e.length > 0){
+      urlService.current.addEntry('search', e);
     }
 
     if(props?.searchValue && props?.searchValue?.length > 0){
@@ -875,7 +877,6 @@ const _handleSearch=(e)=>{
   }
 
   if(e?.name && e?.name?.length > 0){
-    
     props?.openFilterExpandedStage()
     props?._showSearchBar()
     if(e?.search === true){
@@ -983,6 +984,16 @@ const _handleSearch=(e)=>{
       handleFilteredData(true,props?.searchValue)
     }
   },[props?.searchValue])
+
+  const _handleTrivia=(data)=>{
+    if(data.courseType && data.courseType.length > 0){
+
+    }
+
+    if(data.subject && data.subject.length > 0){
+      
+    }
+  }
 
  return(
         <div>      
@@ -1298,6 +1309,10 @@ const _handleSearch=(e)=>{
             </div>
          </div>
 
+         <div style={{width: '100%'}}>
+           <BrowseCategories handleSearch={(e)=>_handleSearch(e)} searchItem={(e)=>props?.handleSearch(e)} />
+         </div>
+
          <div className="dashboard-courses-container">
             <div className="header-container">
               <div className="header-text">
@@ -1328,6 +1343,10 @@ const _handleSearch=(e)=>{
                }
             </div>
          </div>
+
+         <div style={{width: '100%'}}>
+            <CourseTrivia handleTrivia={(item)=>_handleTrivia(item)} />
+         </div>  
 
          <div className="dashboard-courses-container">
             <div className="header-container">

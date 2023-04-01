@@ -344,7 +344,7 @@ const _handleTrackItem=()=>{
             </div>
           </div>
           <div className='content-description'>
-            {props?.data?.one_liner}
+            {props?.data?.one_liner && props?.data?.one_liner.length > 80 ? props?.data?.one_liner.substring(0,80)+'...' : props?.data?.one_liner }
           </div>
       </div>
 
