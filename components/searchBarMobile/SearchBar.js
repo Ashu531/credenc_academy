@@ -151,7 +151,7 @@ export default function SearchBar(props) {
             // borderRadius: "25px",
             // boxShadow: "none",
             clearIconMargin: "3px 124px 0 0",
-            border: "none",
+            border: '1px solid #034FE2',
             hoverBackgroundColor: "#F7F7F7",
             color: "#000000",
             // lineColor: "#FFFFFF",

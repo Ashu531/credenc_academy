@@ -26,6 +26,8 @@ import Link from "next/link";
 import { getTabNumber } from "../../helper/getTabNumber";
 import filterIcon from '../../assets/images/icons/filter-icon-dark.svg';
 import closeIcon from '../../assets/images/icons/close-icon-grey.svg';
+import trendingIcon from '../../assets/images/icons/trendingIcon.svg';
+import mostLikedIcon from '../../assets/images/icons/mostLikedIcon.svg';
 import FloatActionButton from "../../components/floatActionButton/floatActionButton";
 import LoginModalContainer from '../../components/loginModal/LoginModalContainer'
 import ForgotPasswordModal from '../../components/forgotPasswordModal/ForgotPasswordModal'
@@ -37,6 +39,16 @@ import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyMo
 import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer"
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ReactGA from 'react-ga';
+import Image from "next/image";
+import CredencFeatures from "../../components/credencFeatures/credencFeatures"
+import bannerImage from '../../assets/images/icons/bannerImage.svg'
+
+const styles = {
+    // width: "100%",
+    height: "60%",
+    backgroundImage: `url(${bannerImage.src})`,  
+  };
+
 const subjectKey = 'credenc-edtech-subject';
 
 const queries = {
@@ -142,6 +154,7 @@ function DashboardDesktop(props) {
     id: 0
   });
   const pageNumber = useRef(1);
+  const [mostLikedCourses,setMostLikedCourses] = useState([]);
   
   let observer = useRef(
     new IntersectionObserver(
@@ -165,7 +178,25 @@ function DashboardDesktop(props) {
     // getSubjectData()
     getSubCategoryData()
     getDataFromBaseUrl()
+    getMostLikedCourses()
   },[])
+
+  const getMostLikedCourses = async()=>{
+   let response = await axios.get(`${constant.API_URL.DEV}/mostliked/`)
+        .then(res => {
+          try{
+          coursesApiStatus.current.success();
+          setMostLikedCourses(res?.data.data)
+          return res.data;
+          }catch(e){
+            console.log(e);
+          }
+        })
+        .catch(err => {
+          coursesApiStatus.current.failed();
+          console.log(err);
+        });
+  }
 
   const getSubCategoryData=async()=>{
     const response = await fetch(`${constant.API_URL.DEV}/subsubject/search/`)
@@ -1212,7 +1243,7 @@ const _handleSearch=(e)=>{
       </div>
   : <div className="dashboard" style={ props?.loginModal ? {overflow: 'hidden'} : null }>
      <div className="dashboard-upper-section">
-        <div className='banner' ref={searchRef}> 
+        <div className='banner' ref={searchRef} style={styles}> 
           <div className='text-content'>
           <h1 className='heading'>From Learners to Leaders</h1>
           <h2 className='sub-header'>Develop new skills with our hand-picked courses from across the world</h2>
@@ -1231,6 +1262,103 @@ const _handleSearch=(e)=>{
               <SearchBar searchbarWidth={searchbarWidth} search={props.searchValue} handleSearch={(e)=>_handleSearch(e)} selectSearch={(e)=>props?.selectSearch(e)} openFilterExpandedStage={()=>props?.openFilterExpandedStage()}/>
           </div>
          </div> 
+
+         <div style={{width: '100%'}}>
+            <CredencFeatures />
+         </div>  
+
+         <div className="dashboard-courses-container">
+            <div className="header-container">
+              <div className="header-text">
+                 Trending Courses
+              </div>
+              <Image src={trendingIcon} alt="trendingIcon" width={36} height={36} objectFit="contain" style={{marginLeft: 5,marginTop: 2}}/>
+            </div>  
+            <div className='course-section'>
+               {
+                 mostLikedCourses && mostLikedCourses.length > 0 && mostLikedCourses.map((item,index)=>{
+                  return(
+                    <div key={index}>
+                      <CourseCard 
+                        index={index}
+                        data={item} 
+                        openDetailModal={()=>openDetailModal(item)}
+                        openApplyNowModal={()=> _openApplyNowModal(item)}
+                        token={props?.token}
+                        openLoginModal={()=>props?.openLoginModal()}
+                        addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+                        removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                        enableTrackStatus={()=>_enableTrackStatus()}
+                        applied={applied}
+                      />
+                    </div>
+                  )
+                 })
+               }
+            </div>
+         </div>
+
+         <div className="dashboard-courses-container">
+            <div className="header-container">
+              <div className="header-text">
+                 Most Liked
+              </div>
+              <Image src={mostLikedIcon} alt="mostLikedIcon" width={36} height={36} objectFit="contain" style={{marginLeft: 5,marginTop: 2}}/>
+            </div>  
+            <div className='course-section'>
+               {
+                 mostLikedCourses && mostLikedCourses.length > 0 && mostLikedCourses.map((item,index)=>{
+                  return(
+                    <div key={index}>
+                      <CourseCard 
+                        index={index}
+                        data={item} 
+                        openDetailModal={()=>openDetailModal(item)}
+                        openApplyNowModal={()=> _openApplyNowModal(item)}
+                        token={props?.token}
+                        openLoginModal={()=>props?.openLoginModal()}
+                        addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+                        removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                        enableTrackStatus={()=>_enableTrackStatus()}
+                        applied={applied}
+                      />
+                    </div>
+                  )
+                 })
+               }
+            </div>
+         </div>
+
+         <div className="dashboard-courses-container">
+            <div className="header-container">
+              <div className="header-text">
+                Get New skills
+              </div>
+              {/* <Image src={trendingIcon} alt="trendingIcon" width={36} height={36} objectFit="contain" style={{marginLeft: 5,marginTop: 2}}/> */}
+            </div>  
+            <div className='course-section'>
+               {
+                 mostLikedCourses && mostLikedCourses.length > 0 && mostLikedCourses.map((item,index)=>{
+                  return(
+                    <div key={index}>
+                      <CourseCard 
+                        index={index}
+                        data={item} 
+                        openDetailModal={()=>openDetailModal(item)}
+                        openApplyNowModal={()=> _openApplyNowModal(item)}
+                        token={props?.token}
+                        openLoginModal={()=>props?.openLoginModal()}
+                        addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+                        removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                        enableTrackStatus={()=>_enableTrackStatus()}
+                        applied={applied}
+                      />
+                    </div>
+                  )
+                 })
+               }
+            </div>
+         </div>
 
        <div className="course-navbar" style={searchRef && searchRef?.current !== null && searchRef?.current?.getBoundingClientRect().y <= -196 ? { position: 'fixed',top: '8vh',background: '#FFFFFF',zIndex: 9999,boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.1)',padding: '1rem 5rem 0rem 5rem'} : {padding: '0.8rem 5rem 0rem 5rem'}}>
         {

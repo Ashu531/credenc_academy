@@ -5,23 +5,27 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(94.15deg, #FF00DD 0%, #5100FF 99.97%);
+    background: #EBF1FF;
     .text-content{
      text-align: center;
     }
     .heading{
-     font-family:'Poppins';
-     font-size: 24px;
-     font-weight: 500;
-     line-height: 27px;
-     color: #FFFFFF;
+        font-family: 'Gloock';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 36px;
+        line-height: 43px;
+        letter-spacing: 0.01em;
+        text-transform: capitalize;
+        color: #034FE2;
     }
     .sub-header{
-     font-family:'Poppins';
-     font-size: 16px;
-     font-weight: 500;
-     line-height: 21px;
-     color: #FFFFFF;
-     margin-top: 12px;
+        font-family: 'Work Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21px;
+        color: #034FE2;
+        margin-top: 12px;
     }
 }

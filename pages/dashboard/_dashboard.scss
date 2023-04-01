@@ -22,29 +22,73 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(94.15deg, #FF00DD 0%, #5100FF 99.97%);
+    background: #EBF1FF;
     // overflow: scroll;
     .text-content{
       margin-top: 1rem;
       text-align: center;
     }
     .heading{
-     font-family:'Poppins';
-     font-size: 24px;
-     font-weight: 500;
-     line-height: 27px;
-     color: #FFFFFF;
-     margin-top: 40px;
+      font-family: 'Gloock';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 36px;
+      line-height: 43px;
+      letter-spacing: 0.01em;
+      text-transform: capitalize;
+      color: #034FE2;
+      margin-top: 40px;
     }
     .sub-header{
-     font-family:'Poppins';
-     font-size: 16px;
-     font-weight: 500;
-     line-height: 21px;
-     color: #FFFFFF;
-     margin-top: 12px;
+      font-family: 'Work Sans';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 21px;
+      color: #034FE2;
+      margin-top: 12px;
     }
-}
+  }
+
+  .dashboard-courses-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 24px 0px 24px 60px;
+    gap: 30px;
+    width: 100%;
+
+    .header-container{
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 100%;
+
+      .header-text{
+        font-family: 'Gloock';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 32px;
+        line-height: 38px;
+        letter-spacing: 0.01em;
+        text-transform: capitalize;
+        color: #034FE2;
+      }
+    }
+
+    .course-section{
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 0px;
+      gap: 20px;
+      width: 95%;
+      overflow: scroll;
+      // margin-top: 30px;
+    }
+  }
 
   .course-content{
   //  padding: 1rem 2.5rem 1rem 2.5rem;

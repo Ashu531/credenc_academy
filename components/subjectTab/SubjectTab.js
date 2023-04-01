@@ -19,16 +19,16 @@ export default function SubjectTab(props){
                             style={
                                 props?.selectedCategory === item.name || subjectHover === item
                                 ? 
-                                {background: "#b100cd",borderRadius: 6,color:'#ffffff'}
+                                {background: "#F7F7F7",borderRadius: 6,color:'#000000'}
                                 :
-                                {background: "#ffffff",borderRadius: 6,color: '#b100cd',border:'1px solid #b100cd'}
+                                {background: "#ffffff",borderRadius: 6,color: '#717171'}
                             
                         } 
                             onMouseEnter={()=>setSubjectHover(item)}
                             onMouseLeave={()=>setSubjectHover(null)}
                             onClick={()=>_subjectAction(item)}
                         >
-                            <span className='subject-title-text' style={subjectHover === item || props?.selectedCategory === item.name  ? {color: '#ffffff'} : {color: '#b100cd'}}>{item.name}</span>
+                            <span className='subject-title-text' style={subjectHover === item || props?.selectedCategory === item.name  ? {color: '#000000'} : {color: '#717171'}}>{item.name}</span>
                         </div>
                     )
                 })
