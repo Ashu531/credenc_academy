@@ -78,9 +78,9 @@ export default function CourseTrivia(props){
                         }}
                         onChange={handleSubjectChange}
                         allowClear
-                        // placeholder='Select Subject'
+                        placeholder='Select Subject'
                         options={[
-                            { value: 'jack', label: 'Technology' },
+                            { value: 'Technology', label: 'Technology' },
                             { value: 'Marketing', label: 'Marketing' },
                             { value: 'Design', label: 'Design' },
                             { value: 'Business', label: 'Business' },

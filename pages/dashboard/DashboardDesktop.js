@@ -618,6 +618,15 @@ function DashboardDesktop(props) {
     if(props?.searchValue && props?.searchValue?.length > 0){
       urlService.current.addEntry('search', props?.searchValue);
     }
+
+    if(e?.courseType && e?.courseType.length > 0 && e?.subject && e?.subject.length > 0){
+      urlService.current.addEntry('subject', e?.subject);
+      urlService.current.addEntry('course_type', e?.courseType);
+    } else if(e?.subject && e?.subject.length > 0){
+      urlService.current.addEntry('subject', e?.subject);
+    } else if(e?.courseType && e?.courseType.length > 0){
+      urlService.current.addEntry('course_type', e?.courseType);
+    }
    
     let res = await handleSearchClicked();
     // if (forcePageNumber === 1) setForcePageNumber(0);
@@ -986,12 +995,15 @@ const _handleSearch=(e)=>{
   },[props?.searchValue])
 
   const _handleTrivia=(data)=>{
+    props?.openFilterExpandedStage()
     if(data.courseType && data.courseType.length > 0){
-
+      pageNumber.current = 1;
+      handleFilteredData(true,data);
     }
 
     if(data.subject && data.subject.length > 0){
-      
+      pageNumber.current = 1;
+      handleFilteredData(true,data);
     }
   }
 
