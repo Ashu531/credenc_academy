@@ -35,7 +35,7 @@ export default function CourseTrivia(props){
             <div className='trivia-content'>
                 <div className='trivia-section'>
                     <div className='trivia-label'>
-                        I'm Looking for a...
+                        I&apos;m Looking for a...
                     </div>
                     <div>
                     <Select
