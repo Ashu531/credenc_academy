@@ -15,6 +15,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      z-index: 99999;
       .nav-item{
           // position: relative;
           padding: 0 1rem;

@@ -15,23 +15,69 @@ import UrlService from "../../helper/urlService";
 import { useRouter } from 'next/router'
 import credencAcademy from '../../assets/images/icons/credencAcademy.svg'
 import bookmarkIconFilled from '../../assets/images/icons/filledBookmark.svg'
+// import { Select} from 'antd';
+import axios from "axios";
+import constant from '../../config/constant'
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { makeStyles } from "@material-ui/core/styles";
 const EdtechToken = 'credenc-edtech-authkey';
 
+const useStyles = makeStyles(theme => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2)
+  },
+  menuPaper: {
+    maxHeight: '60%',
+  }
+}));
+
 export default function Header(props){
+
+  const classes = useStyles();
 
   let router = useRouter();
   let nextURL=location?.asPath?.substring(2,location?.asPath?.length)
   let urlService = useRef(new UrlService(nextURL));
 
   const [token,setToken] = useState('')
+  const [subjectList,setSubjectList] = useState([])
 
   useEffect(()=>{
-    _getAuthKey()
+    _getAuthKey() 
   },[localStorage.getItem(EdtechToken),props?.bookmarkCount])
+
+  useEffect(()=>{
+    _getSubjectData()
+  },[])
 
   const _getAuthKey=()=>{
     let authKey = localStorage.getItem(EdtechToken);
     setToken(authKey)
+  }
+
+  const _getSubjectData=async()=>{
+    let res = await axios.get(`${constant.API_URL.DEV}/subsubject/search/`)
+    .then(res => {
+      setSubjectList(res?.data?.data);
+      res.data
+    })
+    .catch(err => {
+        console.log(err);
+    })
+    return res;
+  }
+
+  const handleChange=(e)=>{
+      let value = e.target.value
+      props?.openFilterExpandedStage()
+      props?.handleSearch(value)
   }
 
   const renderProfile=()=>{
@@ -142,9 +188,43 @@ export default function Header(props){
         <div className='navbar-wrapper'>
         
         <div className='navbar'>
-         <div  style={{cursor:"pointer",paddingTop: 10,paddingBottom: 5}} onClick={()=>_goToHome()}>
-            <Image src={credencAcademy} objectFit="cover" alt='credencLogo' />
+         <div  style={{cursor:"pointer",paddingTop: 10,paddingBottom: 5,display:'flex',position:'relative'}} >
+            <Image src={credencAcademy} objectFit="contain" alt='credencLogo' onClick={()=>_goToHome()} />
+            <FormControl fullWidth style={{
+              width: 180,
+              marginLeft: 20,
+              // background: '#034FE2',
+              borderRadius: 32,
+            }}>
+              <InputLabel style={{
+                fontFamily: 'Poppins',
+                fontStyle: 'normal',
+                fontWeight: 500,
+                fontSize: 12,
+                marginTop: -5,
+                // color: '#FFFFFF',
+              }}>Subject</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                placeholder='Subject'
+                label="Subject"
+                style={{borderRadius: 32,height: 40}}
+                onChange={handleChange}
+                MenuProps={{ classes: { paper: classes.menuPaper } }}
+              >
+                {
+                  subjectList && subjectList.length > 0 && subjectList.map((item,index)=>{
+                    return(
+                      <MenuItem value={item.value} key={index}>{item.value}</MenuItem>
+                    )
+                  })
+                }
+                
+              </Select>
+            </FormControl>
             </div>
+            
           {
             props?.showSearchBar && router.asPath !== '/privacy/' && router.asPath !== '/my-courses/' && router.asPath !== '/bookmarks/' && router.pathname !== '/details' ?
               <div style={props?.showSearchBar ? {width : '25%',zIndex: 99999,marginLeft: 30} : null} >

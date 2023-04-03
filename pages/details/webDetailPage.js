@@ -35,10 +35,12 @@ import userIcon from '../../assets/images/icons/user.svg'
 import filledStar from '../../assets/images/icons/star-filled.svg'
 import halfStar from '../../assets/images/icons/star-filled-half.svg'
 import emptyStar from '../../assets/images/icons/star-empty.svg'
+import backgroundImage from '../../assets/images/icons/bannerImage.svg'
 import SlidingPanel from 'react-sliding-side-panel';
 import DetailModal from '../../components/detailModal/DetailModal'
 import 'react-sliding-side-panel/lib/index.css';
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
+import InquiryModal from '../../components/inquiryModal/inquiryModal'
 import CourseCard from '../../components/coursecard/CourseCard';
 import constant from '../../config/constant';
 import { useRouter } from 'next/router'
@@ -54,6 +56,8 @@ import WebDetailSkeleton from '../../components/detailPageSkeletonWeb';
 import credencAcademy from '../../assets/images/icons/credencAcademy.svg'
 import Button from '../../components/button/Button';
 import { border, color } from '@mui/system';
+import QuerySuccessModal from '../../components/querySuccessModal/QuerySuccessModal';
+import { number } from 'prop-types';
 
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
@@ -72,6 +76,7 @@ export default function WebDetailPage(props){
     const [detailData,setDetailData] = useState({});
     const [detailModal,setDetailModal] = useState(false)
     const [applyNow, setApplyNow] = useState(false)
+    const [enquire, setEnquire] = useState(false)
     const [courseName,setCourseName] = useState('')
     const [successModal,setSuccessModal] = useState(false);
     const [cardActionTaken,setCardActionTaken] = useState(false)
@@ -353,6 +358,10 @@ export default function WebDetailPage(props){
         setApplyNow(false)
       }
 
+      const _closeEnquireModal = () => {
+        setEnquire(false)
+      }
+
       const closeDetailModal=(data)=>{
         setDetailModal(false)
         setDetailData(data);
@@ -426,6 +435,11 @@ export default function WebDetailPage(props){
       setCourseName(data)
     }
 
+    let [querySuccessModal, setQuerySuccessModal] = useState(false)
+    const _openQuerySuccessModal = (data) => {
+      setQuerySuccessModal(true)
+    }
+
     const _closeSuccessApplyModal=()=>{
       setSuccessModal(false);
     }
@@ -437,48 +451,21 @@ export default function WebDetailPage(props){
       })
     }
 
-    let curriculumData = [
-      {display: false, title: 'UX Fundamentals', modules: [
-        {display: false, name: 'Module 1', topics: [
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."}
-        ]},
-        {display: false, name: 'Module 1', topics: [
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."}
-        ]}
-      ]},
-      {display: false, title: 'UX Fundamentals', modules: [
-        {display: false, name: 'Module 1', topics: [
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."}
-        ]},
-        {display: false, name: 'Module 1', topics: [
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."}
-        ]}
-      ]},
-      {display: false, title: 'UX Fundamentals', modules: [
-        {display: false, name: 'Module 1', topics: [
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."}
-        ]},
-        {display: false, name: 'Module 1', topics: [
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
-          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."}
-        ]}
-      ]}
-    ];
 
     let [curriculum, setCurriculum] = useState([]);
-    useEffect(() => {
+    let [userRating, setUserRating] = useState(0)
+    let [reviewText, setReviewText] = useState('')
+    const [reviews, setReviews] = useState([])
+    const [rating, setRating] = useState({})
+    let [error, setError] = useState('')
 
+    useEffect(() => {
+      setReviews([...props?.reviews])
+      setRating(props?.rating)
+    }, [props?.reviews, props?.rating])
+
+    useEffect(() => {
+      
         let newCurriculumState = props['toolData']['curriculum'];
 
         if(newCurriculumState !== undefined){
@@ -493,7 +480,7 @@ export default function WebDetailPage(props){
           setCurriculum([...newCurriculumState])
         }
 
-    }, [])
+    }, [props?.toolData.curriculum])
 
     const handleCurriculumDisplay = (event, i, j) => {
 
@@ -513,24 +500,67 @@ export default function WebDetailPage(props){
 
     }
 
-    let instructors = [
-      {img: userIcon, name: 'Alex Carry', title: 'Founder - MyStartup', desc: 'A developer, innovative designer and Founder at @MyStartup'},
-      {img: userIcon, name: 'Alex Carry', title: 'Founder - MyStartup', desc: 'A developer, innovative designer and Founder at @MyStartup'},
-      {img: userIcon, name: 'Alex Carry', title: 'Founder - MyStartup', desc: 'A developer, innovative designer and Founder at @MyStartup'},
-      {img: userIcon, name: 'Alex Carry', title: 'Founder - MyStartup', desc: 'A developer, innovative designer and Founder at @MyStartup'}
-    ]
+    const _getReviews = async(id) => {
+      let res = await axios.get(`${constant.API_URL.DEV}/course/reviews/${props?.id}/`)
+        .then(res => {
+          // this.coursesApiStatus.current.success();
+          setReviews(res.data)
+          // setMounted(true);
+          return res.data;
+        })
+        .catch(err => {
+          // this.coursesApiStatus.current.failed();
+          console.log(err);
+        }); 
+  }
 
-    let reviews = [
-      {img: userIcon, name: 'Alex Carry', rating: '4.5', desc: 'A developer, innovative designer and Founder at @MyStartup'},
-      {img: userIcon, name: 'Alex Carry', rating: '3.5', desc: 'A developer, innovative designer and Founder at @MyStartup'},
-      {img: userIcon, name: 'Alex Carry', rating: '2', desc: 'A developer, innovative designer and Founder at @MyStartup'},
-      {img: userIcon, name: 'Alex Carry', rating: '1', desc: 'A developer, innovative designer and Founder at @MyStartup'},
-      {img: userIcon, name: 'Alex Carry', rating: '5', desc: 'A developer, innovative designer and Founder at @MyStartup'}
-    ]
+  const _getRating = async(id) => {
+      let res = await axios.get(`${constant.API_URL.DEV}/course/ratingsavg/${props?.id}/`)
+        .then(res => {
+          // this.coursesApiStatus.current.success();
+          console.log(res)
+          setRating(res.data)
+          // setMounted(true);
+          return res.data;
+        })
+        .catch(err => {
+          // this.coursesApiStatus.current.failed();
+          console.log(err);
+        }); 
+  }
 
-    let [userRating, setUserRating] = useState(0);
+    const handleReviewChange = (val) => {
+      setReviewText(val.target.value)
+    }
 
-    console.log(props.reviews)
+
+    const submitReview = async () => {
+      if(userRating > 0){
+        let res = await axios.post(`${constant.API_URL.DEV}/course/review/`, {
+          "course_id": props?.id,
+          "review" : reviewText,
+          "rating" : userRating
+      }, {
+          headers: {
+            'Authorization': `Bearer ${props?.token}`
+          }
+        })
+          .then(res => {
+            _getReviews()
+            _getRating()
+            return res.data;
+          })
+          .catch(err => {
+            // this.coursesApiStatus.current.failed();
+            console.log(err);
+          });
+      } else {
+        setError('Oh! Looks like you forgot to give us a rating')
+      }
+    }
+
+
+    console.log(props?.priceOptions?.enquiry)
 
     return(
         <>
@@ -539,7 +569,7 @@ export default function WebDetailPage(props){
 
         <div className='detail-page-web'>
 
-          <div className='head-jumbotron'>
+          <div className='head-jumbotron' style={{backgroundImage: `linear-gradient(rgba(245, 248, 255, 0.9), rgba(245, 248, 255, 0.9)), url(${backgroundImage.src})`, backgroundSize: 'cover'}}>
             <div className='title'>{props?.detailData?.course_name}</div>
             {props?.detailData?.program_type && <div className='subtitle'>
               <Image src={certificateIcon} width={20} height={20} objectFit='contain' />
@@ -584,7 +614,7 @@ export default function WebDetailPage(props){
             <div className='description'>{props?.detailData?.description}</div>
           </div>
 
-          {props?.detailData?.eligibility.length > 0 && <div className='container'>
+          {props?.detailData?.eligibility?.length > 0 && <div className='container'>
             <div className='heading' style={{margin: '0 0 1.6rem 0'}}>Pre-Requisites</div>
             {
               props?.detailData?.eligibility.map(
@@ -606,7 +636,7 @@ export default function WebDetailPage(props){
                 <div className='heading' style={{marginBottom: '1.2rem'}}>Still Confused?</div>
                 <div className='description' style={{width: '80%'}}>Our team of experts is here to help you. Contact us today and we're here to help you find clarity and move forward with confidence.</div>
               </div>
-              <button style={{width: '21%'}}>Talk to an Expert!</button>
+              <button style={{width: '21%'}} onClick={() => setEnquire(true)}>Talk to an Expert!</button>
             </div>
           </div>
 
@@ -624,7 +654,7 @@ export default function WebDetailPage(props){
                     <div style={{width: '96%'}}>
                       <div className='item-content'>
                         <div>
-                          <div style={{fontSize: '1.8rem', fontWeight: '600', lineHeight: '2.1rem', color: '#000000', padding: '0 0 0.4rem'}}>{item['heading']}</div>
+                          <div style={{fontSize: '1.8rem', fontWeight: '600', lineHeight: '2.1rem', color: '#000000', padding: '0 0 0.4rem'}}>{item['title_sub'] === '' ? item['heading'] : item['heading'] === '' ? item['title_sub'] : item['title_sub'] + " | " + item['heading']}</div>
                         </div>
                       </div>
                       {
@@ -669,7 +699,7 @@ export default function WebDetailPage(props){
               {props?.instructorData?.instructor?.map(
                   (inst, index) => {
                       return (<div className='feature'>
-                        <Image src={inst['profile_photo']} width={100} height={100} objectFit='contain' loader={myLoader} />
+                        <Image src={inst?.profile_photo} width={100} height={100} objectFit='contain' loader={myLoader} />
                         <div style={{fontSize: '2.4rem', fontWeight: '400', lineHeight: '3.6rem', color: '#000000'}}>{inst['name']}</div>
                         <div style={{fontSize: '1.7rem', fontWeight: '500', lineHeight: '2.55rem', color: '#000000', padding: '0.4rem 0 1.2rem 0'}}>{inst['designation']}</div>
                         {/* <div style={{fontSize: '1.5rem', fontWeight: '400', lineHeight: '2.25rem', color: '#000000'}}>{inst.desc}</div> */}
@@ -680,9 +710,9 @@ export default function WebDetailPage(props){
           </div>}
 
           <div className='container'>
-            <div className='heading' style={{paddingBottom: '0.9rem'}}>Pricing</div>
-            <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-              <div>
+            {(props?.thirdPartyUser === constant.PARTNER_KEY.NJ || props?.priceOptions?.credenc_loan) && <div className='heading' style={{paddingBottom: '0.9rem'}}>Pricing</div>}
+            {props?.thirdPartyUser === constant.PARTNER_KEY.NJ && <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+             <div>
                 <div style={{fontSize: '1.4rem', fontWeight: '600', lineHeight: '1.6rem', color: '#222222'}}>EMI PLANS</div>
                 <div style={{fontSize: '1.2rem', fontWeight: '400', lineHeight: '1.4rem', color: '#8F14CC'}}>Powered by NJ Capital</div>
               </div>
@@ -690,45 +720,168 @@ export default function WebDetailPage(props){
                 <div style={{fontSize: '1.2rem', fontWeight: '500', lineHeight: '1.4rem', color: '#717171'}}>Starts from</div>
                 <div style={{fontSize: '2rem', fontWeight: '700', lineHeight: '2.3rem', color: '#034FE2'}}>₹4,999/month*</div>
               </div>
-            </div>
+            </div>}
 
-            <div className='confused-container' style={{width: '100%', justifyContent: 'flex-start', alignItems: 'center', padding: '1rem', margin: '1rem 0'}}>
-                <Image src={halfStar} width={14} height={14} objectFit='contain' />
+            {props?.thirdPartyUser === constant.PARTNER_KEY.NJ && <div className='confused-container' style={{width: '100%', justifyContent: 'flex-start', alignItems: 'center', padding: '1rem', margin: '1rem 0'}}>
+                <Image src={njIcon} width={20} height={20} objectFit='contain' />
                 &emsp;
                 <div style={{fontSize: '1.2rem', fontWeight: '500', lineHeight: '1.4rem', color: '#000000'}}>You have a Pre-Approved Loan of Rs. 20 lacs from NJ Capital</div>
-            </div>
+            </div>}
 
-            <div className='confused-container' style={{width: '100%'}}>
+            {props?.priceOptions?.credenc_loan && <div className='confused-container' style={{width: '100%'}}>
               <div>
                 <div className='heading' style={{marginBottom: '0.4rem'}}>Credenc Loan</div>
                 <div className='description'>Avail an education loan quickly.</div>
               </div>
-              <button>Talk to Us!</button>
-            </div>
-            <div className='confused-container' style={{width: '100%'}}>
+              <button onClick={() => setEnquire(true)}>Talk to Us!</button>
+            </div>}
+            {props?.priceOptions?.enquiry === true && <div className='confused-container' style={{width: '100%'}}>
               <div>
                 <div className='heading' style={{marginBottom: '1.2rem'}}>Price?</div>
               </div>
-              <button>Inquire Now</button>
-            </div>
+              <button onClick={() => setEnquire(true)}>Inquire Now</button>
+            </div>}
+
+            <div className='detail-page-mobile-price-options-container' style={{width: '100%'}}>
+                  {
+                    props?.priceOptions?.emi_options && props?.priceOptions?.emi_options.map((item,index)=>{
+                      return(
+                      
+                    <div className='detail-page-mobile-price-options-card' key={index}>
+                    <div className='detail-page-mobile-price-options-card-header'>
+                        <div className='detail-page-mobile-price-options-card-plan' style={{display:'flex'}}>
+                        {item.noOfInstallment} Month
+                        <div style={{position:'relative'}}>
+                            &nbsp;EMI
+                        <div style={{position:'absolute',top: -12,right: -16}}>
+                            <Image src={questionDoodle} height={25} width={19} objectFit='contain' />
+                        </div>
+                        </div>
+                        </div>
+                        {
+                          index === 0 ? 
+                          <div className='detail-page-mobile-price-options-card-recommendation'>
+                            <div className='detail-page-mobile-price-options-card-recommendation-text'>Recommended!</div>
+                        </div> : null
+                        }
+                        
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-description'>
+                    Pay ₹ {item.emiAmount} per month for {item.noOfInstallment} months with no interest cost.
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-info'>
+                    <div className='detail-page-mobile-price-options-card-info-heading'>
+                        Monthly Installment
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-info-subheading'>
+                        ₹ {item.emiAmount}
+                    </div>
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-info'>
+                    <div className='detail-page-mobile-price-options-card-info-heading'>
+                    No. Installment
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-info-subheading'>
+                    {item.noOfInstallment}
+                    </div>
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-info'>
+                    <div className='detail-page-mobile-price-options-card-info-heading'>
+                    Down Payment
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-info-subheading'>
+                        {item.downPayment}
+                    </div>
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-info' style={{marginTop:12}}>
+                        <div style={{display:'flex',flexDirection:'column'}}>
+                        <div className='detail-page-mobile-price-options-card-info-amount-header'>
+                        Total Amount
+                        </div>
+                        <div className='detail-page-mobile-price-options-card-info-amount-text'>
+                        ₹ {item.financeAmount}
+                        </div>
+                        </div>
+                        <div className='detail-page-mobile-price-options-card-nocost-emi'>
+                            <div className='detail-page-mobile-price-options-card-nocost-emi-text'>
+                            NO COST EMI
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+               
+                      )
+                    })
+                  }
+                </div> 
+
+            <div className='detail-page-mobile-price-options-container'>
+                   {
+                     props?.priceOptions?.price_options?.lumpsum && props?.priceOptions?.price_options?.lumpsum.map((item,index)=>{
+                       return(
+                         <div className='detail-page-mobile-lumpsum-content' key={index}>
+                           <div className='detail-page-mobile-lumpsum-header'>
+                             LUMPSUM
+                           </div>
+                           <div className='detail-page-mobile-lumpsum-card'>
+                              <div className='detail-page-mobile-lumpsum-card-detail'>
+                                <div className='detail-page-mobile-lumpsum-card-detail-label'>
+                                  Base Price
+                                </div>
+                                <div className='detail-page-mobile-lumpsum-card-detail-amount'>
+                                ₹{item.amount}
+                                </div>
+                              </div>
+                              <div className='detail-page-mobile-lumpsum-card-detail'>
+                                <div className='detail-page-mobile-lumpsum-card-detail-label'>
+                                Discount
+                                </div>
+                                <div className='detail-page-mobile-lumpsum-card-detail-amount'>
+                                ₹0
+                                </div>
+                              </div>
+                              <div className='detail-page-mobile-lumpsum-card-detail'>
+                                <div className='detail-page-mobile-lumpsum-card-detail-label'>
+                                Tax@18%
+                                </div>
+                                <div className='detail-page-mobile-lumpsum-card-detail-amount'>
+                                  Included in Base Price
+                                </div>
+                              </div>
+                              <div className='detail-page-mobile-lumpsum-total-amount-header'>
+                                Total Amount
+                              </div>
+                              <span className='detail-page-mobile-lumpsum-total-amount'>
+                              ₹{item.amount}
+                              </span>
+                           </div>
+                         </div>
+                       )
+                     })
+                   } 
+                  </div>
+                
+          
           </div>
 
 
           <div className='container'>
             <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
               <div className='heading'>Reviews</div>
-              {!isNaN(props?.rating) && <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
+              { rating['avg'] && !isNaN(rating['avg']) && <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
                 {
-                  [1, 2, 3, 4, 5].map(el => <Image src={props?.rating['avg'] / el >= 1 ? filledStar : (el - props?.rating['avg']) >= 1 ? emptyStar : halfStar} width={20} height={20} objectFit='contain' />)
+                  [1, 2, 3, 4, 5].map(el => <Image src={rating['avg'] / el >= 1 ? filledStar : (el - rating['avg']) >= 1 ? emptyStar : halfStar} width={20} height={20} objectFit='contain' />)
                 }
-                <div style={{fontSize: '2rem', fontWeight: '400', lineHeight: '2.4rem', color: '#8F14CC'}}>&ensp;{parseFloat(props?.rating['avg']).toFixed(1)}</div>
+                <div style={{fontSize: '2rem', fontWeight: '400', lineHeight: '2.4rem', color: '#8F14CC'}}>&ensp;{parseFloat(rating['avg']).toFixed(1)}</div>
               </div>}
             </div>
             {props?.reviews?.length > 0 && <div style={{width: '100%', display: 'flex', rowGap: '3.6rem', flexDirection: 'row', flexWrap: 'wrap', padding: '3.6rem 0 0 0'}}>
-              {props?.reviews?.map(
+              {reviews.map(
                   (review, index) => {
                       return (<div className='feature'>
-                        <Image src={review['review']['user']['profile_image']} width={100} height={100} objectFit='contain' loader={myLoader} />
+                        {
+                          review?.review?.user?.profile_image && <Image src={review?.review?.user?.profile_image} width={100} height={100} objectFit='contain' loader={myLoader} />
+                        }
                         <div style={{fontSize: '2.4rem', fontWeight: '400', lineHeight: '3.6rem', color: '#000000'}}>{review['review']['user']['full_name']}</div>
                         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
                           {
@@ -744,14 +897,46 @@ export default function WebDetailPage(props){
             <div className='leave-review'>
               <div style={{fontSize: '1.6rem', fontWeight: '500', lineHeight: '2.4rem', color: '#000000'}}>How was your experience with the course?</div>
               <div style={{fontSize: '1.4rem', fontWeight: '400', lineHeight: '1.6rem', color: '#000000', margin: '1rem 0 2rem 0'}}>Leave a review and help others in their learning journey!</div>
-              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', margin: '0rem 0 2rem 0'}}>
+              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
                 {
                   [1, 2, 3, 4, 5].map(el => <Image src={userRating / el >= 1 ? filledStar : (el - userRating) >= 1 ? emptyStar : halfStar} width={30} height={30} objectFit='contain' onClick={() => setUserRating(el)}/>)
                 }
               </div> 
-              <textarea rows={8} placeholder="This course is amazing..."></textarea> 
+              <div style={{color: 'var(--errorPrimaryColor)', margin: '1rem 0 2rem 0', fontSize: '1.3rem'}}>{error}</div>
+              <textarea rows={8} placeholder="This course is amazing..." onChange={(val) => handleReviewChange(val)} value={reviewText}></textarea>
+              <button 
+                style={{cursor: 'pointer', backgroundColor: '#034FE2', padding: '1.6rem 2.4rem', margin: '1.6rem', border: 'none', borderRadius: '0.8rem', color: '#FFFFFF', fontSize: '1.6rem'}}
+                onClick={submitReview}
+              >Leave a Review
+              </button>
             </div>
           </div>
+
+          <div style={{padding: '2rem 0 3rem 0'}}>
+            <div className='heading' style={{paddingBottom: '0.9rem', padding: '0 0 0.9rem 3rem'}}>You Might Be Interested In</div>
+            <div className='detail-page-mobile-card-container' style={{display:'flex',marginTop: 20,gap: 20,overflow:'auto'}}>
+              {props?.similarCourses?.length > 0 && props?.similarCourses.map((item,index)=>{
+                  return(
+                    <div key={index} style={{margin: index === 0 ? '0 0 0 3rem' : index === props?.similarCourses?.length - 1 ? '0 3rem 0 0' : 'none'}}>
+                      <CourseCard 
+                        index={index}
+                        data={item} 
+                        openDetailModal={()=>_openDetailModal(item)}
+                        openApplyNowModal={()=> _openApplyNowModal(item)}
+                        token={props?.token}
+                        openLoginModal={()=>props?.openLoginModal()}
+                        addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+                        removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                        applied={applied}
+                        detailPage={true}
+                      />
+                    </div>
+                  )
+              })}
+            </div>
+          </div>
+
+
 
           {/* <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'flex-start',padding: '0px 24px 0px 24px'}}>
            <div className='detail-page-web-breadcrumb'>
@@ -1541,12 +1726,33 @@ export default function WebDetailPage(props){
                 />
            </SlidingPanel>
            <SlidingPanel
+                type={'right'}
+                isOpen={enquire}
+                backdropClicked={_closeEnquireModal}
+                size={30}
+            >
+                <InquiryModal 
+                  closeInquiryModal={_closeEnquireModal} 
+                  detailData={props?.detailData} courseName={courseName} 
+                  openSuccessModal={(courseName)=>_openQuerySuccessModal(courseName)}  
+                  handleAppliedStage={(id)=>_handleAppliedStage(id)}
+                />
+           </SlidingPanel>
+           <SlidingPanel
             type={'right'}
             isOpen={successModal}
             backdropClicked={() => setSuccessModal(false)}
             size={30}
           >
             <SuccessApplyModal closeSuccessApplyModal={()=>_closeSuccessApplyModal()} courseName={courseName} />
+          </SlidingPanel>
+          <SlidingPanel
+            type={'right'}
+            isOpen={querySuccessModal}
+            backdropClicked={() => setQuerySuccessModal(false)}
+            size={30}
+          >
+            <QuerySuccessModal closeSuccessQueryModal={()=>setQuerySuccessModal(false)} courseName={courseName} />
           </SlidingPanel>
         </div>
         : <WebDetailSkeleton />

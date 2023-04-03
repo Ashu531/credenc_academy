@@ -846,7 +846,6 @@
     .head-jumbotron{
         margin-bottom: 4.5rem;
         padding: 9rem 12rem;
-        background-color: #F5F8FF;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -950,6 +949,7 @@
             align-items: center;
 
             button{
+                cursor: pointer;
                 background-color: #034FE2;
                 padding: 1.6rem 2.4rem;
                 border: none;

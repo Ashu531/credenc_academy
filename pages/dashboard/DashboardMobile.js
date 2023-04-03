@@ -739,8 +739,8 @@ const getSubjectData=async()=>{
 
   totalSubjectData.unshift(
   {
-      "id": 0,
-      "name": "All",
+      "label": 0,
+      "value": "All",
       "count": totalSubjectCount
   }
   )

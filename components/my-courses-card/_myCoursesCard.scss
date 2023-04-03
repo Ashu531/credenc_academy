@@ -7,16 +7,15 @@
     
     background: var(--defaultBackground);
     
-    border: 1px solid var(--insignificantStrokeColor);
+    border: 1px solid #CACACA !important;
     border-radius: 16px;
     min-width: 36.5em;
     max-width: 36.5em;
     cursor: pointer;
     
-    // &:hover{
-    //     // transform: translateY(0);
-    //     // transition: 0.5s;
-    // }
+    &:hover{
+        border: 1px solid #8F14CC !important;
+    }
     
     .card-header{
         display: flex;

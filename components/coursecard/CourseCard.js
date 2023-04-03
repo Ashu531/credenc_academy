@@ -324,7 +324,7 @@ const _handleTrackItem=()=>{
         </div>
         <div className="card-course-content" onClick={()=> _goToDetailPage(props?.data?.id)}>
           <div className='course-name' onMouseEnter={()=>setCourseNameTooltip(true)} onMouseLeave={()=>setCourseNameTooltip(false)}>
-            { props?.data?.course_name && props?.data?.course_name.length > 50 ? props?.data?.course_name.substring(0, 50) + '...' : props?.data?.course_name} 
+            { props?.data?.course_name && props?.data?.course_name.length > 44 ? props?.data?.course_name.substring(0, 44) + '...' : props?.data?.course_name} 
           </div>
           {
           courseNameTooltip && props?.data?.course_name.length > 22 ?  <div className="course-name-tooltip">

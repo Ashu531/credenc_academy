@@ -207,9 +207,9 @@ function DashboardDesktop(props) {
 
     totalSubcategoryData?.unshift(
       {
-          "name": "All",
+          "value": "All",
           "seo_ranks": 0,
-          "id": 0
+          "label": 0
       }
       )
     setSubCategory(totalSubcategoryData)
@@ -996,12 +996,19 @@ const _handleSearch=(e)=>{
 
   const _handleTrivia=(data)=>{
     props?.openFilterExpandedStage()
-    if(data.courseType && data.courseType.length > 0){
+    console.log(data,"data+++")
+    if(data.courseType.length > 0 && data.subject.length > 0){
       pageNumber.current = 1;
       handleFilteredData(true,data);
+      let tabNumber = getTabNumber(queries.COURSE_TYPE, urlService)
+      setCourseType(tabNumber)
     }
-
-    if(data.subject && data.subject.length > 0){
+    else if(data.courseType && data.courseType.length > 0){
+      pageNumber.current = 1;
+      handleFilteredData(true,data);
+      let tabNumber = getTabNumber(queries.COURSE_TYPE, urlService)
+      setCourseType(tabNumber)
+    }else if(data.subject && data.subject.length > 0){
       pageNumber.current = 1;
       handleFilteredData(true,data);
     }
@@ -1274,7 +1281,7 @@ const _handleSearch=(e)=>{
           <div
           style={{
             width: `${searchbarWidth}`,
-            marginTop: 50,
+            marginTop: 32,
             marginBottom: 40,
             zIndex: "1101",
             visibility: `${props.showSearchBar ? "hidden" : "visible"}`,

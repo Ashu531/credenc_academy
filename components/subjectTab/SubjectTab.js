@@ -17,7 +17,7 @@ export default function SubjectTab(props){
                         <div className='goal-tab' 
                             key={index} 
                             style={
-                                props?.selectedCategory === item.name || subjectHover === item
+                                props?.selectedCategory === item.value || subjectHover === item
                                 ? 
                                 {background: "#F7F7F7",borderRadius: 6,color:'#000000'}
                                 :
@@ -28,7 +28,7 @@ export default function SubjectTab(props){
                             onMouseLeave={()=>setSubjectHover(null)}
                             onClick={()=>_subjectAction(item)}
                         >
-                            <span className='subject-title-text' style={subjectHover === item || props?.selectedCategory === item.name  ? {color: '#000000'} : {color: '#717171'}}>{item.name}</span>
+                            <span className='subject-title-text' style={subjectHover === item || props?.selectedCategory === item.value  ? {color: '#000000'} : {color: '#717171'}}>{item.value}</span>
                         </div>
                     )
                 })

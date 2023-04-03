@@ -265,6 +265,7 @@ export default function DetailPage(props){
         <>
         {isDesktopOrLaptop && 
           <DetailPageWeb
+            id={location.query['course_id']}
             detailData={detailData} 
             instructorData={instructorData} 
             similarCourses={similarCourses} 

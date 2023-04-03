@@ -1,0 +1,284 @@
+import React,{useEffect, useState,useRef} from 'react';
+import Image from "next/image";
+import Input from '../input/Input';
+import { getTabNumber } from "../../helper/getTabNumber";
+import UrlService from "../../helper/urlService";
+import SegmentedBar from '../segementedBar/SegmentedBar';
+import { useRouter } from 'next/router'
+import Lists from '../../config/list';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import whatsAppIcon from '../../assets/images/icons/whatsAppIcon.svg'
+import callIcon from '../../assets/images/icons/phoneCall.svg'
+import axios from "axios";
+import constant from '../../config/constant';
+import moment from 'moment'
+import closeIcon from '../../assets/images/icons/close-icon-grey.svg'
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import Checkbox from '@mui/material/Checkbox';
+import applyNowSchema from '../../helper/models/applyNowModel';
+import { Alert } from 'antd';
+const EdtechAuthKey = 'credenc-edtech-authkey';
+const EdtechPartnerKey = 'credenc-edtech-partner-key';
+
+export default function InquiryModal(props){
+
+    const [genderType, setGenderType] = useState(0);
+    const genderTypeRef = useRef(null);
+    const [name,setName] = useState('')
+    const [email,setEmail] = useState('')
+    const [number,setNumber] = useState('')
+    const [gender,setGender] = useState('Male')
+    const [dob,setDob] = useState(new Date())
+    const [token,setToken] = useState('');
+    const [clearData,setClearData] = useState(false);
+    const [thirdPartyData,setThirdPartyData] = useState({})
+    const [error,setError] = useState('')
+    const [query, setQuery] = useState('')
+
+    useEffect(()=>{
+        let authToken = localStorage.getItem(EdtechAuthKey);
+        setToken(authToken)
+        _getProfileData(authToken)
+    },[])
+
+    const _getProfileData=async(authToken)=>{
+        await axios.get(`${constant.API_URL.DEV}/profiles/`, {
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+            })
+            .then(res => {
+                _setThirdPartyFields(res.data)
+                setThirdPartyData(res.data)
+                _setThirdPartyUser(res.data)
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    const _setThirdPartyUser=(data)=>{
+        localStorage.setItem(EdtechPartnerKey,JSON.stringify(data.partner_key));
+    }
+
+    const _setThirdPartyFields=(info)=>{
+        setEmail(info.email);
+        setName(info.full_name);
+        setNumber(info.phone_number)
+    }
+
+    const _handleChecked=(event)=>{
+
+        if(event === true){
+            setClearData(true);
+            setName('');
+            setEmail('');
+        }else{
+            setName(thirdPartyData.full_name);
+            setEmail(thirdPartyData.email);
+        }
+    }
+
+    const handleChange = (newValue) => {
+        let date = moment(newValue.$d).format('L');
+        setDob(date);
+    };
+
+    const onChange = (date, dateString) => {
+        console.log(date, dateString);
+      };
+
+    const handleSubmit=async()=>{
+
+        let data = {
+            email: email.toString(),
+            full_name: name.toString(),
+            phone_number : number ? number.toString() : number,
+            course_id: props?.detailData?.id,
+        }
+
+        let Schema = applyNowSchema;
+
+        const isValid = await Schema.isValid(data);
+
+        if (isValid) {
+        let res = await axios.post(`${constant.API_URL.DEV}/enquiry/`,{
+            'email': email.toString(),
+            'full_name': name.toString(),
+            'phone_number' : number.toString(),
+            'course_id': props?.detailData?.id,
+            'enquiry': query.toString()
+        }, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          })
+        .then(res => {
+            if(res?.data?.status === true){
+                let courseName = res.data.course
+                props.closeInquiryModal()
+                props.openSuccessModal(courseName)
+                props?.handleAppliedStage(props?.detailData?.id)
+              return res.data;
+            }else{
+                console.log(res?.data?.message)
+                setError(res?.data?.message)
+            }
+        })
+        .catch(err => {
+          // this.coursesApiStatus.current.failed();
+          console.log(res?.data?.message,"gfgdgf")
+          setError(err?.data?.message)
+          console.log(err);
+        });
+    }else{
+        Schema.validate(data).catch(function (err) {
+            setError(err.errors[0])
+        })
+    }
+    } 
+
+    const handleName=(e)=>{
+        let result = e.replace(/[^a-z ]/gi, '');
+         setName(result)
+    }
+
+    const handleQuery=(e)=>{
+         setQuery(e)
+    }
+
+    const handleNumber=(e)=>{
+        setError("")
+        let result = e.replace(/[^0-9]/gi, '');
+        setNumber(result)
+    }
+
+    const handleEmail=(e)=>{
+        setEmail(e)
+    }
+
+    const onKeyDown = (e) => {
+        e.preventDefault();
+     };
+
+    return(
+        <>
+         <div className='apply-modal-container' style={ window.innerWidth<=500 ? {width:'100%',height:'90vh'} : null }>
+              <div className='apply-modal-content'>
+                  <div className='apply-modal-header'>
+                    <span className='header-1'>Enrolling for</span>
+                    <span className='header-2'>Product design from scratch with mentor support</span>
+                  </div>
+                  <div className='apply-modal-banner'  style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
+                    <span className='banner-text'>
+                    No more work for you! Just review your pre-filled application and get enrolled!
+                    </span>
+                  </div>
+                  
+                    {
+                        error && error.length > 0 ? 
+                        <div style={{marginTop: '15rem',padding: '10px 25px',width: '60%'}}>
+                            <Alert message={`Error: ${error}`} type="error" showIcon />
+                        </div> : null
+                    }
+                 
+                  <div className='form-content' style={error && error.length > 0 ? {marginTop: -10} : {marginTop: '15rem'}}>
+                      <div className='label-section'>
+                          <div className='label-header'>
+                          Student Details
+                          </div>
+                      </div>
+                   <div className='name-content'>
+                    <span className='label-text'>
+                       Full Name*
+                    </span>
+                    <span style={{width: '100%'}}>
+                    <Input required={true} placeholder="Full Name" handleInput={(e)=>handleName(e)} value={name} type='text' />
+                    </span>
+                   </div>
+                   <div className='contact-content' style={window.innerWidth <= 500 ? {display:"flex",flexDirection:'column',justifyContent:'flex-start',alignItems:'flex-start',width:'100%'} : {display:"flex",width:'100%'}}>
+                     <div className='mobile-content' style={window.innerWidth >  500 ? {width: '50%'} : {width:'100%'}}>
+                        <span className='label-text'>
+                        Mobile Number*
+                        </span>
+                        <Input placeholder='Mobile Number' handleInput={(e)=>handleNumber(e)} value={number} lenght={10} />
+                     </div>
+                     <div className='email-content' style={window.innerWidth >  500 ? {width: '50%'} : {width:'100%'}}>
+                        <span className='label-text'>
+                        Email ID*
+                        </span>
+                        <Input required={true} placeholder='Email Id' handleInput={(e)=>handleEmail(e)} value={email} type='text'/>
+                     </div>
+                   </div>
+
+                   <div className='name-content'>
+                    <span className='label-text'>
+                       Query
+                    </span>
+                    <span style={{width: '100%'}}>
+                    <Input required={true} placeholder="I want to know that ..." handleInput={(e)=>handleQuery(e)} value={query} type='text' />
+                    </span>
+                   </div>
+                   
+                  </div>
+                  <div className='apply-now-footer'  
+                       style={ 
+                        window.innerWidth<=500 
+                        ? 
+                        {
+                            width:'100%',
+                            display:"flex",
+                            flexDirection:"row",
+                            justifyContent:'flex-start',
+                            alignItems:'flex-start',
+                            background: '#F7F7F7',
+                        } 
+                        : null 
+                        }
+                   >
+
+                   <div className='footer-content'>
+                     <div className='image-content' style={{display: 'none'}}>
+                        <Image src={whatsAppIcon} objectFit='cover'/>
+                        <div className='call-icon-container'>
+                            <Image src={callIcon} objectFit='cover'/>
+                        </div>
+                     </div>
+                     <div className='button-content' onClick={()=>handleSubmit()} style={{cursor:'pointer',paddingRight: '5rem'}}>
+                       <div 
+                         className='button-container'
+                         style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            padding: '8px 24px',
+                            gap: '10px',
+                            background: 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)',
+                            borderRadius: '5px'
+                         }}
+                         >
+                             <span className='submit-footer-text'>
+                                Submit Query
+                             </span>
+                       </div>
+                   </div>
+                  </div>
+                  </div>
+              </div> 
+              {
+                window.innerWidth <= 500 ? 
+                <span className='apply-modal-close-icon' onClick={()=>props.closeInquiryModal()}>
+                    <Image src={closeIcon} objectFit='cover' height={20} width={20} />
+                </span>
+                : null
+              }
+         </div>
+        </>
+    )
+}
