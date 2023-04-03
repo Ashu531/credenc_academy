@@ -21,7 +21,6 @@ import arrowIcon from '../../assets/images/icons/arrowIcon.svg';
 import moduleBullets from '../../assets/images/icons/moduleBullets.svg'
 import moduleSquareBullets from '../../assets/images/icons/moduleSquareBullet.svg'
 import moduleArrowBullets from '../../assets/images/icons/topicArrowBullet.svg'
-import caretDown from '../../assets/images/icons/dropDown.svg'
 import longWaveIcon from '../../assets/images/icons/longWaveIcon.svg'
 import shortWaveIcon from '../../assets/images/icons/shortWaveIcon.svg'
 import constantCurveIcon from '../../assets/images/icons/constantCurveIcon.svg'
@@ -29,6 +28,13 @@ import LinkedlnLogo from '../../assets/images/icons/linkedin-icon.svg';
 import njIcon from '../../assets/images/icons/njIcon.svg';
 import skribbleIcon from '../../assets/images/icons/skribbleIcon.svg'
 import underlineSkribble from '../../assets/images/icons/underlineSkribble.svg'
+import certificateIcon from '../../assets/images/icons/certificate-icon.svg'
+import caretDown from '../../assets/images/icons/caret-down-purple.svg'
+import caretRight from '../../assets/images/icons/caret-right-purple.svg'
+import userIcon from '../../assets/images/icons/user.svg'
+import filledStar from '../../assets/images/icons/star-filled.svg'
+import halfStar from '../../assets/images/icons/star-filled-half.svg'
+import emptyStar from '../../assets/images/icons/star-empty.svg'
 import SlidingPanel from 'react-sliding-side-panel';
 import DetailModal from '../../components/detailModal/DetailModal'
 import 'react-sliding-side-panel/lib/index.css';
@@ -46,6 +52,8 @@ import SigninModalContainer from "../../components/forgotPasswordModal/SigninMod
 import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
 import WebDetailSkeleton from '../../components/detailPageSkeletonWeb';
 import credencAcademy from '../../assets/images/icons/credencAcademy.svg'
+import Button from '../../components/button/Button';
+import { border, color } from '@mui/system';
 
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
@@ -429,13 +437,323 @@ export default function WebDetailPage(props){
       })
     }
 
+    let curriculumData = [
+      {display: false, title: 'UX Fundamentals', modules: [
+        {display: false, name: 'Module 1', topics: [
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."}
+        ]},
+        {display: false, name: 'Module 1', topics: [
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."}
+        ]}
+      ]},
+      {display: false, title: 'UX Fundamentals', modules: [
+        {display: false, name: 'Module 1', topics: [
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."}
+        ]},
+        {display: false, name: 'Module 1', topics: [
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."}
+        ]}
+      ]},
+      {display: false, title: 'UX Fundamentals', modules: [
+        {display: false, name: 'Module 1', topics: [
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."}
+        ]},
+        {display: false, name: 'Module 1', topics: [
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."},
+          {display: false, topic: 'Topic 1', content: "As well as meeting your UX/UI Design classmates we've got a range of practical tasks and resources for you to be ready to nail the Bootcamp form day one."}
+        ]}
+      ]}
+    ];
+
+    let [curriculum, setCurriculum] = useState([]);
+    useEffect(() => {
+
+        let newCurriculumState = props['toolData']['curriculum'];
+
+        if(newCurriculumState !== undefined){
+          for(let i = 0; i < newCurriculumState?.length; i++){
+            newCurriculumState[i]['display'] = false
+            
+            for(let j = 0; j < newCurriculumState[i]['sub_module'].length; j++){
+              newCurriculumState[i]['sub_module'][j]['display'] = false
+            }
+          }
+
+          setCurriculum([...newCurriculumState])
+        }
+
+    }, [])
+
+    const handleCurriculumDisplay = (event, i, j) => {
+
+      event.stopPropagation()
+
+      let newCurriculumState = [...curriculum]
+
+      if(j >= 0){
+        newCurriculumState[i]['sub_module'][j]['display'] = !newCurriculumState[i]['sub_module'][j]['display']
+      }
+
+      else if(i >= 0){
+        newCurriculumState[i]['display'] = !newCurriculumState[i]['display']
+      }
+
+      setCurriculum([...newCurriculumState])
+
+    }
+
+    let instructors = [
+      {img: userIcon, name: 'Alex Carry', title: 'Founder - MyStartup', desc: 'A developer, innovative designer and Founder at @MyStartup'},
+      {img: userIcon, name: 'Alex Carry', title: 'Founder - MyStartup', desc: 'A developer, innovative designer and Founder at @MyStartup'},
+      {img: userIcon, name: 'Alex Carry', title: 'Founder - MyStartup', desc: 'A developer, innovative designer and Founder at @MyStartup'},
+      {img: userIcon, name: 'Alex Carry', title: 'Founder - MyStartup', desc: 'A developer, innovative designer and Founder at @MyStartup'}
+    ]
+
+    let reviews = [
+      {img: userIcon, name: 'Alex Carry', rating: '4.5', desc: 'A developer, innovative designer and Founder at @MyStartup'},
+      {img: userIcon, name: 'Alex Carry', rating: '3.5', desc: 'A developer, innovative designer and Founder at @MyStartup'},
+      {img: userIcon, name: 'Alex Carry', rating: '2', desc: 'A developer, innovative designer and Founder at @MyStartup'},
+      {img: userIcon, name: 'Alex Carry', rating: '1', desc: 'A developer, innovative designer and Founder at @MyStartup'},
+      {img: userIcon, name: 'Alex Carry', rating: '5', desc: 'A developer, innovative designer and Founder at @MyStartup'}
+    ]
+
+    let [userRating, setUserRating] = useState(0);
+
+    console.log(props.reviews)
+
     return(
         <>
         { props?.detailData && props?.detailData != null ?
             // mounted && 
 
         <div className='detail-page-web'>
-          <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'flex-start',padding: '0px 24px 0px 24px'}}>
+
+          <div className='head-jumbotron'>
+            <div className='title'>{props?.detailData?.course_name}</div>
+            {props?.detailData?.program_type && <div className='subtitle'>
+              <Image src={certificateIcon} width={20} height={20} objectFit='contain' />
+              <span>&ensp;{props?.detailData?.program_type}</span>
+            </div>}
+            <div className='description' style={{textAlign: 'center', padding: '0 20rem'}}>
+            {props?.detailData?.description}
+            </div>
+            <div className='items'>
+              {
+                props?.detailData?.educator_list.map((item, index) => {
+                  return (
+                    <div className='item'>
+                      <Image src={certificateIcon} width={34} height={34} objectFit='contain' />
+                      <div>
+                        <div className='head'>{item['text']}</div>
+                        <div className='sub'>{item['name']}</div>
+                      </div>
+                    </div>
+                  )
+                })
+              }
+            </div>
+          </div>
+
+          <div className='container' style={{rowGap: '3.6rem', flexDirection: 'row', flexWrap: 'wrap'}}>
+            {
+              props?.detailData?.grid.map(
+                (feature, index) => {
+                    return (<div className='feature'>
+                      <Image src={feature?.icon} width={20} height={20} objectFit='contain' loader={myLoader} />
+                      <div className='value'>{feature.value}</div>
+                      <div className='key'>{feature.key}</div>
+                    </div>)
+                }
+                )
+            }
+          </div>
+
+          <div className='container'>
+            <div className='heading' style={{margin: '0 0 1.6rem 0'}}>Introduction</div>
+            <div className='description'>{props?.detailData?.description}</div>
+          </div>
+
+          {props?.detailData?.eligibility.length > 0 && <div className='container'>
+            <div className='heading' style={{margin: '0 0 1.6rem 0'}}>Pre-Requisites</div>
+            {
+              props?.detailData?.eligibility.map(
+                (item, index) => {
+                  return (<div 
+                    className='description' 
+                    style={{padding: '0.2rem 0.8rem', margin: '1.2rem 0', borderLeft: '1px solid #034FE2'}}
+                    >
+                      {item}
+                    </div>)
+                }
+              )
+            }
+          </div>}
+
+          <div className='container'>
+            <div className='confused-container'>
+              <div>
+                <div className='heading' style={{marginBottom: '1.2rem'}}>Still Confused?</div>
+                <div className='description' style={{width: '80%'}}>Our team of experts is here to help you. Contact us today and we're here to help you find clarity and move forward with confidence.</div>
+              </div>
+              <button style={{width: '21%'}}>Talk to an Expert!</button>
+            </div>
+          </div>
+
+          {curriculum.length > 0 && <div className='container'>
+            <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center', marginBottom: '2rem'}}>
+              <div className='heading'>Syllabus</div>
+            </div>
+            {
+              curriculum.map((item, index) => {
+                return(
+                  <div className='curriculum-item' onClick={event => handleCurriculumDisplay(event, index, -1)}>
+                    <div style={{padding: '2.1rem 0 0'}}>
+                      <Image src={item.display === true ? caretDown : caretRight} width={15} height={15} objectFit='contain' />
+                    </div>
+                    <div style={{width: '96%'}}>
+                      <div className='item-content'>
+                        <div>
+                          <div style={{fontSize: '1.8rem', fontWeight: '600', lineHeight: '2.1rem', color: '#000000', padding: '0 0 0.4rem'}}>{item['heading']}</div>
+                        </div>
+                      </div>
+                      {
+                        item.display && item['sub_module'].map((module, moduleIndex) => {
+                          return(
+                            <div className='curriculum-item' onClick={event => handleCurriculumDisplay(event, index, moduleIndex)}>
+                              <div style={{padding: '2rem 2rem 2rem'}}>
+                                <Image src={module.display === true ? caretDown : caretRight} width={10} height={10} objectFit='contain' />
+                              </div>
+                              <div style={{width: '96%'}}>
+                                <div className='item-content'>
+                                  <div style={{fontSize: '1.7rem', fontWeight: '500', lineHeight: '2rem', color: '#000000'}}>{module.title}</div>
+                                </div>
+                                {
+                                  module.display && module['sub_topics'].map((topic, topicIndex) => {
+                                    return(
+                                      <div className='curriculum-item'>
+                                        <div style={{width: '96%'}}>
+                                          <div className='item-content'>
+                                              <div style={{fontSize: '1.5rem', fontWeight: '400', lineHeight: '1.76rem', color: '#000000'}}>{topic}</div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    )
+                                  })
+                                }
+                              </div>
+                            </div>
+                          )
+                        })
+                      }
+                    </div> 
+                  </div>
+                )
+              })
+            }
+          </div>}
+
+          {props?.instructorData?.instructor?.length > 0 && <div className='container'>
+            <div className='heading'>Instructors</div>
+            <div style={{width: '100%', display: 'flex', rowGap: '3.6rem', flexDirection: 'row', flexWrap: 'wrap', padding: '3.6rem 0 0 0'}}>
+              {props?.instructorData?.instructor?.map(
+                  (inst, index) => {
+                      return (<div className='feature'>
+                        <Image src={inst['profile_photo']} width={100} height={100} objectFit='contain' loader={myLoader} />
+                        <div style={{fontSize: '2.4rem', fontWeight: '400', lineHeight: '3.6rem', color: '#000000'}}>{inst['name']}</div>
+                        <div style={{fontSize: '1.7rem', fontWeight: '500', lineHeight: '2.55rem', color: '#000000', padding: '0.4rem 0 1.2rem 0'}}>{inst['designation']}</div>
+                        {/* <div style={{fontSize: '1.5rem', fontWeight: '400', lineHeight: '2.25rem', color: '#000000'}}>{inst.desc}</div> */}
+                      </div>)
+                  }
+              )}
+            </div>
+          </div>}
+
+          <div className='container'>
+            <div className='heading' style={{paddingBottom: '0.9rem'}}>Pricing</div>
+            <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+              <div>
+                <div style={{fontSize: '1.4rem', fontWeight: '600', lineHeight: '1.6rem', color: '#222222'}}>EMI PLANS</div>
+                <div style={{fontSize: '1.2rem', fontWeight: '400', lineHeight: '1.4rem', color: '#8F14CC'}}>Powered by NJ Capital</div>
+              </div>
+              <div>
+                <div style={{fontSize: '1.2rem', fontWeight: '500', lineHeight: '1.4rem', color: '#717171'}}>Starts from</div>
+                <div style={{fontSize: '2rem', fontWeight: '700', lineHeight: '2.3rem', color: '#034FE2'}}>₹4,999/month*</div>
+              </div>
+            </div>
+
+            <div className='confused-container' style={{width: '100%', justifyContent: 'flex-start', alignItems: 'center', padding: '1rem', margin: '1rem 0'}}>
+                <Image src={halfStar} width={14} height={14} objectFit='contain' />
+                &emsp;
+                <div style={{fontSize: '1.2rem', fontWeight: '500', lineHeight: '1.4rem', color: '#000000'}}>You have a Pre-Approved Loan of Rs. 20 lacs from NJ Capital</div>
+            </div>
+
+            <div className='confused-container' style={{width: '100%'}}>
+              <div>
+                <div className='heading' style={{marginBottom: '0.4rem'}}>Credenc Loan</div>
+                <div className='description'>Avail an education loan quickly.</div>
+              </div>
+              <button>Talk to Us!</button>
+            </div>
+            <div className='confused-container' style={{width: '100%'}}>
+              <div>
+                <div className='heading' style={{marginBottom: '1.2rem'}}>Price?</div>
+              </div>
+              <button>Inquire Now</button>
+            </div>
+          </div>
+
+
+          <div className='container'>
+            <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+              <div className='heading'>Reviews</div>
+              {!isNaN(props?.rating) && <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
+                {
+                  [1, 2, 3, 4, 5].map(el => <Image src={props?.rating['avg'] / el >= 1 ? filledStar : (el - props?.rating['avg']) >= 1 ? emptyStar : halfStar} width={20} height={20} objectFit='contain' />)
+                }
+                <div style={{fontSize: '2rem', fontWeight: '400', lineHeight: '2.4rem', color: '#8F14CC'}}>&ensp;{parseFloat(props?.rating['avg']).toFixed(1)}</div>
+              </div>}
+            </div>
+            {props?.reviews?.length > 0 && <div style={{width: '100%', display: 'flex', rowGap: '3.6rem', flexDirection: 'row', flexWrap: 'wrap', padding: '3.6rem 0 0 0'}}>
+              {props?.reviews?.map(
+                  (review, index) => {
+                      return (<div className='feature'>
+                        <Image src={review['review']['user']['profile_image']} width={100} height={100} objectFit='contain' loader={myLoader} />
+                        <div style={{fontSize: '2.4rem', fontWeight: '400', lineHeight: '3.6rem', color: '#000000'}}>{review['review']['user']['full_name']}</div>
+                        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
+                          {
+                            [1, 2, 3, 4, 5].map(el => <Image src={review.rating / el >= 1 ? filledStar : (el - review.rating) >= 1 ? emptyStar : halfStar} width={10} height={10} objectFit='contain' />)
+                          }
+                          <div style={{fontSize: '1rem', fontWeight: '400', lineHeight: '1.4rem', color: '#8F14CC'}}>&ensp;{parseFloat(review.rating).toFixed(1)}</div>
+                        </div>
+                        <div style={{fontSize: '1.5rem', fontWeight: '400', lineHeight: '2.25rem', color: '#000000'}}>{review['review']['review']}</div>
+                      </div>)
+                  }
+              )}
+            </div>}
+            <div className='leave-review'>
+              <div style={{fontSize: '1.6rem', fontWeight: '500', lineHeight: '2.4rem', color: '#000000'}}>How was your experience with the course?</div>
+              <div style={{fontSize: '1.4rem', fontWeight: '400', lineHeight: '1.6rem', color: '#000000', margin: '1rem 0 2rem 0'}}>Leave a review and help others in their learning journey!</div>
+              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', margin: '0rem 0 2rem 0'}}>
+                {
+                  [1, 2, 3, 4, 5].map(el => <Image src={userRating / el >= 1 ? filledStar : (el - userRating) >= 1 ? emptyStar : halfStar} width={30} height={30} objectFit='contain' onClick={() => setUserRating(el)}/>)
+                }
+              </div> 
+              <textarea rows={8} placeholder="This course is amazing..."></textarea> 
+            </div>
+          </div>
+
+          {/* <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'flex-start',padding: '0px 24px 0px 24px'}}>
            <div className='detail-page-web-breadcrumb'>
            <Breadcrumbs
                 separator={<NavigateNextIcon fontSize="medium" />}
@@ -481,7 +799,7 @@ export default function WebDetailPage(props){
                       }}
                    >
                     <span className='count-text' style={upvoted ? {color: '#FFFFFF'} : null}>{toggleUpvote ? props?.detailData?.up_votes + 1 : props?.detailData?.up_votes}</span>
-                    {/* <Image src={upvoted ? upvoteLogoDark : upvoteLogo} width={20} height={20} objectFit='contain' /> */}
+                    <Image src={upvoted ? upvoteLogoDark : upvoteLogo} width={20} height={20} objectFit='contain' />
                    </div>
                    {
                      props?.detailData?.is_mooc === true ? 
@@ -511,15 +829,15 @@ export default function WebDetailPage(props){
                 </div>
             </div>
             
-            </div>
-            {
+            </div> */}
+            {/* {
                props?.detailData?.preview ? 
                <div className='detail-page-mobile-banner' style={{display:'contents'}}>
                  <Image loader={myLoader} src={props?.detailData?.preview} height={277} width={'100%'} objectFit="contain" />
                </div> 
                : null
-              }
-           <div className='detail-page-web-course-data-container'>
+              } */}
+           {/* <div className='detail-page-web-course-data-container'>
                   <div className='course-data-left-container'>
                     {
                       props?.detailData?.course_name && props?.detailData?.course_name.length > 0 ? 
@@ -615,8 +933,8 @@ export default function WebDetailPage(props){
                             </div>
                         </div>
                   </div>
-            </div>
-            <div className='detail-page-web-course-grey-section' style={{flexDirection:'row'}}>
+            </div> */}
+            {/* <div className='detail-page-web-course-grey-section' style={{flexDirection:'row'}}>
                     {
                       props?.detailData?.description && props?.detailData?.description.length > 0 ?
                       <div className='detail-page-grey-left-content'>
@@ -656,8 +974,8 @@ export default function WebDetailPage(props){
                         </div> : null
                     }
               
-            </div>
-            {
+            </div> */}
+            {/* {
                props?.detailData?.eligibility && props?.detailData?.eligibility.length > 0 ?
                 <div style={styles}>
                                 <div className='detail-page-web-intro-header' style={{marginTop: 40,fontSize: 22,display:'flex',marginLeft: 24}}>
@@ -685,8 +1003,8 @@ export default function WebDetailPage(props){
                                     }
                                 </div>
                 </div> : null
-            }
-            <div className='detail-page-web-course-grey-section' style={{gap: 0,marginTop: 0}}>
+            } */}
+            {/* <div className='detail-page-web-course-grey-section' style={{gap: 0,marginTop: 0}}>
               {
                 props?.toolData?.curriculum && props?.toolData?.curriculum.length > 0 ?
                 <div className='detail-page-grey-left-content' style={{width: '50%'}}>
@@ -756,12 +1074,6 @@ export default function WebDetailPage(props){
                                                    data.sub_topics.length > 1 && data.sub_topics.map((info,serial)=>{
                                                         return(
                                                           <div style={{display:'flex',flexDirection:'column'}} key={serial}>
-                                                            {/* <div className='detail-page-mobile-module-topic-section'>
-                                                                <Image src={moduleArrowBullets} height={12} width={12} objectFit='contain' />
-                                                                <div className='detail-page-mobile-module-bullet-section-header-text'>
-                                                                    Topic 1
-                                                                </div>
-                                                            </div> */}
                                                             <div className='detail-page-mobile-module-bullet-section-topic-text'>
                                                                 {info}
                                                             </div>
@@ -808,8 +1120,8 @@ export default function WebDetailPage(props){
             </div> : null
             }
                 </div>
-            </div>
-            <div>
+            </div> */}
+            {/* <div>
                 {
                     props?.instructorData?.instructor && props?.instructorData?.instructor.length > 0 ? 
                     <div className='detail-page-web-course-grey-section' style={{flexDirection:'column',marginTop:0,gap: 0,flexWrap:'wrap',overflow:'auto'}}>
@@ -842,8 +1154,8 @@ export default function WebDetailPage(props){
                         </div> 
                 </div> : null
                 }
-                </div>
-                <div style={{...styles}}>
+                </div> */}
+                {/* <div style={{...styles}}>
 
                   <div className='detail-page-mobile-intro'>
                   <div className='detail-page-mobile-intro-header' style={{fontSize: 22}}>
@@ -937,14 +1249,6 @@ export default function WebDetailPage(props){
                     {item.noOfInstallment}
                     </div>
                     </div>
-                    {/* <div className='detail-page-mobile-price-options-card-info'>
-                    <div className='detail-page-mobile-price-options-card-info-heading'>
-                    Interest
-                    </div>
-                    <div className='detail-page-mobile-price-options-card-info-subheading'>
-                        0
-                    </div>
-                    </div> */}
                     <div className='detail-page-mobile-price-options-card-info'>
                     <div className='detail-page-mobile-price-options-card-info-heading'>
                     Down Payment
@@ -953,22 +1257,6 @@ export default function WebDetailPage(props){
                         {item.downPayment}
                     </div>
                     </div>
-                    {/* <div className='detail-page-mobile-price-options-card-info'>
-                    <div className='detail-page-mobile-price-options-card-info-heading'>
-                    GST@18
-                    </div>
-                    <div className='detail-page-mobile-price-options-card-info-subheading'>
-                    ₹ 12,125
-                    </div>
-                    </div> */}
-                    {/* <div className='detail-page-mobile-price-options-card-info'>
-                    <div className='detail-page-mobile-price-options-card-info-heading'>
-                    Discount
-                    </div>
-                    <div className='detail-page-mobile-price-options-card-info-subheading'>
-                        10%
-                    </div>
-                    </div> */}
                     <div className='detail-page-mobile-price-options-card-info' style={{marginTop:12}}>
                         <div style={{display:'flex',flexDirection:'column'}}>
                         <div className='detail-page-mobile-price-options-card-info-amount-header'>
@@ -989,10 +1277,10 @@ export default function WebDetailPage(props){
                       )
                     })
                   }
-                </div> 
+                </div>  
 
                 
-                  <div className='detail-page-mobile-price-options-container'>
+                   <div className='detail-page-mobile-price-options-container'>
                    {
                      props?.priceOptions?.price_options?.lumpsum && props?.priceOptions?.price_options?.lumpsum.map((item,index)=>{
                        return(
@@ -1001,9 +1289,6 @@ export default function WebDetailPage(props){
                              LUMPSUM
                            </div>
                            <div className='detail-page-mobile-lumpsum-card'>
-                              {/* <div className='detail-page-mobile-lumpsum-card-header'>
-                                *First 7 days free trial or any sort of disclaimer comes here. 
-                              </div> */}
                               <div className='detail-page-mobile-lumpsum-card-detail'>
                                 <div className='detail-page-mobile-lumpsum-card-detail-label'>
                                   Base Price
@@ -1042,7 +1327,7 @@ export default function WebDetailPage(props){
                   </div>
                 
                   </div> 
-               </div>
+               </div> */}
                {/* <div>
                     <div className='detail-page-mobile-intro'>
                         <div className='detail-page-mobile-intro-header' style={{position:'relative'}}>
@@ -1159,7 +1444,7 @@ export default function WebDetailPage(props){
                         </div>
                     </div>
                </div> */}
-              {
+              {/* {
                 props?.similarCourses && props?.similarCourses.length > 0 ?
                     <div className='detail-page-mobile-intro' style={styles}>
                     <div className='detail-page-mobile-intro-header' style={{fontSize: 24,display:'flex',flexDirection:'row'}}>
@@ -1196,7 +1481,7 @@ export default function WebDetailPage(props){
                     })}
                     </div>
                 </div> : null
-              }
+              } */}
                
 
             {

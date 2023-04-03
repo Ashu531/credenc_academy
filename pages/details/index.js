@@ -22,6 +22,8 @@ export default function DetailPage(props){
     const [priceOptions,setPriceOptions] = useState({})
     const [toolData,setToolData] = useState({})
     const [similarCourses,setSimilarCourses] = useState({})
+    const [reviews, setReviews] = useState([])
+    const [rating, setRating] = useState({})
     const [token,setToken] = useState('')
     const [startingCost,setStartingCost] = useState({})
     const [thirdPartyUser,setThirdPartyUser] = useState({})
@@ -52,6 +54,8 @@ export default function DetailPage(props){
     const _getCourseId=(id,localToken)=>{
             _getDetailData(id,localToken)
             _getInstructorData(id)
+            _getReviews(id)
+            _getRating(id)
             _getpaymentDetails(id)
             _getToolData(id)
             _getCardData(id,localToken)
@@ -98,6 +102,34 @@ export default function DetailPage(props){
           .then(res => {
             // this.coursesApiStatus.current.success();
             setInstructorData(res.data.data)
+            // setMounted(true);
+            return res.data;
+          })
+          .catch(err => {
+            // this.coursesApiStatus.current.failed();
+            console.log(err);
+          }); 
+    }
+
+    const _getReviews = async(id) => {
+        let res = await axios.get(`${constant.API_URL.DEV}/course/reviews/${id}/`)
+          .then(res => {
+            // this.coursesApiStatus.current.success();
+            setReviews(res.data)
+            // setMounted(true);
+            return res.data;
+          })
+          .catch(err => {
+            // this.coursesApiStatus.current.failed();
+            console.log(err);
+          }); 
+    }
+
+    const _getRating = async(id) => {
+        let res = await axios.get(`${constant.API_URL.DEV}/course/ratingsavg/${id}/`)
+          .then(res => {
+            // this.coursesApiStatus.current.success();
+            setRating(res.data)
             // setMounted(true);
             return res.data;
           })
@@ -238,6 +270,8 @@ export default function DetailPage(props){
             similarCourses={similarCourses} 
             priceOptions={priceOptions} 
             toolData={toolData} 
+            reviews={reviews}
+            rating={rating}
             token={token}
             startingCost={startingCost}
             openLoginModal={()=>props?.openLoginModal()}
