@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2)
   },
   menuPaper: {
-    maxHeight: '60%',
+    maxHeight: '30% !important',
   }
 }));
 

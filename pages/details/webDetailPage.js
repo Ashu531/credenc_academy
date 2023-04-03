@@ -468,16 +468,21 @@ export default function WebDetailPage(props){
       
         let newCurriculumState = props['toolData']['curriculum'];
 
-        if(newCurriculumState !== undefined){
-          for(let i = 0; i < newCurriculumState?.length; i++){
-            newCurriculumState[i]['display'] = false
-            
-            for(let j = 0; j < newCurriculumState[i]['sub_module'].length; j++){
-              newCurriculumState[i]['sub_module'][j]['display'] = false
+        if(newCurriculumState !== undefined && newCurriculumState !== null && newCurriculumState.length > 0){
+          try{
+            for(let i = 0; i < newCurriculumState?.length; i++){
+              newCurriculumState[i]['display'] = false
+              
+              for(let j = 0; j < newCurriculumState[i]['sub_module'].length; j++){
+                newCurriculumState[i]['sub_module'][j]['display'] = false
+              }
             }
+  
+            setCurriculum([...newCurriculumState])
+          }catch(e){
+              console.log(e)
           }
-
-          setCurriculum([...newCurriculumState])
+          
         }
 
     }, [props?.toolData.curriculum])
