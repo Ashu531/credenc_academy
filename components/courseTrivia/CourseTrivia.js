@@ -169,7 +169,7 @@ export default function CourseTrivia(props){
                             {
                             subject && subject?.length > 0 && subject.map((item,index)=>{
                                 return(
-                                    <ThemeProvider theme={theme}>
+                                    <ThemeProvider theme={theme} key={index}>
                                         <MenuItem value={item.value} key={index}>{item.value}</MenuItem>
                                     </ThemeProvider>
                                 )
