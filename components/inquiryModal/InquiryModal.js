@@ -172,11 +172,11 @@ export default function InquiryModal(props){
               <div className='apply-modal-content'>
                   <div className='apply-modal-header'>
                     <span className='header-1'>Enrolling for</span>
-                    <span className='header-2'>Product design from scratch with mentor support</span>
+                    <span className='header-2'>{props?.courseName}</span>
                   </div>
                   <div className='apply-modal-banner'  style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
                     <span className='banner-text'>
-                    No more work for you! Just review your pre-filled application and get enrolled!
+                        No more work for you! Just review your pre-filled application and get enrolled!
                     </span>
                   </div>
                   
@@ -221,7 +221,7 @@ export default function InquiryModal(props){
                        Query
                     </span>
                     <span style={{width: '100%'}}>
-                    <Input required={true} placeholder="I want to know that ..." handleInput={(e)=>handleQuery(e)} value={query} type='text' />
+                    <textarea rows={8} placeholder="This course is amazing..." onChange={(e) => handleQuery(e.target.value)} value={query}></textarea>
                     </span>
                    </div>
                    

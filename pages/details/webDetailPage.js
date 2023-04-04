@@ -546,29 +546,35 @@ export default function WebDetailPage(props){
 
 
     const submitReview = async () => {
-      if(userRating > 0){
-        let res = await axios.post(`${constant.API_URL.DEV}/course/review/`, {
-          "course_id": props?.id,
-          "review" : reviewText,
-          "rating" : userRating
-      }, {
-          headers: {
-            'Authorization': `Bearer ${props?.token}`
-          }
-        })
-          .then(res => {
-            _getReviews()
-            _getRating()
-            handleReviewChange('')
-            return res.data;
+      if(props?.token && props?.token.length > 0){
+        if(userRating > 0){
+          let res = await axios.post(`${constant.API_URL.DEV}/course/review/`, {
+            "course_id": props?.id,
+            "review" : reviewText,
+            "rating" : userRating
+        }, {
+            headers: {
+              'Authorization': `Bearer ${props?.token}`
+            }
           })
-          .catch(err => {
-            // this.coursesApiStatus.current.failed();
-            console.log(err);
-          });
-      } else {
-        setError('Oh! Looks like you forgot to give us a rating')
+            .then(res => {
+              _getReviews()
+              _getRating()
+              handleReviewChange('')
+              return res.data;
+            })
+            .catch(err => {
+              // this.coursesApiStatus.current.failed();
+              console.log(err);
+            });
+        } else {
+          setError('Oh! Looks like you forgot to give us a rating')
+        }
+      }else{
+        console.log("coming+++")
+        props?.openLoginModal()
       }
+      
     }
 
     const overviewActive = ['active', '', '', '', '']
@@ -602,7 +608,7 @@ export default function WebDetailPage(props){
               <li className='nav-item-right' style={{margin: '0 1rem 0 0'}} onClick={()=>_handleCardBookmark(props?.detailData)}><Image src={ bookmarkVisible ? selectedBookmarkIcon : bookmarkIcon} width={20} height={20} objectFit='contain' /></li>
               <li className='nav-item-right'><button style={{backgroundColor: 'transparent', color: '#000000', border: '1px solid #034FE2'}} onClick={() => setEnquire(true)}>Talk to Us</button></li>
               <li className='nav-item-right'><button onClick={() => setApplyNow(true)}>Apply Now</button></li>
-              <li className='nav-item-right'><button>Track Application</button></li>
+              <li className='nav-item-right'><button onClick={() => _openDetailModal(props?.detailData)}>Track Application</button></li>
             </div>
           </ul>
           <div className='head-jumbotron' style={{backgroundImage: `linear-gradient(rgba(245, 248, 255, 0.3), rgba(245, 248, 255, 0.3)), url(${backgroundImage.src})`, backgroundSize: 'cover'}}>
@@ -928,7 +934,7 @@ export default function WebDetailPage(props){
                         <div style={{fontSize: '2.4rem', fontWeight: '400', lineHeight: '3.6rem', color: '#000000'}}>{review['review']['user']['full_name']}</div>
                         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
                           {
-                            [1, 2, 3, 4, 5].map(el => <Image key={el} src={review.rating / el >= 1 ? filledStar : (el - review.rating) >= 1 ? emptyStar : halfStar} width={10} height={10} objectFit='contain' />)
+                            [1, 2, 3, 4, 5].map(el => <Image key={el} src={review.rating / el >= 1 ? filledStar : (el - review.rating) >= 1 ? emptyStar : halfStar} width={12} height={12} objectFit='contain' />)
                           }
                           <div style={{fontSize: '1rem', fontWeight: '400', lineHeight: '1.4rem', color: '#8F14CC'}}>&ensp;{parseFloat(review.rating).toFixed(1)}</div>
                         </div>
@@ -948,7 +954,7 @@ export default function WebDetailPage(props){
               <div style={{color: 'var(--errorPrimaryColor)', margin: '1rem 0 2rem 0', fontSize: '1.3rem'}}>{error}</div>
               <textarea rows={8} placeholder="This course is amazing..." onChange={(e) => handleReviewChange(e.target.value)} value={reviewText}></textarea>
               <button 
-                style={{cursor: 'pointer', backgroundColor: '#034FE2', padding: '1.6rem 2.4rem', margin: '1.6rem', border: 'none', borderRadius: '0.8rem', color: '#FFFFFF', fontSize: '1.6rem'}}
+                style={{cursor: 'pointer', backgroundColor: '#034FE2', padding: '1.6rem 2.4rem', margin: '1.6rem', border: 'none', borderRadius: '0.8rem', color: '#FFFFFF', fontSize: '1.6rem', fontFamily: 'Work Sans'}}
                 onClick={submitReview}
               >Leave a Review
               </button>
@@ -1763,7 +1769,7 @@ export default function WebDetailPage(props){
             >
                 <ApplyNowModal 
                   closeApplyNowModal={()=>_closeApplyNowModal()} 
-                  detailData={props?.detailData} courseName={courseName} 
+                  detailData={props?.detailData} courseName={props?.detailData?.course_name} 
                   openSuccessApplyModal={(courseName)=>_openSuccessApplyModal(courseName)}  
                   handleAppliedStage={(id)=>_handleAppliedStage(id)}
                 />
@@ -1776,7 +1782,7 @@ export default function WebDetailPage(props){
             >
                 <InquiryModal 
                   closeInquiryModal={_closeEnquireModal} 
-                  detailData={props?.detailData} courseName={courseName} 
+                  detailData={props?.detailData} courseName={props?.detailData?.course_name} 
                   openSuccessModal={(courseName)=>_openQuerySuccessModal(courseName)}  
                   handleAppliedStage={(id)=>_handleAppliedStage(id)}
                 />
@@ -1787,7 +1793,7 @@ export default function WebDetailPage(props){
             backdropClicked={() => setSuccessModal(false)}
             size={30}
           >
-            <SuccessApplyModal closeSuccessApplyModal={()=>_closeSuccessApplyModal()} courseName={courseName} />
+            <SuccessApplyModal closeSuccessApplyModal={()=>_closeSuccessApplyModal()} courseName={props?.detailData?.course_name} />
           </SlidingPanel>
           <SlidingPanel
             type={'right'}
@@ -1795,7 +1801,7 @@ export default function WebDetailPage(props){
             backdropClicked={() => setQuerySuccessModal(false)}
             size={30}
           >
-            <QuerySuccessModal closeSuccessQueryModal={()=>setQuerySuccessModal(false)} courseName={courseName} />
+            <QuerySuccessModal closeSuccessQueryModal={()=>setQuerySuccessModal(false)} courseName={props?.detailData?.course_name} />
           </SlidingPanel>
         </div>
         : <WebDetailSkeleton />
