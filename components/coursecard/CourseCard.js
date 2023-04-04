@@ -342,6 +342,15 @@ const _handleTrackItem=()=>{
                 {props?.data?.duration}
                 </h2>
             </div>
+            {
+              props?.data?.start_level?.length > 0 && props?.data?.end_level?.length > 0 ?
+              <div className='content-container' style={{marginLeft: 20}}>
+                <h2 className='course-duration'>
+                {props?.data?.start_level}-{props?.data?.end_level}
+                </h2>
+            </div> : <div />
+            }
+            
           </div>
           <div className='content-description'>
             {props?.data?.one_liner && props?.data?.one_liner.length > 80 ? props?.data?.one_liner.substring(0,80)+'...' : props?.data?.one_liner }

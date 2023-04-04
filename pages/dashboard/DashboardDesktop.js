@@ -38,7 +38,6 @@ import Skeleton from '@mui/material/Skeleton';
 import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
 import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer"
 import InfiniteScroll from 'react-infinite-scroll-component';
-import ReactGA from 'react-ga';
 import Image from "next/image";
 import CredencFeatures from "../../components/credencFeatures/credencFeatures"
 import bannerImage from '../../assets/images/icons/bannerImage.svg'
@@ -165,7 +164,9 @@ function DashboardDesktop(props) {
       (entries) => {
         const first = entries[0];
         if (first.isIntersecting === true && nextPage === true) {
+          console.log("coming+++",pageNumber.current)
           pageNumber.current = pageNumber.current > 0 ? pageNumber.current + 1 : pageNumber.current
+          console.log(pageNumber.current,"pageNumber.current+++")
         }
       })
   );
@@ -174,7 +175,6 @@ function DashboardDesktop(props) {
 
   useEffect(() => {
     setMounted(true);
-    ReactGA.pageview(window.location.pathname);
   }, []);
 
 
@@ -901,9 +901,7 @@ const _handleSearch=(e)=>{
    
   }
 
-
   useEffect(() => {
-    
     if(nextPage === true){
       coursesApiStatus.current.start();
       handleFilteredData(true);
@@ -911,10 +909,9 @@ const _handleSearch=(e)=>{
         applyFilters();
       }
     }
-  }, [pageNumber.current]);
+  }, [pageNumber?.current]);
 
   useEffect(() => {
-    
     const currentElement = lastCourse;
     const currentObserver = observer.current;
     if (currentElement) {
@@ -1015,15 +1012,15 @@ const _handleSearch=(e)=>{
     }
   }
 
-  useEffect(()=>{
-    if(dashboardRef && dashboardRef?.current !== null){
-        if(dashboardRef?.current?.getBoundingClientRect().y <= -2563){
-          setNavbarTop(true)
-        }else{
-          setNavbarTop(false)
-        }
-    }
-  },[dashboardRef?.current?.getBoundingClientRect().y])
+  // useEffect(()=>{
+  //   if(dashboardRef && dashboardRef?.current !== null){
+  //       if(dashboardRef?.current?.getBoundingClientRect().y <= -2563){
+  //         setNavbarTop(true)
+  //       }else{
+  //         setNavbarTop(false)
+  //       }
+  //   }
+  // },[dashboardRef?.current?.getBoundingClientRect().y])
 
  return(
         <div>      
