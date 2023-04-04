@@ -234,7 +234,7 @@ export default function Header(props){
           }
         
          <div className='user-elements'>
-           {/* <div className='header-text' onClick={()=>_openMyCourseTab()}>My Courses</div> */}
+           <div className='header-text' onClick={()=>_openMyCourseTab()}>My Courses</div>
            <div className='icon-element' onClick={()=>_openBookmarkTab()} style={{position:"relative"}}>
            <Image src={ bookmarkIcon} height={22} width={22} objectFit="contain" alt='bookmarkIcon' />
            {

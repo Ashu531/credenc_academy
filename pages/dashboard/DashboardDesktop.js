@@ -273,7 +273,7 @@ function DashboardDesktop(props) {
     if(item.name === "All"){
       // urlService.current.addEntry('subject', 'All');
     }else{
-      urlService.current.addEntry('domain', item.name);
+      urlService.current.addEntry('domain', item.value);
     }
     
     
@@ -284,10 +284,10 @@ function DashboardDesktop(props) {
 
     urlService.current.removeEntry('subject')
 
-    if(item.name === "All"){
+    if(item.value === "All"){
       urlService.current.removeEntry('subject')
     }else{
-      urlService.current.addEntry('subject', item.name);
+      urlService.current.addEntry('subject', item.value);
     }
   
     getCardData(item)
@@ -306,7 +306,7 @@ function DashboardDesktop(props) {
     }
 
     const setSubCategoriesData=(item)=>{
-      setSelectedCategory(item.name)
+      setSelectedCategory(item.value)
       _getSubCategoryDetails(item)
     }
 
