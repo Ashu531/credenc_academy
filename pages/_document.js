@@ -27,10 +27,10 @@ class CustomDocument extends Document {
           rel="stylesheet"
         />
         <link href="https://fonts.googleapis.com/css2?family=Gloock&display=swap" rel="stylesheet" />
-        <link href='https://fonts.googleapis.com/css?family=Work Sans' rel='stylesheet' />
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
         <link rel="icon" href="/favicon.ico" />
         </Head>
-        <body style={{ fontFamily: "Poppins" }} >
+        <body>
           <Main />
           <NextScript />
         </body>

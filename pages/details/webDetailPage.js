@@ -36,6 +36,7 @@ import filledStar from '../../assets/images/icons/star-filled.svg'
 import halfStar from '../../assets/images/icons/star-filled-half.svg'
 import emptyStar from '../../assets/images/icons/star-empty.svg'
 import backgroundImage from '../../assets/images/icons/bannerImage.svg'
+import hatIcon from '../../assets/images/icons/hat.svg'
 import SlidingPanel from 'react-sliding-side-panel';
 import DetailModal from '../../components/detailModal/DetailModal'
 import 'react-sliding-side-panel/lib/index.css';
@@ -505,19 +506,23 @@ export default function WebDetailPage(props){
 
     }
 
+    useEffect(() => {
+      console.log("reviews", reviews)
+    }, [reviews])
+
     const _getReviews = async(id) => {
-      let res = await axios.get(`${constant.API_URL.DEV}/course/reviews/${props?.id}/`)
-        .then(res => {
-          // this.coursesApiStatus.current.success();
-          setReviews(res.data)
-          // setMounted(true);
-          return res.data;
-        })
-        .catch(err => {
-          // this.coursesApiStatus.current.failed();
-          console.log(err);
-        }); 
-  }
+        let res = await axios.get(`${constant.API_URL.DEV}/course/reviews/${props?.id}/`)
+          .then(res => {
+            // this.coursesApiStatus.current.success();
+            setReviews(res.data)
+            // setMounted(true);
+            return res.data;
+          })
+          .catch(err => {
+            // this.coursesApiStatus.current.failed();
+            console.log(err);
+          }); 
+    }
 
   const _getRating = async(id) => {
       let res = await axios.get(`${constant.API_URL.DEV}/course/ratingsavg/${props?.id}/`)
@@ -535,7 +540,8 @@ export default function WebDetailPage(props){
   }
 
     const handleReviewChange = (val) => {
-      setReviewText(val.target.value)
+      setReviewText(val)
+      setError('')
     }
 
 
@@ -553,6 +559,7 @@ export default function WebDetailPage(props){
           .then(res => {
             _getReviews()
             _getRating()
+            handleReviewChange('')
             return res.data;
           })
           .catch(err => {
@@ -565,7 +572,7 @@ export default function WebDetailPage(props){
     }
 
 
-    console.log(props?.priceOptions?.enquiry)
+    console.log(props?.detailData?.educator_list)
 
     return(
         <>
@@ -573,22 +580,29 @@ export default function WebDetailPage(props){
             // mounted && 
 
         <div className='detail-page-web'>
-
-          <div className='head-jumbotron' style={{backgroundImage: `linear-gradient(rgba(245, 248, 255, 0.9), rgba(245, 248, 255, 0.9)), url(${backgroundImage.src})`, backgroundSize: 'cover'}}>
+          <ul className='navbar'>
+            <li className='nav-item active'><Link href="#">Overview</Link></li>
+            <li className='nav-item'><Link href="#syllabus">Syllabus</Link></li>
+            <li className='nav-item'><Link href="#instructor">Instructor</Link></li>
+            <li className='nav-item'><Link href="#pricing">Pricing</Link></li>
+            <li className='nav-item'><Link href="#reviews">Reviews</Link></li>
+            {/* <li className='nav-item nav-item-right'>Syllabus</li> */}
+          </ul>
+          <div className='head-jumbotron' style={{backgroundImage: `linear-gradient(rgba(245, 248, 255, 0.3), rgba(245, 248, 255, 0.3)), url(${backgroundImage.src})`, backgroundSize: 'cover'}}>
             <div className='title'>{props?.detailData?.course_name}</div>
             {props?.detailData?.program_type && <div className='subtitle'>
               <Image src={certificateIcon} width={20} height={20} objectFit='contain' />
               <span>&ensp;{props?.detailData?.program_type}</span>
             </div>}
             <div className='description' style={{textAlign: 'center', padding: '0 20rem'}}>
-            {props?.detailData?.description}
+            {props?.detailData?.one_liner || props?.detailData?.description}
             </div>
             <div className='items'>
               {
                 props?.detailData?.educator_list.map((item, index) => {
                   return (
                     <div className='item' key={index}>
-                      <Image src={certificateIcon} width={34} height={34} objectFit='contain' />
+                      <Image src={item['logo'] || hatIcon} width={34} height={34} objectFit='contain' loader={myLoader} style={{borderRadius: '50%'}} />
                       <div>
                         <div className='head'>{item['text']}</div>
                         <div className='sub'>{item['name']}</div>
@@ -597,6 +611,12 @@ export default function WebDetailPage(props){
                   )
                 })
               }
+            </div>
+            <div style={{fontWeight: '600', fontSize: '2.4rem', lineHeight: '2.8rem', color: '#034FE2'}}>
+              {props?.startingCost?.starting_cost && '₹' + props?.startingCost?.starting_cost[0]}
+            </div>
+            <div style={{fontWeight: '400', fontSize: '1.2rem', lineHeight: '1.4rem', color: '#717171'}}>
+              {props?.startingCost?.starting_cost && 'Starting Cost'}
             </div>
           </div>
 
@@ -646,7 +666,7 @@ export default function WebDetailPage(props){
             </div>
           </div>
 
-          {curriculum.length > 0 && <div className='container'>
+          {curriculum.length > 0 && <div className='container' id='syllabus'>
             <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center', marginBottom: '2rem'}}>
               <div className='heading'>Syllabus</div>
             </div>
@@ -655,7 +675,7 @@ export default function WebDetailPage(props){
                 return(
                   <div className='curriculum-item' onClick={event => handleCurriculumDisplay(event, index, -1)} key={index}>
                     <div style={{padding: '2.1rem 0 0'}}>
-                      <Image src={item.display === true ? caretDown : caretRight} width={15} height={15} objectFit='contain' />
+                      <Image src={caretRight} width={15} height={15} objectFit='contain' style={{rotate: item.display === true ? '90deg' : '0deg'}} />
                     </div>
                     <div style={{width: '96%'}}>
                       <div className='item-content'>
@@ -668,7 +688,7 @@ export default function WebDetailPage(props){
                           return(
                             <div className='curriculum-item' onClick={event => handleCurriculumDisplay(event, index, moduleIndex)} key={moduleIndex}>
                               <div style={{padding: '2rem 2rem 2rem'}}>
-                                <Image src={module.display === true ? caretDown : caretRight} width={10} height={10} objectFit='contain' />
+                                <Image src={caretRight} width={15} height={15} objectFit='contain' style={{rotate: module.display === true ? '90deg' : '0deg'}} />
                               </div>
                               <div style={{width: '96%'}}>
                                 <div className='item-content'>
@@ -699,15 +719,15 @@ export default function WebDetailPage(props){
             }
           </div>}
 
-          {props?.instructorData?.instructor?.length > 0 && <div className='container'>
+          {props?.instructorData?.instructor?.length > 0 && <div className='container' id='instructor'>
             <div className='heading'>Instructors</div>
             <div style={{width: '100%', display: 'flex', rowGap: '3.6rem', flexDirection: 'row', flexWrap: 'wrap', padding: '3.6rem 0 0 0'}}>
               {props?.instructorData?.instructor?.map(
                   (inst, index) => {
                       return (<div className='feature' key={index}>
-                        <Image src={inst?.profile_photo} width={100} height={100} objectFit='contain' loader={myLoader} />
-                        <div style={{fontSize: '2.4rem', fontWeight: '400', lineHeight: '3.6rem', color: '#000000'}}>{inst['name']}</div>
-                        <div style={{fontSize: '1.7rem', fontWeight: '500', lineHeight: '2.55rem', color: '#000000', padding: '0.4rem 0 1.2rem 0'}}>{inst['designation']}</div>
+                        <Image src={inst?.profile_photo} width={100} height={100} style={{borderRadius: '1.2rem'}} objectFit='contain' loader={myLoader} />
+                        <div style={{fontSize: '1.8rem', fontWeight: '400', lineHeight: '2.1rem', color: '#000000', padding: '1.2rem 0'}}>{inst['name']}</div>
+                        <div style={{fontSize: '1.5rem', fontWeight: '400', lineHeight: '1.8rem', color: '#000000', padding: '0.4rem 0 1.2rem 0'}}>{inst['designation']}</div>
                         {/* <div style={{fontSize: '1.5rem', fontWeight: '400', lineHeight: '2.25rem', color: '#000000'}}>{inst.desc}</div> */}
                       </div>)
                   }
@@ -715,7 +735,7 @@ export default function WebDetailPage(props){
             </div>
           </div>}
 
-          <div className='container'>
+          <div className='container' id='pricing'>
             {(props?.thirdPartyUser === constant.PARTNER_KEY.NJ || props?.priceOptions?.credenc_loan) && <div className='heading' style={{paddingBottom: '0.9rem'}}>Pricing</div>}
             {props?.thirdPartyUser === constant.PARTNER_KEY.NJ && <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
              <div>
@@ -871,7 +891,7 @@ export default function WebDetailPage(props){
           </div>
 
 
-          <div className='container'>
+          <div className='container' id='instructor'>
             <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
               <div className='heading'>Reviews</div>
               { rating['avg'] && !isNaN(rating['avg']) && <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
@@ -881,7 +901,7 @@ export default function WebDetailPage(props){
                 <div style={{fontSize: '2rem', fontWeight: '400', lineHeight: '2.4rem', color: '#8F14CC'}}>&ensp;{parseFloat(rating['avg']).toFixed(1)}</div>
               </div>}
             </div>
-            {props?.reviews?.length > 0 && <div style={{width: '100%', display: 'flex', rowGap: '3.6rem', flexDirection: 'row', flexWrap: 'wrap', padding: '3.6rem 0 0 0'}}>
+            {reviews?.length > 0 && <div style={{width: '100%', display: 'flex', rowGap: '3.6rem', flexDirection: 'row', flexWrap: 'wrap', padding: '3.6rem 0 0 0'}}>
               {reviews.map(
                   (review, index) => {
                       return (<div className='feature' key={index}>
@@ -909,7 +929,7 @@ export default function WebDetailPage(props){
                 }
               </div> 
               <div style={{color: 'var(--errorPrimaryColor)', margin: '1rem 0 2rem 0', fontSize: '1.3rem'}}>{error}</div>
-              <textarea rows={8} placeholder="This course is amazing..." onChange={(val) => handleReviewChange(val)} value={reviewText}></textarea>
+              <textarea rows={8} placeholder="This course is amazing..." onChange={(e) => handleReviewChange(e.target.value)} value={reviewText}></textarea>
               <button 
                 style={{cursor: 'pointer', backgroundColor: '#034FE2', padding: '1.6rem 2.4rem', margin: '1.6rem', border: 'none', borderRadius: '0.8rem', color: '#FFFFFF', fontSize: '1.6rem'}}
                 onClick={submitReview}
