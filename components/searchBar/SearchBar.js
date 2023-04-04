@@ -18,10 +18,10 @@ export default function SearchBar(props) {
  let urlService = useRef(new UrlService(nextURL));
 
  useEffect(()=>{
-   if(props?.search && props?.search.length > 0){
+   if(props?.search?.length > 0){
     setSearchString(props?.search)
    }
- },[props?.search])
+ },[])
 
  const myLoader = ({ src, width, quality }) => {
     if(src && src.length > 0){
@@ -113,7 +113,7 @@ export default function SearchBar(props) {
           autoFocus
           showNoResults={false}
           formatResult={formatResult}
-          placeholder="Search for Courses"
+          placeholder="Search here!"
           styling={{
             height: '46px',
             fontFamily: 'Poppins',
