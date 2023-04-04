@@ -1012,6 +1012,13 @@ const _handleSearch=(e)=>{
     }
   }
 
+  useEffect(()=>{
+    if(props?.subjectData.search === true){
+      pageNumber.current = 1;
+      handleFilteredData(true,props?.subjectData?.searchValue)
+    }
+  },[props?.subjectData?.searchValue])
+
   // useEffect(()=>{
   //   if(dashboardRef && dashboardRef?.current !== null){
   //       if(dashboardRef?.current?.getBoundingClientRect().y <= -2563){

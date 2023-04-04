@@ -77,7 +77,7 @@ export default function Header(props){
   const handleChange=(e)=>{
       let value = e.target.value
       props?.openFilterExpandedStage()
-      props?.handleSearch(value)
+      props?.handleSubjectTab(value)
   }
 
   const renderProfile=()=>{

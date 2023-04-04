@@ -333,20 +333,32 @@ const _handleTrackItem=()=>{
           }
           <div className='course-detail-container'>
             <div className='content-container'>
-                <h2 className='course-duration'>
-                  {props?.data?.class_modes}
-                </h2>
-            </div>
-            <div className='content-container' style={{marginLeft: 20}}>
-                <h2 className='course-duration'>
-                {props?.data?.duration}
-                </h2>
+            <h2 className='course-duration'>
+              {
+                props?.data?.class_modes?.length > 0 ? props?.data?.class_modes.map((item,index)=>{
+                  return(
+                  <>
+                    {item}&nbsp; 
+                  </>
+                  )
+                }) : props?.data?.class_modes
+              }
+               </h2>  
             </div>
             {
-              props?.data?.start_level?.length > 0 && props?.data?.end_level?.length > 0 ?
+              props?.data?.duration === 'Duration Unavailable' ? <div/> :
+              <div className='content-container' style={{marginLeft: 20}}>
+                  <h2 className='course-duration'>
+                  {props?.data?.duration}
+                  </h2>
+              </div>
+            }
+           
+            {
+              props?.data?.start_level?.length > 0 ?
               <div className='content-container' style={{marginLeft: 20}}>
                 <h2 className='course-duration'>
-                {props?.data?.start_level}-{props?.data?.end_level}
+                {props?.data?.start_level}
                 </h2>
             </div> : <div />
             }

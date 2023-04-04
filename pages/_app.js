@@ -51,6 +51,7 @@ class MyApp extends App {
      goingUp: false,
      coursePrevieModal: false,
      bookmarkCount: 0,
+     subjectData: {},
 
     };
     this.coursesApiStatus = React.createRef(new ApiStatus());
@@ -275,6 +276,16 @@ class MyApp extends App {
     })
   }
 
+  _handleSubjectTab=(e)=>{
+    let data = {
+      searchValue: e,
+      search: true
+    }
+    this.setState({
+      subjectData: data
+    })
+  }
+
   _handleSearch=(e)=>{
     this.setState({
       search: e
@@ -378,7 +389,6 @@ class MyApp extends App {
     }
   }
  
-
   render(){
     const {Component, pageProps} = this.props;
     let store = createStore(rootReducer, compose(applyMiddleware(ReduxThunk)))
@@ -405,6 +415,7 @@ class MyApp extends App {
             hideSearchBar={this.hideSearchBar}
             bookmarkCount={this.state.bookmarkCount}
             selectSearch={(e)=>this._selectSearch(e)}
+            handleSubjectTab={this._handleSubjectTab}
            /> : 
             <HeaderMobile
             // toggleTheme={this.toggleTheme} 
@@ -461,6 +472,7 @@ class MyApp extends App {
             removeLocalBookmarks={(count)=>this._removeLocalBookmarks(count)}
             closeForgotPasswordModal={()=>this.closeForgotPasswordModal()}
             selectSearch={(e)=>this._selectSearch(e)}
+            subjectData={this.state.subjectData}
          />
          {
             window.innerWidth > 500 ? 
