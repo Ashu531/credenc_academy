@@ -587,7 +587,7 @@ export default function WebDetailPage(props){
               {
                 props?.detailData?.educator_list.map((item, index) => {
                   return (
-                    <div className='item'>
+                    <div className='item' key={index}>
                       <Image src={certificateIcon} width={34} height={34} objectFit='contain' />
                       <div>
                         <div className='head'>{item['text']}</div>
@@ -604,7 +604,7 @@ export default function WebDetailPage(props){
             {
               props?.detailData?.grid.map(
                 (feature, index) => {
-                    return (<div className='feature'>
+                    return (<div className='feature' key={index}>
                       <Image src={feature?.icon} width={20} height={20} objectFit='contain' loader={myLoader} />
                       <div className='value'>{feature.value}</div>
                       <div className='key'>{feature.key}</div>
@@ -627,6 +627,7 @@ export default function WebDetailPage(props){
                   return (<div 
                     className='description' 
                     style={{padding: '0.2rem 0.8rem', margin: '1.2rem 0', borderLeft: '1px solid #034FE2'}}
+                    key={index}
                     >
                       {item}
                     </div>)
@@ -639,7 +640,7 @@ export default function WebDetailPage(props){
             <div className='confused-container'>
               <div>
                 <div className='heading' style={{marginBottom: '1.2rem'}}>Still Confused?</div>
-                <div className='description' style={{width: '80%'}}>Our team of experts is here to help you. Contact us today and we're here to help you find clarity and move forward with confidence.</div>
+                <div className='description' style={{width: '80%'}}>Our team of experts is here to help you. Contact us today and we&apos;re here to help you find clarity and move forward with confidence.</div>
               </div>
               <button style={{width: '21%'}} onClick={() => setEnquire(true)}>Talk to an Expert!</button>
             </div>
@@ -652,7 +653,7 @@ export default function WebDetailPage(props){
             {
               curriculum.map((item, index) => {
                 return(
-                  <div className='curriculum-item' onClick={event => handleCurriculumDisplay(event, index, -1)}>
+                  <div className='curriculum-item' onClick={event => handleCurriculumDisplay(event, index, -1)} key={index}>
                     <div style={{padding: '2.1rem 0 0'}}>
                       <Image src={item.display === true ? caretDown : caretRight} width={15} height={15} objectFit='contain' />
                     </div>
@@ -665,7 +666,7 @@ export default function WebDetailPage(props){
                       {
                         item.display && item['sub_module'].map((module, moduleIndex) => {
                           return(
-                            <div className='curriculum-item' onClick={event => handleCurriculumDisplay(event, index, moduleIndex)}>
+                            <div className='curriculum-item' onClick={event => handleCurriculumDisplay(event, index, moduleIndex)} key={moduleIndex}>
                               <div style={{padding: '2rem 2rem 2rem'}}>
                                 <Image src={module.display === true ? caretDown : caretRight} width={10} height={10} objectFit='contain' />
                               </div>
@@ -676,7 +677,7 @@ export default function WebDetailPage(props){
                                 {
                                   module.display && module['sub_topics'].map((topic, topicIndex) => {
                                     return(
-                                      <div className='curriculum-item'>
+                                      <div className='curriculum-item' key={topicIndex}>
                                         <div style={{width: '96%'}}>
                                           <div className='item-content'>
                                               <div style={{fontSize: '1.5rem', fontWeight: '400', lineHeight: '1.76rem', color: '#000000'}}>{topic}</div>
@@ -703,7 +704,7 @@ export default function WebDetailPage(props){
             <div style={{width: '100%', display: 'flex', rowGap: '3.6rem', flexDirection: 'row', flexWrap: 'wrap', padding: '3.6rem 0 0 0'}}>
               {props?.instructorData?.instructor?.map(
                   (inst, index) => {
-                      return (<div className='feature'>
+                      return (<div className='feature' key={index}>
                         <Image src={inst?.profile_photo} width={100} height={100} objectFit='contain' loader={myLoader} />
                         <div style={{fontSize: '2.4rem', fontWeight: '400', lineHeight: '3.6rem', color: '#000000'}}>{inst['name']}</div>
                         <div style={{fontSize: '1.7rem', fontWeight: '500', lineHeight: '2.55rem', color: '#000000', padding: '0.4rem 0 1.2rem 0'}}>{inst['designation']}</div>
@@ -875,7 +876,7 @@ export default function WebDetailPage(props){
               <div className='heading'>Reviews</div>
               { rating['avg'] && !isNaN(rating['avg']) && <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
                 {
-                  [1, 2, 3, 4, 5].map(el => <Image src={rating['avg'] / el >= 1 ? filledStar : (el - rating['avg']) >= 1 ? emptyStar : halfStar} width={20} height={20} objectFit='contain' />)
+                  [1, 2, 3, 4, 5].map(el => <Image key={el} src={rating['avg'] / el >= 1 ? filledStar : (el - rating['avg']) >= 1 ? emptyStar : halfStar} width={20} height={20} objectFit='contain' />)
                 }
                 <div style={{fontSize: '2rem', fontWeight: '400', lineHeight: '2.4rem', color: '#8F14CC'}}>&ensp;{parseFloat(rating['avg']).toFixed(1)}</div>
               </div>}
@@ -883,14 +884,14 @@ export default function WebDetailPage(props){
             {props?.reviews?.length > 0 && <div style={{width: '100%', display: 'flex', rowGap: '3.6rem', flexDirection: 'row', flexWrap: 'wrap', padding: '3.6rem 0 0 0'}}>
               {reviews.map(
                   (review, index) => {
-                      return (<div className='feature'>
+                      return (<div className='feature' key={index}>
                         {
                           review?.review?.user?.profile_image && <Image src={review?.review?.user?.profile_image} width={100} height={100} objectFit='contain' loader={myLoader} />
                         }
                         <div style={{fontSize: '2.4rem', fontWeight: '400', lineHeight: '3.6rem', color: '#000000'}}>{review['review']['user']['full_name']}</div>
                         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
                           {
-                            [1, 2, 3, 4, 5].map(el => <Image src={review.rating / el >= 1 ? filledStar : (el - review.rating) >= 1 ? emptyStar : halfStar} width={10} height={10} objectFit='contain' />)
+                            [1, 2, 3, 4, 5].map(el => <Image key={el} src={review.rating / el >= 1 ? filledStar : (el - review.rating) >= 1 ? emptyStar : halfStar} width={10} height={10} objectFit='contain' />)
                           }
                           <div style={{fontSize: '1rem', fontWeight: '400', lineHeight: '1.4rem', color: '#8F14CC'}}>&ensp;{parseFloat(review.rating).toFixed(1)}</div>
                         </div>
@@ -904,7 +905,7 @@ export default function WebDetailPage(props){
               <div style={{fontSize: '1.4rem', fontWeight: '400', lineHeight: '1.6rem', color: '#000000', margin: '1rem 0 2rem 0'}}>Leave a review and help others in their learning journey!</div>
               <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
                 {
-                  [1, 2, 3, 4, 5].map(el => <Image src={userRating / el >= 1 ? filledStar : (el - userRating) >= 1 ? emptyStar : halfStar} width={30} height={30} objectFit='contain' onClick={() => setUserRating(el)}/>)
+                  [1, 2, 3, 4, 5].map(el => <Image key={el} src={userRating / el >= 1 ? filledStar : (el - userRating) >= 1 ? emptyStar : halfStar} width={30} height={30} objectFit='contain' onClick={() => setUserRating(el)}/>)
                 }
               </div> 
               <div style={{color: 'var(--errorPrimaryColor)', margin: '1rem 0 2rem 0', fontSize: '1.3rem'}}>{error}</div>
