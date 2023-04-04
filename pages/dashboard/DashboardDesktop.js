@@ -143,7 +143,8 @@ function DashboardDesktop(props) {
   const courseTypeRef = useRef(null);
   const [cardApiSuccess,setCardApiSuccess] = useState(false)
   // const [compareTextVisible,setCompareTextVisible] = useState('');
-
+  const navbarRef = useRef()
+  const dashboardRef = useRef()
   const [cardActionTaken,setCardActionTaken] = useState(false)
   const [nextPage,setNextPage] = useState(true)
   const [successApplyModal,setSuccessApplyModal] = useState(false)
@@ -157,6 +158,7 @@ function DashboardDesktop(props) {
   });
   const pageNumber = useRef(1);
   const [mostLikedCourses,setMostLikedCourses] = useState([]);
+  const [navbarTop,setNavbarTop] = useState(false);
   
   let observer = useRef(
     new IntersectionObserver(
@@ -996,7 +998,6 @@ const _handleSearch=(e)=>{
 
   const _handleTrivia=(data)=>{
     props?.openFilterExpandedStage()
-    console.log(data,"data+++")
     if(data.courseType.length > 0 && data.subject.length > 0){
       pageNumber.current = 1;
       handleFilteredData(true,data);
@@ -1013,6 +1014,16 @@ const _handleSearch=(e)=>{
       handleFilteredData(true,data);
     }
   }
+
+  useEffect(()=>{
+    if(dashboardRef && dashboardRef?.current !== null){
+        if(dashboardRef?.current?.getBoundingClientRect().y <= -2563){
+          setNavbarTop(true)
+        }else{
+          setNavbarTop(false)
+        }
+    }
+  },[dashboardRef?.current?.getBoundingClientRect().y])
 
  return(
         <div>      
@@ -1271,7 +1282,7 @@ const _handleSearch=(e)=>{
         />
       </div>}
       </div>
-  : <div className="dashboard" style={ props?.loginModal ? {overflow: 'hidden'} : null }>
+  : <div className="dashboard" style={ props?.loginModal ? {overflow: 'hidden'} : null} ref={dashboardRef}>
      <div className="dashboard-upper-section">
         <div className='banner' ref={searchRef} style={styles}> 
           <div className='text-content'>
@@ -1293,7 +1304,7 @@ const _handleSearch=(e)=>{
           </div>
          </div> 
 
-         <div style={{width: '100%'}}>
+         <div style={{width: '100%',display:'flex',justifyContent:'center',alignItems: 'center'}}>
             <CredencFeatures />
          </div>  
 
@@ -1302,7 +1313,10 @@ const _handleSearch=(e)=>{
               <div className="header-text">
                  Trending Courses
               </div>
-              <Image src={trendingIcon} alt="trendingIcon" width={36} height={36} objectFit="contain" style={{marginLeft: 5,marginTop: 2}}/>
+              <div style={{marginLeft: 5,marginTop: 2}}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#034FE2" viewBox="0 0 256 256"><path d="M215.79,118.17a8,8,0,0,0-5-5.66L153.18,90.9l14.66-73.33a8,8,0,0,0-13.69-7l-112,120a8,8,0,0,0,3,13l57.63,21.61L88.16,238.43a8,8,0,0,0,13.69,7l112-120A8,8,0,0,0,215.79,118.17ZM109.37,214l10.47-52.38a8,8,0,0,0-5-9.06L62,132.71l84.62-90.66L136.16,94.43a8,8,0,0,0,5,9.06l52.8,19.8Z"></path></svg>
+              </div> 
+              {/* <Image src={trendingIcon} alt="trendingIcon" width={36} height={36} objectFit="contain" style={{marginLeft: 5,marginTop: 2}}/> */}
             </div>  
             <div className='course-section'>
                {
@@ -1337,7 +1351,9 @@ const _handleSearch=(e)=>{
               <div className="header-text">
                  Most Liked
               </div>
-              <Image src={mostLikedIcon} alt="mostLikedIcon" width={36} height={36} objectFit="contain" style={{marginLeft: 5,marginTop: 2}}/>
+              <div style={{marginLeft: 8,marginTop: 2}}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#0345E2" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>
+              </div>  
             </div>  
             <div className='course-section'>
                {
@@ -1398,7 +1414,7 @@ const _handleSearch=(e)=>{
             </div>
          </div>
 
-       <div className="course-navbar" style={searchRef && searchRef?.current !== null && searchRef?.current?.getBoundingClientRect().y <= -196 ? { position: 'fixed',top: '8vh',background: '#FFFFFF',zIndex: 9999,boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.1)',padding: '1rem 5rem 0rem 5rem'} : {padding: '0.8rem 5rem 0rem 5rem'}}>
+       <div className="course-navbar" style={navbarTop ? { position: 'fixed',top: '8vh',background: '#FFFFFF',zIndex: 9999,boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.1)',padding: '1rem 5rem 0rem 5rem'} : {padding: '0.8rem 5rem 0rem 5rem'}}>
         {
           subCategory && subCategory.length > 0 ?
             <Navbar 

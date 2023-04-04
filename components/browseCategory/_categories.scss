@@ -47,11 +47,14 @@
 
             &:hover{
                 border: 2px solid #8F14CC;
+                // fill: none;
+                // stroke-width: 2px;
+                // stroke: #8F14CC;
                 border-radius: 24px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                padding: 20px 8px;
+                padding: 18px 6px;
                 gap: 20px;
                 background: #FFFFFF;
                 width: 20%;

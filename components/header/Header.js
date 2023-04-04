@@ -227,16 +227,16 @@ export default function Header(props){
             
           {
             props?.showSearchBar && router.asPath !== '/privacy/' && router.asPath !== '/my-courses/' && router.asPath !== '/bookmarks/' && router.pathname !== '/details' ?
-              <div style={props?.showSearchBar ? {width : '25%',zIndex: 99999,marginLeft: 30} : null} >
+              <div style={props?.showSearchBar ? {width : '25%',zIndex: 99999,marginRight: 30} : null} >
                 <SearchBar showSearchBar={props?.showSearchBar} search={props?.searchValue} handleSearch={(e)=>_handleSearch(e)} selectSearch={(e)=>props?.selectSearch(e)} openFilterExpandedStage={()=>props?.openFilterExpandedStage()} />
               </div> 
           : null
           }
         
          <div className='user-elements'>
-           <div className='header-text' onClick={()=>_openMyCourseTab()}>My Courses</div>
+           {/* <div className='header-text' onClick={()=>_openMyCourseTab()}>My Courses</div> */}
            <div className='icon-element' onClick={()=>_openBookmarkTab()} style={{position:"relative"}}>
-           <Image src={ bookmarkIcon} height={32} width={32} objectFit="cover" alt='bookmarkIcon' />
+           <Image src={ bookmarkIcon} height={22} width={22} objectFit="contain" alt='bookmarkIcon' />
            {
              props?.bookmarkCount >= 1 ? <span className="bookmark-count-container">
              <span className="bookmark-count">{ props?.bookmarkCount >= 1 ?  props?.bookmarkCount : null}</span>

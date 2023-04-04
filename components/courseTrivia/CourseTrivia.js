@@ -9,6 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import axios from "axios";
 import constant from '../../config/constant'
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -19,9 +20,26 @@ const useStyles = makeStyles(theme => ({
       marginTop: theme.spacing(2)
     },
     menuPaper: {
-      maxHeight: '30% !important'
+      maxHeight: '30% !important',
+      fontFamily: 'Work Sans !important',
+      fontSize: 12
     }
   }));
+
+  const theme = createTheme({
+    components: {
+      // Name of the component
+      MuiButton: {
+        styleOverrides: {
+          // Name of the slot
+          root: {
+            // Some CSS
+            fontSize: '5rem',
+          },
+        },
+      },
+    },
+  });
 
 export default function CourseTrivia(props){
 
@@ -123,6 +141,7 @@ export default function CourseTrivia(props){
                     <div className='trivia-label'>
                         In the field of...
                     </div>
+                    
                     <FormControl fullWidth style={{
                         width: 180,
                         marginLeft: 20,
@@ -150,13 +169,16 @@ export default function CourseTrivia(props){
                             {
                             subject && subject?.length > 0 && subject.map((item,index)=>{
                                 return(
-                                <MenuItem value={item.value} key={index}>{item.value}</MenuItem>
+                                    <ThemeProvider theme={theme}>
+                                        <MenuItem value={item.value} key={index}>{item.value}</MenuItem>
+                                    </ThemeProvider>
                                 )
                             })
                             }
                 
                         </Select>
                      </FormControl>
+                     
                 </div>
                 <div className='trivia-button' onClick={handleSubmit}>
                     <Image src={whiteCaret} alt='whiteCaret' height={14} width={14} objectFit="contain" style={{transform: 'rotate(180deg)'}} />
