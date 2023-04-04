@@ -6,7 +6,6 @@ import axios from "axios";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import {withStyles, Typography } from "@material-ui/core";
 import Image from "next/image";
-import bookmarkIcon from '../../assets/images/icons/bookmark.svg';
 // import upvoteIcon from '../../assets/images/icons/upvote.svg' 
 import NewButton from '../../components/button/NewButton.js'
 import clockIcon from '../../assets/images/icons/clockIcon.svg';
@@ -48,7 +47,8 @@ import { useRouter } from 'next/router'
 import LoginModalContainer from '../../components/loginModal/LoginModalContainer'
 import ForgotPasswordModal from '../../components/forgotPasswordModal/ForgotPasswordModal'
 import upvoteLogoDark from '../../assets/images/icons/thumbs-up-dark.svg'
-import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
+import bookmarkIcon from '../../assets/images/icons/bookmark.svg';
+import selectedBookmarkIcon from '../../assets/images/icons/selectedBookmark.svg'
 // import upvoteLogo from '../../assets/images/icons/upvote.svg'
 import Link from "next/link";
 import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer";
@@ -571,6 +571,16 @@ export default function WebDetailPage(props){
       }
     }
 
+    const overviewActive = ['active', '', '', '', '']
+    const syllabusActive = ['', 'active', '', '', '']
+    const instructorActive = ['', '', 'active', '', '']
+    const pricingActive = ['', '', '', 'active', '']
+    const reviewsActive = ['', '', '', '', 'active']
+    let [navActiveStates, setNavActiveStates] = useState([...overviewActive])
+
+    const handleNavStates = (navState) => {
+      setNavActiveStates([...navState])
+    }
 
     console.log(props?.detailData?.educator_list)
 
@@ -581,12 +591,19 @@ export default function WebDetailPage(props){
 
         <div className='detail-page-web'>
           <ul className='navbar'>
-            <li className='nav-item active'><Link href="#">Overview</Link></li>
-            <li className='nav-item'><Link href="#syllabus">Syllabus</Link></li>
-            <li className='nav-item'><Link href="#instructor">Instructor</Link></li>
-            <li className='nav-item'><Link href="#pricing">Pricing</Link></li>
-            <li className='nav-item'><Link href="#reviews">Reviews</Link></li>
-            {/* <li className='nav-item nav-item-right'>Syllabus</li> */}
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
+              <li className={`nav-item ${navActiveStates[0]}`} onClick={() => handleNavStates(overviewActive)}><Link href="#" scroll={true}>Overview</Link></li>
+              {curriculum.length > 0 && <li className={`nav-item ${navActiveStates[1]}`} onClick={() => handleNavStates(syllabusActive)}><Link href="#syllabus" scroll={true}>Syllabus</Link></li>}
+              {props?.instructorData?.instructor?.length > 0 && <li className={`nav-item ${navActiveStates[2]}`} onClick={() => handleNavStates(instructorActive)}><Link href="#instructor" scroll={true}>Instructor</Link></li>}
+              <li className={`nav-item ${navActiveStates[3]}`} onClick={() => handleNavStates(pricingActive)}><Link href="#pricing" scroll={true}>Pricing</Link></li>
+              <li className={`nav-item ${navActiveStates[4]}`} onClick={() => handleNavStates(reviewsActive)}><Link href="#reviews" scroll={true}>Reviews</Link></li>
+            </div>
+            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
+              <li className='nav-item-right' style={{margin: '0 1rem 0 0'}} onClick={()=>_handleCardBookmark(props?.detailData)}><Image src={ bookmarkVisible ? selectedBookmarkIcon : bookmarkIcon} width={20} height={20} objectFit='contain' /></li>
+              <li className='nav-item-right'><button style={{backgroundColor: 'transparent', color: '#000000', border: '1px solid #034FE2'}} onClick={() => setEnquire(true)}>Talk to Us</button></li>
+              <li className='nav-item-right'><button onClick={() => setApplyNow(true)}>Apply Now</button></li>
+              <li className='nav-item-right'><button>Track Application</button></li>
+            </div>
           </ul>
           <div className='head-jumbotron' style={{backgroundImage: `linear-gradient(rgba(245, 248, 255, 0.3), rgba(245, 248, 255, 0.3)), url(${backgroundImage.src})`, backgroundSize: 'cover'}}>
             <div className='title'>{props?.detailData?.course_name}</div>
@@ -891,7 +908,7 @@ export default function WebDetailPage(props){
           </div>
 
 
-          <div className='container' id='instructor'>
+          <div className='container' id='reviews'>
             <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
               <div className='heading'>Reviews</div>
               { rating['avg'] && !isNaN(rating['avg']) && <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
