@@ -31,7 +31,7 @@
             top: 0;
 
             .header-1{
-                font-family: 'Poppins';
+                font-family: 'Work Sans';
                 font-style: normal;
                 font-weight: 400;
                 font-size: 12px;
@@ -39,7 +39,7 @@
                 color: var(--bodyColor);
             }
             .header-2{
-                font-family: 'Poppins';
+                font-family: 'Work Sans';
                 font-style: normal;
                 font-weight: 600;
                 font-size: 16px;
@@ -55,14 +55,14 @@
             align-items: center;
             padding: 8px 24px;
             gap: 12px;
-            background: linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%);
+            background: #034FE2;
             position: absolute;
             top: 11rem;
             z-index: 999;
        }
 
        .banner-text{
-        font-family: 'Poppins';
+        font-family: 'Work Sans';
         font-style: normal;
         font-weight: 500;
         font-size: 12px;
@@ -90,7 +90,7 @@
                 gap: 4px;
 
                 .label-header{
-                    font-family: 'Poppins';
+                    font-family: 'Glook';
                     font-style: normal;
                     font-weight: 600;
                     font-size: 18px;
@@ -106,7 +106,7 @@
                 align-items: center;
 
                 .check-section-content{
-                    font-family: 'Poppins';
+                    font-family: 'Work Sans';
                     font-style: normal;
                     font-weight: 500;
                     font-size: 13px;
@@ -125,7 +125,7 @@
            }
 
            .label-text{
-            font-family: 'Poppins';
+            font-family: 'Work Sans';
             font-style: normal;
             font-weight: 400;
             font-size: 13px;
@@ -206,7 +206,7 @@
            }
 
            .submit-footer-text{
-            font-family: 'Poppins';
+            font-family: 'Work Sans';
             font-style: normal;
             font-weight: 500;
             font-size: 14px;

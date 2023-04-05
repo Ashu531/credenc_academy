@@ -318,7 +318,7 @@ export default function ApplyNowModal(props){
                             alignItems: 'center',
                             padding: '8px 24px',
                             gap: '10px',
-                            background: 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)',
+                            background: '#034FE2',
                             borderRadius: '5px'
                          }}
                          >

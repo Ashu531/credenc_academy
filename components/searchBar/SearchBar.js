@@ -32,13 +32,23 @@ export default function SearchBar(props) {
  } 
 
   const _autocompleteQuery=async(e,results)=>{
-      props?.handleSearch(e)
+    props?.handleSearch(e)
+    if(props?.token && props?.token.length > 0){
 
-      await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`)
+    }else{
+      await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`,{
+        headers: {
+          'Authorization': `Bearer ${props?.token}`
+        }
+      })
       .then(response => response.data.data)
       .then(data => {
         _fuseData(data,e)
       })
+    }
+      
+
+     
 
   }
 
@@ -116,7 +126,7 @@ export default function SearchBar(props) {
           placeholder="Search here!"
           styling={{
             height: '46px',
-            fontFamily: 'Poppins',
+            fontFamily: 'Work Sans',
             fontStyle: 'normal',
             fontWeight: '500px',
             fontSize: '14px',
@@ -159,7 +169,7 @@ const queryContainer = {
 }
 
 const queryName = {
-  fontFamily: 'Poppins',
+  fontFamily: 'Work Sans',
   fontStyle: 'normal',
   fontWeight: '500px',
   fontSize: '16px',
@@ -169,7 +179,7 @@ const queryName = {
 }
 
 const queryCategory = {
-  fontFamily: 'Poppins',
+  fontFamily: 'Work Sans',
   fontStyle: 'normal',
   fontWeight: '400px',
   fontSize: '12px',

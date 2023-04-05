@@ -375,8 +375,6 @@ export default function DetailModal(props){
 
     const getCardAlignment=()=>{
       if(cardRef && cardRef.current !== null){
-        console.log(cardRef?.current?.getBoundingClientRect(),"cardRef?.current?.getBoundingClientRect()++")
-        console.log(modalRef?.current?.getBoundingClientRect(),"modalRef?.current?.getBoundingClientRect()++")
         if(cardRef?.current?.getBoundingClientRect().left > modalRef?.current?.getBoundingClientRect().width/3){
           setLeftAlign(true)
         }
@@ -412,20 +410,20 @@ export default function DetailModal(props){
                 <div className='header-action-content'>
                         <div className='header-action-container' 
                             onClick={()=> _handleBookmarksTrigger(courseData)} 
-                            style={ bookmarkVisible === true  ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)",cursor:"pointer"} : {cursor:"pointer"}}
+                            style={{cursor:"pointer"}}
                         >
                         <Image src={ bookmarkVisible === true ? selectedBookmark : theme === 'dark' ? bookmarkIconDark : bookmarkIcon}  
                             objectFit="contain" 
-                            width={ window.innerWidth <= 500 ? 25 : 20 }
-                            height={window.innerWidth <= 500 ? 25 : 20 }
+                            width={ window.innerWidth <= 500 ? 25 : 24 }
+                            height={window.innerWidth <= 500 ? 25 : 24 }
                         />
                         </div>
-                    <div 
+                    {/* <div 
                     className='header-action-container' 
                     style={upvoteVisible ? {marginLeft:8,background : 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)'} : {marginLeft:8}}  
                     onClick={()=> _handleUpvoteTrigger(courseData) }
                     >
-                        {/* <div className='upvote-container'>
+                        <div className='upvote-container'>
                             <span className='upvote-text' style={ upvoteVisible ? window.innerWidth <= 500 ?  {marginTop:1,color: '#FFFFFF'} : {color: '#FFFFFF'} : null} >
                             {upvoteCount}
                             </span>
@@ -435,14 +433,14 @@ export default function DetailModal(props){
                                 height={window.innerWidth <= 500 ? 30 : 18 }
                                 objectFit="cover" 
                             />
-                        </div> */}
-                    </div>
+                        </div>
+                    </div> */}
                         <div className='header-action-container' style={{marginLeft:8}}>
                             <a href={courseData?.platform?.link} target='_blank' rel="noreferrer">
                                 <Image 
                                     src={globeIcon}  
-                                    width={ window.innerWidth <= 500 ? 25 : 18 }
-                                    height={window.innerWidth <= 500 ? 25 : 18 }
+                                    width={ window.innerWidth <= 500 ? 25 : 24 }
+                                    height={window.innerWidth <= 500 ? 25 : 24 }
                                     objectFit="cover" 
                                 />
                             </a>
@@ -746,25 +744,25 @@ export default function DetailModal(props){
               <div /> :
               
               courseData?.is_mooc === true ? 
-            <a href={props?.course_link} target="_blank" rel="noreferrer"style={{width: '60%'}}>
-              <div className='detail-modal-footer-section-right' 
-                  style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
-                  <span className='apply-now-button'>
-                      <span className='apply-now-button-text'>
-                          Go To Course
+                <a href={props?.course_link} target="_blank" rel="noreferrer"style={{width: '60%'}}>
+                  <div className='detail-modal-footer-section-right' 
+                      style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
+                      <span className='apply-now-button'>
+                          <span className='apply-now-button-text'>
+                              Go To Course
+                          </span>
                       </span>
-                  </span>
-              </div>
-              </a> :
-              
-              <div className='detail-modal-footer-section-right' 
-                style={ window.innerWidth <= 500 ? {width:'88%'} : null } onClick={()=>_handleApplyModal()}>
-                <span className='apply-now-button'>
-                    <span className='apply-now-button-text'>
-                        Apply Now
+                  </div>
+                  </a> :
+                  
+                  <div className='detail-modal-footer-section-right' 
+                    style={ window.innerWidth <= 500 ? {width:'88%'} : null } onClick={()=>_handleApplyModal()}>
+                    <span className='apply-now-button'>
+                        <span className='apply-now-button-text'>
+                            Apply Now
+                        </span>
                     </span>
-                </span>
-             </div> 
+                </div> 
             }
             
          </div>

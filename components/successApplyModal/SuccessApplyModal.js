@@ -59,11 +59,11 @@ export default function SuccessApplyModal(props){
                             Seat Reservation Successful!
                           </div>
                           <div className='reserved-subheader'>
-                          for {props?.courseName}.
+                          for <b>{props?.courseName}</b>.
                           </div>
                       </div>
                       <div className='nj-section'>
-                        <Image src={njIcon} width={55} height={47} objectFit="contain" />
+                        <Image src={njIcon} width={85} height={72} objectFit="cover" />
                         <div className='njText'>
                         Your selected loan partner, NJ Capital will be in touch with you shortly to complete the loan process. 
                         </div>

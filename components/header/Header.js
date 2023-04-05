@@ -194,10 +194,10 @@ export default function Header(props){
               width: 180,
               marginLeft: 20,
               // background: '#034FE2',
-              borderRadius: 32,
+              borderRadius: 8,
             }}>
               <InputLabel style={{
-                fontFamily: 'Poppins',
+                fontFamily: 'Work Sans',
                 fontStyle: 'normal',
                 fontWeight: 500,
                 fontSize: 12,
@@ -209,7 +209,7 @@ export default function Header(props){
                 id="demo-simple-select"
                 placeholder='Subject'
                 label="Subject"
-                style={{borderRadius: 32,height: 40}}
+                style={{borderRadius: 8,height: 40}}
                 onChange={handleChange}
                 MenuProps={{ classes: { paper: classes.menuPaper } }}
               >

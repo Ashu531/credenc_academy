@@ -476,7 +476,7 @@ export default function LoginModal({
           externalUser === false ? 
             <div className="header-container">
               <div className="headline" style={ error ? {
-                fontFamily: 'Poppins',
+                fontFamily: 'Work Sans',
                 fontWeight: 500,
                 fontSize: 12,
                 color: 'red'
@@ -487,7 +487,7 @@ export default function LoginModal({
             <div className="header-container">
               <Image src={credencAcademy} alt='credencAcademy' />
               <div className="headline" style={ error ? {
-                fontFamily: 'Poppins',
+                fontFamily: 'Work Sans',
                 fontWeight: 500,
                 fontSize: 12,
                 color: 'red'

@@ -310,7 +310,7 @@ const _handleTrackItem=()=>{
                      onClick={()=>_handleCardBookmark(props?.data)} 
                       // style={bookmarkVisible === true ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}
                 >
-                    <Image src={bookmarkVisible === true  ? selectedBookmark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={32} width={32}/>
+                    <Image src={bookmarkVisible === true  ? selectedBookmark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={24} width={24}/>
                 </div>
           {/* <div 
               className='grey-container' 
@@ -347,7 +347,7 @@ const _handleTrackItem=()=>{
             </div>
             {
               props?.data?.duration === 'Duration Unavailable' ? <div/> :
-              <div className='content-container' style={{marginLeft: 20}}>
+              <div className='content-container' style={{marginLeft: 4}}>
                   <h2 className='course-duration'>
                   {props?.data?.duration}
                   </h2>
@@ -356,7 +356,7 @@ const _handleTrackItem=()=>{
            
             {
               props?.data?.start_level?.length > 0 ?
-              <div className='content-container' style={{marginLeft: 20}}>
+              <div className='content-container' style={{marginLeft: 4}}>
                 <h2 className='course-duration'>
                 {props?.data?.start_level}
                 </h2>
