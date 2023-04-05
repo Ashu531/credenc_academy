@@ -10,7 +10,6 @@ import costIcon from '../../assets/images/icons/costIcon.svg';
 import LinkedlnLogo from '../../assets/images/icons/linkedin-icon.svg';
 import njIcon from '../../assets/images/icons/njIcon.svg';
 import Button from '../../components/button/Button';
-import caretDown from '../../assets/images/icons/dropDown.svg'
 import CourseCard from '../../components/coursecard/CourseCard';
 import tableBackground from '../../assets/images/icons/tableBackground.svg'
 import benefitBullet from '../../assets/images/icons/benefitBullet.svg'
@@ -38,6 +37,17 @@ import MobileDetailSkeleton from '../../components/detailPageSkeletonMobile';
 import credencAcademy from '../../assets/images/icons/credencAcademy.svg';
 import constant from '../../config/constant';
 
+import certificateIcon from '../../assets/images/icons/certificate-icon.svg'
+import caretDown from '../../assets/images/icons/caret-down-purple.svg'
+import caretRight from '../../assets/images/icons/caret-right-purple.svg'
+import userIcon from '../../assets/images/icons/user.svg'
+import filledStar from '../../assets/images/icons/star-filled.svg'
+import halfStar from '../../assets/images/icons/star-filled-half.svg'
+import emptyStar from '../../assets/images/icons/star-empty.svg'
+import backgroundImage from '../../assets/images/icons/bannerImage.svg'
+import hatIcon from '../../assets/images/icons/hat.svg'
+import axios from 'axios';
+
 const styles = {
     width: "100%",
     height: "100%",
@@ -59,6 +69,7 @@ export default function DetailPageMobile(props){
     const [detailData,setDetailData] = useState({});
     const [detailModal,setDetailModal] = useState(false)
     const [applyNow, setApplyNow] = useState(false)
+    const [enquire, setEnquire] = useState(false)
     const [courseName,setCourseName] = useState('')
     const [successModal,setSuccessModal] = useState(false);
     const [cardActionTaken,setCardActionTaken] = useState(false)
@@ -170,13 +181,311 @@ export default function DetailPageMobile(props){
     //     _openApplyNowModal()
     // }
 
+    let [querySuccessModal, setQuerySuccessModal] = useState(false)
+    const _openQuerySuccessModal = (data) => {
+      setQuerySuccessModal(true)
+    }
+
+    let [curriculum, setCurriculum] = useState([]);
+    let [userRating, setUserRating] = useState(0)
+    let [reviewText, setReviewText] = useState('')
+    const [reviews, setReviews] = useState([])
+    const [rating, setRating] = useState({})
+    let [error, setError] = useState('')
+
+    useEffect(() => {
+      setReviews([...props?.reviews])
+      setRating(props?.rating)
+    }, [props?.reviews, props?.rating])
+
+    useEffect(() => {
+      
+        let newCurriculumState = props['toolData']['curriculum'];
+
+        if(newCurriculumState !== undefined && newCurriculumState !== null && newCurriculumState.length > 0){
+          try{
+            for(let i = 0; i < newCurriculumState?.length; i++){
+              newCurriculumState[i]['display'] = false
+              
+              for(let j = 0; j < newCurriculumState[i]['sub_module'].length; j++){
+                newCurriculumState[i]['sub_module'][j]['display'] = false
+              }
+            }
+  
+            setCurriculum([...newCurriculumState])
+          }catch(e){
+              console.log(e)
+          }
+          
+        }
+
+    }, [props?.toolData.curriculum])
+
+    const handleCurriculumDisplay = (event, i, j) => {
+
+      event.stopPropagation()
+
+      let newCurriculumState = [...curriculum]
+
+      if(j >= 0){
+        newCurriculumState[i]['sub_module'][j]['display'] = !newCurriculumState[i]['sub_module'][j]['display']
+      }
+
+      else if(i >= 0){
+        newCurriculumState[i]['display'] = !newCurriculumState[i]['display']
+      }
+
+      setCurriculum([...newCurriculumState])
+
+    }
+
+    const _getReviews = async(id) => {
+        let res = await axios.get(`${constant.API_URL.DEV}/course/reviews/${props?.id}/`)
+          .then(res => {
+            // this.coursesApiStatus.current.success();
+            setReviews(res.data)
+            // setMounted(true);
+            return res.data;
+          })
+          .catch(err => {
+            // this.coursesApiStatus.current.failed();
+            console.log(err);
+          }); 
+    }
+
+    const _getRating = async(id) => {
+        let res = await axios.get(`${constant.API_URL.DEV}/course/ratingsavg/${props?.id}/`)
+          .then(res => {
+            // this.coursesApiStatus.current.success();
+            console.log(res)
+            setRating(res.data)
+            // setMounted(true);
+            return res.data;
+          })
+          .catch(err => {
+            // this.coursesApiStatus.current.failed();
+            console.log(err);
+          }); 
+    }
+
+    const handleReviewChange = (val) => {
+      setReviewText(val)
+      setError('')
+    }
+
+
+    const submitReview = async () => {
+      if(props?.token && props?.token.length > 0){
+        if(userRating > 0){
+          let res = await axios.post(`${constant.API_URL.DEV}/course/review/`, {
+            "course_id": props?.id,
+            "review" : reviewText,
+            "rating" : userRating
+        }, {
+            headers: {
+              'Authorization': `Bearer ${props?.token}`
+            }
+          })
+            .then(res => {
+              _getReviews()
+              _getRating()
+              handleReviewChange('')
+              return res.data;
+            })
+            .catch(err => {
+              // this.coursesApiStatus.current.failed();
+              console.log(err);
+            });
+        } else {
+          setError('Oh! Looks like you forgot to give us a rating')
+        }
+      }else{
+        console.log("coming+++")
+        props?.openLoginModal()
+      }
+      
+    }
+
     return(
       <>
       { 
       props?.detailData && props?.detailData != null ?
       //  mounted &&
         <div className='detail-page-mobile'>
-          <div className='detail-page-web-breadcrumb' style={{marginTop: '6rem',padding: 24}}>
+
+          <div className='container'>
+            <div className='heading' style={{margin: '0 0 1.6rem 0'}}>Introduction</div>
+            <div className='description'>{props?.detailData?.description}</div>
+          </div>
+
+          {props?.detailData?.eligibility?.length > 0 && <div className='container'>
+            <div className='heading' style={{margin: '0 0 1.6rem 0'}}>Pre-Requisites</div>
+            {
+              props?.detailData?.eligibility.map(
+                (item, index) => {
+                  return (<div 
+                    className='description' 
+                    style={{padding: '0.2rem 0.8rem', margin: '1.2rem 0', borderLeft: '1px solid #034FE2'}}
+                    key={index}
+                    >
+                      {item}
+                    </div>)
+                }
+              )
+            }
+          </div>}
+
+          <div className='container'>
+            <div className='confused-container'>
+              <div>
+                <div className='heading' style={{marginBottom: '1.2rem'}}>Still Confused?</div>
+                <div className='description' style={{width: '100%'}}>Our team of experts is here to help you. Contact us today and we&apos;re here to help you find clarity and move forward with confidence.</div>
+              </div>
+              <button onClick={() => setEnquire(true)}>Talk to an Expert!</button>
+            </div>
+          </div>
+
+          {curriculum.length > 0 && <div className='container' id='syllabus'>
+            <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'flex-start', marginBottom: '2rem'}}>
+              <div className='heading'>Syllabus</div>
+            </div>
+            {
+              curriculum.map((item, index) => {
+                return(
+                  <div className='curriculum-item' onClick={event => handleCurriculumDisplay(event, index, -1)} key={index}>
+                    <div style={{padding: '2.1rem 0 0'}}>
+                      <Image src={caretRight} width={15} height={15} objectFit='contain' style={{rotate: item.display === true ? '90deg' : '0deg'}} />
+                    </div>
+                    <div style={{width: '96%'}}>
+                      <div className='item-content'>
+                        <div>
+                          <div style={{fontSize: '1.8rem', fontWeight: '600', lineHeight: '2.1rem', color: '#000000', padding: '0 0 0.4rem'}}>{item['title_sub'] === '' ? item['heading'] : item['heading'] === '' ? item['title_sub'] : item['title_sub'] + " | " + item['heading']}</div>
+                        </div>
+                      </div>
+                      {
+                        item.display && item['sub_module'].map((module, moduleIndex) => {
+                          return(
+                            <div className='curriculum-item' onClick={event => handleCurriculumDisplay(event, index, moduleIndex)} key={moduleIndex}>
+                              <div style={{padding: '2rem 0 0'}}>
+                                <Image src={caretRight} width={15} height={15} objectFit='contain' style={{rotate: module.display === true ? '90deg' : '0deg'}} />
+                              </div>
+                              <div style={{width: '96%'}}>
+                                <div className='item-content'>
+                                  <div style={{fontSize: '1.7rem', fontWeight: '500', lineHeight: '2rem', color: '#434343'}}>{module.title}</div>
+                                </div>
+                                {
+                                  module.display && module['sub_topics']?.map((topic, topicIndex) => {
+                                    return(
+                                      <div className='curriculum-item' key={topicIndex}>
+                                        <div style={{width: '96%'}}>
+                                          <div className='item-content'>
+                                              <div style={{fontSize: '1.5rem', fontWeight: '400', lineHeight: '1.76rem', color: '#717171'}}>{topic}</div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    )
+                                  })
+                                }
+                              </div>
+                            </div>
+                          )
+                        })
+                      }
+                    </div> 
+                  </div>
+                )
+              })
+            }
+          </div>}
+
+          {props?.instructorData?.instructor?.length > 0 && <div style={{padding: '2rem 0 3rem 0', marginRight: 'auto', width: '100%'}}>
+            <div className='heading' style={{paddingBottom: '0.9rem', padding: '0 0 0.9rem 2rem'}}>Instructors</div>
+            <div className='people' style={{padding : '0 0 0 2rem'}}>
+              {props?.instructorData?.instructor?.map(
+                  (inst, index) => {
+                      return (<div className='feature' key={index}>
+                        <Image src={inst?.profile_photo} width={100} height={100} style={{borderRadius: '1.2rem'}} objectFit='contain' loader={myLoader} />
+                        <div style={{fontSize: '1.8rem', fontWeight: '400', lineHeight: '2.1rem', color: '#000000', padding: '1.2rem 0'}}>{inst['name']}</div>
+                        <div style={{fontSize: '1.5rem', fontWeight: '400', lineHeight: '1.8rem', color: '#000000', padding: '0.4rem 0 1.2rem 0'}}>{inst['designation']}</div>
+                        {/* <div style={{fontSize: '1.5rem', fontWeight: '400', lineHeight: '2.25rem', color: '#000000'}}>{inst.desc}</div> */}
+                      </div>)
+                  }
+              )}
+            </div>
+          </div>}
+
+          <div className='container' id='reviews'>
+            <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+              <div className='heading'>Reviews</div>
+              { rating['avg'] && !isNaN(rating['avg']) && <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
+                {
+                  [1, 2, 3, 4, 5].map(el => <Image key={el} src={rating['avg'] / el >= 1 ? filledStar : (el - rating['avg']) >= 1 ? emptyStar : halfStar} width={20} height={20} objectFit='contain' />)
+                }
+                <div style={{fontSize: '2rem', fontWeight: '400', lineHeight: '2.4rem', color: '#8F14CC'}}>&ensp;{parseFloat(rating['avg']).toFixed(1)}</div>
+              </div>}
+            </div>
+            {reviews?.length > 0 && <div style={{width: '100%', display: 'flex', rowGap: '1rem', flexDirection: 'row', flexWrap: 'wrap', padding: '3.6rem 0 0 0'}}>
+              {reviews.map(
+                  (review, index) => {
+                      return (<div className='feature' key={index}>
+                        {
+                          review?.review?.user?.profile_image && <Image src={review?.review?.user?.profile_image} width={100} height={100} objectFit='contain' loader={myLoader} />
+                        }
+                        <div style={{fontSize: '2.4rem', fontWeight: '400', lineHeight: '3.6rem', color: '#000000'}}>{review['review']['user']['full_name']}</div>
+                        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
+                          {
+                            [1, 2, 3, 4, 5].map(el => <Image key={el} src={review.rating / el >= 1 ? filledStar : (el - review.rating) >= 1 ? emptyStar : halfStar} width={12} height={12} objectFit='contain' />)
+                          }
+                          <div style={{fontSize: '1rem', fontWeight: '400', lineHeight: '1.4rem', color: '#8F14CC'}}>&ensp;{parseFloat(review.rating).toFixed(1)}</div>
+                        </div>
+                        <div style={{fontSize: '1.5rem', fontWeight: '400', lineHeight: '2.25rem', color: '#000000', padding: '1rem 0 0 0'}}>{review['review']['review']}</div>
+                      </div>)
+                  }
+              )}
+            </div>}
+            <div className='leave-review'>
+              <div style={{fontSize: '1.6rem', fontWeight: '500', lineHeight: '2.4rem', color: '#000000', fontFamily: 'Poppins'}}>How was your experience with the course?</div>
+              <div style={{fontSize: '1.4rem', fontWeight: '400', lineHeight: '1.6rem', color: '#000000', fontFamily: 'Poppins', margin: '0.8rem 0 1rem 0'}}>Leave a review and help others in their learning journey!</div>
+              <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
+                {
+                  [1, 2, 3, 4, 5].map(el => <Image key={el} src={userRating / el >= 1 ? filledStar : (el - userRating) >= 1 ? emptyStar : halfStar} width={30} height={30} objectFit='contain' onClick={() => setUserRating(el)}/>)
+                }
+              </div> 
+              <div style={{color: 'var(--errorPrimaryColor)', margin: '0.6rem 0 1rem 0', fontSize: '1.3rem'}}>{error}</div>
+              <textarea rows={8} placeholder="This course is amazing..." onChange={(e) => handleReviewChange(e.target.value)} value={reviewText}></textarea>
+              <button 
+                style={{cursor: 'pointer', backgroundColor: '#034FE2', padding: '1.6rem 6rem', margin: '1.6rem', border: 'none', borderRadius: '0.8rem', color: '#FFFFFF', fontSize: '1.8rem', fontWeight: '600', fontFamily: 'Work Sans'}}
+                onClick={submitReview}
+              >Leave a Review
+              </button>
+            </div>
+          </div>
+
+          <div style={{padding: '2rem 0 3rem 0', marginRight: 'auto', width: '100%'}}>
+            <div className='heading' style={{paddingBottom: '0.9rem', padding: '0 0 0.9rem 2rem'}}>You Might Be Interested In</div>
+            <div className='detail-page-mobile-card-container'>
+              {props?.similarCourses?.length > 0 && props?.similarCourses.map((item,index)=>{
+                  return(
+                    <div key={index}>
+                      <CourseCard 
+                        index={index}
+                        data={item} 
+                        openDetailModal={()=>_openDetailModal(item)}
+                        openApplyNowModal={()=> _openApplyNowModal(item)}
+                        token={props?.token}
+                        openLoginModal={()=>props?.openLoginModal()}
+                        addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+                        removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                        applied={applied}
+                        detailPage={true}
+                      />
+                    </div>
+                  )
+              })}
+            </div>
+          </div>
+
+          {/* <div className='detail-page-web-breadcrumb' style={{marginTop: '6rem',padding: 24}}>
            <Breadcrumbs
                 separator={<NavigateNextIcon fontSize="medium" />}
                 aria-label="breadcrumb"
@@ -187,34 +496,34 @@ export default function DetailPageMobile(props){
             {
               props?.detailData?.platform &&  props?.detailData?.platform?.logo !== null ?  
                 <div className='detail-page-header-mobile-container'>
-                <div className='detail-page-mobile-header'>
-                   <Image loader={myLoader} src={props?.detailData?.platform?.logo} alt='platform-icon' height={38} width={38} objectFit="contain" />
-                   <div className='detail-page-mobile-platform'>
-                       <span className='detail-page-mobile-platform-heading'>
-                         Hosted on
-                       </span>
-                       <span className='detail-page-mobile-platform-subHeading'>
-                         {props?.detailData?.platform?.name}
-                       </span>
-                   </div>
-                </div>
-            </div> : null
+                  <div className='detail-page-mobile-header'>
+                    <Image loader={myLoader} src={props?.detailData?.platform?.logo} alt='platform-icon' height={38} width={38} objectFit="contain" />
+                    <div className='detail-page-mobile-platform'>
+                        <span className='detail-page-mobile-platform-heading'>
+                          Hosted on
+                        </span>
+                        <span className='detail-page-mobile-platform-subHeading'>
+                          {props?.detailData?.platform?.name}
+                        </span>
+                    </div>
+                  </div>
+              </div> : null
             }
            {
                props?.detailData?.preview ? 
                <div className='detail-page-mobile-banner' style={{display:'contents'}}>
                  <Image loader={myLoader} src={props?.detailData?.preview} height={227} width={'100%'} objectFit="contain" />
                </div> : null
-           }
+           } */}
            
-            <div className='detail-page-content-mobile'>
+            {/* <div className='detail-page-content-mobile'> */}
             {/* <div style={{position:'relative'}}>
                 <div style={{width: }}>
                     <Image src={titleFrame} height={32} width={100} objectFit='contain' />
                 </div>
                 
             </div> */}
-            {
+            {/* {
               props?.detailData?.program_type && props?.detailData?.program_type.length > 0 ?
               <div className='detail-page-content-heading'>
                     {props?.detailData?.program_type}
@@ -246,7 +555,6 @@ export default function DetailPageMobile(props){
                               props?.detailData?.educator && props?.detailData?.educator.length > 0 &&  props?.detailData?.educator.map((item,index)=>{
                                     return(
                                       <div key={index+1} className='detail-page-content-educator-list'>
-                                          {/* <Image loader={myLoader} src={item?.logo} priority={true} objectFit='contain' height={40} width={40} /> */}
                                           {
                                             item?.logo !== null ? 
                                             <Image loader={myLoader} src={item?.logo} priority={true} objectFit='contain' height={40} width={40} /> : null
@@ -260,10 +568,10 @@ export default function DetailPageMobile(props){
                           
                         </div>
                       </div> : null
-               }
+               } */}
                
                
-               <div style={{marginTop: 36}}>
+               {/* <div style={{marginTop: 36}}>
                    <div className='divider' />
                <div className='detail-page-content-educator-details'>
                    <div className='detail-page-content-educator-info'>
@@ -304,9 +612,9 @@ export default function DetailPageMobile(props){
                    </div>
                    <div className='detail-page-content-educator-info-subheader' style={{textAlign:'right'}}>{ props?.startingCost?.starting_cost && props?.startingCost?.starting_cost.length > 0 ? `₹ ${props?.startingCost?.starting_cost[0]}` : props?.detailData?.finance_display && props?.detailData?.finance_display.length > 0 ? `₹${props?.detailData?.finance_display[0]}` : 'Unknown'}</div>
                </div>
-               </div>
-            </div>
-            {
+               </div> */}
+            {/* </div> */}
+            {/* {
                 props?.detailData.eligibility && props?.detailData?.eligibility.length > 0 ? 
                 <div className='detail-page-mobile-intro'>
                 <div className='detail-page-mobile-intro-header'>
@@ -341,14 +649,14 @@ export default function DetailPageMobile(props){
                 </div>
                 
               </div> : null
-            }
+            } */}
             
-            {
+            {/* {
               props?.toolData.usps &&  props?.toolData?.usps.length > 0 ? 
               <div style={styles}>
-              {/* <div style={{display:'contents'}}>
+              { <div style={{display:'contents'}}>
               <Image src={tableBackground} height={'100%'} width={'100%'} objectFit='contain' />
-              </div> */}
+              </div> }
              <div className='detail-page-mobile-benefit-section'>
                <div className='detail-page-mobile-benefit-content'>
                   <div className='detail-page-mobile-benefit-content-header'>
@@ -370,9 +678,9 @@ export default function DetailPageMobile(props){
                </div>
               </div>
              </div> : null
-            }
+            } */}
            
-          {
+          {/* {
             props?.toolData?.curriculum && props?.toolData?.curriculum.length > 0 ?
             <div className='detail-page-mobile-intro'>
                 <div className='detail-page-mobile-intro-header' style={{position:'relative'}}>
@@ -436,12 +744,12 @@ export default function DetailPageMobile(props){
                                                   data.sub_topics.length > 1 && data.sub_topics.map((info,serial)=>{
                                                     return(
                                                       <div style={{display:'flex',flexDirection:'column',margin: '12px 0px'}} key={serial}>
-                                                        {/* <div className='detail-page-mobile-module-topic-section'>
+                                                        { <div className='detail-page-mobile-module-topic-section'>
                                                             <Image src={moduleArrowBullets} height={12} width={12} objectFit='contain' />
                                                             <div className='detail-page-mobile-module-bullet-section-header-text'>
                                                                 Topic 1
                                                             </div>
-                                                        </div> */}
+                                                        </div> }
                                                           <div className='detail-page-mobile-module-bullet-section-topic-text'>
                                                               {info.title}
                                                           </div>
@@ -464,7 +772,7 @@ export default function DetailPageMobile(props){
                 
 
             </div> : null
-          }
+          } */}
             
             
 
@@ -492,7 +800,7 @@ export default function DetailPageMobile(props){
                 </div>
             </div> */}
 
-            {
+            {/* {
                 props?.toolData?.skills && props?.toolData?.skills.length > 0 ? 
                 <div className='detail-page-mobile-intro'>
                 <div className='detail-page-mobile-intro-header' style={{position:'relative'}}>
@@ -541,9 +849,9 @@ export default function DetailPageMobile(props){
                     }
                 </div>
             </div> : null
-            }
+            } */}
 
-         {
+         {/* {
              props?.instructorData?.instructor && props?.instructorData?.instructor.length > 0 ? 
              <div className='detail-page-mobile-intro'>
              <div className='detail-page-mobile-intro-header' style={{position:'relative'}}>
@@ -574,9 +882,9 @@ export default function DetailPageMobile(props){
              })}
                   </div> 
            </div> : null
-         }
+         } */}
 
-          <div className='detail-page-mobile-intro' style={{background: '#FFFFFF'}}>
+          {/* <div className='detail-page-mobile-intro' style={{background: '#FFFFFF'}}>
              <div className='detail-page-mobile-intro-header' style={{fontSize: 22}}>
              How Much Would You Pay?
              </div>
@@ -666,14 +974,14 @@ export default function DetailPageMobile(props){
                            {item.noOfInstallment}
                            </div>
                          </div>
-                         {/* <div className='detail-page-mobile-price-options-card-info'>
+                         { <div className='detail-page-mobile-price-options-card-info'>
                            <div className='detail-page-mobile-price-options-card-info-heading'>
                            Interest
                            </div>
                            <div className='detail-page-mobile-price-options-card-info-subheading'>
                              0
                            </div>
-                         </div> */}
+                         </div> }
                          <div className='detail-page-mobile-price-options-card-info'>
                            <div className='detail-page-mobile-price-options-card-info-heading'>
                            Down Payment
@@ -682,7 +990,7 @@ export default function DetailPageMobile(props){
                            {item.downPayment}
                            </div>
                          </div>
-                         {/* <div className='detail-page-mobile-price-options-card-info'>
+                         { <div className='detail-page-mobile-price-options-card-info'>
                            <div className='detail-page-mobile-price-options-card-info-heading'>
                            GST@18
                            </div>
@@ -697,7 +1005,7 @@ export default function DetailPageMobile(props){
                            <div className='detail-page-mobile-price-options-card-info-subheading'>
                              10%
                            </div>
-                         </div> */}
+                         </div> }
                          <div className='detail-page-mobile-price-options-card-info' style={{marginTop:12}}>
                            <div style={{display:'flex',flexDirection:'column'}}>
                              <div className='detail-page-mobile-price-options-card-info-amount-header'>
@@ -726,9 +1034,9 @@ export default function DetailPageMobile(props){
                              LUMPSUM
                            </div>
                            <div className='detail-page-mobile-lumpsum-card'>
-                              {/* <div className='detail-page-mobile-lumpsum-card-header'>
+                              { <div className='detail-page-mobile-lumpsum-card-header'>
                                 *First 7 days free trial or any sort of disclaimer comes here. 
-                              </div> */}
+                              </div> }
                               <div className='detail-page-mobile-lumpsum-card-detail'>
                                 <div className='detail-page-mobile-lumpsum-card-detail-label'>
                                   Base Price
@@ -766,7 +1074,7 @@ export default function DetailPageMobile(props){
                    } 
                   </div>
               </div>
-            </div> 
+            </div>  */}
            
             
             {/* <div className='detail-page-mobile-intro'>
@@ -875,7 +1183,7 @@ export default function DetailPageMobile(props){
                    </div>
                 </div>
             </div> */}
-            {
+            {/* {
              props?.similarCourses && props?.similarCourses.length > 0 ?
              <div className='detail-page-mobile-intro' style={{background: '#FFFFFF'}}>
              <div className='detail-page-mobile-intro-header' style={{fontSize: 24,display:'flex'}}>
@@ -911,7 +1219,7 @@ export default function DetailPageMobile(props){
                     })}
                   </div>
               </div> : null
-            }
+            } */}
             
             <SlidingPanel
                 type={'right'}
