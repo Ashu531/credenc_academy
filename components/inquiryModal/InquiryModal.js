@@ -120,10 +120,8 @@ export default function InquiryModal(props){
           })
         .then(res => {
             if(res?.data?.status === true){
-                let courseName = res.data.course
                 props.closeInquiryModal()
-                props.openSuccessModal(courseName)
-                props?.handleAppliedStage(props?.detailData?.id)
+                props.openSuccessModal()
               return res.data;
             }else{
                 console.log(res?.data?.message)
@@ -259,7 +257,7 @@ export default function InquiryModal(props){
                             alignItems: 'center',
                             padding: '8px 24px',
                             gap: '10px',
-                            background: 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)',
+                            background: 'var(--defaultPrimaryColor)',
                             borderRadius: '5px'
                          }}
                          >

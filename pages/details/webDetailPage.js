@@ -437,7 +437,7 @@ export default function WebDetailPage(props){
     }
 
     let [querySuccessModal, setQuerySuccessModal] = useState(false)
-    const _openQuerySuccessModal = (data) => {
+    const _openQuerySuccessModal = () => {
       setQuerySuccessModal(true)
     }
 
@@ -1778,8 +1778,7 @@ export default function WebDetailPage(props){
                 <InquiryModal 
                   closeInquiryModal={_closeEnquireModal} 
                   detailData={props?.detailData} courseName={props?.detailData?.course_name} 
-                  openSuccessModal={(courseName)=>_openQuerySuccessModal(courseName)}  
-                  handleAppliedStage={(id)=>_handleAppliedStage(id)}
+                  openSuccessModal={()=>_openQuerySuccessModal()}
                 />
            </SlidingPanel>
            <SlidingPanel

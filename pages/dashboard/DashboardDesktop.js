@@ -43,6 +43,8 @@ import CredencFeatures from "../../components/credencFeatures/credencFeatures"
 import bannerImage from '../../assets/images/icons/bannerImage.svg'
 import BrowseCategories from "../../components/browseCategory/Categories"
 import CourseTrivia from "../../components/courseTrivia/CourseTrivia"
+import QuerySuccessModal from "../../components/querySuccessModal/QuerySuccessModal"
+import InquiryModal from "../../components/inquiryModal/inquiryModal"
 
 const styles = {
     // width: "100%",
@@ -137,6 +139,7 @@ function DashboardDesktop(props) {
   const searchRef = useRef();
   const [searchbarWidth, setSearchBarWidth] = useState("41.0919%");
   const [applyNow, setApplyNow] = useState(false)
+  const [enquire, setEnquire] = useState(false)
   let appliedFiltersCount = useRef(0);
   const [lastCourse, setLastCourse] = useState(null);
   const courseTypeRef = useRef(null);
@@ -350,7 +353,7 @@ function DashboardDesktop(props) {
   }
 
   const openDetailModal = (data)=>{
-    props?.openCoursePreviewModal()
+    // props?.openCoursePreviewModal()
     setDetailModal(true);
     setDetailData(data);
   }
@@ -956,6 +959,19 @@ const _handleSearch=(e)=>{
     setSuccessApplyModal(true)
     setCourseName(data)
   }
+
+  const _closeEnquireModal = () => {
+    setEnquire(false)
+  }
+
+  const _openEnquireModal = () => {
+    setEnquire(true)
+  }
+
+  let [querySuccessModal, setQuerySuccessModal] = useState(false)
+    const _openQuerySuccessModal = () => {
+      setQuerySuccessModal(true)
+    }
 
   const _setUserEmail=(data)=>{
     setUserEmail(data)
@@ -1666,6 +1682,27 @@ const _handleSearch=(e)=>{
         size={30}
       >
         <SuccessApplyModal closeSuccessApplyModal={()=>_closeSuccessApplyModal()} courseName={courseName} />
+      </SlidingPanel>
+      <SlidingPanel
+          type={'right'}
+          isOpen={enquire}
+          backdropClicked={_closeEnquireModal}
+          size={30}
+      >
+          <InquiryModal 
+            closeInquiryModal={_closeEnquireModal} 
+            detailData={props?.detailData} courseName={props?.detailData?.course_name} 
+            openSuccessModal={(courseName)=>_openQuerySuccessModal(courseName)}  
+            handleAppliedStage={(id)=>_handleAppliedStage(id)}
+          />
+        </SlidingPanel>
+      <SlidingPanel
+        type={'right'}
+        isOpen={querySuccessModal}
+        backdropClicked={() => setQuerySuccessModal(false)}
+        size={30}
+      >
+        <QuerySuccessModal closeSuccessQueryModal={()=>setQuerySuccessModal(false)} courseName={props?.detailData?.course_name} />
       </SlidingPanel>
       {
         props?.loginModal ? 

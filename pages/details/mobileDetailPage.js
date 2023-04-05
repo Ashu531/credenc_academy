@@ -47,6 +47,8 @@ import emptyStar from '../../assets/images/icons/star-empty.svg'
 import backgroundImage from '../../assets/images/icons/bannerImage.svg'
 import hatIcon from '../../assets/images/icons/hat.svg'
 import axios from 'axios';
+import QuerySuccessModal from '../../components/querySuccessModal/QuerySuccessModal';
+import InquiryModal from '../../components/inquiryModal/inquiryModal';
 
 const styles = {
     width: "100%",
@@ -181,8 +183,12 @@ export default function DetailPageMobile(props){
     //     _openApplyNowModal()
     // }
 
+    const _closeEnquireModal = () => {
+      setEnquire(false)
+    }
+
     let [querySuccessModal, setQuerySuccessModal] = useState(false)
-    const _openQuerySuccessModal = (data) => {
+    const _openQuerySuccessModal = () => {
       setQuerySuccessModal(true)
     }
 
@@ -313,6 +319,52 @@ export default function DetailPageMobile(props){
       //  mounted &&
         <div className='detail-page-mobile'>
 
+          <div className='head-jumbotron' style={{backgroundImage: `linear-gradient(rgba(245, 248, 255, 0.3), rgba(245, 248, 255, 0.3)), url(${backgroundImage.src})`, backgroundSize: 'cover'}}>
+            <div className='title'>{props?.detailData?.course_name}</div>
+            {props?.detailData?.program_type && <div className='subtitle'>
+              <Image src={certificateIcon} width={20} height={20} objectFit='contain' />
+              <span>&ensp;{props?.detailData?.program_type}</span>
+            </div>}
+            <div className='description' style={{textAlign: 'center'}}>
+            {props?.detailData?.one_liner || props?.detailData?.description}
+            </div>
+            <div className='items'>
+              {
+                props?.detailData?.educator_list.map((item, index) => {
+                  return (
+                    <div className='item' key={index}>
+                      <Image src={item['logo'] || hatIcon} width={34} height={34} objectFit='contain' loader={myLoader} style={{borderRadius: '50%'}} />
+                      <div>
+                        <div className='head'>{item['text']}</div>
+                        <div className='sub'>{item['name']}</div>
+                      </div>
+                    </div>
+                  )
+                })
+              }
+            </div>
+            <div style={{fontWeight: '600', fontSize: '2.4rem', lineHeight: '2.8rem', color: '#034FE2'}}>
+              {props?.startingCost?.starting_cost && '₹' + props?.startingCost?.starting_cost[0]}
+            </div>
+            <div style={{fontWeight: '400', fontSize: '1.2rem', lineHeight: '1.4rem', color: '#717171'}}>
+              {props?.startingCost?.starting_cost && 'Starting Cost'}
+            </div>
+          </div>
+
+          <div className='container' style={{rowGap: '3.6rem', flexDirection: 'row', flexWrap: 'wrap'}}>
+            {
+              props?.detailData?.grid.map(
+                (feature, index) => {
+                    return (<div className='feature' key={index}>
+                      <Image src={feature?.icon} width={20} height={20} objectFit='contain' loader={myLoader} />
+                      <div className='value'>{feature.value}</div>
+                      <div className='key'>{feature.key}</div>
+                    </div>)
+                }
+                )
+            }
+          </div>
+
           <div className='container'>
             <div className='heading' style={{margin: '0 0 1.6rem 0'}}>Introduction</div>
             <div className='description'>{props?.detailData?.description}</div>
@@ -431,7 +483,7 @@ export default function DetailPageMobile(props){
                         {
                           review?.review?.user?.profile_image && <Image src={review?.review?.user?.profile_image} width={100} height={100} objectFit='contain' loader={myLoader} />
                         }
-                        <div style={{fontSize: '2.4rem', fontWeight: '400', lineHeight: '3.6rem', color: '#000000'}}>{review['review']['user']['full_name']}</div>
+                        <div style={{fontSize: '1.8rem', fontWeight: '400', lineHeight: '2.1rem', color: '#000000'}}>{review['review']['user']['full_name']}</div>
                         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
                           {
                             [1, 2, 3, 4, 5].map(el => <Image key={el} src={review.rating / el >= 1 ? filledStar : (el - review.rating) >= 1 ? emptyStar : halfStar} width={12} height={12} objectFit='contain' />)
@@ -1253,6 +1305,26 @@ export default function DetailPageMobile(props){
             size={30}
           >
             <SuccessApplyModal closeSuccessApplyModal={()=>_closeSuccessApplyModal()} courseName={courseName} />
+          </SlidingPanel>
+          <SlidingPanel
+                type={'right'}
+                isOpen={enquire}
+                backdropClicked={_closeEnquireModal}
+                size={30}
+            >
+                <InquiryModal 
+                  closeInquiryModal={_closeEnquireModal} 
+                  detailData={props?.detailData} courseName={props?.detailData?.course_name} 
+                  openSuccessModal={_openQuerySuccessModal}
+                />
+           </SlidingPanel>
+          <SlidingPanel
+            type={'right'}
+            isOpen={querySuccessModal}
+            backdropClicked={() => setQuerySuccessModal(false)}
+            size={30}
+          >
+            <QuerySuccessModal closeSuccessQueryModal={()=>setQuerySuccessModal(false)} courseName={props?.detailData?.course_name} />
           </SlidingPanel>
         </div> :
         <MobileDetailSkeleton />
