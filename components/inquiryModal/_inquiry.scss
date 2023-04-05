@@ -1,9 +1,9 @@
-.apply-modal-container{
+.query-modal-container{
     width: 42%;
     height: 100%;
     background-color: var(--defaultBackground);
     position: absolute;
-    right: 0px; 
+    right: 0px;
 
     textarea{
         width: 95%;
@@ -15,10 +15,13 @@
 
     .apply-modal-content{
         width: 100%;
-        height: 93vh;
+        height: 100vh;
         overflow: scroll;
         overflow-x: hidden;
         background-color: var(--defaultBackground);
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
         
         .apply-modal-header{
             display: flex;
@@ -165,23 +168,22 @@
     }
     .apply-now-footer{
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        flex-direction: row;
+        justify-content: flex-end;
         align-items: center;
         padding: 12px 24px;
         background: var(--defaultBackground);
         border: 1px solid var(--insignificantStrokeColor);
-        position: fixed;
-        bottom: 0px;
-        width: 42%;
+        // position: fixed;
+        // bottom: 0px;
+        // width: 39%;
+        // margin-top: auto;
 
         .footer-content{
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
-            gap: 20px;
-            width: 100%;
 
             .image-content{
                 display: flex;
