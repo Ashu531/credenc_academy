@@ -437,7 +437,7 @@ export default function WebDetailPage(props){
     }
 
     let [querySuccessModal, setQuerySuccessModal] = useState(false)
-    const _openQuerySuccessModal = (data) => {
+    const _openQuerySuccessModal = () => {
       setQuerySuccessModal(true)
     }
 
@@ -1753,6 +1753,7 @@ export default function WebDetailPage(props){
                     handleCardActionTaken={()=>_handleCardActionTaken()}
                     openLoginModal={()=>props?.openLoginModal()}
                     token={props?.token}
+                    openQueryModal={() => setEnquire(true)}
                     status={((props?.detailData?.applied === true) || (applied?.state === true && applied?.id === props?.detailData?.id)) ? true : false}
                 />
             </SlidingPanel>
@@ -1763,6 +1764,7 @@ export default function WebDetailPage(props){
                 size={30}
             >
                 <ApplyNowModal 
+                  openQueryModal={() => setEnquire(true)}
                   closeApplyNowModal={()=>_closeApplyNowModal()} 
                   detailData={props?.detailData} courseName={props?.detailData?.course_name} 
                   openSuccessApplyModal={(courseName)=>_openSuccessApplyModal(courseName)}  
@@ -1778,8 +1780,7 @@ export default function WebDetailPage(props){
                 <InquiryModal 
                   closeInquiryModal={_closeEnquireModal} 
                   detailData={props?.detailData} courseName={props?.detailData?.course_name} 
-                  openSuccessModal={(courseName)=>_openQuerySuccessModal(courseName)}  
-                  handleAppliedStage={(id)=>_handleAppliedStage(id)}
+                  openSuccessModal={()=>_openQuerySuccessModal()}
                 />
            </SlidingPanel>
            <SlidingPanel

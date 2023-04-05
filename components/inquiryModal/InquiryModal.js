@@ -120,10 +120,8 @@ export default function InquiryModal(props){
           })
         .then(res => {
             if(res?.data?.status === true){
-                let courseName = res.data.course
                 props.closeInquiryModal()
-                props.openSuccessModal(courseName)
-                props?.handleAppliedStage(props?.detailData?.id)
+                props.openSuccessModal()
               return res.data;
             }else{
                 console.log(res?.data?.message)
@@ -132,7 +130,6 @@ export default function InquiryModal(props){
         })
         .catch(err => {
           // this.coursesApiStatus.current.failed();
-          console.log(res?.data?.message,"gfgdgf")
           setError(err?.data?.message)
           console.log(err);
         });
@@ -168,17 +165,17 @@ export default function InquiryModal(props){
 
     return(
         <>
-         <div className='apply-modal-container' style={ window.innerWidth<=500 ? {width:'100%',height:'90vh'} : null }>
+         <div className='query-modal-container' style={ window.innerWidth<=500 ? {width:'100%',height:'90vh'} : null }>
               <div className='apply-modal-content'>
                   <div className='apply-modal-header'>
                     <span className='header-1'>Enrolling for</span>
                     <span className='header-2'>{props?.courseName}</span>
                   </div>
-                  <div className='apply-modal-banner'  style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
+                  {/* <div className='apply-modal-banner'  style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
                     <span className='banner-text'>
                         No more work for you! Just review your pre-filled application and get enrolled!
                     </span>
-                  </div>
+                  </div> */}
                   
                     {
                         error && error.length > 0 ? 
@@ -243,13 +240,7 @@ export default function InquiryModal(props){
                    >
 
                    <div className='footer-content'>
-                     <div className='image-content' style={{display: 'none'}}>
-                        <Image src={whatsAppIcon} objectFit='cover'/>
-                        <div className='call-icon-container'>
-                            <Image src={callIcon} objectFit='cover'/>
-                        </div>
-                     </div>
-                     <div className='button-content' onClick={()=>handleSubmit()} style={{cursor:'pointer',paddingRight: '5rem'}}>
+                     <div onClick={()=>handleSubmit()} style={{cursor:'pointer'}}>
                        <div 
                          className='button-container'
                          style={{
@@ -259,7 +250,7 @@ export default function InquiryModal(props){
                             alignItems: 'center',
                             padding: '8px 24px',
                             gap: '10px',
-                            background: 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)',
+                            background: 'var(--defaultPrimaryColor)',
                             borderRadius: '5px'
                          }}
                          >

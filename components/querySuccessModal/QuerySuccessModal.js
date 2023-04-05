@@ -27,13 +27,13 @@ export default function QuerySuccessModal(props){
 
     return(
         <>
-         <div className='success-apply-modal-container' style={ window.innerWidth<=500 ? {width:'100%',height:'90vh'} : null }>
+         <div className='success-query-modal-container' style={ window.innerWidth<=500 ? {width:'100%',height:'90vh'} : null }>
               <div className='closeIconContent' onClick={()=>props.closeSuccessQueryModal()}>
                 <span className='success-apply-modal-close-icon' >
                     <Image src={closeIcon} objectFit='cover' height={20} width={20} />
                 </span>
               </div>
-              <div className='success-apply-modal-content' style={thirdPartyUser === constant.PARTNER_KEY.NJ ? {marginTop: 200} : null}>
+              <div className='success-apply-modal-content' style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                 {
                   <div className='success-apply-modal-gif'>
                       <Image src={reservedImage} width={150} height={68} objectFit='contain' />
@@ -140,13 +140,12 @@ export default function QuerySuccessModal(props){
                               alignItems: 'center',
                               padding: '8px 24px',
                               gap: '10px',
-                              // background: 'linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)',
+                              background: 'var(--defaultPrimaryColor)',
                               borderRadius: '5px',
-                              border:'1px solid #00CB9C',
                           }}
                           >
-                              <span className='submit-footer-text' style={{color: '#000000'}}>
-                                  Back
+                              <span className='submit-footer-text' style={{color: '#FFFFFF'}}>
+                                  Keep Browsing
                               </span>
                         </div>
                        }
