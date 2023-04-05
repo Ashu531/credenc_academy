@@ -34,8 +34,6 @@ export default function SearchBar(props) {
   const _autocompleteQuery=async(e,results)=>{
     props?.handleSearch(e)
     if(props?.token && props?.token.length > 0){
-
-    }else{
       await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`,{
         headers: {
           'Authorization': `Bearer ${props?.token}`
@@ -45,12 +43,14 @@ export default function SearchBar(props) {
       .then(data => {
         _fuseData(data,e)
       })
+    }else{
+      await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`)
+      .then(response => response.data.data)
+      .then(data => {
+        _fuseData(data,e)
+      })
     }
-      
-
-     
-
-  }
+ }
 
   const _fuseData=(data,e)=>{
     let intialQuery = {

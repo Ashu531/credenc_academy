@@ -40,13 +40,15 @@ export default function CourseTrivia(props){
     const [subject,setSubject] = useState([]);
     const [selectedCourseType,setSelectedCourseType] = useState('')
     const [selectedSubject,setSelectedSubject] = useState('')
+    const [specialisation,setSpecialisation] = useState([])
+    const [selectedSpecialisation,setSelectedSpecialisation] = useState('')
 
     useEffect(()=>{
         _getSubjectData()
       },[])
 
     const _getSubjectData=async()=>{
-        let res = await axios.get(`${constant.API_URL.DEV}/subsubject/search/`)
+        let res = await axios.get(`${constant.API_URL.DEV}/subject/search/`)
         .then(res => {
             setSubject(res?.data?.data);
           res.data
@@ -63,16 +65,37 @@ export default function CourseTrivia(props){
     }
 
     const handleSubjectChange=(data)=>{
-        let key = data.target.value
+        let key = data.target.name
         setSelectedSubject(key)
+        // _getSpecialisation()
+    }
+
+    const handleSpecialisationChange=(data)=>{
+        let key = data.target.value
+        setSelectedSpecialisation(key)
+    }
+
+    const handleSubjectDropdown=(id)=>{
+        _getSpecialisation(id)
+    }
+
+    const _getSpecialisation=async(id)=>{
+        let res = await axios.get(`${constant.API_URL.DEV}/subsubject/search/?domain=${id}`)
+        .then(res => {
+            setSpecialisation(res?.data?.data);
+          res.data
+        })
+        .catch(err => {
+            console.log(err);
+        })
+        return res;
     }
 
     const handleSubmit = () =>{
         let data = {
             courseType : selectedCourseType,
-            subject: selectedSubject
+            subject: selectedSpecialisation
         }
-
         props?.handleTrivia(data);
     }
   
@@ -84,7 +107,7 @@ export default function CourseTrivia(props){
             <div className='trivia-content'>
                 <div className='trivia-section'>
                     <div className='trivia-label'>
-                        I&apos;m Looking for a...
+                        You&apos;re Looking for a...
                     </div>
                     <div>
                     <FormControl fullWidth style={{
@@ -152,6 +175,39 @@ export default function CourseTrivia(props){
                         >
                             {
                             subject && subject?.length > 0 && subject.map((item,index)=>{
+                                return(
+                                    <MenuItem value={item.name} key={index} onClick={()=>handleSubjectDropdown(item.id)}>{item.name}</MenuItem>
+                                )
+                            })
+                            }
+                
+                        </Select>
+                     </FormControl>
+                     
+                </div>
+                <div className='trivia-section'>
+                    <div className='trivia-label'>
+                        Specialising in...
+                    </div>
+                    
+                    <FormControl fullWidth style={{
+                        width: 180,
+                        marginLeft: 20,
+                        // background: '#034FE2',
+                        borderRadius: 32,
+                        height: 40
+                        }}>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            placeholder='Subject'
+                            label="Subject"
+                            style={{borderRadius: 32,height: 40}}
+                            onChange={handleSpecialisationChange}
+                            MenuProps={{ classes: { paper: classes.menuPaper } }}
+                        >
+                            {
+                            specialisation && specialisation?.length > 0 && specialisation.map((item,index)=>{
                                 return(
                                     <MenuItem value={item.value} key={index}>{item.value}</MenuItem>
                                 )

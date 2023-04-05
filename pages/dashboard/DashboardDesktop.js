@@ -1400,7 +1400,7 @@ const _handleSearch=(e)=>{
             <CourseTrivia handleTrivia={(item)=>_handleTrivia(item)} />
          </div>  
 
-         <div className="dashboard-courses-container">
+         <div className="dashboard-courses-container" style={{borderBottom: '1px solid #DDDDDD',paddingBottom: 70}}>
             <div className="header-container">
               <div className="header-text">
                 Get New skills
