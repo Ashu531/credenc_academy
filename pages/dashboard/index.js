@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import DashboardDesktop from "./DashboardDesktop";
 import DashboardMobile from "./DashboardMobile";
 import { useMediaQuery } from "react-responsive";
+import constant from "../../config/constant";
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
 export default function Dashboard(props) {
@@ -56,6 +57,7 @@ export default function Dashboard(props) {
           closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
           selectSearch={(e)=>props?.selectSearch(e)}
           thirdPartyUser={thirdPartyUser}
+          subjectData={props?.subjectData}
         />}
         {isMobile && 
           <DashboardMobile

@@ -258,7 +258,7 @@ const _goToDetailPage=(id)=>{
                 <div className='grey-container' 
                      onClick={()=>_handleCardBookmark(props?.data)} 
                 >
-                    <Image src={bookmarkVisible === true  ? selectedBookmark : bookmarkIcon} objectFit="contain" alt='selectedBookmark' height={32} width={32}/>
+                    <Image src={bookmarkVisible === true  ? selectedBookmark : bookmarkIcon} objectFit="contain" alt='selectedBookmark' height={24} width={24}/>
                 </div>
           {/* <div 
               className='grey-container' 

@@ -77,7 +77,7 @@ export default function Header(props){
   const handleChange=(e)=>{
       let value = e.target.value
       props?.openFilterExpandedStage()
-      props?.handleSearch(value)
+      props?.handleSubjectTab(value)
   }
 
   const renderProfile=()=>{
@@ -194,10 +194,10 @@ export default function Header(props){
               width: 180,
               marginLeft: 20,
               // background: '#034FE2',
-              borderRadius: 32,
+              borderRadius: 8,
             }}>
               <InputLabel style={{
-                fontFamily: 'Poppins',
+                fontFamily: 'Work Sans',
                 fontStyle: 'normal',
                 fontWeight: 500,
                 fontSize: 12,
@@ -209,7 +209,7 @@ export default function Header(props){
                 id="demo-simple-select"
                 placeholder='Subject'
                 label="Subject"
-                style={{borderRadius: 32,height: 40}}
+                style={{borderRadius: 8,height: 40}}
                 onChange={handleChange}
                 MenuProps={{ classes: { paper: classes.menuPaper } }}
               >
@@ -234,7 +234,7 @@ export default function Header(props){
           }
         
          <div className='user-elements'>
-           {/* <div className='header-text' onClick={()=>_openMyCourseTab()}>My Courses</div> */}
+           <div className='header-text' onClick={()=>_openMyCourseTab()}>My Courses</div>
            <div className='icon-element' onClick={()=>_openBookmarkTab()} style={{position:"relative"}}>
            <Image src={ bookmarkIcon} height={22} width={22} objectFit="contain" alt='bookmarkIcon' />
            {

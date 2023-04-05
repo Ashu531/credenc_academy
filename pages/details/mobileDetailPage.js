@@ -86,7 +86,7 @@ export default function DetailPageMobile(props){
 
     const breadcrumbs = [
       <Link key="1" href="/">
-        <span style={{fontSize: 13, fontFamily: 'Poppins', fontWeight: 400,color: '#4F4F4F',cursor: 'pointer'}}>
+        <span style={{fontSize: 13, fontFamily: 'Work Sans', fontWeight: 400,color: '#4F4F4F',cursor: 'pointer'}}>
         Home
         </span>
       </Link>,
@@ -831,7 +831,7 @@ export default function DetailPageMobile(props){
                                   style={{
                                     borderRadius: 3,
                                     padding: '6px 8px',
-                                    fontFamily: 'Poppins',
+                                    fontFamily: 'Work Sans',
                                     fontStyle: 'normal',
                                     fontWeight: 500,
                                     fontSize: 14,
@@ -1266,7 +1266,7 @@ export default function DetailPageMobile(props){
 const CustomColor = withStyles({
   root: {
     fontSize: 13,
-    fontFamily: 'Poppins',
+    fontFamily: 'Work Sans',
     fontWeight: 400,
   //   lineHeight: 20,
     background: "-webkit-linear-gradient(94.15deg, #8F14CC 0%, #6602FC 99.97%)",

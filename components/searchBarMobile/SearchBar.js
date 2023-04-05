@@ -142,7 +142,7 @@ export default function SearchBar(props) {
           placeholder="Search here!"
           styling={{
             height: '48px',
-            fontFamily: 'Poppins',
+            fontFamily: 'Work Sans',
             fontStyle: 'normal',
             fontWeight: '500px',
             fontSize: '14px',
@@ -184,7 +184,7 @@ const queryContainer = {
 }
 
 const queryName = {
-  fontFamily: 'Poppins',
+  fontFamily: 'Work Sans',
   fontStyle: 'normal',
   fontWeight: '500px',
   fontSize: '16px',
@@ -194,7 +194,7 @@ const queryName = {
 }
 
 const queryCategory = {
-  fontFamily: 'Poppins',
+  fontFamily: 'Work Sans',
   fontStyle: 'normal',
   fontWeight: '400px',
   fontSize: '12px',

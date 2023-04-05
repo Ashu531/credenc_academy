@@ -310,7 +310,7 @@ const _handleTrackItem=()=>{
                      onClick={()=>_handleCardBookmark(props?.data)} 
                       // style={bookmarkVisible === true ? {background: "linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%)" ,marginRight: 10} : {marginRight: 10}}
                 >
-                    <Image src={bookmarkVisible === true  ? selectedBookmark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={32} width={32}/>
+                    <Image src={bookmarkVisible === true  ? selectedBookmark : bookmarkIcon  } objectFit="contain" alt='selectedBookmark' height={24} width={24}/>
                 </div>
           {/* <div 
               className='grey-container' 
@@ -333,15 +333,36 @@ const _handleTrackItem=()=>{
           }
           <div className='course-detail-container'>
             <div className='content-container'>
-                <h2 className='course-duration'>
-                  {props?.data?.class_modes}
-                </h2>
+            <h2 className='course-duration'>
+              {
+                props?.data?.class_modes?.length > 0 ? props?.data?.class_modes.map((item,index)=>{
+                  return(
+                  <>
+                    {item}&nbsp; 
+                  </>
+                  )
+                }) : props?.data?.class_modes
+              }
+               </h2>  
             </div>
-            <div className='content-container' style={{marginLeft: 20}}>
+            {
+              props?.data?.duration === 'Duration Unavailable' ? <div/> :
+              <div className='content-container' style={{marginLeft: 4}}>
+                  <h2 className='course-duration'>
+                  {props?.data?.duration}
+                  </h2>
+              </div>
+            }
+           
+            {
+              props?.data?.start_level?.length > 0 ?
+              <div className='content-container' style={{marginLeft: 4}}>
                 <h2 className='course-duration'>
-                {props?.data?.duration}
+                {props?.data?.start_level}
                 </h2>
-            </div>
+            </div> : <div />
+            }
+            
           </div>
           <div className='content-description'>
             {props?.data?.one_liner && props?.data?.one_liner.length > 80 ? props?.data?.one_liner.substring(0,80)+'...' : props?.data?.one_liner }

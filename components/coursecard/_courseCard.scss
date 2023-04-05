@@ -66,7 +66,7 @@
 
     }
     .count-text{
-        font-family: 'Poppins';
+        font-family: 'Work Sans';
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -89,6 +89,7 @@
     }
     .card-course-content{
         padding: 0rem 1.25rem 1rem 1.25rem;
+        margin-top: 24px;
     // transition: 0.5s;
 
     .course-name{
@@ -100,7 +101,7 @@
         letter-spacing: 0.02em;
         text-transform: capitalize;
         color: var(--inverseBackground);
-        // height: 48px;
+        min-height: 60px;
         max-width: 16.6em;
     }
 
@@ -114,7 +115,7 @@
         // visibility: hidden;
         min-width: 20em;
         background-color: var(--primaryColor);
-        font-family: "Poppins";
+        font-family: "Work Sans";
         color: var(--defaultBackground);
         text-align: center;
         padding: 5px 5px;
@@ -141,7 +142,7 @@
             border-radius: 3px;
 
             .course-mode{
-                font-family:'Poppins';
+                font-family:'Work Sans';
                 font-style: normal;
                 font-weight: 500;
                 font-size: 14px;
@@ -150,13 +151,13 @@
                 margin-top: 12px;
             }
             .course-duration{
-                font-family:'Poppins';
+                font-family: 'Work Sans';
                 font-style: normal;
-                font-weight: 500;
-                font-size: 14px;
-                line-height: 21px;
-                color: var(--bodyColor);
-                margin-top: 4px;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 14px;
+                color: var(--inverseBackground);
+                // margin-top: 4px;
             }
         }
     }
@@ -182,7 +183,7 @@
         margin-top: 36px;
 
         .course-pay{
-            font-family:'Poppins';
+            font-family:'Work Sans';
             font-style: normal;
             font-weight: 500;
             font-size: 11px;
@@ -190,7 +191,7 @@
             color: var(--disabledColor); 
         }
         .course-price{
-            font-family:'Poppins';
+            font-family:'Work Sans';
             font-style: normal;
             font-weight: 600;
             font-size: 15px;
@@ -210,7 +211,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 0px;
+    padding: 18px 0px 5px 0px;
     // gap: 8px;
     // background: var(--subduedBackground);
     border-radius: 0px 0px 16px 16px; 
@@ -227,7 +228,7 @@
         border-radius: 5px;
 
         .track-text{
-            font-family: 'Poppins';
+            font-family: 'Work Sans';
             font-style: normal;
             font-weight: 500;
             font-size: 14px;
@@ -277,7 +278,7 @@
 }
 
 .add-to-compare-text{
-    font-family: 'Poppins';
+    font-family: 'Work Sans';
     font-style: normal;
     font-weight: 600;
     font-size: 13px;
@@ -295,7 +296,7 @@
 }
 
 .course-detail-text{
-    font-family:'Poppins';
+    font-family:'Work Sans';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -326,7 +327,7 @@
 }
 
 .add-to-compare-text-mobile{
-    font-family:'Poppins';
+    font-family:'Work Sans';
     font-style: normal;
 font-weight: 600;
 font-size: 14px;
@@ -343,7 +344,7 @@ color: var(--defaultBackground);
     gap: 10px;
 }
 .course-detail-text-mobile{
-    font-family:'Poppins';
+    font-family:'Work Sans';
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -430,7 +431,7 @@ color: var(--defaultBackground);
     
     }
     .count-text{
-        font-family: 'Poppins';
+        font-family: 'Work Sans';
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -477,7 +478,7 @@ color: var(--defaultBackground);
             // visibility: hidden;
             min-width: 20em;
             background-color: var(--primaryColor);
-            font-family: "Poppins";
+            font-family: "Work Sans";
             color: var(--defaultBackground);
             text-align: center;
             padding: 5px 5px;
@@ -488,7 +489,7 @@ color: var(--defaultBackground);
           
     
         .course-mode{
-            font-family:'Poppins';
+            font-family:'Work Sans';
             font-style: normal;
             font-weight: 500;
             font-size: 14px;
@@ -497,7 +498,7 @@ color: var(--defaultBackground);
             margin-top: 12px;
         }
         .course-duration{
-            font-family:'Poppins';
+            font-family:'Work Sans';
             font-style: normal;
             font-weight: 500;
             font-size: 14px;
@@ -514,7 +515,7 @@ color: var(--defaultBackground);
         margin-top: 36px;
     
             .course-pay{
-                font-family:'Poppins';
+                font-family:'Work Sans';
                 font-style: normal;
                 font-weight: 500;
                 font-size: 11px;
@@ -522,7 +523,7 @@ color: var(--defaultBackground);
                 color: var(--disabledColor); 
             }
             .course-price{
-                font-family:'Poppins';
+                font-family:'Work Sans';
                 font-style: normal;
                 font-weight: 600;
                 font-size: 15px;
@@ -559,7 +560,7 @@ color: var(--defaultBackground);
             border-radius: 5px;
     
             .track-text{
-                font-family: 'Poppins';
+                font-family: 'Work Sans';
                 font-style: normal;
                 font-weight: 500;
                 font-size: 14px;
@@ -583,7 +584,7 @@ color: var(--defaultBackground);
     }
     
     .add-to-compare-text{
-        font-family: 'Poppins';
+        font-family: 'Work Sans';
         font-style: normal;
         font-weight: 600;
         font-size: 13px;
@@ -601,7 +602,7 @@ color: var(--defaultBackground);
     }
     
     .course-detail-text{
-        font-family:'Poppins';
+        font-family:'Work Sans';
         font-style: normal;
         font-weight: 500;
         font-size: 14px;
@@ -632,7 +633,7 @@ color: var(--defaultBackground);
     }
     
     .add-to-compare-text-mobile{
-        font-family:'Poppins';
+        font-family:'Work Sans';
         font-style: normal;
     font-weight: 600;
     font-size: 14px;
@@ -649,7 +650,7 @@ color: var(--defaultBackground);
         gap: 10px;
     }
     .course-detail-text-mobile{
-        font-family:'Poppins';
+        font-family:'Work Sans';
         font-style: normal;
         font-weight: 500;
         font-size: 14px;

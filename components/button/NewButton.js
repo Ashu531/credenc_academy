@@ -33,7 +33,7 @@ export default function NewButton({
           width: width, 
           color: '#FFFFFF',
           borderRadius: 4,
-          fontFamily: 'Poppins',
+          fontFamily: 'Work Sans',
           fontSize: 14,
           fontWeight: 600,
           fontStyle: 'normal',

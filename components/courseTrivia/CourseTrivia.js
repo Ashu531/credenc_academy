@@ -9,7 +9,6 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import axios from "axios";
 import constant from '../../config/constant'
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -25,21 +24,6 @@ const useStyles = makeStyles(theme => ({
       fontSize: 12
     }
   }));
-
-  const theme = createTheme({
-    components: {
-      // Name of the component
-      MuiButton: {
-        styleOverrides: {
-          // Name of the slot
-          root: {
-            // Some CSS
-            fontSize: '5rem',
-          },
-        },
-      },
-    },
-  });
 
 export default function CourseTrivia(props){
 
@@ -110,7 +94,7 @@ export default function CourseTrivia(props){
                         borderRadius: 32,
                         }}>
                         <InputLabel style={{
-                            fontFamily: 'Poppins',
+                            fontFamily: 'Work Sans',
                             fontStyle: 'normal',
                             fontWeight: 500,
                             fontSize: 12,
@@ -150,7 +134,7 @@ export default function CourseTrivia(props){
                         height: 40
                         }}>
                         <InputLabel style={{
-                            fontFamily: 'Poppins',
+                            fontFamily: 'Work Sans',
                             fontStyle: 'normal',
                             fontWeight: 500,
                             fontSize: 12,
@@ -169,9 +153,7 @@ export default function CourseTrivia(props){
                             {
                             subject && subject?.length > 0 && subject.map((item,index)=>{
                                 return(
-                                    <ThemeProvider theme={theme}>
-                                        <MenuItem value={item.value} key={index}>{item.value}</MenuItem>
-                                    </ThemeProvider>
+                                    <MenuItem value={item.value} key={index}>{item.value}</MenuItem>
                                 )
                             })
                             }

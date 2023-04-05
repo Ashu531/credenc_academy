@@ -113,7 +113,7 @@ export default function WebDetailPage(props){
 
     const breadcrumbs = [
         <Link key="1" href="/">
-          <span style={{fontSize: 13, fontFamily: 'Poppins', fontWeight: 400,color: '#4F4F4F',cursor: 'pointer'}}>
+          <span style={{fontSize: 13, fontFamily: 'Work Sans', fontWeight: 400,color: '#4F4F4F',cursor: 'pointer'}}>
            Home
           </span>
         </Link>,
@@ -603,7 +603,7 @@ export default function WebDetailPage(props){
             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
               <li className='nav-item-right' style={{margin: '0 1rem 0 0'}} onClick={()=>_handleCardBookmark(props?.detailData)}><Image src={ bookmarkVisible ? selectedBookmarkIcon : bookmarkIcon} width={20} height={20} objectFit='contain' /></li>
               <li className='nav-item-right'><button style={{backgroundColor: 'transparent', color: '#000000', border: '1px solid #034FE2'}} onClick={() => setEnquire(true)}>Talk to Us</button></li>
-              <li className='nav-item-right'><button onClick={() => setApplyNow(true)}>Apply Now</button></li>
+              <li className='nav-item-right'><button onClick={()=> handleButtonClick()}>{((props?.detailData?.applied === true) || (applied?.state === true && applied?.id === props?.detailData?.id)) ? 'Applied' : 'Apply Now'}</button></li>
               <li className='nav-item-right'><button onClick={() => _openDetailModal(props?.detailData)}>Track Application</button></li>
             </div>
           </ul>
@@ -1753,6 +1753,7 @@ export default function WebDetailPage(props){
                     handleCardActionTaken={()=>_handleCardActionTaken()}
                     openLoginModal={()=>props?.openLoginModal()}
                     token={props?.token}
+                    status={((props?.detailData?.applied === true) || (applied?.state === true && applied?.id === props?.detailData?.id)) ? true : false}
                 />
             </SlidingPanel>
             <SlidingPanel
@@ -1808,7 +1809,7 @@ export default function WebDetailPage(props){
 const CustomColor = withStyles({
     root: {
       fontSize: 13,
-      fontFamily: 'Poppins',
+      fontFamily: 'Work Sans',
       fontWeight: 400,
     //   lineHeight: 20,
       background: "-webkit-linear-gradient(94.15deg, #8F14CC 0%, #6602FC 99.97%)",
