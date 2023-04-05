@@ -739,6 +739,16 @@ export default function DetailModal(props){
                 }
                 
             </div>
+
+            <div className='detail-modal-footer-section-right'
+                style={{width:window.innerWidth <= 500 ? '88%' : '', padding: '0 2.4rem 0 0' }} onClick={()=>props?.openQueryModal()}>
+                <span className='apply-now-button' style={{background: 'transparent', border: '1px solid var(--defaultPrimaryColor)'}}>
+                    <span className='apply-now-button-text' style={{color: '#000000'}}>
+                        Talk to Us
+                    </span>
+                </span>
+            </div>
+
             {
               props?.status === true || courseData?.applied === true ? 
               <div /> :

@@ -27,7 +27,7 @@ export default function QuerySuccessModal(props){
 
     return(
         <>
-         <div className='success-apply-modal-container' style={ window.innerWidth<=500 ? {width:'100%',height:'90vh'} : null }>
+         <div className='success-query-modal-container' style={ window.innerWidth<=500 ? {width:'100%',height:'90vh'} : null }>
               <div className='closeIconContent' onClick={()=>props.closeSuccessQueryModal()}>
                 <span className='success-apply-modal-close-icon' >
                     <Image src={closeIcon} objectFit='cover' height={20} width={20} />
@@ -142,7 +142,6 @@ export default function QuerySuccessModal(props){
                               gap: '10px',
                               background: 'var(--defaultPrimaryColor)',
                               borderRadius: '5px',
-                              border:'1px solid #00CB9C',
                           }}
                           >
                               <span className='submit-footer-text' style={{color: '#FFFFFF'}}>

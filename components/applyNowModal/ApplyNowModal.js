@@ -308,7 +308,27 @@ export default function ApplyNowModal(props){
                             <Image src={callIcon} objectFit='cover'/>
                         </div>
                      </div>
-                     <div className='button-content' onClick={()=>handleSubmit()} style={{cursor:'pointer',paddingRight: '5rem'}}>
+                     <div className='button-content' onClick={()=>props?.openQueryModal()} style={{cursor:'pointer'}}>
+                        <div 
+                            className='button-container'
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                padding: '8px 24px',
+                                gap: '10px',
+                                borderRadius: '5px',
+                                border: '1px solid var(--defaultPrimaryColor)',
+                            }}
+                            >
+                                <span className='submit-footer-text' style={{color: '#000000'}}>
+                                    Talk to Us
+                                </span>
+                        </div>
+                    </div>
+
+                   <div className='button-content' onClick={()=>handleSubmit()} style={{cursor:'pointer',paddingRight: '5rem'}}>
                        <div 
                          className='button-container'
                          style={{
@@ -327,6 +347,7 @@ export default function ApplyNowModal(props){
                              </span>
                        </div>
                    </div>
+
                   </div>
                   </div>
               </div> 

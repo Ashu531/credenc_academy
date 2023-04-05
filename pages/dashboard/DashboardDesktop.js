@@ -1659,6 +1659,7 @@ const _handleSearch=(e)=>{
         handleCardActionTaken={()=>_handleCardActionTaken()}
         openDetailModal={()=>openDetailModal()}
         status={trackStatus}
+        openQueryModal={_openEnquireModal}
         />
       </SlidingPanel>
       <SlidingPanel
@@ -1668,6 +1669,7 @@ const _handleSearch=(e)=>{
         size={30}
       >
         <ApplyNowModal 
+          openQueryModal={_openEnquireModal}
           detailData={detailData} 
           closeApplyNowModal={()=>_closeApplyNowModal()} 
           openSuccessApplyModal={(courseName)=>_openSuccessApplyModal(courseName)}
@@ -1689,11 +1691,11 @@ const _handleSearch=(e)=>{
           backdropClicked={_closeEnquireModal}
           size={30}
       >
-          <InquiryModal 
+          <InquiryModal
             closeInquiryModal={_closeEnquireModal} 
-            detailData={props?.detailData} courseName={props?.detailData?.course_name} 
-            openSuccessModal={(courseName)=>_openQuerySuccessModal(courseName)}  
-            handleAppliedStage={(id)=>_handleAppliedStage(id)}
+            detailData={detailData} 
+            courseName={detailData?.course_name} 
+            openSuccessModal={()=>_openQuerySuccessModal()}
           />
         </SlidingPanel>
       <SlidingPanel

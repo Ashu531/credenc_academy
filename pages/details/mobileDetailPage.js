@@ -1288,6 +1288,7 @@ export default function DetailPageMobile(props){
             handleCardActionTaken={()=>_handleCardActionTaken()}
             openLoginModal={()=>props?.openLoginModal()}
             token={props?.token}
+            openQueryModal={() => setEnquire(true)}
            />
          </SlidingPanel>
          <SlidingPanel
@@ -1296,7 +1297,7 @@ export default function DetailPageMobile(props){
             backdropClicked={() => setApplyNow(false)}
             size={30}
           >
-             <ApplyNowModal detailData={detailData} closeApplyNowModal={()=>_closeApplyNowModal()} />
+             <ApplyNowModal openQueryModal={() => setEnquire(true)} detailData={detailData} closeApplyNowModal={()=>_closeApplyNowModal()} />
            </SlidingPanel>
            <SlidingPanel
             type={'right'}
