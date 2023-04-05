@@ -506,10 +506,6 @@ export default function WebDetailPage(props){
 
     }
 
-    useEffect(() => {
-      console.log("reviews", reviews)
-    }, [reviews])
-
     const _getReviews = async(id) => {
         let res = await axios.get(`${constant.API_URL.DEV}/course/reviews/${props?.id}/`)
           .then(res => {
@@ -524,20 +520,20 @@ export default function WebDetailPage(props){
           }); 
     }
 
-  const _getRating = async(id) => {
-      let res = await axios.get(`${constant.API_URL.DEV}/course/ratingsavg/${props?.id}/`)
-        .then(res => {
-          // this.coursesApiStatus.current.success();
-          console.log(res)
-          setRating(res.data)
-          // setMounted(true);
-          return res.data;
-        })
-        .catch(err => {
-          // this.coursesApiStatus.current.failed();
-          console.log(err);
-        }); 
-  }
+    const _getRating = async(id) => {
+        let res = await axios.get(`${constant.API_URL.DEV}/course/ratingsavg/${props?.id}/`)
+          .then(res => {
+            // this.coursesApiStatus.current.success();
+            console.log(res)
+            setRating(res.data)
+            // setMounted(true);
+            return res.data;
+          })
+          .catch(err => {
+            // this.coursesApiStatus.current.failed();
+            console.log(err);
+          }); 
+    }
 
     const handleReviewChange = (val) => {
       setReviewText(val)
@@ -718,7 +714,7 @@ export default function WebDetailPage(props){
                                   <div style={{fontSize: '1.7rem', fontWeight: '500', lineHeight: '2rem', color: '#000000'}}>{module.title}</div>
                                 </div>
                                 {
-                                  module.display && module['sub_topics'].map((topic, topicIndex) => {
+                                  module.display && module['sub_topics']?.map((topic, topicIndex) => {
                                     return(
                                       <div className='curriculum-item' key={topicIndex}>
                                         <div style={{width: '96%'}}>
@@ -744,7 +740,7 @@ export default function WebDetailPage(props){
 
           {props?.instructorData?.instructor?.length > 0 && <div className='container' id='instructor'>
             <div className='heading'>Instructors</div>
-            <div style={{width: '100%', display: 'flex', rowGap: '3.6rem', flexDirection: 'row', flexWrap: 'wrap', padding: '3.6rem 0 0 0'}}>
+            <div style={{width: '100%', display: 'flex', flexDirection: 'row', rowGap: '3.6rem', flexWrap: 'wrap', padding: '3.6rem 0 0 0'}}>
               {props?.instructorData?.instructor?.map(
                   (inst, index) => {
                       return (<div className='feature' key={index}>
@@ -791,126 +787,124 @@ export default function WebDetailPage(props){
               <button onClick={() => setEnquire(true)}>Inquire Now</button>
             </div>}
 
-            <div className='detail-page-mobile-price-options-container' style={{width: '100%'}}>
-                  {
-                    props?.priceOptions?.emi_options && props?.priceOptions?.emi_options.map((item,index)=>{
-                      return(
-                      
-                    <div className='detail-page-mobile-price-options-card' key={index}>
-                    <div className='detail-page-mobile-price-options-card-header'>
-                        <div className='detail-page-mobile-price-options-card-plan' style={{display:'flex'}}>
-                        {item.noOfInstallment} Month
-                        <div style={{position:'relative'}}>
-                            &nbsp;EMI
-                        <div style={{position:'absolute',top: -12,right: -16}}>
-                            <Image src={questionDoodle} height={25} width={19} objectFit='contain' />
+            {props?.priceOptions?.emi_options?.length > 0 && <div className='detail-page-mobile-price-options-container' style={{width: '100%'}}>
+              {
+                props?.priceOptions?.emi_options && props?.priceOptions?.emi_options.map((item,index)=>{
+                  return(
+                  
+                <div className='detail-page-mobile-price-options-card' key={index}>
+                <div className='detail-page-mobile-price-options-card-header'>
+                    <div className='detail-page-mobile-price-options-card-plan' style={{display:'flex'}}>
+                    {item.noOfInstallment} Month
+                    <div style={{position:'relative'}}>
+                        &nbsp;EMI
+                    <div style={{position:'absolute',top: -12,right: -16}}>
+                        <Image src={questionDoodle} height={25} width={19} objectFit='contain' />
+                    </div>
+                    </div>
+                    </div>
+                    {
+                      index === 0 ? 
+                      <div className='detail-page-mobile-price-options-card-recommendation'>
+                        <div className='detail-page-mobile-price-options-card-recommendation-text'>Recommended!</div>
+                    </div> : null
+                    }
+                    
+                </div>
+                <div className='detail-page-mobile-price-options-card-description'>
+                Pay ₹ {item.emiAmount} per month for {item.noOfInstallment} months with no interest cost.
+                </div>
+                <div className='detail-page-mobile-price-options-card-info'>
+                <div className='detail-page-mobile-price-options-card-info-heading'>
+                    Monthly Installment
+                </div>
+                <div className='detail-page-mobile-price-options-card-info-subheading'>
+                    ₹ {item.emiAmount}
+                </div>
+                </div>
+                <div className='detail-page-mobile-price-options-card-info'>
+                <div className='detail-page-mobile-price-options-card-info-heading'>
+                No. Installment
+                </div>
+                <div className='detail-page-mobile-price-options-card-info-subheading'>
+                {item.noOfInstallment}
+                </div>
+                </div>
+                <div className='detail-page-mobile-price-options-card-info'>
+                <div className='detail-page-mobile-price-options-card-info-heading'>
+                Down Payment
+                </div>
+                <div className='detail-page-mobile-price-options-card-info-subheading'>
+                    {item.downPayment}
+                </div>
+                </div>
+                <div className='detail-page-mobile-price-options-card-info' style={{marginTop:12}}>
+                    <div style={{display:'flex',flexDirection:'column'}}>
+                    <div className='detail-page-mobile-price-options-card-info-amount-header'>
+                    Total Amount
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-info-amount-text'>
+                    ₹ {item.financeAmount}
+                    </div>
+                    </div>
+                    <div className='detail-page-mobile-price-options-card-nocost-emi'>
+                        <div className='detail-page-mobile-price-options-card-nocost-emi-text'>
+                        NO COST EMI
                         </div>
-                        </div>
-                        </div>
-                        {
-                          index === 0 ? 
-                          <div className='detail-page-mobile-price-options-card-recommendation'>
-                            <div className='detail-page-mobile-price-options-card-recommendation-text'>Recommended!</div>
-                        </div> : null
-                        }
-                        
                     </div>
-                    <div className='detail-page-mobile-price-options-card-description'>
-                    Pay ₹ {item.emiAmount} per month for {item.noOfInstallment} months with no interest cost.
-                    </div>
-                    <div className='detail-page-mobile-price-options-card-info'>
-                    <div className='detail-page-mobile-price-options-card-info-heading'>
-                        Monthly Installment
-                    </div>
-                    <div className='detail-page-mobile-price-options-card-info-subheading'>
-                        ₹ {item.emiAmount}
-                    </div>
-                    </div>
-                    <div className='detail-page-mobile-price-options-card-info'>
-                    <div className='detail-page-mobile-price-options-card-info-heading'>
-                    No. Installment
-                    </div>
-                    <div className='detail-page-mobile-price-options-card-info-subheading'>
-                    {item.noOfInstallment}
-                    </div>
-                    </div>
-                    <div className='detail-page-mobile-price-options-card-info'>
-                    <div className='detail-page-mobile-price-options-card-info-heading'>
-                    Down Payment
-                    </div>
-                    <div className='detail-page-mobile-price-options-card-info-subheading'>
-                        {item.downPayment}
-                    </div>
-                    </div>
-                    <div className='detail-page-mobile-price-options-card-info' style={{marginTop:12}}>
-                        <div style={{display:'flex',flexDirection:'column'}}>
-                        <div className='detail-page-mobile-price-options-card-info-amount-header'>
-                        Total Amount
-                        </div>
-                        <div className='detail-page-mobile-price-options-card-info-amount-text'>
-                        ₹ {item.financeAmount}
-                        </div>
-                        </div>
-                        <div className='detail-page-mobile-price-options-card-nocost-emi'>
-                            <div className='detail-page-mobile-price-options-card-nocost-emi-text'>
-                            NO COST EMI
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-               
-                      )
-                    })
-                  }
-                </div> 
+                </div>
+                </div>
+            
+                  )
+                })
+              }
+            </div>} 
 
-            <div className='detail-page-mobile-price-options-container'>
-                   {
-                     props?.priceOptions?.price_options?.lumpsum && props?.priceOptions?.price_options?.lumpsum.map((item,index)=>{
-                       return(
-                         <div className='detail-page-mobile-lumpsum-content' key={index}>
-                           <div className='detail-page-mobile-lumpsum-header'>
-                             LUMPSUM
-                           </div>
-                           <div className='detail-page-mobile-lumpsum-card'>
-                              <div className='detail-page-mobile-lumpsum-card-detail'>
-                                <div className='detail-page-mobile-lumpsum-card-detail-label'>
-                                  Base Price
-                                </div>
-                                <div className='detail-page-mobile-lumpsum-card-detail-amount'>
-                                ₹{item.amount}
-                                </div>
-                              </div>
-                              <div className='detail-page-mobile-lumpsum-card-detail'>
-                                <div className='detail-page-mobile-lumpsum-card-detail-label'>
-                                Discount
-                                </div>
-                                <div className='detail-page-mobile-lumpsum-card-detail-amount'>
-                                ₹0
-                                </div>
-                              </div>
-                              <div className='detail-page-mobile-lumpsum-card-detail'>
-                                <div className='detail-page-mobile-lumpsum-card-detail-label'>
-                                Tax@18%
-                                </div>
-                                <div className='detail-page-mobile-lumpsum-card-detail-amount'>
-                                  Included in Base Price
-                                </div>
-                              </div>
-                              <div className='detail-page-mobile-lumpsum-total-amount-header'>
-                                Total Amount
-                              </div>
-                              <span className='detail-page-mobile-lumpsum-total-amount'>
-                              ₹{item.amount}
-                              </span>
-                           </div>
-                         </div>
-                       )
-                     })
-                   } 
-                  </div>
-                
-          
+            {props?.priceOptions?.price_options?.lumpsum?.length > 0 && <div className='detail-page-mobile-price-options-container'>
+              {
+                props?.priceOptions?.price_options?.lumpsum && props?.priceOptions?.price_options?.lumpsum.map((item,index)=>{
+                  return(
+                    <div className='detail-page-mobile-lumpsum-content' key={index}>
+                      <div className='detail-page-mobile-lumpsum-header'>
+                        LUMPSUM
+                      </div>
+                      <div className='detail-page-mobile-lumpsum-card'>
+                        <div className='detail-page-mobile-lumpsum-card-detail'>
+                          <div className='detail-page-mobile-lumpsum-card-detail-label'>
+                            Base Price
+                          </div>
+                          <div className='detail-page-mobile-lumpsum-card-detail-amount'>
+                          ₹{item.amount}
+                          </div>
+                        </div>
+                        <div className='detail-page-mobile-lumpsum-card-detail'>
+                          <div className='detail-page-mobile-lumpsum-card-detail-label'>
+                          Discount
+                          </div>
+                          <div className='detail-page-mobile-lumpsum-card-detail-amount'>
+                          ₹0
+                          </div>
+                        </div>
+                        <div className='detail-page-mobile-lumpsum-card-detail'>
+                          <div className='detail-page-mobile-lumpsum-card-detail-label'>
+                          Tax@18%
+                          </div>
+                          <div className='detail-page-mobile-lumpsum-card-detail-amount'>
+                            Included in Base Price
+                          </div>
+                        </div>
+                        <div className='detail-page-mobile-lumpsum-total-amount-header'>
+                          Total Amount
+                        </div>
+                        <span className='detail-page-mobile-lumpsum-total-amount'>
+                        ₹{item.amount}
+                        </span>
+                      </div>
+                    </div>
+                  )
+                })
+              } 
+            </div>}
           </div>
 
 
@@ -961,7 +955,7 @@ export default function WebDetailPage(props){
             </div>
           </div>
 
-          <div style={{padding: '2rem 0 3rem 0'}}>
+          <div style={{padding: '2rem 0 3rem 0', marginRight: 'auto', width: '100%'}}>
             <div className='heading' style={{paddingBottom: '0.9rem', padding: '0 0 0.9rem 3rem'}}>You Might Be Interested In</div>
             <div className='detail-page-mobile-card-container' style={{display:'flex',marginTop: 20,gap: 20,overflow:'auto'}}>
               {props?.similarCourses?.length > 0 && props?.similarCourses.map((item,index)=>{

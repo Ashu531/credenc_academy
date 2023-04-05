@@ -295,6 +295,8 @@ export default function DetailPage(props){
                 similarCourses={similarCourses} 
                 priceOptions={priceOptions} 
                 toolData={toolData}
+                reviews={reviews}
+                rating={rating}
                 startingCost={startingCost} 
                 addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
                 removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
