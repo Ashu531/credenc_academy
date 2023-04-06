@@ -160,7 +160,7 @@ export default function ForgotPasswordModal({
         else{
         dispatchLogin(res.data.tokens);
         _setThirdPartyUser(res.data)
-        _goToHome()
+        
         // setModalState(modalStates.NEW_PASSWORD);
         closeForgotPasswordModal()
         }
@@ -183,7 +183,10 @@ export default function ForgotPasswordModal({
   }
 
   const _setThirdPartyUser=(data)=>{
-    localStorage.setItem(EdtechPartnerKey,JSON.stringify(data.partner_key));
+    if(data?.partner_key && data.partner_key.length > 0){
+      localStorage.setItem(EdtechPartnerKey,JSON.stringify(data.partner_key));
+    }
+    _goToHome()
 }
 
   const setNewPassword = async () => {
