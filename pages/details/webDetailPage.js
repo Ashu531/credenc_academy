@@ -59,15 +59,22 @@ import Button from '../../components/button/Button';
 import { border, color } from '@mui/system';
 import QuerySuccessModal from '../../components/querySuccessModal/QuerySuccessModal';
 import { number } from 'prop-types';
+import DotLoader from "react-spinners/DotLoader";
 
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 
-const styles = {
-    // width: "100%",
-    height: "100%",
-    backgroundImage: `url(${tableBackground.src})`,  
+const spinnerCSS = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red",
   };
+
+const spinnerContainer = {
+   position: 'fixed',
+   top: '50%',
+   right: '45%'
+}  
 
 export default function WebDetailPage(props){
 
@@ -96,6 +103,8 @@ export default function WebDetailPage(props){
       state: false,
       id: 0
     });
+    const [reviewSuccess,setReviewSuccess] = useState(true)
+    let [loading, setLoading] = useState(true);
 
     useEffect(() => {
       window.onpopstate = () => {
@@ -557,17 +566,19 @@ export default function WebDetailPage(props){
               _getReviews()
               _getRating()
               handleReviewChange('')
+              setReviewSuccess(true);
               return res.data;
             })
             .catch(err => {
               // this.coursesApiStatus.current.failed();
+              setReviewSuccess(true);
               console.log(err);
             });
         } else {
+          setReviewSuccess(true);
           setError('Oh! Looks like you forgot to give us a rating')
         }
       }else{
-        console.log("coming+++")
         props?.openLoginModal()
       }
       
@@ -584,11 +595,11 @@ export default function WebDetailPage(props){
       setNavActiveStates([...navState])
     }
 
-    console.log(props?.detailData?.educator_list)
+    console.log(applied,"applied+++")
 
     return(
         <>
-        { props?.detailData && props?.detailData != null ?
+        { props?.detailData && props?.detailData != null &&
             // mounted && 
 
         <div className='detail-page-web'>
@@ -603,8 +614,13 @@ export default function WebDetailPage(props){
             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
               <li className='nav-item-right' style={{margin: '0 1rem 0 0'}} onClick={()=>_handleCardBookmark(props?.detailData)}><Image src={ bookmarkVisible ? selectedBookmarkIcon : bookmarkIcon} width={20} height={20} objectFit='contain' /></li>
               <li className='nav-item-right'><button style={{backgroundColor: 'transparent', color: '#000000', border: '1px solid #034FE2'}} onClick={() => setEnquire(true)}>Talk to Us</button></li>
-              <li className='nav-item-right'><button onClick={()=> handleButtonClick()}>{((props?.detailData?.applied === true) || (applied?.state === true && applied?.id === props?.detailData?.id)) ? 'Applied' : 'Apply Now'}</button></li>
-              <li className='nav-item-right'><button onClick={() => _openDetailModal(props?.detailData)}>Track Application</button></li>
+              {
+                (!props?.detailData.is_mooc && !(props?.detailData?.applied === true || (applied?.state === true && applied?.id === props?.detailData?.id)))  && <li className='nav-item-right'><button onClick={()=> handleButtonClick()}>{'Apply Now'}</button></li>
+              }
+              {
+                (!props?.detailData.is_mooc && (props?.detailData?.applied === true || (applied?.state === true && applied?.id === props?.detailData?.id)))  && <li className='nav-item-right'><button onClick={() => _openDetailModal(props?.detailData)}>Track Application</button></li>
+              }
+              
             </div>
           </ul>
           <div className='head-jumbotron' style={{backgroundImage: `linear-gradient(rgba(245, 248, 255, 0.3), rgba(245, 248, 255, 0.3)), url(${backgroundImage.src})`, backgroundSize: 'cover'}}>
@@ -618,7 +634,7 @@ export default function WebDetailPage(props){
             </div>
             <div className='items'>
               {
-                props?.detailData?.educator_list.map((item, index) => {
+                props?.detailData?.educator_list?.map((item, index) => {
                   return (
                     <div className='item' key={index}>
                       <Image src={item['logo'] || hatIcon} width={34} height={34} objectFit='contain' loader={myLoader} style={{borderRadius: '50%'}} />
@@ -907,8 +923,18 @@ export default function WebDetailPage(props){
             </div>}
           </div>
 
-
-          <div className='container' id='reviews'>
+          {
+            !reviewSuccess ? 
+              <div style={spinnerContainer}>
+                      <DotLoader
+                        cssOverride={spinnerCSS}
+                        size={100}
+                        color={"#000000"}
+                        loading={loading}
+                        speedMultiplier={1}
+                        />
+              </div>
+               :      <div className='container' id='reviews'>
             <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
               <div className='heading'>Reviews</div>
               { rating['avg'] && !isNaN(rating['avg']) && <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
@@ -949,12 +975,15 @@ export default function WebDetailPage(props){
               <textarea rows={8} placeholder="This course is amazing..." onChange={(e) => handleReviewChange(e.target.value)} value={reviewText}></textarea>
               <button 
                 style={{cursor: 'pointer', backgroundColor: '#034FE2', padding: '1.6rem 2.4rem', margin: '1.6rem', border: 'none', borderRadius: '0.8rem', color: '#FFFFFF', fontSize: '1.6rem', fontFamily: 'Work Sans'}}
-                onClick={submitReview}
+                onClick={()=>{
+                  setReviewSuccess(false)
+                  submitReview()
+                }}
               >Leave a Review
               </button>
             </div>
           </div>
-
+          }
           <div style={{padding: '2rem 0 3rem 0', marginRight: 'auto', width: '100%'}}>
             <div className='heading' style={{paddingBottom: '0.9rem', padding: '0 0 0.9rem 3rem'}}>You Might Be Interested In</div>
             <div className='detail-page-mobile-card-container' style={{display:'flex',marginTop: 20,gap: 20,overflow:'auto'}}>
@@ -1800,7 +1829,6 @@ export default function WebDetailPage(props){
             <QuerySuccessModal closeSuccessQueryModal={()=>setQuerySuccessModal(false)} courseName={props?.detailData?.course_name} />
           </SlidingPanel>
         </div>
-        : <WebDetailSkeleton />
         }
         
         </>

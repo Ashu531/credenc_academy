@@ -1346,7 +1346,7 @@
         overflow: auto;
         margin-top: 24px;
         gap: 10px;
-
+        flex-wrap: wrap;
 
         .detail-page-mobile-price-options-card{
             display: flex;
@@ -1357,7 +1357,7 @@
             background: var(--defaultBackground);
             border: 1px solid #DDDDDD;
             box-shadow: 6px 6px 0px #F7F7F7;
-            width: 260px;
+            width: 230px;
             border-radius: 6px;
 
             .detail-page-mobile-price-options-card-header{
