@@ -97,6 +97,7 @@ export default function SearchBar(props) {
       name: searchString,
       search: true
     }
+
     props?.handleSearch(data)
   }
 

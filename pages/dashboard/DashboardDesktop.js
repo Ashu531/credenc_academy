@@ -653,9 +653,9 @@ function DashboardDesktop(props) {
       urlService.current.addEntry('search', e);
     }
 
-    if(props?.searchValue && props?.searchValue?.length > 0){
-      urlService.current.addEntry('search', props?.searchValue);
-    }
+    // if(props?.searchValue && props?.searchValue?.length > 0){
+    //   urlService.current.addEntry('search', props?.searchValue);
+    // }
 
     if(e?.courseType && e?.courseType.length > 0 && e?.subject && e?.subject.length > 0){
       urlService.current.addEntry('subject', e?.subject);
@@ -931,7 +931,6 @@ const _handleSearch=(e)=>{
     }else{
       props?.handleSearch(e)
     }
-   
   }
 
   const _openApplyNowModal=(data)=>{
@@ -998,10 +997,12 @@ const _handleSearch=(e)=>{
     handleFilteredData()
   }
 
+  
+
   useEffect(()=>{
     if(props?.searchValue?.search === true){
       setPageNumber(1)
-      handleFilteredData(true,props?.searchValue)
+      handleFilteredData(true,props?.searchValue?.name)
     }
   },[props?.searchValue])
 
