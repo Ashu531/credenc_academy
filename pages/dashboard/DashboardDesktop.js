@@ -699,7 +699,8 @@ function DashboardDesktop(props) {
     if (pageNumber <= 1 || updatePageNumber === false) {
       // setCourses([...res.data]);
       setCardApiSuccess(true)
-      setCourseCardData([...res.data])
+      if(res?.data)
+        setCourseCardData([...res.data])
     } else {
       // setCourses([...courseCardData, ...res.data]);
       setCardApiSuccess(true)

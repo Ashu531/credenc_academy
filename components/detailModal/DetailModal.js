@@ -351,7 +351,7 @@ export default function DetailModal(props){
 
     const _handleApplyModal=()=>{
       if(props?.token && props?.token?.length > 0){
-        props?.openDetailModal()
+        // props?.openDetailModal()
         props?.openApplyNowModal()
       }else{
         props?.openLoginModal()
@@ -384,6 +384,10 @@ export default function DetailModal(props){
         }
       }
     }
+
+    useEffect(() => {
+      setCourseData({...props?.detailData})
+    }, [props?.detailData])
 
     return(
         <>
@@ -437,7 +441,7 @@ export default function DetailModal(props){
                         </div>
                     </div> */}
                         <div className='header-action-container' style={{marginLeft:8}}>
-                            <a href={props?.detailData?.course_link} target='_blank' rel="noreferrer">
+                            <a href={courseData?.course_link} target='_blank' rel="noreferrer">
                                 <Image 
                                     src={globeIcon}  
                                     width={ window.innerWidth <= 500 ? 25 : 24 }
@@ -549,41 +553,16 @@ export default function DetailModal(props){
               </div>
               <div className='divider' />
               <div className='detail-modal-course-info'>
-                <span className='content-detail'>
-                    <Image src={certificateIcon} objectFit="cover"/>
-                    <span className='content-detail-text'>
-                      {courseData?.program_type}
-                    </span>    
-                </span>
-                <span className='content-detail'>
-                    <Image src={onlineIcon} objectFit="cover"/>
-                    {courseData?.class_modes && courseData?.class_modes.map((item,index)=>{
-                        return(
-                            <span className='content-detail-text' key={index}>
-                            {item}
-                            </span>
-                        )
-                    })}
-                    
-                </span>
-                <span className='content-detail'>
-                    <Image src={chartIcon} objectFit="cover"/>
-                    <span className='content-detail-text'>
-                    { courseData?.start_level.length > 0 && courseData?.end_level.length > 0 ? courseData?.start_level + ' to ' + courseData?.end_level : "Level Unknown" }
-                    </span>    
-                </span>
-                <span className='content-detail'>
-                    <Image src={calendarIcon} objectFit="cover" />
-                    <span className='content-detail-text'>
-                    {courseData?.duration}
-                    </span>    
-                </span>
-                <span className='content-detail'>
-                    <Image src={clockIcon} objectFit="cover"/>
-                    <span className='content-detail-text'>
-                    6hrs/ week
-                    </span>    
-                </span>
+                {courseData?.grid?.map((item, index) => {
+                  return (
+                    <span key={index} className='content-detail'>
+                      <Image src={item.icon} loader={myLoader} width={24} height={24} objectFit="cover"/>
+                      <span className='content-detail-text'>
+                        {item.value}
+                      </span>    
+                    </span>
+                  )
+                })}
             </div>
             {
               courseData?.skills && courseData?.skills.length > 0 ? 
@@ -729,9 +708,9 @@ export default function DetailModal(props){
          >
             <div className='detail-modal-footer-section-left' style={window.innerWidth < 500 ? {width: '51%'} : null}>
                 {
-                  props?.detailData?.final_pricing && props?.detailData?.final_pricing.length > 0 ?
+                  courseData?.final_pricing && courseData?.final_pricing.length > 0 ?
                     <span className='price-text'>
-                      { props?.detailData?.final_pricing.length > 0 ? `₹${props?.detailData?.final_pricing}` : 'Free'}
+                      { courseData?.final_pricing.length > 0 ? `₹${courseData?.final_pricing}` : 'Free'}
                     </span>
                     : 
                     <span className='price-text'>
@@ -755,7 +734,7 @@ export default function DetailModal(props){
               <div /> :
               
               courseData?.is_mooc === true ? 
-                <a href={props?.detailData?.course_link} target="_blank" rel="noopener noreferrer">
+                <a href={courseData?.course_link} target="_blank" rel="noopener noreferrer">
                   <div className='detail-modal-footer-section-right' 
                       style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
                       <span className='apply-now-button'>
