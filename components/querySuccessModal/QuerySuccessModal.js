@@ -73,12 +73,12 @@ export default function QuerySuccessModal(props){
                         {props?.courseName}.
                       </div>
                   </div>
-                  <div className='nj-section'>
+                  {/* <div className='nj-section'>
                     <Image src={njIcon} width={55} height={47} objectFit="contain" />
                     <div className='njText'>
                     Your selected loan partner, NJ Capital will be in touch with you shortly to complete the loan process. 
                     </div>
-                  </div>
+                  </div> */}
                   <div className='trackSection'>
                     <div className='trackText'>
                       A counsellor will soon be in touch with you to address your query and answer any questions!

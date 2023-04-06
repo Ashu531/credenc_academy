@@ -104,11 +104,11 @@ export default function ApplyNowModal(props){
         }
 
         let currentDate = moment("13/04/2008", "DD/MM/YYYY");
-        let result = moment(dob, "DD/MM/YYYY").diff(currentDate, 'days');
-        if(result > 5400){
-            setError("Please Enter Date of Birth");
-            return;
-        }
+        // let result = moment(dob, "DD/MM/YYYY").diff(currentDate, 'days');
+        // if(result > 5400){
+        //     setError("Please Enter Date of Birth");
+        //     return;
+        // }
 
         let Schema = applyNowSchema;
 

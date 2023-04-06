@@ -1705,7 +1705,7 @@ const _handleSearch=(e)=>{
         backdropClicked={() => setQuerySuccessModal(false)}
         size={30}
       >
-        <QuerySuccessModal closeSuccessQueryModal={()=>setQuerySuccessModal(false)} courseName={props?.detailData?.course_name} />
+        <QuerySuccessModal closeSuccessQueryModal={()=>setQuerySuccessModal(false)} courseName={detailData?.course_name} />
       </SlidingPanel>
       {
         props?.loginModal ? 
