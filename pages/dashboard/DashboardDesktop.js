@@ -952,7 +952,7 @@ const _handleSearch=(e)=>{
     if(e?.domain === true){
       urlService.current.addEntry('domain', e?.name);
       setPageNumber(1)
-      handleFilteredData(true,e)
+      // handleFilteredData(true,e)
     }
     props?.handleSearch(e?.name)
     }else{
