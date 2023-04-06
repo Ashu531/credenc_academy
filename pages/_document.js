@@ -30,7 +30,7 @@ class CustomDocument extends Document {
         <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
         <link rel="icon" href="/favicon.ico" />
         </Head>
-        <body>
+        <body style={{overflowX: 'hidden'}}>
           <Main />
           <NextScript />
         </body>

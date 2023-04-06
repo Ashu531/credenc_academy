@@ -80,7 +80,11 @@ export default function CourseTrivia(props){
     }
 
     const _getSpecialisation=async(id)=>{
-        let res = await axios.get(`${constant.API_URL.DEV}/subsubject/search/?domain=${id}`)
+        let res = await axios.get(`${constant.API_URL.DEV}/subsubject/search/?domain=${id}`, {
+            headers: {
+                'key': 'credenc'
+            }
+        })
         .then(res => {
             setSpecialisation(res?.data?.data);
           res.data

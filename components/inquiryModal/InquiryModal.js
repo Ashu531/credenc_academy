@@ -192,12 +192,12 @@ export default function InquiryModal(props){
          <div className='query-modal-container' style={ window.innerWidth<=500 ? {width:'100%',height:'90vh'} : null }>
               <div className='apply-modal-content'>
                   <div className='apply-modal-header'>
-                    <span className='header-1'>Enrolling for</span>
+                    <span className='header-1'>Inquiring about</span>
                     <span className='header-2'>{props?.courseName}</span>
                   </div>
                   <div className='apply-modal-banner'  style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
                     <span className='banner-text'>
-                        No more work for you! Just review your pre-filled application and get enrolled!
+                        Have any questions for us? Ask us here!
                     </span>
                   </div>
                   
@@ -209,11 +209,11 @@ export default function InquiryModal(props){
                     }
                  
                   <div className='form-content' style={error && error.length > 0 ? {marginTop: -10} : {marginTop: '15rem'}}>
-                      <div className='label-section'>
+                      {/* <div className='label-section'>
                           <div className='label-header'>
                           Student Details
                           </div>
-                      </div>
+                      </div> */}
                    <div className='name-content'>
                     <span className='label-text'>
                        Full Name*
@@ -239,7 +239,7 @@ export default function InquiryModal(props){
 
                    <div className='name-content'>
                     <span className='label-text'>
-                       Query
+                        Inquire about anything!
                     </span>
                     <span style={{width: '100%'}}>
                     <textarea rows={8} placeholder="I want to know that..." onChange={(e) => handleQuery(e.target.value)} value={query}></textarea>
@@ -279,7 +279,7 @@ export default function InquiryModal(props){
                          }}
                          >
                              <span className='submit-footer-text'>
-                                Submit Query
+                                Submit
                              </span>
                        </div>
                    </div>

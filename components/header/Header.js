@@ -63,7 +63,11 @@ export default function Header(props){
   }
 
   const _getSubjectData=async()=>{
-    let res = await axios.get(`${constant.API_URL.DEV}/subsubject/search/`)
+    let res = await axios.get(`${constant.API_URL.DEV}/subsubject/search/`, {
+      headers: {
+        'key': 'credenc'
+      }
+    })
     .then(res => {
       setSubjectList(res?.data?.data);
       res.data

@@ -167,7 +167,12 @@ function DashboardMobile(props) {
 
 
   const _getSubCategoryData=async()=>{
-    const response = await fetch(`${constant.API_URL.DEV}/subsubject/search/`)
+    const response = await fetch(`${constant.API_URL.DEV}/subsubject/search/`, {
+      method: 'GET',
+      headers: {
+        'key': 'credenc'
+      }
+    })
     const data = await response.json()
     let totalSubcategoryData = data?.data;
 
@@ -729,7 +734,12 @@ useEffect(()=>{
 },[])
 
 const getSubjectData=async()=>{
-  const response = await fetch(`${constant.API_URL.DEV}/subject/search/`)
+  const response = await fetch(`${constant.API_URL.DEV}/subject/search/`, {
+    method: 'GET',
+    headers: {
+      'key': 'credenc'
+    }
+  })
   const data = await response.json()
   let totalSubjectCount = 0;
   data.data.forEach(item=>{

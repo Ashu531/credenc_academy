@@ -262,7 +262,13 @@ function DashboardDesktop(props) {
   }
 
   const getSubCategoryData=async()=>{
-    const response = await fetch(`${constant.API_URL.DEV}/subsubject/search/`)
+    const response = await fetch(`${constant.API_URL.DEV}/subsubject/search/`, {
+      method: 'GET',
+      headers: {
+        'key': 'credenc'
+      }
+    })
+
     const data = await response.json()
     let totalSubcategoryData = data?.data;
 
@@ -638,7 +644,11 @@ function DashboardDesktop(props) {
     let res;
     let token = props?.token;
     if (token === null || !token) {
-      res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
+      res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`, {
+        headers: {
+          'key': 'credenc'
+        }
+      })
         .then(res => {
           coursesApiStatus.current.success();
           return res.data;
@@ -650,7 +660,8 @@ function DashboardDesktop(props) {
     } else {
       res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`, {
         headers: {
-          'Authorization': `Bearer ${!!token ? token : ''}`
+          'Authorization': `Bearer ${!!token ? token : ''}`,
+          'key': 'credenc'
         }
       })
         .then(res => {
@@ -699,7 +710,8 @@ function DashboardDesktop(props) {
     if (pageNumber <= 1 || updatePageNumber === false) {
       // setCourses([...res.data]);
       setCardApiSuccess(true)
-      setCourseCardData([...res.data])
+      if(res?.data)
+        setCourseCardData([...res.data])
     } else {
       // setCourses([...courseCardData, ...res.data]);
       setCardApiSuccess(true)
