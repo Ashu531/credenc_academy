@@ -621,7 +621,7 @@ export default function WebDetailPage(props){
               
             </div>
           </ul>
-          <div className='head-jumbotron' style={{backgroundImage: `linear-gradient(rgba(245, 248, 255, 0.3), rgba(245, 248, 255, 0.3)), url(${backgroundImage.src})`, backgroundSize: 'cover'}}>
+          <div className='head-jumbotron' style={{background: 'rgba(235,241,255, 0.9)', backgroundImage: `url(${backgroundImage.src})`, backgroundSize: 'cover'}}>
             <div className='title'>{props?.detailData?.course_name}</div>
             {props?.detailData?.program_type && <div className='subtitle'>
               <Image src={certificateIcon} width={20} height={20} objectFit='contain' />
