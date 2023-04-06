@@ -223,7 +223,12 @@ function DashboardDesktop(props) {
   }
 
   const getMostLikedCourses = async()=>{
-   let response = await axios.get(`${constant.API_URL.DEV}/mostliked/`)
+    if(props?.token && props?.token.length > 0){
+      let response = await axios.get(`${constant.API_URL.DEV}/mostliked/`,{
+        headers: {
+          'Authorization': `Bearer ${props?.token}`
+        }
+      })
         .then(res => {
           try{
           coursesApiStatus.current.success();
@@ -237,6 +242,23 @@ function DashboardDesktop(props) {
           coursesApiStatus.current.failed();
           console.log(err);
         });
+    }else{
+      let response = await axios.get(`${constant.API_URL.DEV}/mostliked/`)
+        .then(res => {
+          try{
+          coursesApiStatus.current.success();
+          setMostLikedCourses(res?.data.data)
+          return res.data;
+          }catch(e){
+            console.log(e);
+          }
+        })
+        .catch(err => {
+          coursesApiStatus.current.failed();
+          console.log(err);
+        });
+    }
+   
   }
 
   const getSubCategoryData=async()=>{
@@ -926,6 +948,11 @@ const _handleSearch=(e)=>{
     if(e?.search === true){
       setPageNumber(1)
       handleFilteredData(true,e?.name)
+    }
+    if(e?.domain === true){
+      urlService.current.addEntry('domain', e?.name);
+      setPageNumber(1)
+      handleFilteredData(true,e)
     }
     props?.handleSearch(e?.name)
     }else{
