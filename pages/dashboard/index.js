@@ -3,6 +3,7 @@ import DashboardDesktop from "./DashboardDesktop";
 import DashboardMobile from "./DashboardMobile";
 import { useMediaQuery } from "react-responsive";
 import constant from "../../config/constant";
+import { useRouter } from 'next/router'
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
 export default function Dashboard(props) {
@@ -13,6 +14,19 @@ export default function Dashboard(props) {
     query: "(min-width: 500px)",
   });
 
+  let router = useRouter();
+
+
+
+  useEffect(() => {
+    if(!location.isReady) return;
+
+    if(location?.query && Object.keys(location?.query).length > 0){
+
+    }
+
+  }, [location.isReady])
+
   useEffect(() => {
     setMounted(true);
     _retrieveData()
@@ -22,6 +36,10 @@ export default function Dashboard(props) {
     let partnerKey = JSON.parse(localStorage.getItem(EdtechPartnerKey));
      if(partnerKey && partnerKey.length > 0){
       setThirdPartyUser(partnerKey)
+     }
+      console.log(router,constant.PARTNER_KEY.NJ)
+     if(router?.asPath.includes(constant.PARTNER_KEY.NJ)){
+        router.push('https://nj.credencacademy.com')
      }
   }
 
