@@ -22,8 +22,23 @@ import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import Checkbox from '@mui/material/Checkbox';
 import applyNowSchema from '../../helper/models/applyNowModel';
 import { Alert } from 'antd';
+import DotLoader from "react-spinners/DotLoader";
 const EdtechAuthKey = 'credenc-edtech-authkey';
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
+
+const spinnerCSS = {
+    display: "block",
+    // margin: "30rem auto",
+};
+
+const spinnerContainer = {
+   width: '100%',
+   height: '100%',
+   position: 'fixed',
+   top: '70%',
+   left: '75%',
+   height: '100%',
+}
 
 export default function InquiryModal(props){
 
@@ -39,6 +54,7 @@ export default function InquiryModal(props){
     const [thirdPartyData,setThirdPartyData] = useState({})
     const [error,setError] = useState('')
     const [query, setQuery] = useState('')
+    const [loader,setLoader] = useState(true)
 
     useEffect(()=>{
         let authToken = localStorage.getItem(EdtechAuthKey);
@@ -94,6 +110,7 @@ export default function InquiryModal(props){
       };
 
     const handleSubmit=async()=>{
+        setLoader(false)
 
         if(query.trim().length < 10){
             setError("Query is too short. Please Provide more information")
@@ -127,19 +144,21 @@ export default function InquiryModal(props){
             if(res?.data?.status === true){
                 props.closeInquiryModal()
                 props.openSuccessModal()
+                setLoader(true)
               return res.data;
             }else{
-                console.log(res?.data?.message)
+                setLoader(true)
                 setError(res?.data?.message)
             }
         })
         .catch(err => {
           // this.coursesApiStatus.current.failed();
+          setLoader(true)
           setError(err?.data?.message)
-          console.log(err);
         });
     }else{
         Schema.validate(data).catch(function (err) {
+            setLoader(true)
             setError(err.errors[0])
         })
     }
@@ -275,6 +294,17 @@ export default function InquiryModal(props){
                 : null
               }
          </div>
+         {
+                    !loader && <div style={spinnerContainer}>
+                    <DotLoader
+                        cssOverride={spinnerCSS}
+                        size={100}
+                        color={"#000000"}
+                        loading={!loader}
+                        speedMultiplier={1}
+                    />
+                    </div> 
+         }
         </>
     )
 }
