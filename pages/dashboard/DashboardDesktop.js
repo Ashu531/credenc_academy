@@ -262,7 +262,11 @@ function DashboardDesktop(props) {
   }
 
   const getSubCategoryData=async()=>{
-    const response = await fetch(`${constant.API_URL.DEV}/subsubject/search/`)
+    const response = await fetch(`${constant.API_URL.DEV}/subsubject/search/`, {
+      headers: {
+        'keyid': 'credenc'
+      }
+    })
     const data = await response.json()
     let totalSubcategoryData = data?.data;
 
@@ -638,7 +642,11 @@ function DashboardDesktop(props) {
     let res;
     let token = props?.token;
     if (token === null || !token) {
-      res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`)
+      res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`, {
+        headers: {
+          'keyid': 'credenc'
+        }
+      })
         .then(res => {
           coursesApiStatus.current.success();
           return res.data;
@@ -650,7 +658,8 @@ function DashboardDesktop(props) {
     } else {
       res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`, {
         headers: {
-          'Authorization': `Bearer ${!!token ? token : ''}`
+          'Authorization': `Bearer ${!!token ? token : ''}`,
+          'keyid': 'credenc'
         }
       })
         .then(res => {

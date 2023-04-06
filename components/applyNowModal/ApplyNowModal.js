@@ -121,10 +121,12 @@ export default function ApplyNowModal(props){
             'phone_number' : number.toString(),
             'gender': gender.toString(),
             'dob': dob,
-            'course_id': props?.detailData?.id
+            'course_id': props?.detailData?.id,
+            'keyid': 'credenc'
         }, {
             headers: {
-              'Authorization': `Bearer ${token}`
+              'Authorization': `Bearer ${token}`,
+              'keyid': 'credenc'
             }
           })
         .then(res => {

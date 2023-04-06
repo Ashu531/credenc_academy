@@ -167,7 +167,11 @@ function DashboardMobile(props) {
 
 
   const _getSubCategoryData=async()=>{
-    const response = await fetch(`${constant.API_URL.DEV}/subsubject/search/`)
+    const response = await fetch(`${constant.API_URL.DEV}/subsubject/search/`, {
+      headers: {
+        'keyid': 'credenc'
+      }
+    })
     const data = await response.json()
     let totalSubcategoryData = data?.data;
 
