@@ -144,7 +144,7 @@ export default function DetailPage(props){
         let res = await axios.get(`${constant.API_URL.DEV}/course/price_options/${id}/`,{
           headers: {
             'Authorization': `Bearer ${token}`,
-            'keyid': 'credenc'
+            'key': 'credenc'
           }
         })
         .then(res => {
@@ -160,7 +160,7 @@ export default function DetailPage(props){
       }else{
         let res = await axios.get(`${constant.API_URL.DEV}/course/price_options/${id}/`, {
           headers: {
-            'keyid': 'credenc'
+            'key': 'credenc'
           }
         })
           .then(res => {
@@ -196,7 +196,7 @@ export default function DetailPage(props){
         let res = await axios.get(`${constant.API_URL.DEV}/course/similar/${id}/`, {
           headers: {
             'Authorization': `Bearer ${localToken}`,
-            'keyid': 'credenc'
+            'key': 'credenc'
           }
         })
         .then(res => {
@@ -212,7 +212,7 @@ export default function DetailPage(props){
       }else{
         let res = await axios.get(`${constant.API_URL.DEV}/course/similar/${id}/`, {
           headers: {
-            'keyid': 'credenc'
+            'key': 'credenc'
           }
         })
           .then(res => {
@@ -235,7 +235,7 @@ export default function DetailPage(props){
         let res = await axios.get(`${constant.API_URL.DEV}/course/starting_cost/${id}/`,{
           headers: {
             'Authorization': `Bearer ${token}`,
-            'keyid': 'credenc'
+            'key': 'credenc'
           }
         })
           .then(res => {
@@ -252,7 +252,7 @@ export default function DetailPage(props){
       }else{
         let res = await axios.get(`${constant.API_URL.DEV}/course/starting_cost/${id}/`, {
           headers: {
-            'keyid': 'credenc'
+            'key': 'credenc'
           }
         })
           .then(res => {

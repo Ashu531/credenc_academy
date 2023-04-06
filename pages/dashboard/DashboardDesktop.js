@@ -264,7 +264,7 @@ function DashboardDesktop(props) {
   const getSubCategoryData=async()=>{
     const response = await fetch(`${constant.API_URL.DEV}/subsubject/search/`, {
       headers: {
-        'keyid': 'credenc'
+        'key': 'credenc'
       }
     })
     const data = await response.json()
@@ -644,7 +644,7 @@ function DashboardDesktop(props) {
     if (token === null || !token) {
       res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`, {
         headers: {
-          'keyid': 'credenc'
+          'key': 'credenc'
         }
       })
         .then(res => {
@@ -659,7 +659,7 @@ function DashboardDesktop(props) {
       res = await axios.get(`${constant.API_URL.DEV}/course/search/${getParams()}${pageNumber > 0 ? `&page_no=${pageNumber}` : ''}`, {
         headers: {
           'Authorization': `Bearer ${!!token ? token : ''}`,
-          'keyid': 'credenc'
+          'key': 'credenc'
         }
       })
         .then(res => {

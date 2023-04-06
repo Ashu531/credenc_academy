@@ -122,11 +122,11 @@ export default function ApplyNowModal(props){
             'gender': gender.toString(),
             'dob': dob,
             'course_id': props?.detailData?.id,
-            'keyid': 'credenc'
+            'key': 'credenc'
         }, {
             headers: {
               'Authorization': `Bearer ${token}`,
-              'keyid': 'credenc'
+              'key': 'credenc'
             }
           })
         .then(res => {
