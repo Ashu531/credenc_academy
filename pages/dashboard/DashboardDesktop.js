@@ -263,10 +263,12 @@ function DashboardDesktop(props) {
 
   const getSubCategoryData=async()=>{
     const response = await fetch(`${constant.API_URL.DEV}/subsubject/search/`, {
+      method: 'GET',
       headers: {
         'key': 'credenc'
       }
     })
+
     const data = await response.json()
     let totalSubcategoryData = data?.data;
 
