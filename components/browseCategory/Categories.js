@@ -10,7 +10,7 @@ export default function BrowseCategories(props){
     const _handleCategoryData=(searchString)=>{
         let data = {
             name: searchString,
-            search: true
+            domain: true
           }
         props?.searchItem(searchString)  
         props?.handleSearch(data)

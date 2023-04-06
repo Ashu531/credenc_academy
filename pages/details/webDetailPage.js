@@ -595,8 +595,6 @@ export default function WebDetailPage(props){
       setNavActiveStates([...navState])
     }
 
-    console.log(applied,"applied+++")
-
     return(
         <>
         { props?.detailData && props?.detailData != null &&

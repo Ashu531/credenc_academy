@@ -6,7 +6,11 @@ const nextConfig = {
     path: '..',
     domains:['credenc-neo-bank.s3.amazonaws.com']
   },
-  trailingSlash: true
+  trailingSlash: true,
+  generateBuildId: async () => {
+    // Return custom build ID, like the latest git commit hash
+    return 'my-build-id'
+  }
 }
 
 module.exports = nextConfig
