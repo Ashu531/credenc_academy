@@ -21,6 +21,7 @@ export default function FooterModal(props){
         router.push('/privacy');
     }
 
+    console.log(router)
 
     return(
        <div className='footer-modal'>
@@ -89,38 +90,38 @@ export default function FooterModal(props){
             <div className='programAndSubjectDiv' style={{cursor: 'pointer'}}>
                 <div className='programDiv'>
                      <p className='paraHeading'>Program Type</p>
-                     <a href={`${constant.BASE_URL.PROD}&course_type=Certificate`} className='removeLine'>
+                     <a href={`/?course_type=Certificate`} className='removeLine'>
                     <p className='para'>Certificate</p>
                     </a>
-                    <a href={`${constant.BASE_URL.PROD}&course_type=Diploma`} className='removeLine'>
+                    <a href={`/?course_type=Diploma`} className='removeLine'>
                     <p className='para'>Diploma</p>
                     </a>
-                    <a href={`${constant.BASE_URL.PROD}&course_type=Degree`} className='removeLine'>
+                    <a href={`/?course_type=Degree`} className='removeLine'>
                     <p className='para'>Degree</p>
                     </a>
-                    <a href={`${constant.BASE_URL.PROD}&course_type=Job%20Assured`} className='removeLine'>
+                    <a href={`/?course_type=Job%20Assured`} className='removeLine'>
                     <p className='para'>Job assured</p>
                     </a>
-                    {/* <a href={`${constant.BASE_URL.DEV}&course_type=Certificate`} className='removeLine'>
+                    {/* <a href={`/?course_type=Certificate`} className='removeLine'>
                     <p className='para'>Other</p>
                     </a> */}
                 </div>
 
                 <div className='subjectDiv'>
                     <p className='paraHeading'>Domain</p>
-                        <a href={`${constant.BASE_URL.PROD}&domain=Technology`} className='removeLine'>
+                        <a href={`/?domain=Technology`} className='removeLine'>
                              <p className='para'>Technology</p>
                         </a>
-                        <a href={`${constant.BASE_URL.PROD}&domain=Marketing`} className='removeLine'>
+                        <a href={`/?domain=Marketing`} className='removeLine'>
                             <p className='para'>Marketing</p>
                         </a>
-                        <a href={`${constant.BASE_URL.PROD}&domain=Design`} className='removeLine'>
+                        <a href={`/?domain=Design`} className='removeLine'>
                             <p className='para'>Design</p>
                         </a>
-                        <a href={`${constant.BASE_URL.PROD}&domain=Business`} className='removeLine'>
+                        <a href={`/?domain=Business`} className='removeLine'>
                             <p className='para'>Business</p>
                         </a>
-                        <a href={`${constant.BASE_URL.PROD}&domain=Others`} className='removeLine'>
+                        <a href={`/?domain=Others`} className='removeLine'>
                             <p className='para'>Others</p>
                         </a>
                 </div>
