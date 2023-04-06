@@ -8,7 +8,7 @@ let applyNowSchema = yup.object().shape({
     full_name: yup
     .string()
     .required('Please enter valid name')
-    .min(5, 'Please enter valid name'),
+    .min(3, 'Please enter valid name'),
     phone_number: yup
     .string()
     .required('Please enter valid 10 digit Number')

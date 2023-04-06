@@ -29,6 +29,7 @@ import DotLoader from "react-spinners/DotLoader";
 import LinkedlnLogo from '../../assets/images/icons/linkedin-icon.svg';
 import approvedIcon from '../../assets/images/icons/approvedIcon.svg'
 import stopWatchIcon from '../../assets/images/icons/stopWatchIcon.svg'
+import Link from 'next/link';
 const EdtechTheme = 'EdtechTheme';
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
@@ -436,7 +437,7 @@ export default function DetailModal(props){
                         </div>
                     </div> */}
                         <div className='header-action-container' style={{marginLeft:8}}>
-                            <a href={courseData?.platform?.link} target='_blank' rel="noreferrer">
+                            <a href={props?.detailData?.course_link} target='_blank' rel="noreferrer">
                                 <Image 
                                     src={globeIcon}  
                                     width={ window.innerWidth <= 500 ? 25 : 24 }
@@ -590,7 +591,7 @@ export default function DetailModal(props){
               <div className='skill-header-content'>
                   <Image src={starIcon} objectFit="cover" />
                   <span className='skill-header'>
-                  Top 8 Skills you will learn
+                  Top {courseData?.skills?.length} Skills you will learn
                   </span>
               </div>
               <div className='skill-details'>
@@ -754,7 +755,7 @@ export default function DetailModal(props){
               <div /> :
               
               courseData?.is_mooc === true ? 
-                <a href={props?.course_link} target="_blank" rel="noreferrer"style={{width: '60%'}}>
+                <a href={props?.detailData?.course_link} target="_blank" rel="noopener noreferrer">
                   <div className='detail-modal-footer-section-right' 
                       style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
                       <span className='apply-now-button'>

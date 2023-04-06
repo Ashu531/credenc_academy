@@ -239,10 +239,8 @@
             line-height: 18px;
             text-align: center;
             text-transform: uppercase;
-            background: linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            // background: linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%);
+            color: var(--defaultPrimaryColor);
         }
         .skill-details{
             display: flex;

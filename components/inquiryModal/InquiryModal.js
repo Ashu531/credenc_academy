@@ -95,6 +95,11 @@ export default function InquiryModal(props){
 
     const handleSubmit=async()=>{
 
+        if(query.trim().length < 10){
+            setError("Query is too short. Please Provide more information")
+            return
+        }
+
         let data = {
             email: email.toString(),
             full_name: name.toString(),
@@ -171,11 +176,11 @@ export default function InquiryModal(props){
                     <span className='header-1'>Enrolling for</span>
                     <span className='header-2'>{props?.courseName}</span>
                   </div>
-                  {/* <div className='apply-modal-banner'  style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
+                  <div className='apply-modal-banner'  style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
                     <span className='banner-text'>
                         No more work for you! Just review your pre-filled application and get enrolled!
                     </span>
-                  </div> */}
+                  </div>
                   
                     {
                         error && error.length > 0 ? 
@@ -218,7 +223,7 @@ export default function InquiryModal(props){
                        Query
                     </span>
                     <span style={{width: '100%'}}>
-                    <textarea rows={8} placeholder="This course is amazing..." onChange={(e) => handleQuery(e.target.value)} value={query}></textarea>
+                    <textarea rows={8} placeholder="I want to know that..." onChange={(e) => handleQuery(e.target.value)} value={query}></textarea>
                     </span>
                    </div>
                    
