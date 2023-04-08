@@ -778,7 +778,7 @@ export default function WebDetailPage(props){
               </div>
               <div>
                 <div style={{fontSize: '1.2rem', fontWeight: '500', lineHeight: '1.4rem', color: '#717171'}}>Starts from</div>
-                <div style={{fontSize: '2rem', fontWeight: '700', lineHeight: '2.3rem', color: '#034FE2'}}>₹4,999/month*</div>
+                <div style={{fontSize: '2rem', fontWeight: '700', lineHeight: '2.3rem', color: '#034FE2'}}>₹{props?.startingCost.starting_cost}*</div>
               </div>
             </div>}
 

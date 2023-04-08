@@ -28,7 +28,7 @@ export default function Dashboard(props) {
      }
       console.log(router,constant.PARTNER_KEY.NJ)
      if(router?.asPath.includes(constant.PARTNER_KEY.NJ)){
-        // router.push(`https://nj.credencacademy.com${router.asPath}`)
+        router.push(`https://nj.credencacademy.com${router.asPath}`)
      }
   }
 
