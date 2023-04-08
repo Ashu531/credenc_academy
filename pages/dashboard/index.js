@@ -16,17 +16,6 @@ export default function Dashboard(props) {
 
   let router = useRouter();
 
-
-
-  useEffect(() => {
-    if(!location.isReady) return;
-
-    if(location?.query && Object.keys(location?.query).length > 0){
-
-    }
-
-  }, [location.isReady])
-
   useEffect(() => {
     setMounted(true);
     _retrieveData()
@@ -39,7 +28,7 @@ export default function Dashboard(props) {
      }
       console.log(router,constant.PARTNER_KEY.NJ)
      if(router?.asPath.includes(constant.PARTNER_KEY.NJ)){
-        router.push('https://nj.credencacademy.com')
+        // router.push(`https://nj.credencacademy.com${router.asPath}`)
      }
   }
 
