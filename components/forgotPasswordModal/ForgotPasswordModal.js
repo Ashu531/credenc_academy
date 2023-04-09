@@ -267,9 +267,7 @@ export default function ForgotPasswordModal({
 
     location.push({
       pathname: '/'
-    },()=>{
-      location.reload() 
-    }) 
+    }).then(() => location.reload())
     
   }
   useEffect(() => {
