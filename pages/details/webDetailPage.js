@@ -596,6 +596,13 @@ export default function WebDetailPage(props){
       setNavActiveStates([...navState])
     }
 
+    useEffect(()=>{
+      if(props?.subjectData.search === true){
+        router.push('/')
+        props?.openFilterExpandedStage()  
+      }
+    },[props?.subjectData?.searchValue])
+
     return(
         <>
         { props?.detailData && props?.detailData != null &&

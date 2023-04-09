@@ -26,7 +26,7 @@ export default function Dashboard(props) {
      if(partnerKey && partnerKey.length > 0){
       setThirdPartyUser(partnerKey)
      }
-      console.log(router,constant.PARTNER_KEY.NJ)
+   
      if(router?.asPath.includes(constant.PARTNER_KEY.NJ)){
         router.push(`https://nj.credencacademy.com${router.asPath}`)
      }
