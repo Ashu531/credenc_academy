@@ -32,7 +32,6 @@ export default function SearchBar(props) {
  } 
 
   const _autocompleteQuery=async(e,results)=>{
-    setSearchString(e)
     props?.handleSearch(e)
     if(props?.token && props?.token.length > 0){
       await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`,{
@@ -68,6 +67,7 @@ export default function SearchBar(props) {
     }
   
     setSearchQuery(data)
+    setSearchString(e)
   }
 
 
