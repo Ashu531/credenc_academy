@@ -60,7 +60,6 @@ import { border, color } from '@mui/system';
 import QuerySuccessModal from '../../components/querySuccessModal/QuerySuccessModal';
 import { number } from 'prop-types';
 import DotLoader from "react-spinners/DotLoader";
-import useOnScreen from '../../helper/useOnScreen.js';
 
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
