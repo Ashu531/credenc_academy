@@ -27,6 +27,7 @@ export default function DetailPage(props){
     const [token,setToken] = useState('')
     const [startingCost,setStartingCost] = useState({})
     const [thirdPartyUser,setThirdPartyUser] = useState({})
+    const [courseName,setCourseName] = useState('')
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const isDesktopOrLaptop = useMediaQuery({
       query: "(min-width: 500px)",
@@ -73,6 +74,7 @@ export default function DetailPage(props){
           .then(res => {
             // this.coursesApiStatus.current.success();
             setDetailData(res?.data?.data)
+            _handleCourseName(res?.data?.data?.course_name)
             setMounted(true);
             return res.data;
           })
@@ -84,7 +86,8 @@ export default function DetailPage(props){
         let res = await axios.get(`${constant.API_URL.DEV}/course/detail_one/${id}/`)
           .then(res => {
             // this.coursesApiStatus.current.success();
-            setDetailData(res.data.data)
+            setDetailData(res?.data?.data)
+            _handleCourseName(res?.data?.data?.course_name)
             setMounted(true);
             return res.data;
           })
@@ -93,8 +96,21 @@ export default function DetailPage(props){
             console.log(err);
           });
       }
+   }
+
+    const _handleCourseName=(course_name)=>{
       
-        
+     let str = course_name.replace(
+      /\p{L}+/gu,
+      function(txt) {
+        if (course_name.indexOf(txt) !== 0) {
+          return txt.toLowerCase();
+        }
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    )
+
+      setCourseName(str)
     }
 
     const _getInstructorData=async(id)=>{
@@ -272,7 +288,7 @@ export default function DetailPage(props){
     return(
     <>
     <Head>
-      <title>Detail Page</title>
+      <title>{courseName}</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
     {
@@ -303,6 +319,7 @@ export default function DetailPage(props){
             thirdPartyUser={thirdPartyUser}
             subjectData={props?.subjectData}
             openFilterExpandedStage={()=>props?.openFilterExpandedStage()} 
+            courseName={courseName}
           />
         }
         {isMobile && 

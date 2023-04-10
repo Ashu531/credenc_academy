@@ -30,6 +30,7 @@ export default function CourseCard(props){
   const [bookmarkVisible, setBookmarkVisible] = useState(null)
   const [upvoted,setUpvoted] = useState(null)
   const [toggleUpvote,setToggleUpvote] = useState(null)
+  const [courseName,setCourseName] = useState('')
 
   const myLoader = ({ src, width, quality }) => {
     if(src && src.length > 0){
@@ -48,7 +49,23 @@ export default function CourseCard(props){
     }
     
     _handleUpvoteData()
+    _handleCourseName()
    }, []);
+
+
+   const _handleCourseName=()=>{
+    let str = props?.data?.course_name.replace(
+      /\p{L}+/gu,
+      function(txt) {
+        if (props?.data?.course_name.indexOf(txt) !== 0) {
+          return txt.toLowerCase();
+        }
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    )
+
+      setCourseName(str)
+   }
 
 
    const _retrieveBookmarks=()=>{
@@ -324,11 +341,11 @@ const _handleTrackItem=()=>{
         </div>
         <div className="card-course-content" onClick={()=> _goToDetailPage(props?.data?.id)}>
           <div className='course-name' onMouseEnter={()=>setCourseNameTooltip(true)} onMouseLeave={()=>setCourseNameTooltip(false)}>
-            { props?.data?.course_name && props?.data?.course_name.length > 44 ? props?.data?.course_name.substring(0, 44) + '...' : props?.data?.course_name} 
+            { courseName && courseName.length > 44 ? courseName.substring(0, 44) + '...' : courseName} 
           </div>
           {
-          courseNameTooltip && props?.data?.course_name.length > 22 ?  <div className="course-name-tooltip">
-          <span className="course-name-tooltiptext">{props?.data?.course_name}</span>
+          courseNameTooltip && courseName.length > 22 ?  <div className="course-name-tooltip">
+          <span className="course-name-tooltiptext">{courseName}</span>
           </div> : null
           }
           <div className='course-detail-container'>
