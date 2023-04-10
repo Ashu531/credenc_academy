@@ -301,6 +301,8 @@ export default function DetailPage(props){
             closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
             loginModal={props?.loginModal}
             thirdPartyUser={thirdPartyUser}
+            subjectData={props?.subjectData}
+            openFilterExpandedStage={()=>props?.openFilterExpandedStage()} 
           />
         }
         {isMobile && 

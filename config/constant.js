@@ -39,3 +39,8 @@ const constant= {
 
 
 export default constant;
+
+
+// DEV: https://edtech.credenc.com
+// PROD: https://edtechbackend.credenc.com
+// STAGE: https://edtech-demo.credenc.com

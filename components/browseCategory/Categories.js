@@ -34,10 +34,10 @@ export default function BrowseCategories(props){
                         Marketing
                     </div>
                 </div>
-                <div className='category-data' onClick={()=>_handleCategoryData('Data Science')}>
+                <div className='category-data' onClick={()=>_handleCategoryData('Business')}>
                     <Image src={dataScienceImage} alt='techonolgyImage' width={246} height={200} objectFit='contain' />
                     <div className='category-text'>
-                        Data Science
+                        Business
                     </div>
                 </div>
                 <div className='category-data' onClick={()=>_handleCategoryData('Design')}>

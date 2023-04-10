@@ -22,8 +22,23 @@ import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import Checkbox from '@mui/material/Checkbox';
 import applyNowSchema from '../../helper/models/applyNowModel';
 import { Alert } from 'antd';
+import DotLoader from "react-spinners/DotLoader";
 const EdtechAuthKey = 'credenc-edtech-authkey';
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
+
+const spinnerCSS = {
+    display: "block",
+    // margin: "30rem auto",
+};
+
+const spinnerContainer = {
+   width: '100%',
+   height: '100%',
+   position: 'fixed',
+   top: '70%',
+   left: '75%',
+   height: '100%',
+}
 
 export default function ApplyNowModal(props){
 
@@ -38,6 +53,7 @@ export default function ApplyNowModal(props){
     const [clearData,setClearData] = useState(false);
     const [thirdPartyData,setThirdPartyData] = useState({})
     const [error,setError] = useState('')
+    const [loader,setLoader] = useState(true)
 
     useEffect(()=>{
         let authToken = localStorage.getItem(EdtechAuthKey);
@@ -93,7 +109,7 @@ export default function ApplyNowModal(props){
       };
 
     const handleSubmit=async()=>{
-
+        setLoader(false)
         let data = {
             email: email.toString(),
             full_name: name.toString(),
@@ -135,6 +151,7 @@ export default function ApplyNowModal(props){
                 props.closeApplyNowModal()
                 props.openSuccessApplyModal(courseName)
                 props?.handleAppliedStage(props?.detailData?.id)
+                setLoader(true)
               return res.data;
             }else{
                 setError(res?.data?.message)
@@ -142,11 +159,13 @@ export default function ApplyNowModal(props){
         })
         .catch(err => {
           // this.coursesApiStatus.current.failed();
+          setLoader(true)
           setError(err?.data?.message)
           console.log(err);
         });
     }else{
         Schema.validate(data).catch(function (err) {
+            setLoader(true)
             setError(err.errors[0])
         })
     }
@@ -360,7 +379,19 @@ export default function ApplyNowModal(props){
                 </span>
                 : null
               }
+              
          </div>
+         {
+                    !loader && <div style={spinnerContainer}>
+                    <DotLoader
+                        cssOverride={spinnerCSS}
+                        size={100}
+                        color={"#000000"}
+                        loading={!loader}
+                        speedMultiplier={1}
+                    />
+                    </div> 
+         }
         </>
     )
 }

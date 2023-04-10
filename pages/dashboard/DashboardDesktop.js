@@ -680,9 +680,9 @@ function DashboardDesktop(props) {
   const handleFilteredData = async (updatePageNumber = true,e) => {
     coursesApiStatus.current.start();
     setCardApiSuccess(false)
-    urlService.current.removeEntry('search');
 
     if(e && e.length > 0){
+      urlService.current.removeEntry('search');
       urlService.current.addEntry('search', e);
     }
 
@@ -955,16 +955,17 @@ const _handleSearch=(e)=>{
   }
 
   if(e?.name && e?.name?.length > 0){
+    setPageNumber(1)
     props?.openFilterExpandedStage()
     props?._showSearchBar()
     if(e?.search === true){
-      setPageNumber(1)
       handleFilteredData(true,e?.name)
     }
+
     if(e?.domain === true){
       urlService.current.addEntry('domain', e?.name);
-      setPageNumber(1)
       handleFilteredData(true,e)
+    // handleFilteredData(true,e)
     }
     props?.handleSearch(e?.name)
     }else{

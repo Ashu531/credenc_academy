@@ -67,14 +67,15 @@ const UpvoteKey = 'credenc-edtech-upvote'
 
 const spinnerCSS = {
     display: "block",
-    margin: "0 auto",
-    borderColor: "red",
+    margin: "30rem auto",
   };
 
 const spinnerContainer = {
    position: 'fixed',
-   top: '50%',
-   right: '45%'
+   width: '100%',
+   height: '100%',
+   backgroundColor: 'rgba(0,0,0,0.5)',
+   zIndex: 2,
 }  
 
 export default function WebDetailPage(props){
@@ -104,8 +105,8 @@ export default function WebDetailPage(props){
       state: false,
       id: 0
     });
-    const [reviewSuccess,setReviewSuccess] = useState(true)
-    let [loading, setLoading] = useState(true);
+    const [loader,setLoader] = useState(true)
+
 
     useEffect(() => {
       window.onpopstate = () => {
@@ -567,16 +568,16 @@ export default function WebDetailPage(props){
               _getReviews()
               _getRating()
               handleReviewChange('')
-              setReviewSuccess(true);
+              setLoader(true);
               return res.data;
             })
             .catch(err => {
               // this.coursesApiStatus.current.failed();
-              setReviewSuccess(true);
+              setLoader(true);
               console.log(err);
             });
         } else {
-          setReviewSuccess(true);
+          setLoader(true);
           setError('Oh! Looks like you forgot to give us a rating')
         }
       }else{
@@ -682,6 +683,13 @@ export default function WebDetailPage(props){
         reviewsRef.current && reviewsObserver.disconnect()
       }
     }, [scrollY])
+    
+    useEffect(()=>{
+      if(props?.subjectData.search === true){
+        router.push('/')
+        props?.openFilterExpandedStage()  
+      }
+    },[props?.subjectData?.searchValue])
 
     return(
         <>
@@ -865,7 +873,7 @@ export default function WebDetailPage(props){
               </div>
               <div>
                 <div style={{fontSize: '1.2rem', fontWeight: '500', lineHeight: '1.4rem', color: '#717171'}}>Starts from</div>
-                <div style={{fontSize: '2rem', fontWeight: '700', lineHeight: '2.3rem', color: '#034FE2'}}>₹4,999/month*</div>
+                <div style={{fontSize: '2rem', fontWeight: '700', lineHeight: '2.3rem', color: '#034FE2'}}>₹{props?.startingCost.starting_cost}*</div>
               </div>
             </div>}
 
@@ -1009,18 +1017,7 @@ export default function WebDetailPage(props){
             </div>}
           </div>
 
-          {
-            !reviewSuccess ? 
-              <div style={spinnerContainer}>
-                      <DotLoader
-                        cssOverride={spinnerCSS}
-                        size={100}
-                        color={"#000000"}
-                        loading={loading}
-                        speedMultiplier={1}
-                        />
-              </div>
-               :      <div className='container' id='reviews' ref={reviewsRef}>
+           <div className='container' id='reviews'>
             <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
               <div className='heading'>Reviews</div>
               { rating['avg'] && !isNaN(rating['avg']) && <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
@@ -1062,14 +1059,14 @@ export default function WebDetailPage(props){
               <button 
                 style={{cursor: 'pointer', backgroundColor: '#034FE2', padding: '1.6rem 2.4rem', margin: '1.6rem', border: 'none', borderRadius: '0.8rem', color: '#FFFFFF', fontSize: '1.6rem', fontFamily: 'Work Sans'}}
                 onClick={()=>{
-                  setReviewSuccess(false)
+                  setLoader(false)
                   submitReview()
                 }}
               >Leave a Review
               </button>
             </div>
           </div>
-          }
+
           <div style={{padding: '2rem 0 3rem 0', marginRight: 'auto', width: '100%'}}>
             <div className='heading' style={{paddingBottom: '0.9rem', padding: '0 0 0.9rem 3rem'}}>You Might Be Interested In</div>
             <div className='detail-page-mobile-card-container' style={{display:'flex',marginTop: 20,gap: 20,overflow:'auto'}}>
@@ -1093,8 +1090,7 @@ export default function WebDetailPage(props){
               })}
             </div>
           </div>
-
-
+          
 
           {/* <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'flex-start',padding: '0px 24px 0px 24px'}}>
            <div className='detail-page-web-breadcrumb'>
@@ -1914,6 +1910,18 @@ export default function WebDetailPage(props){
           >
             <QuerySuccessModal closeSuccessQueryModal={()=>setQuerySuccessModal(false)} courseName={props?.detailData?.course_name} />
           </SlidingPanel>
+          {
+            !loader && <div style={spinnerContainer}>
+            <DotLoader
+                cssOverride={spinnerCSS}
+                size={100}
+                color={"#000000"}
+                loading={!loader}
+                speedMultiplier={1}
+            />
+            </div> 
+          }
+          
         </div>
         }
         

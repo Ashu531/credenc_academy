@@ -42,7 +42,7 @@ export default function Home(props) {
     <Dashboard 
       theme={props?.theme} 
       filterExpandedStage={props?.filterExpandedStage} 
-      openFilterExpandedStage={props?.openFilterExpandedStage} 
+      openFilterExpandedStage={()=>props?.openFilterExpandedStage()} 
       subjectDropdownMobile={props?.subjectDropdownMobile}
       loginModal={props?.loginModal}
       closeLoginModal={()=>props?.closeLoginModal()}
