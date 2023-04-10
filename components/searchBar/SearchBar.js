@@ -120,6 +120,7 @@ export default function SearchBar(props) {
           onSearch={_autocompleteQuery}
           onSelect={handleOnSelect}
           inputDebounce={500}
+          fuseOptions={{ threshold: 1, shouldSort: false }}
           inputSearchString={searchString}
           autoFocus
           showNoResults={false}
