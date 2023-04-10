@@ -31,13 +31,9 @@ export default function SearchBar(props) {
     }
  } 
 
-  const handleSearch=(e,results)=>{
+  const _autocompleteQuery=async(e,results)=>{
     setSearchString(e)
     props?.handleSearch(e)
-    _autocompleteQuery(e)
-  }
-
-  const _autocompleteQuery=async(e)=>{
     if(props?.token && props?.token.length > 0){
       await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`,{
         headers: {
@@ -58,7 +54,6 @@ export default function SearchBar(props) {
  }
 
   const _fuseData=(data,e)=>{
-    setSearchQuery(data)
     let intialQuery = {
       id: 0,
       logo : searchImage,
@@ -71,6 +66,8 @@ export default function SearchBar(props) {
       autocompleteArray=[]
       autocompleteArray.unshift(intialQuery)
     }
+  
+    setSearchQuery(data)
   }
 
 
@@ -120,7 +117,7 @@ export default function SearchBar(props) {
       >
         <ReactSearchAutocomplete
           items={searchQuery}
-          onSearch={handleSearch}
+          onSearch={_autocompleteQuery}
           onSelect={handleOnSelect}
           inputDebounce={500}
           inputSearchString={searchString}

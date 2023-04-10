@@ -12,10 +12,10 @@ export default function CredencFeatures(){
                 <Image src={bricksImage} alt="bricksImage" width={148} height={100} objectFit="contain" />
                 <div className="text-section">
                     <h2 className='header'>
-                      Product design from scratch with to mentors
+                    Discover the Future of Learning
                     </h2>
                     <p className='content'>
-                      From online courses to digital downloads and beyond, this is where creative entrepreneurs. Use this template to describe the culture at your company, and to post open positions.
+                    Unlock the full potential of edtech with Credenc Academy&apos;s curated platform, where top resources are handpicked to accelerate your learning journey and empower your growth.
                     </p>
                 </div>
           </div>
@@ -23,10 +23,10 @@ export default function CredencFeatures(){
                 <Image src={paperPlaneImage} alt="bricksImage" width={148} height={100} objectFit="contain" />
                 <div className="text-section">
                     <h2 className='header'>
-                      Product design from scratch with to mentors
+                    All Your Learning Needs in One Place
                     </h2>
                     <p className='content'>
-                      From online courses to digital downloads and beyond, this is where creative entrepreneurs. Use this template to describe the culture at your company, and to post open positions.
+                    Dive into our extensive range of online courses, innovative learning tools, expert educational services, and a rich resource library that will keep you engaged, inspired, and connected.
                     </p>
                 </div>
           </div>
@@ -34,10 +34,10 @@ export default function CredencFeatures(){
                 <Image src={globeImage} alt="bricksImage" width={148} height={100} objectFit="contain" />
                 <div className="text-section">
                     <h2 className='header'>
-                      Product design from scratch with to mentors
+                    Experience a Personalized and Collaborative Platform
                     </h2>
                     <p className='content'>
-                      From online courses to digital downloads and beyond, this is where creative entrepreneurs. Use this template to describe the culture at your company, and to post open positions.
+                    Embrace the seamless Credenc Academy experience with curated content tailored to your preferences, an intuitive interface, and a vibrant community where collaboration fuels success.
                     </p>
                 </div>
           </div>
