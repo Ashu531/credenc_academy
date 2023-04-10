@@ -680,9 +680,9 @@ function DashboardDesktop(props) {
   const handleFilteredData = async (updatePageNumber = true,e) => {
     coursesApiStatus.current.start();
     setCardApiSuccess(false)
-    urlService.current.removeEntry('search');
 
     if(e && e.length > 0){
+      urlService.current.removeEntry('search');
       urlService.current.addEntry('search', e);
     }
 

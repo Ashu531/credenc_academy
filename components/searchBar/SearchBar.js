@@ -65,7 +65,7 @@ export default function SearchBar(props) {
       autocompleteArray=[]
       autocompleteArray.unshift(intialQuery)
     }
-  
+
     setSearchQuery(data)
     setSearchString(e)
   }
