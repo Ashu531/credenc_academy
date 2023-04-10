@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect, useRef, useMemo} from 'react';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 // import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
@@ -60,6 +60,7 @@ import { border, color } from '@mui/system';
 import QuerySuccessModal from '../../components/querySuccessModal/QuerySuccessModal';
 import { number } from 'prop-types';
 import DotLoader from "react-spinners/DotLoader";
+import useOnScreen from '../../helper/useOnScreen.js';
 
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
@@ -584,16 +585,103 @@ export default function WebDetailPage(props){
       
     }
 
-    const overviewActive = ['active', '', '', '', '']
-    const syllabusActive = ['', 'active', '', '', '']
-    const instructorActive = ['', '', 'active', '', '']
-    const pricingActive = ['', '', '', 'active', '']
-    const reviewsActive = ['', '', '', '', 'active']
-    let [navActiveStates, setNavActiveStates] = useState([...overviewActive])
-
     const handleNavStates = (navState) => {
       setNavActiveStates([...navState])
     }
+
+    const overviewRef = useRef(null)
+    const syllabusRef = useRef(null)
+    const instructorRef = useRef(null)
+    const pricingRef = useRef(null)
+    const reviewsRef = useRef(null)
+
+    const [ scrollY, setScrollY ] = useState()
+
+    useEffect(() => {
+
+      setScrollY(window.scrollY)
+  
+      window.addEventListener("scroll", () => setScrollY(window.scrollY));
+      return () => {
+        window.removeEventListener("scroll", () => setScrollY(window.scrollY));
+      };
+  
+      
+    }, []);
+
+    const [isSyllabusIntersecting, setSyllabusIntersecting] = useState(false)
+    const [isInstructorIntersecting, setInstructorIntersecting] = useState(false)
+    const [isPricingIntersecting, setPricingIntersecting] = useState(false)
+    const [isReviewsIntersecting, setReviewsIntersecting] = useState(false)
+
+    const syllabusObserver = useMemo(() => new IntersectionObserver(
+      ([entry]) => {
+        setSyllabusIntersecting(entry.isIntersecting)
+        if(entry.isIntersecting === true){
+          setInstructorIntersecting(false)
+          setPricingIntersecting(false)
+          setReviewsIntersecting(false)
+        }
+      }
+    ), [syllabusRef])
+
+    const instructorObserver = useMemo(() => new IntersectionObserver(
+      ([entry]) => {
+        setInstructorIntersecting(entry.isIntersecting)
+        if(entry.isIntersecting === true){
+          setSyllabusIntersecting(false)
+          setPricingIntersecting(false)
+          setReviewsIntersecting(false)
+        }
+      }
+    ), [instructorRef])
+
+    const pricingObserver = useMemo(() => new IntersectionObserver(
+      ([entry]) => {
+        setPricingIntersecting(entry.isIntersecting)
+        if(entry.isIntersecting === true){
+          setInstructorIntersecting(false)
+          setSyllabusIntersecting(false)
+          setReviewsIntersecting(false)
+        }
+      }
+    ), [pricingRef])
+
+    const reviewsObserver = useMemo(() => new IntersectionObserver(
+      ([entry]) => {
+        setReviewsIntersecting(entry.isIntersecting)
+        if(entry.isIntersecting === true){
+          setInstructorIntersecting(false)
+          setPricingIntersecting(false)
+          setSyllabusIntersecting(false)
+        }
+      }
+    ), [reviewsRef])
+
+    useEffect(() => {
+      if(syllabusRef.current){
+        syllabusObserver.observe(syllabusRef.current)
+      }
+
+      if(instructorRef.current){
+        instructorObserver.observe(instructorRef.current)
+      }
+
+      if(pricingRef.current){
+        pricingObserver.observe(pricingRef.current)
+      }
+
+      if(reviewsRef.current){
+        reviewsObserver.observe(reviewsRef.current)
+      }
+
+      return () => {
+        syllabusRef.current && syllabusObserver.disconnect()
+        instructorRef.current && instructorObserver.disconnect()
+        pricingRef.current && pricingObserver.disconnect()
+        reviewsRef.current && reviewsObserver.disconnect()
+      }
+    }, [scrollY])
 
     return(
         <>
@@ -603,11 +691,11 @@ export default function WebDetailPage(props){
         <div className='detail-page-web'>
           <ul className='navbar'>
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
-              <li className={`nav-item ${navActiveStates[0]}`} onClick={() => handleNavStates(overviewActive)}><Link href="#" scroll={true}>Overview</Link></li>
-              {curriculum.length > 0 && <li className={`nav-item ${navActiveStates[1]}`} onClick={() => handleNavStates(syllabusActive)}><Link href="#syllabus" scroll={true}>Syllabus</Link></li>}
-              {props?.instructorData?.instructor?.length > 0 && <li className={`nav-item ${navActiveStates[2]}`} onClick={() => handleNavStates(instructorActive)}><Link href="#instructor" scroll={true}>Instructor</Link></li>}
-              <li className={`nav-item ${navActiveStates[3]}`} onClick={() => handleNavStates(pricingActive)}><Link href="#pricing" scroll={true}>Pricing</Link></li>
-              <li className={`nav-item ${navActiveStates[4]}`} onClick={() => handleNavStates(reviewsActive)}><Link href="#reviews" scroll={true}>Reviews</Link></li>
+              <li className={`nav-item ${!isSyllabusIntersecting && !isInstructorIntersecting && !isPricingIntersecting && !isReviewsIntersecting  ? 'active': ''}`} ><Link href="#" scroll={true}>Overview</Link></li>
+              {curriculum.length > 0 && <li className={`nav-item ${isSyllabusIntersecting ? 'active': ''}`} ><Link href="#syllabus" scroll={true}>Syllabus</Link></li>}
+              {props?.instructorData?.instructor?.length > 0 && <li className={`nav-item ${isInstructorIntersecting ? 'active': ''}`} ><Link href="#instructor" scroll={true}>Instructor</Link></li>}
+              <li className={`nav-item ${isPricingIntersecting ? 'active': ''}`} ><Link href="#pricing" scroll={true}>Pricing</Link></li>
+              <li className={`nav-item ${isReviewsIntersecting ? 'active': ''}`} ><Link href="#reviews" scroll={true}>Reviews</Link></li>
             </div>
             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
               <li className='nav-item-right' style={{margin: '0 1rem 0 0'}} onClick={()=>_handleCardBookmark(props?.detailData)}><Image src={ bookmarkVisible ? selectedBookmarkIcon : bookmarkIcon} width={20} height={20} objectFit='contain' /></li>
@@ -699,7 +787,7 @@ export default function WebDetailPage(props){
             </div>
           </div>
 
-          {curriculum.length > 0 && <div className='container' id='syllabus'>
+          {curriculum.length > 0 && <div className='container' id='syllabus' ref={syllabusRef}>
             <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center', marginBottom: '2rem'}}>
               <div className='heading'>Syllabus</div>
             </div>
@@ -752,7 +840,7 @@ export default function WebDetailPage(props){
             }
           </div>}
 
-          {props?.instructorData?.instructor?.length > 0 && <div className='container' id='instructor'>
+          {props?.instructorData?.instructor?.length > 0 && <div className='container' id='instructor' ref={instructorRef}>
             <div className='heading'>Instructors</div>
             <div style={{width: '100%', display: 'flex', flexDirection: 'row', rowGap: '3.6rem', flexWrap: 'wrap', padding: '3.6rem 0 0 0'}}>
               {props?.instructorData?.instructor?.map(
@@ -768,7 +856,7 @@ export default function WebDetailPage(props){
             </div>
           </div>}
 
-          <div className='container' id='pricing'>
+          <div className='container' id='pricing' ref={pricingRef}>
             {(props?.thirdPartyUser === constant.PARTNER_KEY.NJ || props?.priceOptions?.credenc_loan) && <div className='heading' style={{paddingBottom: '0.9rem'}}>Pricing</div>}
             {props?.thirdPartyUser === constant.PARTNER_KEY.NJ && <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
              <div>
@@ -932,7 +1020,7 @@ export default function WebDetailPage(props){
                         speedMultiplier={1}
                         />
               </div>
-               :      <div className='container' id='reviews'>
+               :      <div className='container' id='reviews' ref={reviewsRef}>
             <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
               <div className='heading'>Reviews</div>
               { rating['avg'] && !isNaN(rating['avg']) && <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
