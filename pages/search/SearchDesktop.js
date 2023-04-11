@@ -2,7 +2,6 @@ import React, { useEffect, useState,useRef } from "react"
 import { connect } from 'react-redux'
 import {changeTheme} from '../../scripts/actions/index'
 import CourseCard from '../../components/coursecard/CourseCard'
-import Navbar from '../../components/navbar/Navbar'
 import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import constant from '../../config/constant.js'
@@ -10,27 +9,24 @@ import { useRouter } from 'next/router'
 import DetailModal from '../../components/detailModal/DetailModal'
 import Error from "../../components/error/Error"
 import theme from "../../scripts/reducers/theme"
-import States from '../../config/states';
+import SegmentedBar from "../../components/segementedBar/SegmentedBar";
+import SecondaryDropdown from "../../components/primaryDropdown/SecondaryDropdown";
 import Lists from "../../config/list";
 import Filter from "../../components/filter/Filter";
 import axios from "axios";
 import ApiStatus from "../../config/apiStatus";
 import UrlService from "../../helper/urlService";
 import Button from "../../components/button/Button";
-import Link from "next/link";
 import { getTabNumber } from "../../helper/getTabNumber";
+import filterIcon from '../../assets/images/icons/filter-icon-dark.svg';
 import closeIcon from '../../assets/images/icons/close-icon-grey.svg';
+import FloatActionButton from "../../components/floatActionButton/floatActionButton";
 import LoginModalContainer from '../../components/loginModal/LoginModalContainer'
-import SearchBar from '../../components/searchBar/SearchBar'
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
-import HomeSkeleton from "../../components/homePageSkeleton/homeSkeleton"
-import Skeleton from '@mui/material/Skeleton';
 import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
 import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer"
-import CredencFeatures from "../../components/credencFeatures/credencFeatures"
+import InfiniteScroll from 'react-infinite-scroll-component';
 import bannerImage from '../../assets/images/icons/bannerImage.svg'
-import BrowseCategories from "../../components/browseCategory/Categories"
-import CourseTrivia from "../../components/courseTrivia/CourseTrivia"
 import QuerySuccessModal from "../../components/querySuccessModal/QuerySuccessModal"
 import InquiryModal from "../../components/inquiryModal/inquiryModal"
 
@@ -82,7 +78,7 @@ export const useIsMount = () => {
 
 
 
-function DashboardDesktop(props) {
+function SearchDesktop(props) {
 
   const isMount = useIsMount();
   let location = useRouter();
@@ -93,14 +89,9 @@ function DashboardDesktop(props) {
 
   const [filterModal, setFilterModal] = useState(false);
   const [courseCardData,setCourseCardData]= useState([])
-  const [selectedCategory,setSelectedCategory] = useState('');
-  const [subjectData,setSubjectData] = useState([])
-  const [subCategory,setSubCategory] = useState([])
-  const [selectedSubject,setSelectedSubject] = useState({})
   const [detailModal, setDetailModal] = useState(false);
   const [detailData,setDetailData] = useState({});
   const coursesApiStatus = useRef(new ApiStatus());
-  const [mounted, setMounted] = useState(false);
   const [courseType, setCourseType] = useState(getTabNumber(queries.COURSE_TYPE, urlService) || 0);
 
   const [maxPrice, setMaxPrice] = useState(0);
@@ -120,14 +111,14 @@ function DashboardDesktop(props) {
   const [updateCostSlider, setUpdateCostSlider] = useState(false)
   const [isAppliedCostSlider, setIsAppliedCostSlider] = useState(false);
   const [sortState, setSortState] = useState(0);
+  const [pageLoadSortState, setPageLoadSortState] = useState(null);
   const [courseTypesFloatState, setCourseTypesFloatState] = useState(0)
   const [mobileFiltersState, setMobileFiltersState] = useState(false)
   const searchRef = useRef();
-  const [searchbarWidth, setSearchBarWidth] = useState("41.0919%");
   const [applyNow, setApplyNow] = useState(false)
   const [enquire, setEnquire] = useState(false)
   let appliedFiltersCount = useRef(0);
-  const [lastCourse, setLastCourse] = useState(null);
+  const courseTypeRef = useRef(null);
   const [cardApiSuccess,setCardApiSuccess] = useState(false)
   const dashboardRef = useRef()
   const [cardActionTaken,setCardActionTaken] = useState(false)
@@ -142,59 +133,13 @@ function DashboardDesktop(props) {
     id: 0
   });
   const [pageNumber,setPageNumber] = useState(1);
-  const [mostLikedCourses,setMostLikedCourses] = useState([]);
-  const [navbarTop,setNavbarTop] = useState(false);
-  
-  let observer = useRef(
-    new IntersectionObserver(
-      (entries) => {
-        const first = entries[0];
-        if (first.isIntersecting === true && nextPage === true) {
-          setPageNumber((pn) => pn > 0 ? pn + 1 : pn);
-        }
-      })
-  );
-
-  
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
 
   useEffect(()=>{
-    // getSubjectData()
-    getSubCategoryData()
-    getDataFromBaseUrl()
-    getMostLikedCourses()
     getExternalUser()
     
   },[])
 
-  useEffect(() => {
-    if(nextPage === true){
-      coursesApiStatus.current.start();
-      handleFilteredData(true);
-      if (pageNumber === 1) {
-        applyFilters();
-      }
-    }
-  }, [pageNumber]);
-
-  useEffect(() => {
-    
-    const currentElement = lastCourse;
-    const currentObserver = observer.current;
-    if (currentElement) {
-      currentObserver.observe(currentElement);
-    }
-
-    return () => {
-      if (currentElement) {
-        currentObserver.unobserve(currentElement);
-      }
-    };
-  }, [lastCourse]);
 
   const getExternalUser=()=>{
     let externalUser = urlService.current.hasEntry("partner_key")
@@ -203,80 +148,6 @@ function DashboardDesktop(props) {
         props?.openLoginModal()
       }
     }
-  }
-
-  const getMostLikedCourses = async()=>{
-    if(props?.token && props?.token.length > 0){
-      let response = await axios.get(`${constant.API_URL.DEV}/mostliked/`,{
-        headers: {
-          'Authorization': `Bearer ${props?.token}`
-        }
-      })
-        .then(res => {
-          try{
-          coursesApiStatus.current.success();
-          setMostLikedCourses(res?.data.data)
-          return res.data;
-          }catch(e){
-            console.log(e);
-          }
-        })
-        .catch(err => {
-          coursesApiStatus.current.failed();
-          console.log(err);
-        });
-    }else{
-      let response = await axios.get(`${constant.API_URL.DEV}/mostliked/`)
-        .then(res => {
-          try{
-          coursesApiStatus.current.success();
-          setMostLikedCourses(res?.data.data)
-          return res.data;
-          }catch(e){
-            console.log(e);
-          }
-        })
-        .catch(err => {
-          coursesApiStatus.current.failed();
-          console.log(err);
-        });
-    }
-   
-  }
-
-  const getSubCategoryData=async()=>{
-    const response = await fetch(`${constant.API_URL.DEV}/subsubject/search/`, {
-      method: 'GET',
-      headers: {
-        'key': 'credenc'
-      }
-    })
-
-    const data = await response.json()
-    let totalSubcategoryData = data?.data;
-
-    totalSubcategoryData?.unshift(
-      {
-          "value": "All",
-          "seo_ranks": 0,
-          "label": 0
-      }
-      )
-    setSubCategory(totalSubcategoryData)
-  }
-    
- const getDataFromBaseUrl=()=>{
-
-  let urlSubCategoryQuery = urlService.current.getValueFromEntry('subject')
-
-    if(urlSubCategoryQuery  && Object.keys(urlSubCategoryQuery).length !== 0){
-      setSelectedCategory(urlSubCategoryQuery)
-    }else{
-      setSelectedCategory('All')
-    }
-   
-    // setSelectedSubject(data)
-    getCardData()
   }
 
   const getCardData=()=>{
@@ -575,6 +446,8 @@ function DashboardDesktop(props) {
     urlService.current.removeEntry(queries.MIN_PRICE);
     urlService.current.removeEntry(queries.MAX_PRICE);
     history.replaceState({}, null, '?' + urlService.current.getUpdatedUrl().replaceAll('+', ' '));
+    // urlService.current.addEntry(queries.MIN_PRICE, costRange.min);
+    // urlService.current.addEntry(queries.MAX_PRICE, costRange.max);
 
   }
 
@@ -592,7 +465,6 @@ function DashboardDesktop(props) {
       
     }
   }
-
 
   const handleSearchClicked = async (forcePageNumber = 0) => {
     const getParams = () => {
@@ -746,6 +618,9 @@ function DashboardDesktop(props) {
   }
 
   const resetFilters = async (makeApiCall = true) => {
+    // Mixpanel.track(MixpanelStrings.RESET_BUTTON_TRIGGERED, {
+    //   'search-string': urlService.current.getUpdatedUrl()
+    // })
     urlService.current.removeAll();
     updateBrowserUrl();
     if (pageNumber !== 1){
@@ -865,6 +740,7 @@ function DashboardDesktop(props) {
   }, [courseTypesFloatState])
 
   useEffect(() => {
+    setPageLoadSortState(getSortStateFromUrl());
 
     // change tab number
     let tabNumber = getTabNumber(queries.COURSE_TYPE, urlService)
@@ -872,39 +748,7 @@ function DashboardDesktop(props) {
     // courseTypeRef?.current?.changeTab(tabNumber);
   }, []);
 
-const onScroll = () => {
-  if(searchRef && searchRef.current !== null){
-    if (searchRef.current.getBoundingClientRect().y < 371) {
-      setSearchBarWidth(
-        `${(searchRef.current.getBoundingClientRect().y / 370) * 49 + 35}%`
-      );
-    }
-    if (!props?.showSearchBar && searchRef.current.getBoundingClientRect().top < -80) {
-      props?._showSearchBar()
-    } else if (searchRef.current.getBoundingClientRect().top >= -80) {
-      props?.hideSearchBar()
-    }
-  }
-  // if(searchRef && searchRef.current !== null){
-  //    if(searchRef.current.getBoundingClientRect().y <= -196){
-  //      setFixHeader(true)
-  //    }else if(searchRef.current.getBoundingClientRect().y > -196){
-  //     setFixHeader(false)
-  //    }
-  // }
-}
-
-useEffect(() => {
-    document.addEventListener("scroll", onScroll, true);
-    return () => document.removeEventListener("scroll", onScroll, true);
-}, []);
-
 const _handleSearch=(e)=>{
-  // location.push({
-  //       pathname: '/search',
-  //       query: { search: e },
-  //     })
-
 
   if(e?.course_id){
     location.push({
@@ -914,12 +758,21 @@ const _handleSearch=(e)=>{
     props?._showSearchBar()
 
   }
-console.log(e,"value++++")
-  if(e?.length > 0){
-    location.push({
-      pathname: '/search',
-      query: { search: e },
-    })
+
+  if(e?.name && e?.name?.length > 0){
+    setPageNumber(1)
+    props?.openFilterExpandedStage()
+    props?._showSearchBar()
+    if(e?.search === true){
+      handleFilteredData(true,e?.name)
+    }
+
+    if(e?.domain === true){
+      urlService.current.addEntry('domain', e?.name);
+      handleFilteredData(true,e)
+    // handleFilteredData(true,e)
+    }
+    props?.handleSearch(e?.name)
     }else{
       props?.handleSearch(e)
     }
@@ -992,10 +845,8 @@ console.log(e,"value++++")
   
 
   useEffect(()=>{
-    if(props?.searchValue?.search === true){
       setPageNumber(1)
-      handleFilteredData(true,props?.searchValue?.name)
-    }
+      handleFilteredData(true,props?.searchValue)
   },[props?.searchValue])
 
   const _handleTrivia=(data)=>{
@@ -1025,234 +876,261 @@ console.log(e,"value++++")
     }
   },[props?.subjectData?.searchValue])
 
-  useEffect(()=>{
-    if(dashboardRef && dashboardRef?.current !== null){
-        if(dashboardRef?.current?.getBoundingClientRect().y <= -2563){
-          setNavbarTop(true)
-        }else{
-          setNavbarTop(false)
-        }
-    }
-  },[dashboardRef?.current?.getBoundingClientRect().y])
-
  return(
-        <div>      
-
-  <div className="dashboard" style={ props?.loginModal ? {overflow: 'hidden'} : null} ref={dashboardRef}>
-     <div className="dashboard-upper-section">
-        <div className='banner' ref={searchRef} style={styles}> 
-          <div className='text-content'>
-          <h1 className='heading'>From Learners to Leaders</h1>
-          <h2 className='sub-header'>Develop new skills with our hand-picked courses from across the world</h2>
-          </div>
-          <div
-          style={{
-            width: `${searchbarWidth}`,
-            marginTop: 32,
-            marginBottom: 40,
-            zIndex: "1101",
-            visibility: `${props.showSearchBar ? "hidden" : "visible"}`,
-            transition: '10s ease-in ease-out',
-            transform: 'translateY(0)',
-          }}
-          >
-              <SearchBar searchbarWidth={searchbarWidth} search={props.searchValue} handleSearch={(e)=>_handleSearch(e)} selectSearch={(e)=>props?.selectSearch(e)} openFilterExpandedStage={()=>props?.openFilterExpandedStage()} token={props?.token}/>
-          </div>
-         </div> 
-
-         <div style={{width: '100%',display:'flex',justifyContent:'center',alignItems: 'center'}}>
-            <CredencFeatures />
-         </div>  
-
-         <div className="dashboard-courses-container">
-            <div className="header-container">
-              <div className="header-text">
-                 Trending Courses
-              </div>
-              <div style={{marginLeft: 5,marginTop: 2}}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#034FE2" viewBox="0 0 256 256"><path d="M215.79,118.17a8,8,0,0,0-5-5.66L153.18,90.9l14.66-73.33a8,8,0,0,0-13.69-7l-112,120a8,8,0,0,0,3,13l57.63,21.61L88.16,238.43a8,8,0,0,0,13.69,7l112-120A8,8,0,0,0,215.79,118.17ZM109.37,214l10.47-52.38a8,8,0,0,0-5-9.06L62,132.71l84.62-90.66L136.16,94.43a8,8,0,0,0,5,9.06l52.8,19.8Z"></path></svg>
-              </div> 
-              {/* <Image src={trendingIcon} alt="trendingIcon" width={36} height={36} objectFit="contain" style={{marginLeft: 5,marginTop: 2}}/> */}
-            </div>  
-            <div className='course-section'>
-               {
-                 mostLikedCourses && mostLikedCourses.length > 0 && mostLikedCourses.map((item,index)=>{
-                  return(
-                    <div key={index}>
-                      <CourseCard 
-                        index={index}
-                        data={item} 
-                        openDetailModal={()=>openDetailModal(item)}
-                        openApplyNowModal={()=> _openApplyNowModal(item)}
-                        token={props?.token}
-                        openLoginModal={()=>props?.openLoginModal()}
-                        addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
-                        removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
-                        enableTrackStatus={()=>_enableTrackStatus()}
-                        applied={applied}
-                      />
-                    </div>
-                  )
-                 })
-               }
-            </div>
-         </div>
-
-         <div style={{width: '100%'}}>
-           <BrowseCategories handleSearch={(e)=>_handleSearch(e)} searchItem={(e)=>props?.handleSearch(e)} />
-         </div>
-
-         <div className="dashboard-courses-container">
-            <div className="header-container">
-              <div className="header-text">
-                 Most Liked
-              </div>
-              <div style={{marginLeft: 8,marginTop: 2}}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#0345E2" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>
-              </div>  
-            </div>  
-            <div className='course-section'>
-               {
-                 mostLikedCourses && mostLikedCourses.length > 0 && mostLikedCourses.map((item,index)=>{
-                  return(
-                    <div key={index}>
-                      <CourseCard 
-                        index={index}
-                        data={item} 
-                        openDetailModal={()=>openDetailModal(item)}
-                        openApplyNowModal={()=> _openApplyNowModal(item)}
-                        token={props?.token}
-                        openLoginModal={()=>props?.openLoginModal()}
-                        addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
-                        removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
-                        enableTrackStatus={()=>_enableTrackStatus()}
-                        applied={applied}
-                      />
-                    </div>
-                  )
-                 })
-               }
-            </div>
-         </div>
-
-         <div style={{width: '100%'}}>
-            <CourseTrivia handleTrivia={(item)=>_handleTrivia(item)} />
-         </div>  
-
-         <div className="dashboard-courses-container" style={{borderBottom: '1px solid #DDDDDD',paddingBottom: 70}}>
-            <div className="header-container">
-              <div className="header-text">
-                Get New skills
-              </div>
-              {/* <Image src={trendingIcon} alt="trendingIcon" width={36} height={36} objectFit="contain" style={{marginLeft: 5,marginTop: 2}}/> */}
-            </div>  
-            <div className='course-section'>
-               {
-                 mostLikedCourses && mostLikedCourses.length > 0 && mostLikedCourses.map((item,index)=>{
-                  return(
-                    <div key={index}>
-                      <CourseCard 
-                        index={index}
-                        data={item} 
-                        openDetailModal={()=>openDetailModal(item)}
-                        openApplyNowModal={()=> _openApplyNowModal(item)}
-                        token={props?.token}
-                        openLoginModal={()=>props?.openLoginModal()}
-                        addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
-                        removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
-                        enableTrackStatus={()=>_enableTrackStatus()}
-                        applied={applied}
-                      />
-                    </div>
-                  )
-                 })
-               }
-            </div>
-         </div>
-
-       <div className="course-navbar" style={navbarTop ? { position: 'fixed',top: '8vh',background: '#FFFFFF',zIndex: 9999,boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.1)',padding: '1rem 5rem 0rem 5rem'} : {padding: '0.8rem 5rem 0rem 5rem'}}>
-        {
-          subCategory && subCategory.length > 0 ?
-            <Navbar 
-              toggleFilterModal={openFilterModal} 
-              openSubjectModal={openSubjectModal} 
-              closeSubjectModal={closeSubjectModal} 
-              subCategories={subCategory} 
-              selectedCategory={selectedCategory} 
-              setSubCategoriesData={setSubCategoriesData} 
-              subjectData={subjectData}
-              selectedSubject={selectedSubject} 
-              selectSubject={selectSubject}
-              theme={props.newTheme}
-              appliedFiltersCount={appliedFiltersCount.current}
-            /> :
-          <div style={{display:'flex',justifyContent:'flex-start',padding: 24}}>
-              {Array.from({length: 11}, (x, i) => {
-                  return <div style={{marginRight: 30}}>
-                            <Skeleton variant="rectangular" width={90} height={23} key={i}/>
-                          </div>
-              })}
-          </div>
-        }
-        
-       </div>
-       {/* <FilterModal filterModal={filterModal} toggleFilterModal={closeFilterModal}/> */}
-       <div className="course-content">
-       {/* <CategoryDropdown categories={categories}/> */}
-       <div className="card-content">
-
-       {
-         courseCardData && courseCardData.length > 0 ? 
-         <div className="course-card-container" >
-        {
-           courseCardData?.map((item,i)=>{
-            return i === courseCardData.length - 1 ? 
-            <div key={`${item.id}:${i}`} ref={setLastCourse}>
-               <CourseCard 
-                 key={i} 
-                 data={item} 
-                 theme={props.newTheme} 
-                 openDetailModal={()=>openDetailModal(item)} 
-                 openApplyNowModal={()=> _openApplyNowModal(item)}
-                 token={props?.token}
-                 openLoginModal={()=>props?.openLoginModal()}
-                 addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
-                 removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
-                 enableTrackStatus={()=>_enableTrackStatus()}
-                 applied={applied}
-               />
-            </div> :
-               <CourseCard 
-                  key={i} 
-                  data={item} 
-                  theme={props.newTheme} 
-                  openDetailModal={()=>openDetailModal(item)} 
-                  openApplyNowModal={()=> _openApplyNowModal(item)}
-                  token={props?.token}
-                  openLoginModal={()=>props?.openLoginModal()}
-                  addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
-                  removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
-                  enableTrackStatus={()=>_enableTrackStatus()}
-                  applied={applied}
-              />
-             
-           })
-        }
-         {/* <HomeSkeleton /> */}
-       </div> : 
-        courseCardData.length === 0 && cardApiSuccess ?
-        <Error type={ Lists.errorTypes.EMPTY } text={'No Result Found'} /> :
-        <div className="course-card-container">
-          {Array.from({length: 4}, (x, i) => {
-                  return <HomeSkeleton key={i} />;
-          })}
+        <div>    
+      <div className="course-page"> 
+      {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={ window.innerWidth > 500 ? {minHeight: '80%'} : null}>
+        <div className="filter-head">{appliedFiltersCount.current === 0 ? <span className="no-filter-text">No filters applied</span> : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}
+          {appliedFiltersCount.current !== 0 && <span style={window.innerWidth > 500 ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>}
+          {window.innerWidth <= 500 && <span className='cross' onClick={() => setMobileFiltersState(false)}><img src={closeIcon} /></span>}
         </div>
-       }
-       
-       </div>
-       </div>
-       </div>
-    </div>
+        <div className='filters'>
+
+          <Filter
+            item={{ name: 'Class Mode', type: filterList.CLASS_MODE }}
+            filterState={classModeList}
+            updateFilterState={updateFilterState}
+            theme={theme}
+          />
+          <Filter
+            item={{ name: 'Course Pace', type: filterList.COURSE_PACE }}
+            filterState={[...coursePaceList]}
+            updateFilterState={updateFilterState}
+            theme={theme}
+          />
+          <Filter
+            item={{ name: 'Cost', type: filterList.COST }}
+            filterState={costList}
+            updateFilterState={updateFilterState}
+            max={maxPrice}
+            min={minPrice}
+            getRange={handleCostRange}
+            updateCostSlider={updateCostSlider}
+            setIsAppliedCostSlider={() => setIsAppliedCostSlider(true)}
+            isAppliedCostSlider={isAppliedCostSlider}
+            theme={theme}
+          />
+          <Filter
+            item={{ name: 'Difficulty Level', type: filterList.DIFFICULTY_LEVEL }}
+            filterState={difficultyList}
+            updateFilterState={updateFilterState}
+            theme={theme}
+          />
+          {/* <Filter
+            item={{ name: 'Work Experience', type: filterList.WORK_EXPERIENCE }}
+            filterState={workExperienceList}
+            updateFilterState={updateFilterState}
+            theme={theme}
+          /> */}
+          {
+            props?.thirdPartyUser != constant.PARTNER_KEY.NJ ? 
+            <Filter
+              item={{ name: 'Finance Options', type: filterList.FINANCE_OPTIONS }}
+              filterState={financeOptionList}
+              updateFilterState={updateFilterState}
+              theme={theme}
+            /> : null
+          }
+          
+          {/* <Filter
+            item={{ name: 'Course Language', type: filterList.COURSE_LANGUAGE }}
+            filterState={languageList}
+            updateFilterState={updateFilterState}
+            theme={theme}
+          /> */}
+          <Filter
+            item={{ name: 'Platform', type: filterList.PLATFORM }}
+            filterState={platformList}
+            updateFilterState={updateFilterState}
+            theme={theme}
+          />
+          <Filter
+            item={{ name: 'Educator', type: filterList.EDUCATOR }}
+            filterState={educatorList}
+            updateFilterState={updateFilterState}
+            theme={theme}
+          />
+        </div>
+        <div className="filter-footer">
+          <a href='/privacy' target='_blank' style={{textDecoration: 'none'}}><span className='link' >Privacy policy & disclaimer</span></a>
+          <div className='mobile-actions-container'>
+            <div className='btn-container reset-button-wrapper'>
+              <Button
+                // disabled={true} 
+                onClick={resetFilters}
+                mobileButtonText='Reset'
+                classes='btn-reset'
+              />
+            </div>
+            <div className='btn-container'>
+              <Button
+                // disabled={true} 
+                onClick={handleApplyButton}
+                mobileButtonText='Apply'
+                classes='btn-apply'
+              />
+            </div>
+          </div>
+        </div>
+      </div>}
+      <div className="list-column">
+        <div className="filter-container" style={{ opacity: 1 }}>
+          <div className="segment-container">
+            <SegmentedBar
+              items={Lists.courseTypes}
+              ref={courseTypeRef}
+              style={{
+                fontWeight: 600,
+                ontSize: '1.1rem',
+                lineHeight: '1.6rem',
+              }}
+              theme={theme}
+              // bgColor='#16181A'
+              handleTabNumber={(i) => {
+                setPageNumber(1)
+                setCourseType(i)
+                // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypes[i])
+              }}
+              selected={courseType}
+            />
+          </div>
+          <SecondaryDropdown
+            heading={Lists.sortByList[sortState]['label']}
+            style={theme === 'dark' ? {
+              background: '#141414',
+              padding: '1.4rem',
+              borderRadius: '0.8rem',
+              fontWeight: 600,
+              fontSize: '1.1rem',
+              lineHeight: '1.6rem',
+              color: '#FFFFFF'
+            }: {
+              background: '#F7F7F7',
+              padding: '1.4rem',
+              borderRadius: '0.8rem',
+              fontWeight: 600,
+              fontSize: '1.1rem',
+              lineHeight: '1.6rem',
+              color: '#000000'
+            }}
+            classes={{ 
+              wrapper: 'no-padding', 
+              content: 'content-sort' 
+            }}
+            dropList={[...Lists.sortByList]}
+            selected={pageLoadSortState || sortState}
+            onSelect={(item, i) => {
+              setPageNumber(1)
+              setPageLoadSortState(null)
+              setSortState(i)
+              // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
+            }}
+          />
+          <div style={{ flexGrow: 1 }}></div>
+          <div className="text-container">Showing {totalCourses} Course{totalCourses === 1 ? '' : 's'}</div>
+        </div>
+        <div 
+          className="list-container" 
+          id="scrollableDiv"
+          style={{padding: '10rem 2.4rem 2rem 0rem',height: 800, overflow: "auto"}}
+          >
+          {/* <List
+            type={listTypes?.HORIZONTAL_CARDS}
+            list={courseCardData}
+            listApiStatus={coursesApiStatus}
+            openDetailModal={(item)=>openDetailModal(item)} 
+            openApplyNowModal={(item)=> _openApplyNowModal(item)}
+            token={props?.token}
+            openLoginModal={()=>props?.openLoginModal()} 
+            setLastElement={setLastCourse}
+            addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+            removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+            enableTrackStatus={()=>_enableTrackStatus()}
+            applied={applied}
+          /> */}
+          <InfiniteScroll
+                  dataLength={courseCardData.length} //This is important field to render the next data
+                  next={handleScrollData}
+                  hasMore={true}
+                  // loader={<h4>Loading...</h4>}
+                  style={{width: '100%',display:'flex',flexDirection:'row',gap: 10,flexWrap: 'wrap',overflow:'auto'}}
+                  // onScroll={handleScroll}
+                  scrollableTarget="scrollableDiv"
+                  endMessage={
+                    <p style={{ textAlign: 'center' }}>
+                      <b>Yay! You have seen it all</b>
+                    </p>
+                  }
+                  // below props only if you need pull down functionality
+                >
+                 {
+                 courseCardData.length > 0 ?
+                 courseCardData && courseCardData.map((item,index)=>{
+                    return(
+                      <div key={index}>
+                        <CourseCard 
+                          index={index}
+                          data={item} 
+                          openDetailModal={()=>openDetailModal(item)}
+                          openApplyNowModal={()=> _openApplyNowModal(item)}
+                          token={props?.token}
+                          openLoginModal={()=>props?.openLoginModal()}
+                          addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+                          removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                          enableTrackStatus={()=>_enableTrackStatus()}
+                          applied={applied}
+                        />
+                      </div>
+                    )
+                 })
+                :
+                courseCardData.length === 0 && cardApiSuccess ?
+                <Error type={ Lists.errorTypes.EMPTY } text={'No Result Found'} /> 
+                : null
+                }
+                </InfiniteScroll>
+        </div>
+      </div>
+      {window.innerWidth <= 500 && <div className='mobile-view-actions'>
+        <span className='filter' onClick={() => setMobileFiltersState(true)}><img src={filterIcon} alt='filters' /></span>
+        <FloatActionButton
+          type='course type'
+          heading={Lists.courseTypesFloatList[courseTypesFloatState]['name']}
+          style={{
+            borderRadius: '10rem',
+            fontWeight: 600,
+            fontSize: '1.1rem',
+            lineHeight: '1.6rem',
+            color: '#313235',
+          }}
+          floatList={[...Lists.courseTypesFloatList]}
+          selected={courseTypesFloatState}
+          onSelect={(item, i) => {
+            // setPageLoadSortState(null)
+            setCourseTypesFloatState(i)
+            // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypesFloatList[i].name)
+          }}
+        />
+        <FloatActionButton
+          type='sort type'
+          heading={null}
+          style={{
+            borderRadius: '10rem',
+            fontWeight: 600,
+            fontSize: '1.1rem',
+            lineHeight: '1.6rem',
+            color: '#313235',
+          }}
+          floatList={[...Lists.sortByList]}
+          selected={sortState}
+          onSelect={(item, i) => {
+            setPageLoadSortState(null)
+            setSortState(i)
+            // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
+          }}
+        />
+      </div>}
+      </div>
       
         <SlidingPanel
         type={'left'}
@@ -1489,7 +1367,7 @@ const mapStateToProps = (state) => {
     }
   }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardDesktop);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchDesktop);
 
 // export async function getServerSideProps(context) {
 

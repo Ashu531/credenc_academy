@@ -1,25 +1,108 @@
-import React from 'react';
-import Image from "next/image";
-import SearchMobile from '../../components/searchBarMobile/SearchBar'
+import React, { useEffect, useState } from "react"
+import { useMediaQuery } from "react-responsive";
+import constant from "../../config/constant";
+import { useRouter } from 'next/router'
+import SearchDesktop from "./SearchDesktop";
+import DashboardMobile from "./SearchMobile";
+const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
-export default function SearchPageMobile(props){
+export default function Dashboard(props) {
+  const [mounted, setMounted] = useState(false);
+  const [thirdPartyUser,setThirdPartyUser] = useState({})
+  const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 500px)",
+  });
 
-  const _handleSearch=(e)=>{
-    props?.handleSearch(e)
+  let router = useRouter();
+
+  useEffect(() => {
+    setMounted(true);
+    _retrieveData()
+  }, []);
+
+  const _retrieveData=()=>{
+    let partnerKey = JSON.parse(localStorage.getItem(EdtechPartnerKey));
+     if(partnerKey && partnerKey.length > 0){
+      setThirdPartyUser(partnerKey)
+     }
+   
+     if(router?.asPath.includes(constant.PARTNER_KEY.NJ)){
+        router.push(`https://nj.credencacademy.com${router.asPath}`)
+     }
   }
 
-    return(
-        <div className='search-container'>
-           <div className='search-bar-content'>
-             <SearchMobile 
-                handleOpenMobileSearch={()=>props?.handleOpenMobileSearch()} 
-                search={props.searchValue} 
-                handleSearch={(e)=>_handleSearch(e)} 
-                toggleFilterVisible={()=>props?.toggleFilterVisible()}
-                openFilterVisible={()=>props?.openFilterVisible()}
-                clearSearch={()=>props?.clearSearch()}
-             />
-           </div> 
-        </div>
-    )
+   return(
+      <>
+      {
+        mounted && 
+        <>
+        {isDesktopOrLaptop && <SearchDesktop
+        // toggleTheme={toggleTheme} 
+          newTheme={props?.theme}
+          openFilterExpandedStage={props?.openFilterExpandedStage}
+          filterExpandedStage={props?.filterExpandedStage}
+          loginModal={props?.loginModal}
+          closeLoginModal={()=>props?.closeLoginModal()}
+          openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
+          forgotPasswordModal={props?.forgotPasswordModal}
+          handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
+          token={props?.token}
+          showSearchBar={props?.showSearchBar}
+          _showSearchBar={props?._showSearchBar}
+          hideSearchBar={props?.hideSearchBar}
+          searchValue={props?.searchValue}
+          handleSearch={(e)=>props?.handleSearch(e)}
+          closeFilterExpandedStage={()=>props?.closeFilterExpandedStage()}
+          searchData={props?.searchData}
+          handleLogin={()=>props?.handleLogin()}
+          openLoginModal={()=>props?.openLoginModal()}
+          openCoursePreviewModal={()=>props?.openCoursePreviewModal()}
+          closeCoursePreviewModal={()=>props?.closeCoursePreviewModal()}
+          addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+          removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+          closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
+          selectSearch={(e)=>props?.selectSearch(e)}
+          thirdPartyUser={thirdPartyUser}
+          subjectData={props?.subjectData}
+        />}
+        {isMobile && 
+          <DashboardMobile
+          openFilterExpandedStage={props?.openFilterExpandedStage}
+          filterExpandedStage={props?.filterExpandedStage}
+          subjectDropdownMobile={props?.subjectDropdownMobile}
+          loginModal={props?.loginModal}
+          closeLoginModal={()=>props?.closeLoginModal()}
+          openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
+          forgotPasswordModal={props?.forgotPasswordModal}
+          handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
+          token={props?.token}
+          selectedSubject= {(item)=>props?.selectedSubject(item)}
+          toggleSubjectDropdown={()=>props?.toggleSubjectDropdown()}
+          toggleFilterVisible={()=>props?.toggleFilterVisible()}
+          filterModalVisible={props?.filterModalVisible}
+          handleLogin={()=>props?.handleLogin()}
+          searchValue={props?.searchValue}
+          handleSearch={(e)=>props?.handleSearch(e)}
+          closeFilterExpandedStage={()=>props?.closeFilterExpandedStage()}
+          openFilterVisible={()=>props?.openFilterVisible()}
+          handleOpenMobileSearch={()=>props?.handleOpenMobileSearch()}
+          clearSearch={()=>props?.clearSearch()}
+          openLoginModal={()=>props?.openLoginModal()}
+          closeFilterVisible={()=>props?.closeFilterVisible()}
+          setScrollUp={()=>props?.setScrollUp()}
+          setScrollDown={()=>props?.setScrollDown()}
+          goingUp={props?.goingUp}
+          addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+          removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+          closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
+          selectSearch={(e)=>props?.selectSearch(e)}
+          thirdPartyUser={thirdPartyUser}
+        />
+        }
+        </>
+      }
+      </>
+       )
 }
+

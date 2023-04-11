@@ -32,7 +32,7 @@ export default function SearchBar(props) {
  } 
 
   const _autocompleteQuery=async(e,results)=>{
-    props?.handleSearch(e)
+    // props?.handleSearch(e)
     if(props?.token && props?.token.length > 0){
       await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`,{
         headers: {
@@ -53,18 +53,18 @@ export default function SearchBar(props) {
  }
 
   const _fuseData=(data,e)=>{
-    let intialQuery = {
-      id: 0,
-      logo : searchImage,
-      name: e,
-    }
-    let autocompleteArray = data ? data : [];
-    if(autocompleteArray && autocompleteArray.length > 0){
-      autocompleteArray.push(intialQuery)
-    }else{
-      autocompleteArray=[]
-      autocompleteArray.unshift(intialQuery)
-    }
+    // let intialQuery = {
+    //   id: 0,
+    //   logo : searchImage,
+    //   name: e,
+    // }
+    // let autocompleteArray = data ? data : [];
+    // if(autocompleteArray && autocompleteArray.length > 0){
+    //   autocompleteArray.push(intialQuery)
+    // }else{
+    //   autocompleteArray=[]
+    //   autocompleteArray.unshift(intialQuery)
+    // }
   
     setSearchQuery(data)
     setSearchString(e)
@@ -93,17 +93,18 @@ export default function SearchBar(props) {
   };
 
   const customSearch=()=>{
+    console.log(searchString,"searchString")
     let data = {
       name: searchString,
       search: true
     }
 
-    props?.handleSearch(data)
+    props?.handleSearch(searchString)
   }
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      props?.openFilterExpandedStage()
+      // props?.openFilterExpandedStage()
       customSearch()
     }
   }

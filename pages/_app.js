@@ -287,6 +287,7 @@ class MyApp extends App {
   }
 
   _handleSearch=(e)=>{
+    console.log('search', e)
     this.setState({
       search: e
     })
