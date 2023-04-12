@@ -69,6 +69,16 @@ useEffect(()=>{
     // the item selected
     // console.log("enter detected",item);
     props?.handleSearch(item?.name)
+    location.push({
+      pathname: '/search',
+      query: {
+        search: item?.name
+      }
+    },
+    undefined,
+    {
+      shallow: true
+    })
   };
 
   const formatResult = (item) => {

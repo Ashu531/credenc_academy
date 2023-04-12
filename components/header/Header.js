@@ -80,8 +80,17 @@ export default function Header(props){
 
   const handleChange=(e)=>{
       let value = e.target.value
-      props?.openFilterExpandedStage()
-      props?.handleSubjectTab(value)
+      router.push({
+        pathname: '/search',
+        query: {
+          search: value
+        }
+      },
+      undefined,
+      {
+        shallow: true
+      })
+      // props?.handleSubjectTab(value)
   }
 
   const renderProfile=()=>{

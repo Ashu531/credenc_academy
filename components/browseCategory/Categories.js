@@ -8,12 +8,7 @@ import designImage from '../../assets/images/icons/designImage.svg'
 export default function BrowseCategories(props){
 
     const _handleCategoryData=(searchString)=>{
-        let data = {
-            name: searchString,
-            domain: true
-          }
-        props?.searchItem(searchString)  
-        props?.handleSearch(data)
+       props?.handleSearch(searchString)
     }
   
     return(
