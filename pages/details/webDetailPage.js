@@ -495,7 +495,7 @@ export default function WebDetailPage(props){
           
         }
 
-    }, [props?.toolData.curriculum])
+    }, [props?.toolData?.curriculum])
 
     const handleCurriculumDisplay = (event, i, j) => {
 

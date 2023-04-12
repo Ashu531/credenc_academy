@@ -270,13 +270,11 @@ const removeUpvote = async (item) => {
 const _goToDetailPage=(id)=>{
   if(props?.detailPage === true){
     router.replace({
-      pathname: `/details`,
-      query: {course_id : id}
+      pathname: `/details/${id}`,
     }).then(()=>router.reload())
   }else{
     router.push({
-      pathname: `/details`,
-      query: {course_id : id}
+      pathname: `/details/${id}`,
     })
   }
   

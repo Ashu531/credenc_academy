@@ -6,7 +6,7 @@ import constant from "../../config/constant";
 import { useRouter } from 'next/router'
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
-export default function Dashboard(props) {
+const Dashboard = (props) => {
   const [mounted, setMounted] = useState(false);
   const [thirdPartyUser,setThirdPartyUser] = useState({})
   const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
@@ -65,6 +65,7 @@ export default function Dashboard(props) {
           selectSearch={(e)=>props?.selectSearch(e)}
           thirdPartyUser={thirdPartyUser}
           subjectData={props?.subjectData}
+          {...props}
         />}
         {isMobile && 
           <DashboardMobile
@@ -105,4 +106,6 @@ export default function Dashboard(props) {
       </>
        )
 }
+
+export default Dashboard;
 

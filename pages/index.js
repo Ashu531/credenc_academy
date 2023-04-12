@@ -2,9 +2,11 @@ import Dashboard from './dashboard'
 import React,{useState,useEffect} from "react"
 import Script from 'next/script';
 import SEO from '../config/seo';
+import axios from 'axios';
+import constant from '../config/constant';
 const EdtechToken = 'credenc-edtech-authkey';
 
-export default function Home(props) {
+const Home = (props) => {
   const [mounted, setMounted] = useState(false);
   const [token,setToken] = useState('')
 
@@ -40,7 +42,7 @@ export default function Home(props) {
     {
     mounted &&  
     <Dashboard 
-      theme={props?.theme} 
+      theme={props?.theme}
       filterExpandedStage={props?.filterExpandedStage} 
       openFilterExpandedStage={()=>props?.openFilterExpandedStage()} 
       subjectDropdownMobile={props?.subjectDropdownMobile}
@@ -78,9 +80,30 @@ export default function Home(props) {
       closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
       selectSearch={(e)=>props?.selectSearch(e)}
       subjectData={props?.subjectData}
+      {...props}
     />
     }
    </>
   )
 }
 
+export const getStaticProps = async ({ req, res, query })=> {
+  // res.setHeader(
+  //   'Cache-Control',
+  //   'public, s-maxage=10, stale-while-revalidate=59'
+  // )
+  
+    let data = await axios.get(`${constant.API_URL.DEV}/mostliked/`)
+    .then(res => {
+      return res.data;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  // Fetch data from external API
+  // Pass data to the page via props
+  return { props: { mostLikedCourses: data } }
+}
+
+export default Home;
