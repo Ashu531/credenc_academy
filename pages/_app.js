@@ -52,7 +52,6 @@ class MyApp extends App {
      coursePrevieModal: false,
      bookmarkCount: 0,
      subjectData: {},
-
     };
     this.coursesApiStatus = React.createRef(new ApiStatus());
   }
@@ -287,9 +286,8 @@ class MyApp extends App {
   }
 
   _handleSearch=(e)=>{
-    console.log('search', e)
     this.setState({
-      search: e
+      search: e,
     })
   }
 
@@ -410,7 +408,7 @@ class MyApp extends App {
             showSearchBar={this.state.showSearchBar}
             _showSearchBar={this._showSearchBar}
             searchValue={this.state.search}
-            handleSearch={this._handleSearch}
+            handleSearch={(e)=>this._handleSearch(e)}
             closeFilterExpandedStage={()=>this.closeFilterExpandedStage()}
             // openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
             hideSearchBar={this.hideSearchBar}
@@ -474,6 +472,7 @@ class MyApp extends App {
             closeForgotPasswordModal={()=>this.closeForgotPasswordModal()}
             selectSearch={(e)=>this._selectSearch(e)}
             subjectData={this.state.subjectData}
+            searchPageQuery={this.state.searchPageQuery}
          />
          {
             window.innerWidth > 500 ? 

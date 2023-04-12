@@ -230,9 +230,16 @@ export default function Header(props){
             </div>
             
           {
-            props?.showSearchBar && router.asPath !== '/privacy/' && router.asPath !== '/my-courses/' && router.asPath !== '/bookmarks/' && router.pathname !== '/details' ?
-              <div style={props?.showSearchBar ? {width : '25%',zIndex: 99999,marginRight: 30} : null} >
-                <SearchBar showSearchBar={props?.showSearchBar} search={props?.searchValue} handleSearch={(e)=>_handleSearch(e)} selectSearch={(e)=>props?.selectSearch(e)} openFilterExpandedStage={()=>props?.openFilterExpandedStage()} />
+            (router?.pathname === '/search') || props?.showSearchBar ?
+              <div style={(router?.pathname === '/search') || (props?.showSearchBar) ? {width : '25%',zIndex: 99999,marginRight: 30} : null} >
+                <SearchBar 
+                  showSearchBar={props?.showSearchBar} 
+                  search={props?.searchValue} 
+                  handleSearch={(e)=>_handleSearch(e)} 
+                  handleSearchQuery={()=>props?.handleSearchQuery()}
+                  selectSearch={(e)=>props?.selectSearch(e)} 
+                  openFilterExpandedStage={()=>props?.openFilterExpandedStage()} 
+                />
               </div> 
           : null
           }

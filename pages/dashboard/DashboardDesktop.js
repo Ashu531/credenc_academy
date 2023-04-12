@@ -900,12 +900,6 @@ useEffect(() => {
 }, []);
 
 const _handleSearch=(e)=>{
-  // location.push({
-  //       pathname: '/search',
-  //       query: { search: e },
-  //     })
-
-
   if(e?.course_id){
     location.push({
       pathname: '/details',
@@ -914,15 +908,13 @@ const _handleSearch=(e)=>{
     props?._showSearchBar()
 
   }
-console.log(e,"value++++")
-  if(e?.length > 0){
-    location.push({
-      pathname: '/search',
-      query: { search: e },
-    })
-    }else{
-      props?.handleSearch(e)
-    }
+  props?.handleSearch(e)
+  // else{
+  //   location.push({
+  //     pathname: '/search',
+  //     query: { search: e },
+  //   })
+  //   }
   }
 
   const _openApplyNowModal=(data)=>{
@@ -1056,7 +1048,7 @@ console.log(e,"value++++")
             transform: 'translateY(0)',
           }}
           >
-              <SearchBar searchbarWidth={searchbarWidth} search={props.searchValue} handleSearch={(e)=>_handleSearch(e)} selectSearch={(e)=>props?.selectSearch(e)} openFilterExpandedStage={()=>props?.openFilterExpandedStage()} token={props?.token}/>
+              <SearchBar searchbarWidth={searchbarWidth} search={props?.searchValue} handleSearch={(e)=>_handleSearch(e)} selectSearch={(e)=>props?.selectSearch(e)} openFilterExpandedStage={()=>props?.openFilterExpandedStage()} token={props?.token}/>
           </div>
          </div> 
 

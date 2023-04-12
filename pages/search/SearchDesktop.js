@@ -26,17 +26,8 @@ import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
 import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
 import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer"
 import InfiniteScroll from 'react-infinite-scroll-component';
-import bannerImage from '../../assets/images/icons/bannerImage.svg'
 import QuerySuccessModal from "../../components/querySuccessModal/QuerySuccessModal"
 import InquiryModal from "../../components/inquiryModal/inquiryModal"
-
-const styles = {
-    // width: "100%",
-    height: "60%",
-    backgroundImage: `url(${bannerImage.src})`,  
-  };
-
-const subjectKey = 'credenc-edtech-subject';
 
 const queries = {
   PROFESSION: 'profession',
@@ -82,7 +73,7 @@ function SearchDesktop(props) {
 
   const isMount = useIsMount();
   let location = useRouter();
-  let nextURL=location?.asPath?.substring(2,location?.asPath?.length)
+  let nextURL=`?${location?.asPath?.split('?')[1]}`
   let urlService = useRef(new UrlService(nextURL));
 
   const filterList = Lists.filters;
@@ -120,7 +111,6 @@ function SearchDesktop(props) {
   let appliedFiltersCount = useRef(0);
   const courseTypeRef = useRef(null);
   const [cardApiSuccess,setCardApiSuccess] = useState(false)
-  const dashboardRef = useRef()
   const [cardActionTaken,setCardActionTaken] = useState(false)
   const [nextPage,setNextPage] = useState(true)
   const [successApplyModal,setSuccessApplyModal] = useState(false)
@@ -128,91 +118,13 @@ function SearchDesktop(props) {
   const [loginState,setLoginState]=useState(0);
   const [courseName,setCourseName] = useState('')
   const [trackStatus,setTrackStatus] = useState(false)
+  const [searchQuery,setSearchQuery] = useState('')
   const [applied,setApplied] = useState({
     state: false,
     id: 0
   });
   const [pageNumber,setPageNumber] = useState(1);
 
-
-  useEffect(()=>{
-    getExternalUser()
-    
-  },[])
-
-
-  const getExternalUser=()=>{
-    let externalUser = urlService.current.hasEntry("partner_key")
-    if(nextURL && nextURL.length > 0 && props?.token === null){
-      if(externalUser === true){
-        props?.openLoginModal()
-      }
-    }
-  }
-
-  const getCardData=()=>{
-
-    updateBrowserUrl()
-    
-    if(pageNumber > 1){
-        setPageNumber(1)
-    }
-    handleCardData()
-  }
-
-  const handleCardData=()=>{
-    coursesApiStatus.current.start();
-    handleFilteredData(true);
-  }
-
-  const _getSubjectDetails=(item)=>{
-
-    urlService.current.removeEntry('domain')
-    
-    if(item.name === "All"){
-      // urlService.current.addEntry('subject', 'All');
-    }else{
-      urlService.current.addEntry('domain', item.value);
-    }
-    
-    
-    getCardData(item)
-  }
-
-  const _getSubCategoryDetails=(item)=>{
-
-    urlService.current.removeEntry('subject')
-
-    if(item.value === "All"){
-      urlService.current.removeEntry('subject')
-    }else{
-      urlService.current.addEntry('subject', item.value);
-    }
-  
-    getCardData(item)
-  }
-
-    const openFilterModal = async()=>{
-      setFilterModal(true)
-    } 
-
-    const openSubjectModal = ()=>{
-      setSubjectModalVisible(true)
-    } 
-
-    const closeSubjectModal = ()=>{
-      setSubjectModalVisible(false)
-    }
-
-    const setSubCategoriesData=(item)=>{
-      setSelectedCategory(item.value)
-      _getSubCategoryDetails(item)
-    }
-
-    const selectSubject=(item)=>{
-      setSelectedSubject(item)
-      _getSubjectDetails(item)
-  }
 
   const openDetailModal = (data)=>{
     // props?.openCoursePreviewModal()
@@ -233,17 +145,12 @@ function SearchDesktop(props) {
    const updateQueryString = (i, filter, list) => {
 
     urlService.current.removeEntry(filter);
-    urlService.current.removeEntry('search');
-
+    // urlService.current.removeEntry('search');
     list.forEach(item => {
       if (item['isApplied']) {
         urlService.current.addEntry(filter, item['filterValue']);
       }
     });
-
-    if(props?.searchValue && props?.searchValue?.length > 0){
-     urlService.current.addEntry('search', props?.searchValue);
-    }
 
   }
 
@@ -467,6 +374,7 @@ function SearchDesktop(props) {
   }
 
   const handleSearchClicked = async (forcePageNumber = 0) => {
+
     const getParams = () => {
       return `?${urlService.current.getUpdatedUrl()}`;
     }
@@ -512,24 +420,6 @@ function SearchDesktop(props) {
   const handleFilteredData = async (updatePageNumber = true,e) => {
     coursesApiStatus.current.start();
     setCardApiSuccess(false)
-
-    if(e && e.length > 0){
-      urlService.current.removeEntry('search');
-      urlService.current.addEntry('search', e);
-    }
-
-    // if(props?.searchValue && props?.searchValue?.length > 0){
-    //   urlService.current.addEntry('search', props?.searchValue);
-    // }
-
-    if(e?.courseType && e?.courseType.length > 0 && e?.subject && e?.subject.length > 0){
-      urlService.current.addEntry('subject', e?.subject);
-      urlService.current.addEntry('course_type', e?.courseType);
-    } else if(e?.subject && e?.subject.length > 0){
-      urlService.current.addEntry('subject', e?.subject);
-    } else if(e?.courseType && e?.courseType.length > 0){
-      urlService.current.addEntry('course_type', e?.courseType);
-    }
    
     let res = await handleSearchClicked();
     // if (forcePageNumber === 1) setForcePageNumber(0);
@@ -670,31 +560,6 @@ function SearchDesktop(props) {
     }
   }, [maxPrice]);
 
-  useEffect( () => {
-    if(!location.isReady) return;
-    if (location?.query && Object.keys(location?.query).length > 0) {
-      // resetFilters(false);
-      // urlService.current.changeEntry('subject', `${location.query}`);
-
-      if(!location.query.hasOwnProperty('subject') && !location.query.hasOwnProperty('domain')){
-        props?.openFilterExpandedStage();
-      }
-
-      if(location.query.hasOwnProperty('partner_key')){
-        props?.closeFilterExpandedStage();
-      }
-
-      if(location.query.hasOwnProperty('search')){
-        props?.handleSearch(location?.query?.search)
-        props?._showSearchBar()
-      }
-
-      if (pageNumber > 1) {
-        setPageNumber(1)
-        handleFilteredData();
-      }
-   }
-  }, [location.isReady]);
 
   useEffect(() => {
     if (!isMount) {
@@ -702,9 +567,8 @@ function SearchDesktop(props) {
       urlService.current.removeEntry('course_type_sub');
       urlService.current.changeEntry(queries.COURSE_TYPE, Lists.courseTypes[courseType]);
       updateBrowserUrl();
-      if (pageNumber > 1) {
-        setPageNumber(1)
-      }
+
+      setPageNumber(1)
       coursesApiStatus.current.start();
       handleFilteredData(false); 
       // setPageNumber(1);
@@ -721,11 +585,8 @@ function SearchDesktop(props) {
       coursesApiStatus.current.start();
       updateBrowserUrl();
 
-      if (pageNumber > 1) {
-        setPageNumber(1)
-      } else {
-        handleFilteredData(false);
-      }
+      setPageNumber(1)
+      handleFilteredData(false);
     }
   }, [sortState]);
 
@@ -747,36 +608,6 @@ function SearchDesktop(props) {
     setCourseType(tabNumber)
     // courseTypeRef?.current?.changeTab(tabNumber);
   }, []);
-
-const _handleSearch=(e)=>{
-
-  if(e?.course_id){
-    location.push({
-      pathname: '/details',
-      query: { course_id: e?.course_id },
-    })
-    props?._showSearchBar()
-
-  }
-
-  if(e?.name && e?.name?.length > 0){
-    setPageNumber(1)
-    props?.openFilterExpandedStage()
-    props?._showSearchBar()
-    if(e?.search === true){
-      handleFilteredData(true,e?.name)
-    }
-
-    if(e?.domain === true){
-      urlService.current.addEntry('domain', e?.name);
-      handleFilteredData(true,e)
-    // handleFilteredData(true,e)
-    }
-    props?.handleSearch(e?.name)
-    }else{
-      props?.handleSearch(e)
-    }
-  }
 
   const _openApplyNowModal=(data)=>{
     setApplyNow(true)
@@ -842,39 +673,43 @@ const _handleSearch=(e)=>{
     handleFilteredData()
   }
 
+  useEffect(()=>{
+    if(!location.isReady) return;
+    if(location?.query && Object.keys(location?.query).length > 0){
+      if(location?.query?.search.length > 0){
+        _handleSearchQuery(location?.query?.search)
+      }
+    }
+  },[location.isReady])
+
+  useEffect(()=>{
+    setPageNumber(1)
+    handleFilteredData()
+},[location?.query?.search])
   
 
-  useEffect(()=>{
-      setPageNumber(1)
-      handleFilteredData(true,props?.searchValue)
-  },[props?.searchValue])
+//   useEffect(()=>{
+//     if(props?.subjectData.search === true){
+//       setPageNumber(1)
+//       handleFilteredData()
+//     }
+//   },[props?.subjectData?.searchValue])
 
-  const _handleTrivia=(data)=>{
-    props?.openFilterExpandedStage()
+  const _handleSearchQuery=(event)=>{
+    // setSearchQuery(event)
+    location.push({
+      pathname: '/search',
+      query: {
+        search: event
+      }
+    },
+    undefined,
+    {
+      shallow: true
+    })
     setPageNumber(1)
-    if(data.courseType.length > 0 && data.subject.length > 0){
-
-      handleFilteredData(true,data);
-      let tabNumber = getTabNumber(queries.COURSE_TYPE, urlService)
-      setCourseType(tabNumber)
-    }
-    else if(data.courseType && data.courseType.length > 0){
-
-      handleFilteredData(true,data);
-      let tabNumber = getTabNumber(queries.COURSE_TYPE, urlService)
-      setCourseType(tabNumber)
-    }else if(data.subject && data.subject.length > 0){
-
-      handleFilteredData(true,data);
-    }
+    handleFilteredData()
   }
-
-  useEffect(()=>{
-    if(props?.subjectData.search === true){
-      setPageNumber(1)
-      handleFilteredData(true,props?.subjectData?.searchValue)
-    }
-  },[props?.subjectData?.searchValue])
 
  return(
         <div>    
@@ -1034,20 +869,6 @@ const _handleSearch=(e)=>{
           id="scrollableDiv"
           style={{padding: '10rem 2.4rem 2rem 0rem',height: 800, overflow: "auto"}}
           >
-          {/* <List
-            type={listTypes?.HORIZONTAL_CARDS}
-            list={courseCardData}
-            listApiStatus={coursesApiStatus}
-            openDetailModal={(item)=>openDetailModal(item)} 
-            openApplyNowModal={(item)=> _openApplyNowModal(item)}
-            token={props?.token}
-            openLoginModal={()=>props?.openLoginModal()} 
-            setLastElement={setLastCourse}
-            addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
-            removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
-            enableTrackStatus={()=>_enableTrackStatus()}
-            applied={applied}
-          /> */}
           <InfiniteScroll
                   dataLength={courseCardData.length} //This is important field to render the next data
                   next={handleScrollData}

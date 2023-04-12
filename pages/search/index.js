@@ -40,19 +40,12 @@ export default function Dashboard(props) {
         {isDesktopOrLaptop && <SearchDesktop
         // toggleTheme={toggleTheme} 
           newTheme={props?.theme}
-          openFilterExpandedStage={props?.openFilterExpandedStage}
-          filterExpandedStage={props?.filterExpandedStage}
           loginModal={props?.loginModal}
           closeLoginModal={()=>props?.closeLoginModal()}
           openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
           forgotPasswordModal={props?.forgotPasswordModal}
           handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
           token={props?.token}
-          showSearchBar={props?.showSearchBar}
-          _showSearchBar={props?._showSearchBar}
-          hideSearchBar={props?.hideSearchBar}
-          searchValue={props?.searchValue}
-          handleSearch={(e)=>props?.handleSearch(e)}
           closeFilterExpandedStage={()=>props?.closeFilterExpandedStage()}
           searchData={props?.searchData}
           handleLogin={()=>props?.handleLogin()}
@@ -62,7 +55,6 @@ export default function Dashboard(props) {
           addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
           removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
           closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
-          selectSearch={(e)=>props?.selectSearch(e)}
           thirdPartyUser={thirdPartyUser}
           subjectData={props?.subjectData}
         />}

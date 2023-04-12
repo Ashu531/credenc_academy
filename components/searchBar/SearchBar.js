@@ -18,10 +18,17 @@ export default function SearchBar(props) {
  let urlService = useRef(new UrlService(nextURL));
 
  useEffect(()=>{
-   if(props?.search?.length > 0){
+  if(!location.isReady) return;
+  if(location?.query && Object.keys(location?.query).length > 0){
+    setSearchString(location?.query?.search)
+  }
+},[location.isReady])
+
+useEffect(()=>{
+  if(props?.search.length > 0){
     setSearchString(props?.search)
-   }
- },[])
+  }
+},[props?.showSearchBar])
 
  const myLoader = ({ src, width, quality }) => {
     if(src && src.length > 0){
@@ -32,7 +39,7 @@ export default function SearchBar(props) {
  } 
 
   const _autocompleteQuery=async(e,results)=>{
-    // props?.handleSearch(e)
+    props?.handleSearch(e)
     if(props?.token && props?.token.length > 0){
       await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`,{
         headers: {
@@ -53,19 +60,6 @@ export default function SearchBar(props) {
  }
 
   const _fuseData=(data,e)=>{
-    // let intialQuery = {
-    //   id: 0,
-    //   logo : searchImage,
-    //   name: e,
-    // }
-    // let autocompleteArray = data ? data : [];
-    // if(autocompleteArray && autocompleteArray.length > 0){
-    //   autocompleteArray.push(intialQuery)
-    // }else{
-    //   autocompleteArray=[]
-    //   autocompleteArray.unshift(intialQuery)
-    // }
-  
     setSearchQuery(data)
     setSearchString(e)
   }
@@ -74,7 +68,7 @@ export default function SearchBar(props) {
   const handleOnSelect = (item) => {
     // the item selected
     // console.log("enter detected",item);
-    props?.handleSearch(item)
+    props?.handleSearch(item?.name)
   };
 
   const formatResult = (item) => {
@@ -93,13 +87,8 @@ export default function SearchBar(props) {
   };
 
   const customSearch=()=>{
-    console.log(searchString,"searchString")
-    let data = {
-      name: searchString,
-      search: true
-    }
-
     props?.handleSearch(searchString)
+    handleLocationQuery()
   }
 
   const handleKeyDown = (event) => {
@@ -107,6 +96,19 @@ export default function SearchBar(props) {
       // props?.openFilterExpandedStage()
       customSearch()
     }
+  }
+
+  const handleLocationQuery=()=>{
+    location.push({
+      pathname: '/search',
+      query: {
+        search: searchString
+      }
+    },
+    undefined,
+    {
+      shallow: true
+    })
   }
 
   return (
