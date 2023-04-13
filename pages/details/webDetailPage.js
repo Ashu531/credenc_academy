@@ -707,16 +707,19 @@ export default function WebDetailPage(props){
               <li className='nav-item-right' style={{margin: '0 1rem 0 0'}} onClick={()=>_handleCardBookmark(props?.detailData)}><Image src={ bookmarkVisible ? selectedBookmarkIcon : bookmarkIcon} width={20} height={20} objectFit='contain' /></li>
               <li className='nav-item-right'><button style={{backgroundColor: 'transparent', color: '#000000', border: '1px solid #034FE2'}} onClick={() => setEnquire(true)}>Talk to Us</button></li>
               {
-                (!props?.detailData.is_mooc && !(props?.detailData?.applied === true || (applied?.state === true && applied?.id === props?.detailData?.id)))  && <li className='nav-item-right'><button onClick={()=> handleButtonClick()}>{'Apply Now'}</button></li>
+                (props?.detailData.can_apply && !(props?.detailData?.applied === true || (applied?.state === true && applied?.id === props?.detailData?.id)))  && <li className='nav-item-right'><button onClick={()=> handleButtonClick()}>{'Apply Now'}</button></li>
               }
               {
-                (!props?.detailData.is_mooc && (props?.detailData?.applied === true || (applied?.state === true && applied?.id === props?.detailData?.id)))  && <li className='nav-item-right'><button onClick={() => _openDetailModal(props?.detailData)}>Track Application</button></li>
+                (props?.detailData?.applied === true || (applied?.state === true && applied?.id === props?.detailData?.id))  && <li className='nav-item-right'><button onClick={() => _openDetailModal(props?.detailData)}>Track Application</button></li>
+              }
+              {
+                props?.detailData?.course_link  && <a href={props?.detailData?.course_link} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none'}}><li className='nav-item-right'><button>Go To Course</button></li></a>
               }
               
             </div>
           </ul>
           <div className='head-jumbotron' style={{background: 'rgba(235,241,255, 0.9)', backgroundImage: `url(${backgroundImage.src})`, backgroundSize: 'cover'}}>
-            <div className='title'>{props?.detailData?.course_name}</div>
+            <div className='title'>{props?.courseName}</div>
             {props?.detailData?.program_type && <div className='subtitle'>
               <Image src={certificateIcon} width={20} height={20} objectFit='contain' />
               <span>&ensp;{props?.detailData?.program_type}</span>
@@ -740,9 +743,10 @@ export default function WebDetailPage(props){
               }
             </div>
             <div style={{fontWeight: '600', fontSize: '2.4rem', lineHeight: '2.8rem', color: '#034FE2'}}>
-              {props?.startingCost?.starting_cost && '₹' + props?.startingCost?.starting_cost[0]}
+              {props?.startingCost?.starting_cost?.length > 0 && '₹' + props?.startingCost?.starting_cost[0]}
             </div>
             <div style={{fontWeight: '400', fontSize: '1.2rem', lineHeight: '1.4rem', color: '#717171'}}>
+              {props?.startingCost?.starting_cost?.length > 0 && 'Starting Cost'}
               {props?.startingCost?.starting_cost && 'Starting Cost'}
             </div>
           </div>
