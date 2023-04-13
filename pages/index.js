@@ -39,6 +39,9 @@ const Home = (props) => {
         `}
       </Script>
       <SEO />
+      <h1>
+        Credenc
+      </h1>
     {
     mounted &&  
     <Dashboard 
@@ -87,23 +90,23 @@ const Home = (props) => {
   )
 }
 
-export const getStaticProps = async ({ req, res, query })=> {
-  // res.setHeader(
-  //   'Cache-Control',
-  //   'public, s-maxage=10, stale-while-revalidate=59'
-  // )
-  
-    let data = await axios.get(`${constant.API_URL.DEV}/mostliked/`)
-    .then(res => {
-      return res.data;
+export const getStaticProps = async () =>{
+
+  let trendingData = await _getTrendingData();
+
+  return { props: { trendingData } };
+}
+
+const _getTrendingData = async () => {
+  return await axios
+    .get(`${constant.API_URL.DEV}/mostliked/`)
+    .then((res) => {
+      return res?.data?.data;
     })
-    .catch(err => {
+    .catch((err) => {
+      // this.coursesApiStatus.current.failed();
       console.log(err);
     });
-
-  // Fetch data from external API
-  // Pass data to the page via props
-  return { props: { mostLikedCourses: data } }
-}
+};
 
 export default Home;
