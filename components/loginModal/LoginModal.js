@@ -26,19 +26,14 @@ import { GoogleLogin,GoogleOAuthProvider } from '@react-oauth/google';
 import UrlService from "../../helper/urlService";
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 const bookmarkKey = 'credenc-edtech-bookmarks';
+const authKey = 'credenc-edtech-authkey';
 
 export default function LoginModal({
-  tokens,
-  dispatchLogin,
-  handleClose,
-  handleForgotPassword,
-  changeNavbarVisibility,
   closeLoginModal,
   openForgotPasswordModal,
   handleLogin,
   setUserEmail,
   setUserLoginState,
-  // theme
 }) {
 
   const modalStates = States.loginModalStates;
@@ -178,8 +173,6 @@ export default function LoginModal({
     })
     .then(res => {
       try{
-        console.log(res);
-        // dispatchLogin(res.data.tokens);
         setAuthApiStatus(ApiStatus.SUCCESS);
         // setTimeout(() => location.reload(), 100)
         setUserEmail(emailInputState.toLowerCase().trim())
@@ -224,6 +217,10 @@ export default function LoginModal({
     return authApiStatus === ApiStatus.STARTED || authApiStatus === ApiStatus.PENDING;
   }
 
+  const _authorizeUser=(tokens)=>{
+    localStorage.setItem(authKey, tokens['access']);
+  }
+
   const onGoogleLoginSuccess = async (response) => {
     if (response?.error === "idpiframe_initialization_failed" || response?.error === "popup_closed_by_user") {
       // setFormError(Strings.ALLOW_COOKIES_IN_INCOGNITO);
@@ -238,10 +235,10 @@ export default function LoginModal({
     })
     .then(res => {
       try{
-        dispatchLogin(res.data.tokens);
         setAuthApiStatus(ApiStatus.SUCCESS);
         handleModalClose();
         handleLogin()
+        _authorizeUser(res.data.tokens)
         _setThirdPartyUser(res.data)
         _goToHome()
         if (res?.status) localStorage.removeItem(bookmarkKey);
@@ -264,8 +261,6 @@ export default function LoginModal({
       if (res?.status) localStorage.removeItem(bookmarkKey);
       setTimeout(() => location.reload(), 100)
     }
-
-    // dispatchLogin(response.tokenid);
   }
 
   const _setThirdPartyUser=(data)=>{
@@ -328,7 +323,7 @@ export default function LoginModal({
       })
       .then(res => {
       try{
-        dispatchLogin(res.data.tokens);
+        _authorizeUser(res.data.tokens);
         setAuthApiStatus(ApiStatus.SUCCESS);
         handleModalClose();
         return res.data;

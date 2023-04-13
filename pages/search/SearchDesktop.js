@@ -1,6 +1,4 @@
 import React, { useEffect, useState, useRef } from "react"
-import { connect } from 'react-redux'
-import { changeTheme } from '../../scripts/actions/index'
 import CourseCard from '../../components/coursecard/CourseCard'
 import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
@@ -8,7 +6,6 @@ import constant from '../../config/constant.js'
 import { useRouter } from 'next/router'
 import DetailModal from '../../components/detailModal/DetailModal'
 import Error from "../../components/error/Error"
-import theme from "../../scripts/reducers/theme"
 import SegmentedBar from "../../components/segementedBar/SegmentedBar";
 import SecondaryDropdown from "../../components/primaryDropdown/SecondaryDropdown";
 import Lists from "../../config/list";
@@ -21,10 +18,10 @@ import { getTabNumber } from "../../helper/getTabNumber";
 import filterIcon from '../../assets/images/icons/filter-icon-dark.svg';
 import closeIcon from '../../assets/images/icons/close-icon-grey.svg';
 import FloatActionButton from "../../components/floatActionButton/floatActionButton";
-import LoginModalContainer from '../../components/loginModal/LoginModalContainer'
+import LoginModal from '../../components/loginModal/LoginModal'
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
 import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
-import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer"
+import ForgotPasswordModal from "../../components/forgotPasswordModal/ForgotPasswordModal"
 import InfiniteScroll from 'react-infinite-scroll-component';
 import QuerySuccessModal from "../../components/querySuccessModal/QuerySuccessModal"
 import InquiryModal from "../../components/inquiryModal/inquiryModal"
@@ -69,7 +66,7 @@ export const useIsMount = () => {
 
 
 
-function SearchDesktop(props) {
+export default function SearchDesktop(props) {
 
   const isMount = useIsMount();
   let location = useRouter();
@@ -708,13 +705,13 @@ function SearchDesktop(props) {
               item={{ name: 'Class Mode', type: filterList.CLASS_MODE }}
               filterState={classModeList}
               updateFilterState={updateFilterState}
-              theme={theme}
+              
             />
             <Filter
               item={{ name: 'Course Pace', type: filterList.COURSE_PACE }}
               filterState={[...coursePaceList]}
               updateFilterState={updateFilterState}
-              theme={theme}
+              
             />
             <Filter
               item={{ name: 'Cost', type: filterList.COST }}
@@ -726,19 +723,19 @@ function SearchDesktop(props) {
               updateCostSlider={updateCostSlider}
               setIsAppliedCostSlider={() => setIsAppliedCostSlider(true)}
               isAppliedCostSlider={isAppliedCostSlider}
-              theme={theme}
+              
             />
             <Filter
               item={{ name: 'Difficulty Level', type: filterList.DIFFICULTY_LEVEL }}
               filterState={difficultyList}
               updateFilterState={updateFilterState}
-              theme={theme}
+              
             />
             {/* <Filter
             item={{ name: 'Work Experience', type: filterList.WORK_EXPERIENCE }}
             filterState={workExperienceList}
             updateFilterState={updateFilterState}
-            theme={theme}
+            
           /> */}
             {
               props?.thirdPartyUser != constant.PARTNER_KEY.NJ ?
@@ -746,7 +743,7 @@ function SearchDesktop(props) {
                   item={{ name: 'Finance Options', type: filterList.FINANCE_OPTIONS }}
                   filterState={financeOptionList}
                   updateFilterState={updateFilterState}
-                  theme={theme}
+                  
                 /> : null
             }
 
@@ -754,19 +751,19 @@ function SearchDesktop(props) {
             item={{ name: 'Course Language', type: filterList.COURSE_LANGUAGE }}
             filterState={languageList}
             updateFilterState={updateFilterState}
-            theme={theme}
+            
           /> */}
             <Filter
               item={{ name: 'Platform', type: filterList.PLATFORM }}
               filterState={platformList}
               updateFilterState={updateFilterState}
-              theme={theme}
+              
             />
             <Filter
               item={{ name: 'Educator', type: filterList.EDUCATOR }}
               filterState={educatorList}
               updateFilterState={updateFilterState}
-              theme={theme}
+              
             />
           </div>
           <div className="filter-footer">
@@ -802,7 +799,7 @@ function SearchDesktop(props) {
                   ontSize: '1.1rem',
                   lineHeight: '1.6rem',
                 }}
-                theme={theme}
+                
                 // bgColor='#16181A'
                 handleTabNumber={(i) => {
                   setPageNumber(1)
@@ -814,15 +811,7 @@ function SearchDesktop(props) {
             </div>
             <SecondaryDropdown
               heading={Lists.sortByList[sortState]['label']}
-              style={theme === 'dark' ? {
-                background: '#141414',
-                padding: '1.4rem',
-                borderRadius: '0.8rem',
-                fontWeight: 600,
-                fontSize: '1.1rem',
-                lineHeight: '1.6rem',
-                color: '#FFFFFF'
-              } : {
+              style={{
                 background: '#F7F7F7',
                 padding: '1.4rem',
                 borderRadius: '0.8rem',
@@ -955,13 +944,13 @@ function SearchDesktop(props) {
                 item={{ name: 'Class Mode', type: filterList.CLASS_MODE }}
                 filterState={classModeList}
                 updateFilterState={updateFilterState}
-                theme={theme}
+                
               />
               <Filter
                 item={{ name: 'Course Pace', type: filterList.COURSE_PACE }}
                 filterState={[...coursePaceList]}
                 updateFilterState={updateFilterState}
-                theme={theme}
+                
               />
               <Filter
                 item={{ name: 'Cost', type: filterList.COST }}
@@ -973,19 +962,19 @@ function SearchDesktop(props) {
                 updateCostSlider={updateCostSlider}
                 setIsAppliedCostSlider={() => setIsAppliedCostSlider(true)}
                 isAppliedCostSlider={isAppliedCostSlider}
-                theme={theme}
+                
               />
               <Filter
                 item={{ name: 'Difficulty Level', type: filterList.DIFFICULTY_LEVEL }}
                 filterState={difficultyList}
                 updateFilterState={updateFilterState}
-                theme={theme}
+                
               />
               {/* <Filter
                         item={{ name: 'Work Experience', type: filterList.WORK_EXPERIENCE }}
                         filterState={workExperienceList}
                         updateFilterState={updateFilterState}
-                        theme={theme}
+                        
                       /> */}
               {
                 props?.thirdPartyUser != constant.PARTNER_KEY.NJ ?
@@ -993,7 +982,7 @@ function SearchDesktop(props) {
                     item={{ name: 'Finance Options', type: filterList.FINANCE_OPTIONS }}
                     filterState={financeOptionList}
                     updateFilterState={updateFilterState}
-                    theme={theme}
+                    
                   /> : null
               }
 
@@ -1001,19 +990,19 @@ function SearchDesktop(props) {
                         item={{ name: 'Course Language', type: filterList.COURSE_LANGUAGE }}
                         filterState={languageList}
                         updateFilterState={updateFilterState}
-                        theme={theme}
+                        
                       /> */}
               <Filter
                 item={{ name: 'Platform', type: filterList.PLATFORM }}
                 filterState={platformList}
                 updateFilterState={updateFilterState}
-                theme={theme}
+                
               />
               <Filter
                 item={{ name: 'Educator', type: filterList.EDUCATOR }}
                 filterState={educatorList}
                 updateFilterState={updateFilterState}
-                theme={theme}
+                
               />
             </div>
             <div className="filter-footer" style={{ textAlign: "center", marginTop: 20 }}>
@@ -1072,7 +1061,6 @@ function SearchDesktop(props) {
         <DetailModal
           detailData={detailData}
           token={props?.token}
-          theme={props?.theme}
           openApplyNowModal={() => _openApplyNowModal(detailData)}
           closeDetailModal={() => closeDetailModal(detailData)}
           openLoginModal={() => props?.openLoginModal()}
@@ -1129,11 +1117,10 @@ function SearchDesktop(props) {
       {
         props?.loginModal ?
           <div style={{ width: '100%', height: '100%' }}>
-            <LoginModalContainer
+            <LoginModal
               closeLoginModal={() => props?.closeLoginModal()}
               openForgotPasswordModal={() => props?.openForgotPasswordModal()}
               forgotPasswordModal={props?.forgotPasswordModal}
-              theme={props?.theme}
               handleLogin={() => props?.handleLogin()}
               setUserEmail={(data) => _setUserEmail(data)}
               setUserLoginState={(data) => _setUserLoginState(data)}
@@ -1143,7 +1130,7 @@ function SearchDesktop(props) {
       }
       {
         props?.forgotPasswordModal ?
-          <SigninModalContainer
+          <ForgotPasswordModal
             handleForgotPasswordEnd={() => props?.handleForgotPasswordEnd()}
             closeForgotPasswordModal={() => props?.closeForgotPasswordModal()}
             userEmail={userEmail}
@@ -1156,31 +1143,3 @@ function SearchDesktop(props) {
     </div>
   )
 }
-
-const mapStateToProps = (state) => {
-  return {
-    theme: state.theme
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    dispatchThemeChange: (theme) => {
-      dispatch(changeTheme(theme))
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchDesktop);
-
-// export async function getServerSideProps(context) {
-
-//   const response = await fetch(`${constant.API_URL.DEV}/batch/search/`)
-//   const data = await response.json()
-
-//   // return {
-//   //   props: {
-//   //     courseCardData: data
-//   //   },
-//   // }
-// }

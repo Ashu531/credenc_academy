@@ -18,18 +18,15 @@ import constant from "../../config/constant";
 import { useRouter } from 'next/router'
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
+const authKey = 'credenc-edtech-authkey';
 
 // import { Mixpanel } from "../../../services/Mixpanel";
 // import MixpanelStrings from "../../../../values/mixpanelStrings";
 
 export default function ForgotPasswordModal({
-  handleClose,
-  handleBack,
   handleForgotPasswordEnd,
-  theme,
   userEmail,
   closeForgotPasswordModal,
-  dispatchLogin,
   openLoginModal,
   loginState
 }) {
@@ -143,11 +140,11 @@ export default function ForgotPasswordModal({
       setOtp({...otp, values: values});
   }
 
+  const _authorizeUser=(tokens)=>{
+    localStorage.setItem(authKey, tokens['access']);
+  }
+
   const verifyOtp = async () => {
-    // Mixpanel.track(MixpanelStrings.VERIFY_OTP_FORGOT_PASSWORD, {
-    //   'email': emailInputState.toString(),
-    //   "otp" : otp.values.join('')
-    // })
 
     if(validate()){
       let response = await axios.post(`${constant.API_URL.DEV}/login_verify/`, {
@@ -158,7 +155,7 @@ export default function ForgotPasswordModal({
         if(res['data']['error'] && res['data']['error'] != '')
           setFormError(res['data']['error']);
         else{
-        dispatchLogin(res.data.tokens);
+        _authorizeUser(res.data.tokens)
         _setThirdPartyUser(res.data)
         
         // setModalState(modalStates.NEW_PASSWORD);
@@ -190,10 +187,6 @@ export default function ForgotPasswordModal({
 }
 
   const setNewPassword = async () => {
-    // Mixpanel.track(MixpanelStrings.SET_PASSWORD_FORGOT_PASSWORD, {
-    //   "new_password" : 'Not saved!',
-    //   "confirm_password" : 'Not saved!',
-    // });
 
     if(validate()){
       let res = await axios.post(`${constant.API_URL.DEV}/forgot_password/`, {
@@ -223,35 +216,12 @@ export default function ForgotPasswordModal({
   }
 
   const handleBackClick = () => {
-    // if(modalState === modalStates.ENTER_EMAIL){
-    //   handleForgotPasswordEnd();
-    // } else if(modalState === modalStates.ENTER_OTP){
-    //   handleForgotPasswordEnd();
-    // } else {
-    //   setModalState(modalStates.ENTER_EMAIL);
-    // }
     handleForgotPasswordEnd();
   }
 
   const renderState = (state) => {
     return state === modalState;
   }
-
-  // useEffect(() => {
-  //   setFormError(null);
-  //   if(modalState === modalStates.ENTER_EMAIL){
-  //     setHeader(Strings.FORGOT_PASSWORD_HEADER);
-  //     setSubtitle(Strings.FORGOT_PASSWORD_SUBTITLE);
-  //   }
-  //   else if(modalState === modalStates.ENTER_OTP){
-  //     setHeader(Strings.ENTER_OTP_HEADER);
-  //     setSubtitle(Strings.ENTER_OTP_SUBTITLE);
-  //   }
-  //   else if(modalState === modalStates.NEW_PASSWORD){
-  //     setHeader(Strings.NEW_PASSWORD_HEADER);
-  //     setSubtitle(Strings.NEW_PASSWORD_SUBTITLE);
-  //   }
-  // }, [modalState]);
 
   useEffect(()=>{
    setModalState(modalStates.ENTER_OTP)
@@ -300,14 +270,6 @@ export default function ForgotPasswordModal({
       setAuthApiStatus(ApiStatus.FAILED)
       setFormError(err?.response?.data?.message || '')
     })
-
-    // if (response?.response === "Successfully LoggedIn") {
-
-    //   let currentBookmarks = JSON.parse(localStorage.getItem(bookmarkKey));
-    //   // currentBookmarks = currentBookmarks?.split(',');
-    //   let res = await addBookmarkToBackend(currentBookmarks, response?.tokens?.access);
-    //   if (res?.status) localStorage.removeItem(bookmarkKey);
-    // }
   }
 
   return (
@@ -320,14 +282,6 @@ export default function ForgotPasswordModal({
           <Image src={backArrowDark} objectFit='contain' height={12} width={7}/>
         </div>
         }
-        {/* <Link 
-        href='/' 
-        className='login-modal-brand' 
-        onClick={() => Mixpanel.track(MixpanelStrings.HOME_BUTTON_CLICK)}
-        >
-          <Image src={ theme === 'dark' ? credencLogo : credencLogoLight} objectFit="cover" />
-          <div style={{textDecoration: 'none', color: '#FFFFFF', fontSize: '21px'}}>BETA</div>
-        </Link> */}
         {
           passwordSuccess.reset === true ? 
           <div className='forgot-modal-header'>

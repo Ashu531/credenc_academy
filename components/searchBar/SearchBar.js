@@ -38,7 +38,12 @@ useEffect(()=>{
     }
  } 
 
+ useEffect(() => {
+   console.log(searchString, searchQuery, props?.showSearchBar, location?.query)
+ }, [searchString])
+
   const _autocompleteQuery=async(e,results)=>{
+    
     props?.handleSearch(e)
     if(props?.token && props?.token.length > 0){
       await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`,{
@@ -57,11 +62,11 @@ useEffect(()=>{
         _fuseData(data,e)
       })
     }
+    setSearchString(e)
  }
 
   const _fuseData=(data,e)=>{
     setSearchQuery(data)
-    setSearchString(e)
   }
 
 
@@ -103,7 +108,6 @@ useEffect(()=>{
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      // props?.openFilterExpandedStage()
       customSearch()
     }
   }
@@ -133,6 +137,7 @@ useEffect(()=>{
           onSearch={_autocompleteQuery}
           onSelect={handleOnSelect}
           inputDebounce={500}
+          fuseOptions={{ threshold: 1, shouldSort: false }}
           inputSearchString={searchString}
           autoFocus
           showNoResults={false}

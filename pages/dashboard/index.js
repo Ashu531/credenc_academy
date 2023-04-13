@@ -40,8 +40,6 @@ export default function Dashboard(props) {
         {isDesktopOrLaptop && <DashboardDesktop
         // toggleTheme={toggleTheme} 
           newTheme={props?.theme}
-          openFilterExpandedStage={props?.openFilterExpandedStage}
-          filterExpandedStage={props?.filterExpandedStage}
           loginModal={props?.loginModal}
           closeLoginModal={()=>props?.closeLoginModal()}
           openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
@@ -53,7 +51,6 @@ export default function Dashboard(props) {
           hideSearchBar={props?.hideSearchBar}
           searchValue={props?.searchValue}
           handleSearch={(e)=>props?.handleSearch(e)}
-          closeFilterExpandedStage={()=>props?.closeFilterExpandedStage()}
           searchData={props?.searchData}
           handleLogin={()=>props?.handleLogin()}
           openLoginModal={()=>props?.openLoginModal()}
@@ -64,7 +61,6 @@ export default function Dashboard(props) {
           closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
           selectSearch={(e)=>props?.selectSearch(e)}
           thirdPartyUser={thirdPartyUser}
-          subjectData={props?.subjectData}
         />}
         {isMobile && 
           <DashboardMobile

@@ -3,7 +3,7 @@ import { useMediaQuery } from "react-responsive";
 import constant from "../../config/constant";
 import { useRouter } from 'next/router'
 import SearchDesktop from "./SearchDesktop";
-import DashboardMobile from "./SearchMobile";
+import DashboardMobile from "../dashboard/DashboardMobile";
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
 export default function Dashboard(props) {

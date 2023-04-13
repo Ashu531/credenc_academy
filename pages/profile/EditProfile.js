@@ -126,7 +126,7 @@ export default function EditProfile(props) {
         <div className='row margin-35 mobile'>
             <div className='label'>Name:</div>
             <div className='input-container'>
-                <Input placeholder='John Doe' value={inputName} handleInput={(val) => setInputName(val)} err={errorState}/>
+                <Input placeholder='Your Name' value={inputName} handleInput={(val) => setInputName(val)} err={errorState}/>
             </div>
         </div>
         {/* <div className='row'>

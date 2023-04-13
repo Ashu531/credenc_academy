@@ -7,13 +7,13 @@ import axios from 'axios';
 import SearchMobile from '../../components/searchBarMobile/SearchBar';
 import { useRouter } from 'next/router';
 import constant from '../../config/constant';
-import LoginModalContainer from '../../components/loginModal/LoginModalContainer'
+import LoginModal from '../../components/loginModal/LoginModal'
 import ForgotPasswordModal from '../../components/forgotPasswordModal/ForgotPasswordModal'
 import DetailModal from '../../components/detailModal/DetailModal'
 import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
-import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer";
+import ForgotPasswordModal from "../../components/forgotPasswordModal/ForgotPasswordModal";
 import Head from 'next/head'
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
@@ -200,7 +200,7 @@ export default function Bookmarks(props){
             {
               props?.loginModal ? 
               <div style={{width: '100%',height: '100%'}}>
-              <LoginModalContainer
+              <LoginModal
               closeLoginModal={()=>props?.closeLoginModal()}
               openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
               forgotPasswordModal={props?.forgotPasswordModal}
@@ -214,7 +214,7 @@ export default function Bookmarks(props){
             }
             {
               props?.forgotPasswordModal ? 
-              <SigninModalContainer
+              <ForgotPasswordModal
                 handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
                 closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
                 userEmail={userEmail}

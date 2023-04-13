@@ -1,13 +1,10 @@
 import React, { useEffect, useState, useRef } from "react"
-import { connect } from 'react-redux'
-import {changeTheme} from '../../scripts/actions/index'
 import CourseCard from '../../components/coursecard/CourseCard'
 import constant from '../../config/constant.js'
 import SlidingPanel from 'react-sliding-side-panel';
 import DetailModal from '../../components/detailModal/DetailModal'
 import 'react-sliding-side-panel/lib/index.css';
 import { useRouter } from 'next/router'
-import theme from "../../scripts/reducers/theme"
 import States from '../../config/states';
 import SegmentedBar from "../../components/segementedBar/SegmentedBar";
 import SecondaryDropdown from "../../components/primaryDropdown/SecondaryDropdown";
@@ -23,7 +20,7 @@ import { getTabNumber } from "../../helper/getTabNumber";
 import closeIcon from '../../assets/images/icons/close-icon-grey.svg';
 import FloatActionButton from "../../components/floatActionButton/floatActionButton";
 import Image from "next/image";
-import LoginModalContainer from '../../components/loginModal/LoginModalContainer'
+import LoginModal from '../../components/loginModal/LoginModal'
 import ForgotPasswordModal from "../../components/forgotPasswordModal/ForgotPasswordModal"
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
 import SubjectTab from '../../components/subjectTab/SubjectTab'
@@ -33,7 +30,6 @@ import sortingIcon from '../../assets/images/icons/filterSortMobile.svg';
 import backArrowDark from '../../assets/images/icons/backArrowDark.svg'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
-import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer"
 
 const compareKey = 'credenc-marketplace-compares';
 const bookmarkKey = 'credenc-edtech-bookmarks';
@@ -79,7 +75,7 @@ export const useIsMount = () => {
   return isMountRef.current;
 };
 
-function DashboardMobile(props) {
+export default function DashboardMobile(props) {
 
   const isMount = useIsMount();
   let location = useRouter();
@@ -1318,7 +1314,7 @@ const _handleAppliedStage=(courseId)=>{
          {
         props?.loginModal ? 
         <div style={{width: '100%',height: '100%'}}>
-        <LoginModalContainer
+        <LoginModal
          closeLoginModal={()=>props?.closeLoginModal()}
          openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
          forgotPasswordModal={props?.forgotPasswordModal}
@@ -1332,7 +1328,7 @@ const _handleAppliedStage=(courseId)=>{
       }
       {
         props?.forgotPasswordModal ? 
-        <SigninModalContainer
+        <ForgotPasswordModal
         handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
         closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
         userEmail={userEmail}
@@ -1345,19 +1341,3 @@ const _handleAppliedStage=(courseId)=>{
         </div>
        )
 }
-
-const mapStateToProps = (state) => {
-    return {
-      theme: state.theme
-    }
-  }
-  
-  const mapDispatchToProps = (dispatch) => {
-    return {
-      dispatchThemeChange: (theme) => {
-        dispatch(changeTheme(theme))
-      }
-    }
-  }
-
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardMobile);

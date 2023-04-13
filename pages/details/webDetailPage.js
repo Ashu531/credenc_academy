@@ -44,14 +44,13 @@ import InquiryModal from '../../components/inquiryModal/inquiryModal'
 import CourseCard from '../../components/coursecard/CourseCard';
 import constant from '../../config/constant';
 import { useRouter } from 'next/router'
-import LoginModalContainer from '../../components/loginModal/LoginModalContainer'
-import ForgotPasswordModal from '../../components/forgotPasswordModal/ForgotPasswordModal'
+import LoginModal from '../../components/loginModal/LoginModal'
 import upvoteLogoDark from '../../assets/images/icons/thumbs-up-dark.svg'
 import bookmarkIcon from '../../assets/images/icons/bookmark.svg';
 import selectedBookmarkIcon from '../../assets/images/icons/selectedBookmark.svg'
 // import upvoteLogo from '../../assets/images/icons/upvote.svg'
 import Link from "next/link";
-import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer";
+import ForgotPasswordModal from "../../components/forgotPasswordModal/ForgotPasswordModal";
 import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
 import WebDetailSkeleton from '../../components/detailPageSkeletonWeb';
 import credencAcademy from '../../assets/images/icons/credencAcademy.svg'
@@ -1825,7 +1824,7 @@ export default function WebDetailPage(props){
             {
                 props?.loginModal ? 
                 <div style={{width: '100%',height: '100%'}}>
-                <LoginModalContainer
+                <LoginModal
                     closeLoginModal={()=>props?.closeLoginModal()}
                     openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
                     forgotPasswordModal={props?.forgotPasswordModal}
@@ -1839,7 +1838,7 @@ export default function WebDetailPage(props){
             }
             {
               props?.forgotPasswordModal ? 
-              <SigninModalContainer
+              <ForgotPasswordModal
                 handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
                 closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
                 userEmail={userEmail}

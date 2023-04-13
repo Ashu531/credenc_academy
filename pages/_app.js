@@ -2,12 +2,7 @@ import App from 'next/app';
 import '../styles/globals.scss'
 import { useRouter } from "next/router";
 import React from 'react';
-import { Provider } from "react-redux";
-import { createStore, applyMiddleware, compose } from 'redux'
-import ReduxThunk from "redux-thunk";
-import rootReducer from '../scripts/reducers/index'
 import 'react-sliding-side-panel/lib/index.css';
-import HeaderContainer from '../components/header/HeaderContainer';
 // import HomeHeader from '../components/homeHeader/NavbarContainer'
 import HeaderMobile from '../components/headerMobile/HeaderMobile';
 import Footer from '../components/footer/Footer';
@@ -390,14 +385,12 @@ class MyApp extends App {
  
   render(){
     const {Component, pageProps} = this.props;
-    let store = createStore(rootReducer, compose(applyMiddleware(ReduxThunk)))
     return <>
-    <Provider store={store} >
       {
         this.state.mounted && <div data-theme={this.state.theme} style={this.state.loginModal || this.state.forgotPasswordModal || this.state.footerModal || this.state.coursePrevieModal ? {height: 'calc(var(--vh, 1vh) * 100)',overflow: 'hidden'} : {height: '100%'}}>
           {
             window.innerWidth > 500 ? 
-            <HeaderContainer 
+            <Header 
             toggleTheme={this.toggleTheme} 
             theme={this.state.theme} 
             toggleFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
@@ -406,7 +399,6 @@ class MyApp extends App {
             openLoginModal={()=>this.openLoginModal()}
             logoutUser={()=>this.logoutUser()}
             showSearchBar={this.state.showSearchBar}
-            _showSearchBar={this._showSearchBar}
             searchValue={this.state.search}
             handleSearch={(e)=>this._handleSearch(e)}
             closeFilterExpandedStage={()=>this.closeFilterExpandedStage()}
@@ -506,8 +498,6 @@ class MyApp extends App {
            </SlidingPanel>
          </div>
       }
-    
-   </Provider>
    </>
   }
  

@@ -1,6 +1,4 @@
 import React, { useEffect, useState, useRef } from "react"
-import { connect } from 'react-redux'
-import { changeTheme } from '../../scripts/actions/index'
 import CourseCard from '../../components/coursecard/CourseCard'
 import Navbar from '../../components/navbar/Navbar'
 import SlidingPanel from 'react-sliding-side-panel';
@@ -9,22 +7,20 @@ import constant from '../../config/constant.js'
 import { useRouter } from 'next/router'
 import DetailModal from '../../components/detailModal/DetailModal'
 import Error from "../../components/error/Error"
-import theme from "../../scripts/reducers/theme"
 import Lists from "../../config/list";
 import Filter from "../../components/filter/Filter";
 import axios from "axios";
 import ApiStatus from "../../config/apiStatus";
 import UrlService from "../../helper/urlService";
 import Button from "../../components/button/Button";
-import Link from "next/link";
 import closeIcon from '../../assets/images/icons/close-icon-grey.svg';
-import LoginModalContainer from '../../components/loginModal/LoginModalContainer'
+import LoginModal from '../../components/loginModal/LoginModal'
 import SearchBar from '../../components/searchBar/SearchBar'
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
 import HomeSkeleton from "../../components/homePageSkeleton/homeSkeleton"
 import Skeleton from '@mui/material/Skeleton';
 import SuccessApplyModal from "../../components/successApplyModal/SuccessApplyModal"
-import SigninModalContainer from "../../components/forgotPasswordModal/SigninModalContainer"
+import ForgotPasswordModal from "../../components/forgotPasswordModal/ForgotPasswordModal"
 import CredencFeatures from "../../components/credencFeatures/credencFeatures"
 import bannerImage from '../../assets/images/icons/bannerImage.svg'
 import BrowseCategories from "../../components/browseCategory/Categories"
@@ -78,7 +74,7 @@ export const useIsMount = () => {
 
 
 
-function DashboardDesktop(props) {
+export default function DashboardDesktop(props) {
 
   const isMount = useIsMount();
   let location = useRouter();
@@ -150,9 +146,7 @@ function DashboardDesktop(props) {
 
 
   useEffect(() => {
-    // getSubjectData()
     getSubCategoryData()
-    getDataFromBaseUrl()
     getMostLikedCourses()
     getExternalUser()
 
@@ -250,35 +244,6 @@ function DashboardDesktop(props) {
       }
     )
     setSubCategory(totalSubcategoryData)
-  }
-
-  const getDataFromBaseUrl = () => {
-
-    let urlSubCategoryQuery = urlService.current.getValueFromEntry('subject')
-
-    if (urlSubCategoryQuery && Object.keys(urlSubCategoryQuery).length !== 0) {
-      setSelectedCategory(urlSubCategoryQuery)
-    } else {
-      setSelectedCategory('All')
-    }
-
-    // setSelectedSubject(data)
-    getCardData()
-  }
-
-  const getCardData = () => {
-
-    updateBrowserUrl()
-
-    if (pageNumber > 1) {
-      setPageNumber(1)
-    }
-    handleCardData()
-  }
-
-  const handleCardData = () => {
-    coursesApiStatus.current.start();
-    handleFilteredData(true);
   }
 
   const _getSubjectDetails = (item) => {
@@ -915,13 +880,6 @@ function DashboardDesktop(props) {
   }
 
   useEffect(() => {
-    if (props?.subjectData.search === true) {
-      setPageNumber(1)
-      handleFilteredData(true, props?.subjectData?.searchValue)
-    }
-  }, [props?.subjectData?.searchValue])
-
-  useEffect(() => {
     if (dashboardRef && dashboardRef?.current !== null) {
       if (dashboardRef?.current?.getBoundingClientRect().y <= -2563) {
         setNavbarTop(true)
@@ -951,7 +909,14 @@ function DashboardDesktop(props) {
                 transform: 'translateY(0)',
               }}
             >
-              <SearchBar searchbarWidth={searchbarWidth} search={props?.searchValue} handleSearch={(e) => _handleSearch(e)} selectSearch={(e) => props?.selectSearch(e)} openFilterExpandedStage={() => props?.openFilterExpandedStage()} token={props?.token} />
+              <SearchBar 
+               searchbarWidth={searchbarWidth} 
+               search={props?.searchValue} 
+               handleSearch={(e) => _handleSearch(e)} 
+               selectSearch={(e) => props?.selectSearch(e)} 
+               token={props?.token} 
+               showSearchBar={props?.showSearchBar}
+              />
             </div>
           </div>
 
@@ -1078,7 +1043,6 @@ function DashboardDesktop(props) {
                   subjectData={subjectData}
                   selectedSubject={selectedSubject}
                   selectSubject={selectSubject}
-                  theme={props.newTheme}
                   appliedFiltersCount={appliedFiltersCount.current}
                 /> :
                 <div style={{ display: 'flex', justifyContent: 'flex-start', padding: 24 }}>
@@ -1106,7 +1070,6 @@ function DashboardDesktop(props) {
                             <CourseCard
                               key={i}
                               data={item}
-                              theme={props.newTheme}
                               openDetailModal={() => openDetailModal(item)}
                               openApplyNowModal={() => _openApplyNowModal(item)}
                               token={props?.token}
@@ -1120,7 +1083,6 @@ function DashboardDesktop(props) {
                           <CourseCard
                             key={i}
                             data={item}
-                            theme={props.newTheme}
                             openDetailModal={() => openDetailModal(item)}
                             openApplyNowModal={() => _openApplyNowModal(item)}
                             token={props?.token}
@@ -1168,13 +1130,11 @@ function DashboardDesktop(props) {
                 item={{ name: 'Class Mode', type: filterList.CLASS_MODE }}
                 filterState={classModeList}
                 updateFilterState={updateFilterState}
-                theme={theme}
               />
               <Filter
                 item={{ name: 'Course Pace', type: filterList.COURSE_PACE }}
                 filterState={[...coursePaceList]}
                 updateFilterState={updateFilterState}
-                theme={theme}
               />
               <Filter
                 item={{ name: 'Cost', type: filterList.COST }}
@@ -1186,19 +1146,17 @@ function DashboardDesktop(props) {
                 updateCostSlider={updateCostSlider}
                 setIsAppliedCostSlider={() => setIsAppliedCostSlider(true)}
                 isAppliedCostSlider={isAppliedCostSlider}
-                theme={theme}
               />
               <Filter
                 item={{ name: 'Difficulty Level', type: filterList.DIFFICULTY_LEVEL }}
                 filterState={difficultyList}
                 updateFilterState={updateFilterState}
-                theme={theme}
               />
               {/* <Filter
                         item={{ name: 'Work Experience', type: filterList.WORK_EXPERIENCE }}
                         filterState={workExperienceList}
                         updateFilterState={updateFilterState}
-                        theme={theme}
+      
                       /> */}
               {
                 props?.thirdPartyUser != constant.PARTNER_KEY.NJ ?
@@ -1206,7 +1164,6 @@ function DashboardDesktop(props) {
                     item={{ name: 'Finance Options', type: filterList.FINANCE_OPTIONS }}
                     filterState={financeOptionList}
                     updateFilterState={updateFilterState}
-                    theme={theme}
                   /> : null
               }
 
@@ -1214,19 +1171,17 @@ function DashboardDesktop(props) {
                         item={{ name: 'Course Language', type: filterList.COURSE_LANGUAGE }}
                         filterState={languageList}
                         updateFilterState={updateFilterState}
-                        theme={theme}
+      
                       /> */}
               <Filter
                 item={{ name: 'Platform', type: filterList.PLATFORM }}
                 filterState={platformList}
                 updateFilterState={updateFilterState}
-                theme={theme}
               />
               <Filter
                 item={{ name: 'Educator', type: filterList.EDUCATOR }}
                 filterState={educatorList}
                 updateFilterState={updateFilterState}
-                theme={theme}
               />
             </div>
             <div className="filter-footer" style={{ textAlign: "center", marginTop: 20 }}>
@@ -1285,7 +1240,6 @@ function DashboardDesktop(props) {
         <DetailModal
           detailData={detailData}
           token={props?.token}
-          theme={props?.theme}
           openApplyNowModal={() => _openApplyNowModal(detailData)}
           closeDetailModal={() => closeDetailModal(detailData)}
           openLoginModal={() => props?.openLoginModal()}
@@ -1342,11 +1296,10 @@ function DashboardDesktop(props) {
       {
         props?.loginModal ?
           <div style={{ width: '100%', height: '100%' }}>
-            <LoginModalContainer
+            <LoginModal
               closeLoginModal={() => props?.closeLoginModal()}
               openForgotPasswordModal={() => props?.openForgotPasswordModal()}
               forgotPasswordModal={props?.forgotPasswordModal}
-              theme={props?.theme}
               handleLogin={() => props?.handleLogin()}
               setUserEmail={(data) => _setUserEmail(data)}
               setUserLoginState={(data) => _setUserLoginState(data)}
@@ -1356,7 +1309,7 @@ function DashboardDesktop(props) {
       }
       {
         props?.forgotPasswordModal ?
-          <SigninModalContainer
+          <ForgotPasswordModal
             handleForgotPasswordEnd={() => props?.handleForgotPasswordEnd()}
             closeForgotPasswordModal={() => props?.closeForgotPasswordModal()}
             userEmail={userEmail}
@@ -1369,19 +1322,3 @@ function DashboardDesktop(props) {
     </div>
   )
 }
-
-const mapStateToProps = (state) => {
-  return {
-    theme: state.theme
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    dispatchThemeChange: (theme) => {
-      dispatch(changeTheme(theme))
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardDesktop);

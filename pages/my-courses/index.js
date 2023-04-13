@@ -7,7 +7,7 @@ import axios from 'axios';
 import SearchMobile from '../../components/searchBarMobile/SearchBar';
 import { useRouter } from 'next/router';
 import constant from '../../config/constant';
-import LoginModalContainer from '../../components/loginModal/LoginModalContainer'
+import LoginModal from '../../components/loginModal/LoginModal'
 import ForgotPasswordModal from '../../components/forgotPasswordModal/ForgotPasswordModal'
 import DetailModal from '../../components/detailModal/DetailModal'
 import SlidingPanel from 'react-sliding-side-panel';
@@ -179,7 +179,7 @@ export default function MyCourses(props){
             {
               props?.loginModal ? 
               <div style={{width: '100%',height: '100%'}}>
-              <LoginModalContainer
+              <LoginModal
               closeLoginModal={()=>props?.closeLoginModal()}
               openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
               forgotPasswordModal={props?.forgotPasswordModal}
