@@ -43,15 +43,15 @@ export default function Header(props){
   const classes = useStyles();
 
   let router = useRouter();
-  let nextURL=location?.asPath?.substring(2,location?.asPath?.length)
+  let nextURL=router?.asPath?.substring(2,router?.asPath?.length)
   let urlService = useRef(new UrlService(nextURL));
 
   const [token,setToken] = useState('')
   const [subjectList,setSubjectList] = useState([])
 
-  useEffect(()=>{
-    _getAuthKey() 
-  },[localStorage.getItem(EdtechToken),props?.bookmarkCount])
+  // useEffect(()=>{
+  //   _getAuthKey() 
+  // },[localStorage.getItem(EdtechToken),props?.bookmarkCount])
 
   useEffect(()=>{
     _getSubjectData()

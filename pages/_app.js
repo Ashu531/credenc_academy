@@ -1,6 +1,6 @@
-import App from 'next/app';
 import '../styles/globals.scss'
 import { useRouter } from "next/router";
+import App, { Container } from 'next/app'
 import React from 'react';
 import 'react-sliding-side-panel/lib/index.css';
 // import HomeHeader from '../components/homeHeader/NavbarContainer'
@@ -385,11 +385,12 @@ class MyApp extends App {
  
   render(){
     const {Component, pageProps} = this.props;
-    return <>
+    return (
+    <>
       {
-        this.state.mounted && <div data-theme={this.state.theme} style={this.state.loginModal || this.state.forgotPasswordModal || this.state.footerModal || this.state.coursePrevieModal ? {height: 'calc(var(--vh, 1vh) * 100)',overflow: 'hidden'} : {height: '100%'}}>
-          {
-            window.innerWidth > 500 ? 
+       <div data-theme={this.state.theme} style={this.state.loginModal || this.state.forgotPasswordModal || this.state.footerModal || this.state.coursePrevieModal ? {height: 'calc(var(--vh, 1vh) * 100)',overflow: 'hidden'} : {height: '100%'}}>
+          {/* {
+            window.innerWidth > 500 ?  */}
             <Header 
             toggleTheme={this.toggleTheme} 
             theme={this.state.theme} 
@@ -407,7 +408,8 @@ class MyApp extends App {
             bookmarkCount={this.state.bookmarkCount}
             selectSearch={(e)=>this._selectSearch(e)}
             handleSubjectTab={this._handleSubjectTab}
-           /> : 
+           /> 
+           {/* : 
             <HeaderMobile
             // toggleTheme={this.toggleTheme} 
             theme={this.state.theme} 
@@ -420,7 +422,7 @@ class MyApp extends App {
             filterModalVisible={this.state.filterModalVisible}
             goingUp={this.state.goingUp}
             />
-          }
+          } */}
          <Component 
             {...pageProps} 
             theme={this.state.theme} 
@@ -466,13 +468,14 @@ class MyApp extends App {
             subjectData={this.state.subjectData}
             searchPageQuery={this.state.searchPageQuery}
          />
-         {
-            window.innerWidth > 500 ? 
+         {/* {
+            window.innerWidth > 500 ?  */}
             <Footer 
             toggleFooterModal={this.toggleFooterModal} 
             filterExpandedStage={this.state.filterExpandedStage}
             closeFooterModal={this.closeFooterModal}
-            title="©Credenc2022"/> : 
+            title="©Credenc2022"/> 
+            {/* : 
             <FooterMobile
             openLoginModal={()=>this.openLoginModal()}
             setMobileLoginNaviagtion={()=>this.openMobileLoginNaviagtion()}
@@ -485,7 +488,7 @@ class MyApp extends App {
             bookmarkCount={this.state.bookmarkCount}
             closeFilterVisible={()=>this.closeFilterVisible()}
             />
-         }
+         } */}
         <SlidingPanel
              type={'bottom'}
              isOpen={this.state.footerModal}
@@ -498,7 +501,8 @@ class MyApp extends App {
            </SlidingPanel>
          </div>
       }
-   </>
+      </>
+   )
   }
  
 }

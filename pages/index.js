@@ -2,25 +2,23 @@ import Dashboard from './dashboard'
 import React,{useState,useEffect} from "react"
 import Script from 'next/script';
 import SEO from '../config/seo';
+import axios from 'axios';
+import constant from '../config/constant';
 const EdtechToken = 'credenc-edtech-authkey';
 
-export default function Home(props) {
+const Home = (props) => {
   const [mounted, setMounted] = useState(false);
   const [token,setToken] = useState('')
-
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  useEffect(()=>{
-    _getAuthKey()
-  },[localStorage.getItem(EdtechToken)])
-
+  // useEffect(()=>{
+  //   _getAuthKey()
+  // },[localStorage.getItem(EdtechToken)])
   const _getAuthKey=()=>{
     let authKey = localStorage.getItem(EdtechToken);
     setToken(authKey)
   }
-
   return (
     <>
       <Script
@@ -32,17 +30,19 @@ export default function Home(props) {
           window.dataLayer = window.dataLayer || [];
           function gtag(){window.dataLayer.push(arguments);}
           gtag('js', new Date());
-
           gtag('config', 'G-31M56NX8K4');
         `}
       </Script>
       <SEO />
+      <h1>
+        Credenc
+      </h1>
     {
-    mounted &&  
-    <Dashboard 
-      theme={props?.theme} 
-      filterExpandedStage={props?.filterExpandedStage} 
-      openFilterExpandedStage={()=>props?.openFilterExpandedStage()} 
+    mounted &&
+    <Dashboard
+      theme={props?.theme}
+      filterExpandedStage={props?.filterExpandedStage}
+      openFilterExpandedStage={()=>props?.openFilterExpandedStage()}
       subjectDropdownMobile={props?.subjectDropdownMobile}
       loginModal={props?.loginModal}
       closeLoginModal={()=>props?.closeLoginModal()}
@@ -78,9 +78,26 @@ export default function Home(props) {
       closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
       selectSearch={(e)=>props?.selectSearch(e)}
       subjectData={props?.subjectData}
+      {...props}
     />
     }
    </>
   )
 }
+export const getStaticProps = async () =>{
+  let trendingData = await _getTrendingData();
+  return { props: { trendingData } };
+}
+const _getTrendingData = async () => {
+  return await axios
+    .get(`${constant.API_URL.DEV}/mostliked/`)
+    .then((res) => {
+      return res?.data?.data;
+    })
+    .catch((err) => {
+      // this.coursesApiStatus.current.failed();
+      console.log(err);
+    });
+};
 
+export default Home

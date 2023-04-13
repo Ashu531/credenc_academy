@@ -13,7 +13,6 @@ import DetailModal from '../../components/detailModal/DetailModal'
 import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
-import ForgotPasswordModal from "../../components/forgotPasswordModal/ForgotPasswordModal";
 import Head from 'next/head'
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
