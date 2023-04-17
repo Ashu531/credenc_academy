@@ -38,19 +38,10 @@ const Home = (props) => {
         Credenc
       </h1>
     {
-<<<<<<< HEAD
-    mounted &&
     <Dashboard
       theme={props?.theme}
       filterExpandedStage={props?.filterExpandedStage}
       openFilterExpandedStage={()=>props?.openFilterExpandedStage()}
-=======
-    mounted &&  
-    <Dashboard 
-      theme={props?.theme}
-      filterExpandedStage={props?.filterExpandedStage} 
-      openFilterExpandedStage={()=>props?.openFilterExpandedStage()} 
->>>>>>> ssr-update
       subjectDropdownMobile={props?.subjectDropdownMobile}
       loginModal={props?.loginModal}
       closeLoginModal={()=>props?.closeLoginModal()}
@@ -108,27 +99,4 @@ const _getTrendingData = async () => {
     });
 };
 
-<<<<<<< HEAD
 export default Home
-=======
-export const getStaticProps = async () =>{
-
-  let trendingData = await _getTrendingData();
-
-  return { props: { trendingData } };
-}
-
-const _getTrendingData = async () => {
-  return await axios
-    .get(`${constant.API_URL.DEV}/mostliked/`)
-    .then((res) => {
-      return res?.data?.data;
-    })
-    .catch((err) => {
-      // this.coursesApiStatus.current.failed();
-      console.log(err);
-    });
-};
-
-export default Home;
->>>>>>> ssr-update

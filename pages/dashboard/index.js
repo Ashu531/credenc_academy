@@ -61,11 +61,6 @@ const Dashboard = (props) => {
           closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
           selectSearch={(e)=>props?.selectSearch(e)}
           thirdPartyUser={thirdPartyUser}
-<<<<<<< HEAD
-=======
-          subjectData={props?.subjectData}
-          {...props}
->>>>>>> ssr-update
         />}
         {isMobile && 
           <DashboardMobile
