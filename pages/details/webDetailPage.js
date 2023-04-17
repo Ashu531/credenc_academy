@@ -135,7 +135,6 @@ export default function WebDetailPage(props){
         if( props?.detailData && props?.detailData != null ){
                 _handleLocalItems()
         }
-       
       }, []);
 
       const _handleLocalItems = ()=>{
@@ -495,7 +494,7 @@ export default function WebDetailPage(props){
           
         }
 
-    }, [props?.toolData.curriculum])
+    }, [props?.toolData?.curriculum])
 
     const handleCurriculumDisplay = (event, i, j) => {
 
@@ -714,6 +713,9 @@ export default function WebDetailPage(props){
               }
               {
                 props?.detailData?.course_link  && <a href={props?.detailData?.course_link} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none'}}><li className='nav-item-right'><button>Go To Course</button></li></a>
+              }
+              {
+                !props?.detailData.is_mooc  && <a href={props?.detailData?.course_link} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none'}}><li className='nav-item-right'><button>Go To Course</button></li></a>
               }
               
             </div>

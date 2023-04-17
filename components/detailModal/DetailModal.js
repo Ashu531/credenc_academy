@@ -65,6 +65,7 @@ export default function DetailModal(props){
     const [leftCardAlign,setLeftAlign] = useState(false);
     const [thirdPartyUser,setThirdPartyUser] = useState(false);
     let [loading, setLoading] = useState(true);
+    const [courseName,setCourseName] = useState('');
   
 
     const modalRef = useRef();
@@ -108,6 +109,7 @@ export default function DetailModal(props){
               })
                 .then(res => {
                   setCourseData(res.data.data)
+                  _handleCourseName(res.data.data.course_name)
                   getBookmarks(res.data.data)
                   getUpvotes(res.data.data)
                   setUpvoteCount(res.data.data.up_votes)
@@ -122,6 +124,7 @@ export default function DetailModal(props){
             let res = await axios.get(`${constant.API_URL.DEV}/course/preview/${item?.id}/`)
                 .then(res => {
                   setCourseData(res.data.data)
+                  _handleCourseName(res.data.data.course_name)
                   getBookmarks(res.data.data)
                   getUpvotes(res.data.data)
                   setUpvoteCount(res.data.data.up_votes)
@@ -134,6 +137,20 @@ export default function DetailModal(props){
                 })
         }
        
+    }
+
+    const _handleCourseName=(course_name)=>{
+      let str = course_name.replace(
+        /\p{L}+/gu,
+        function(txt) {
+          if (course_name.indexOf(txt) !== 0) {
+            return txt.toLowerCase();
+          }
+          return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        }
+      )
+  
+        setCourseName(str)
     }
 
     const _retrieveData=(item)=>{
@@ -532,7 +549,7 @@ export default function DetailModal(props){
               <div className='detail-modal-course-content' style={props?.status === true ? null : {marginTop: '11rem'}}>
                 <div className='detail-modal-course-container'>
                     <span className='heading1'>
-                      {courseData?.course_name}
+                      {courseName}
                     </span>
                     <span className='heading2'>
                       {courseData?.description}
@@ -734,7 +751,7 @@ export default function DetailModal(props){
               <div /> :
               
               courseData?.is_mooc === true ? 
-                <a href={courseData?.course_link} target="_blank" rel="noopener noreferrer">
+                <a href={courseData?.course_link} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none'}}>
                   <div className='detail-modal-footer-section-right' 
                       style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
                       <span className='apply-now-button'>

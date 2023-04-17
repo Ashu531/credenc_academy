@@ -47,7 +47,7 @@
             font-weight: 500;
             font-size: 13px;
             line-height: 20px;
-            text-transform: capitalize;
+            text-transform: capitalize !important;
             color: var(--primaryColor);
           }
 
@@ -144,6 +144,7 @@
             font-size: 16px;
             line-height: 24px;
             color: var(--primaryColor);
+            text-transform: capitalize !important;
         }
 
         .heading2{
