@@ -391,6 +391,7 @@ class MyApp extends App {
        <div data-theme={this.state.theme} style={this.state.loginModal || this.state.forgotPasswordModal || this.state.footerModal || this.state.coursePrevieModal ? {height: 'calc(var(--vh, 1vh) * 100)',overflow: 'hidden'} : {height: '100%'}}>
           {/* {
             isDesktopOrLaptop ?  */}
+            
             <Header 
             toggleTheme={this.toggleTheme} 
             theme={this.state.theme} 
@@ -409,6 +410,7 @@ class MyApp extends App {
             selectSearch={(e)=>this._selectSearch(e)}
             handleSubjectTab={this._handleSubjectTab}
            /> 
+            
            {/* : 
             <HeaderMobile
             // toggleTheme={this.toggleTheme} 
@@ -423,7 +425,7 @@ class MyApp extends App {
             goingUp={this.state.goingUp}
             />
           } */}
-         <Component 
+         {/* <Component 
             {...pageProps} 
             theme={this.state.theme} 
             filterExpandedStage={this.state.filterExpandedStage} 
@@ -467,28 +469,31 @@ class MyApp extends App {
             selectSearch={(e)=>this._selectSearch(e)}
             subjectData={this.state.subjectData}
             searchPageQuery={this.state.searchPageQuery}
-         />
+         /> */}
          {/* {
             isDesktopOrLaptop ?  */}
-            <Footer 
-            toggleFooterModal={this.toggleFooterModal} 
-            filterExpandedStage={this.state.filterExpandedStage}
-            closeFooterModal={this.closeFooterModal}
-            title="©Credenc2022"/> 
-            {/* : 
-            <FooterMobile
-            openLoginModal={()=>this.openLoginModal()}
-            setMobileLoginNaviagtion={()=>this.openMobileLoginNaviagtion()}
-            theme={this.state.theme} 
-            filterModalVisible={this.state.filterModalVisible}
-            loggedIn={this.state.loggedIn}
-            goingUp={this.state.goingUp}
-            closeLoginModal={()=>this.closeLoginModal()}
-            loginModal={this.state.loginModal}
-            bookmarkCount={this.state.bookmarkCount}
-            closeFilterVisible={()=>this.closeFilterVisible()}
-            />
-         } */}
+            <div className='hideOnMobile'>
+              <Footer 
+              toggleFooterModal={this.toggleFooterModal} 
+              filterExpandedStage={this.state.filterExpandedStage}
+              closeFooterModal={this.closeFooterModal}
+              title="©Credenc2022"/>
+            </div>
+
+            <div className='hideOnDesktop'>
+              <FooterMobile
+              openLoginModal={()=>this.openLoginModal()}
+              setMobileLoginNaviagtion={()=>this.openMobileLoginNaviagtion()}
+              theme={this.state.theme} 
+              filterModalVisible={this.state.filterModalVisible}
+              loggedIn={this.state.loggedIn}
+              goingUp={this.state.goingUp}
+              closeLoginModal={()=>this.closeLoginModal()}
+              loginModal={this.state.loginModal}
+              bookmarkCount={this.state.bookmarkCount}
+              closeFilterVisible={()=>this.closeFilterVisible()}
+              />
+            </div>
         <SlidingPanel
              type={'bottom'}
              isOpen={this.state.footerModal}

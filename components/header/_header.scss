@@ -7,15 +7,31 @@
   
     .navbar{
     //   width: 100%;
-    //   padding: 1.2rem 1.2rem 1.2rem 1.2rem;
-    padding-left: 6rem;
-    padding-right: 5rem;
-    min-height: 8vh;
+      padding: 0 3.2rem;
+    // padding-left: 6rem;
+    // padding-right: 5rem;
+    height: 8vh;
     // background-color: black;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
       z-index: 99999;
+
+      .alignRight {
+        margin-left: auto;
+      }
+
+      .hideOnMobile {
+        visibility: visible;
+      }
+
+      @media screen and (max-width: 500px) {
+        .hideOnMobile {
+          display: none;
+          visibility: hidden;
+        }
+      }
+
       .nav-item{
           // position: relative;
           padding: 0 1rem;
@@ -28,11 +44,6 @@
         .back {
           margin-right: 1rem;
         }
-        .user-elements{
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
 
           .header-text{
             font-family: 'Work Sans';
@@ -45,7 +56,7 @@
             cursor: pointer;
           }
           .icon-element{
-            padding-right: 2rem;
+            padding: 0 1.2rem;
             cursor: pointer;
           }
           .bookmark-count-container{
@@ -88,7 +99,6 @@
           .profile-item{
             padding-left: 20px;
           }
-        }
         .change-theme-text{
           color: var(--defaultPrimaryColor);
         }

@@ -116,7 +116,6 @@ export default function Header(props){
           }}
           text='Sign In'
           classes='btn-tertiary'
-          theme={props?.theme}
         />
       );
     }
@@ -201,7 +200,6 @@ export default function Header(props){
         <div className='navbar-wrapper'>
         
         <div className='navbar'>
-         <div  style={{cursor:"pointer",paddingTop: 10,paddingBottom: 5,display:'flex',position:'relative'}} >
             <Image src={credencAcademy} objectFit="contain" alt='credencLogo' onClick={()=>_goToHome()} />
             <FormControl fullWidth style={{
               width: 180,
@@ -236,11 +234,10 @@ export default function Header(props){
                 
               </Select>
             </FormControl>
-            </div>
             
           {
             (router?.pathname === '/search') || props?.showSearchBar ?
-              <div style={(router?.pathname === '/search') || (props?.showSearchBar) ? {width : '25%',zIndex: 99999,marginRight: 30} : null} >
+              <div className='hideOnMobile' style={(router?.pathname === '/search') || (props?.showSearchBar) ? {width : '25%',zIndex: 99999,marginRight: 30} : null} >
                 <SearchBar 
                   showSearchBar={props?.showSearchBar} 
                   search={props?.searchValue} 
@@ -253,13 +250,12 @@ export default function Header(props){
           : null
           }
         
-         <div className='user-elements'>
-           <div className='header-text' onClick={()=>_openMyCourseTab()}>My Courses</div>
-           <div className='icon-element' onClick={()=>_openBookmarkTab()} style={{position:"relative"}}>
+           <div className='header-text hideOnMobile alignRight' onClick={()=>_openMyCourseTab()}>My Courses</div>
+           <div className='icon-element hideOnMobile' onClick={()=>_openBookmarkTab()}>
            <Image src={ bookmarkIcon} height={22} width={22} objectFit="contain" alt='bookmarkIcon' />
            {
              props?.bookmarkCount >= 1 ? <span className="bookmark-count-container">
-             <span className="bookmark-count">{ props?.bookmarkCount >= 1 ?  props?.bookmarkCount : null}</span>
+             <span className="bookmark-count">{ props?.bookmarkCount >= 1 ?  props?.bookmarkCount : null }</span>
             </span> : null
            }
            
@@ -268,11 +264,10 @@ export default function Header(props){
            {/* <div onClick={()=>props.toggleTheme()} style={{cursor:"pointer",paddingLeft:10}}>
             <span className='change-theme-text'>Change Theme</span>
           </div> */}
-          <div className='profile-item' style={{zIndex: 9999999}}>
+          <div className='profile-item hideOnMobile' style={{zIndex: 9999999}}>
           {renderProfile()}
           </div>
          
-          </div>
           </div>
       
       </div>
