@@ -20,6 +20,7 @@
     .mobile-footer-element{
         display: flex;
         flex-direction: column;
+        align-items: center;
     }
 
     .bookmark-element-mobile{
@@ -86,5 +87,13 @@
             // margin-top: 0.6rem;
         }
       
+    }
+
+    .imageContainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 24px;
+        height: 24px;
     }
 }
