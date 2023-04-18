@@ -15,6 +15,7 @@ import 'react-sliding-side-panel/lib/index.css';
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
 import MyCourseCard from '../../components/my-courses-card/My-Courses-Card'
 import Head from 'next/head'
+import { useMediaQuery } from 'react-responsive';
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 const EdtechAuthKey = 'credenc-edtech-authkey';
@@ -31,6 +32,10 @@ export default function MyCourses(props){
     const [applyNow, setApplyNow] = useState(false)
     const [mounted, setMounted] = useState(false);
     const [cardActionTaken,setCardActionTaken] = useState(false)
+
+    const isDesktopOrLaptop = useMediaQuery({
+      query: "(min-width: 500px)",
+    });
 
     useEffect(() => {
       setMounted(true);
@@ -103,7 +108,7 @@ export default function MyCourses(props){
         <div className='my-course-container'>
             <div className='my-course-content'>
               {
-                window.innerWidth < 500 ?
+                !isDesktopOrLaptop ?
                 <div className='my-course-header-mobile'>
                   <span className='my-course-header-mobile' style={{paddingLeft: 20}}>
                   My Courses
@@ -121,7 +126,7 @@ export default function MyCourses(props){
               }
                 
                 <div className='card-list-content' 
-                style={ window.innerWidth < 500 ? {marginTop: '6rem',gap: 10,padding: '0rem 0rem 8rem 0rem',display:'block'} : courses && courses.length > 0 ? {gap: 10, position: "absolute", top: '14rem', left: '60px', paddingBottom: '6rem'} : {gap: 10}}
+                style={ !isDesktopOrLaptop ? {marginTop: '6rem',gap: 10,padding: '0rem 0rem 8rem 0rem',display:'block'} : courses && courses.length > 0 ? {gap: 10, position: "absolute", top: '14rem', left: '60px', paddingBottom: '6rem'} : {gap: 10}}
                 >
                   {/* <List
                       type={listTypes?.HORIZONTAL_CARDS}

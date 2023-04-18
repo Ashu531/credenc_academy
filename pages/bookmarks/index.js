@@ -14,6 +14,7 @@ import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
 import Head from 'next/head'
+import { useMediaQuery } from 'react-responsive';
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 const EdtechAuthKey = 'credenc-edtech-authkey';
@@ -32,6 +33,10 @@ export default function Bookmarks(props){
     const [cardActionTaken,setCardActionTaken] = useState(false)
     const [userEmail,setUserEmail] = useState('')
     const [loginState,setLoginState]=useState(0);
+
+    const isDesktopOrLaptop = useMediaQuery({
+      query: "(min-width: 500px)",
+    });
 
     useEffect(() => {
       setMounted(true);
@@ -139,7 +144,7 @@ export default function Bookmarks(props){
         <div className='bookmark-container'>
             <div className='bookmark-content'>
               {
-                window.innerWidth < 500 ?
+                !isDesktopOrLaptop ?
                 <div className='bookmark-header-mobile'>
                   <span className='bookmark-header-mobile' style={{paddingLeft: 20}}>
                         Showing all bookmarked courses
@@ -157,7 +162,7 @@ export default function Bookmarks(props){
               }
                 
                 <div className='card-list-content' 
-                style={ window.innerWidth < 500 ? {marginTop: '6rem',gap: 10,padding: '0rem 0rem 8rem 0rem',display:'block'} : courses && courses.length > 0 ? {gap: 10, position: "absolute", top: '14rem', left: '60px', paddingBottom: '6rem'} : {gap: 10}}
+                style={ !isDesktopOrLaptop ? {marginTop: '6rem',gap: 10,padding: '0rem 0rem 8rem 0rem',display:'block'} : courses && courses.length > 0 ? {gap: 10, position: "absolute", top: '14rem', left: '60px', paddingBottom: '6rem'} : {gap: 10}}
                 >
                   <List
                       type={States.listTypes.BOOKMARK_CARDS}

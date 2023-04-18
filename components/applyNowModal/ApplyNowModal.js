@@ -23,6 +23,7 @@ import Checkbox from '@mui/material/Checkbox';
 import applyNowSchema from '../../helper/models/applyNowModel';
 import { Alert } from 'antd';
 import DotLoader from "react-spinners/DotLoader";
+import { useMediaQuery } from 'react-responsive';
 const EdtechAuthKey = 'credenc-edtech-authkey';
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
@@ -54,6 +55,10 @@ export default function ApplyNowModal(props){
     const [thirdPartyData,setThirdPartyData] = useState({})
     const [error,setError] = useState('')
     const [loader,setLoader] = useState(true)
+
+    const isDesktopOrLaptop = useMediaQuery({
+        query: "(min-width: 500px)",
+      });
 
     useEffect(()=>{
         let authToken = localStorage.getItem(EdtechAuthKey);
@@ -104,9 +109,7 @@ export default function ApplyNowModal(props){
         setDob(date);
     };
 
-    const onChange = (date, dateString) => {
-        console.log(date, dateString);
-      };
+    const onChange = (date, dateString) => {};
 
     const handleSubmit=async()=>{
         setLoader(false)
@@ -198,7 +201,7 @@ export default function ApplyNowModal(props){
                     <span className='header-1'>Enrolling for</span>
                     <span className='header-2'>{props?.courseName}</span>
                   </div>
-                  <div className='apply-modal-banner'  style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
+                  <div className='apply-modal-banner'  style={ !isDesktopOrLaptop ? {width:'88%'} : null }>
                     <span className='banner-text'>
                     No more work for you! Just review your pre-filled application and get enrolled!
                     </span>
@@ -233,7 +236,7 @@ export default function ApplyNowModal(props){
                     <Input required={true} placeholder="Full Name" handleInput={(e)=>handleName(e)} value={name} type='text' />
                     </span>
                    </div>
-                   <div className='contact-content' style={window.innerWidth <= 500 ? {display:"flex",flexDirection:'column',justifyContent:'flex-start',alignItems:'flex-start',width:'100%'} : {display:"flex",width:'100%'}}>
+                   <div className='contact-content' style={!isDesktopOrLaptop ? {display:"flex",flexDirection:'column',justifyContent:'flex-start',alignItems:'flex-start',width:'100%'} : {display:"flex",width:'100%'}}>
                      <div className='mobile-content' style={window.innerWidth >  500 ? {width: '50%'} : {width:'100%'}}>
                         <span className='label-text'>
                         Mobile Number*
@@ -247,7 +250,7 @@ export default function ApplyNowModal(props){
                         <Input required={true} placeholder='Email Id' handleInput={(e)=>handleEmail(e)} value={email} type='text'/>
                      </div>
                    </div>
-                   <div className='contact-content' style={window.innerWidth <= 500 ? {display:"flex",flexDirection:'column',justifyContent:'flex-start',alignItems:'flex-start',width:'100%'} : {display:"flex",width:'100%'}}>
+                   <div className='contact-content' style={!isDesktopOrLaptop ? {display:"flex",flexDirection:'column',justifyContent:'flex-start',alignItems:'flex-start',width:'100%'} : {display:"flex",width:'100%'}}>
                      <div className='mobile-content' style={window.innerWidth >  500 ? {width: '50%'} : {width:'100%'}}>
                         <span className='label-text'>
                         Gender*
@@ -285,7 +288,7 @@ export default function ApplyNowModal(props){
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <Stack spacing={3} style={{width:'100%'}}>
                                 {
-                                    window.innerWidth < 500 ? 
+                                    !isDesktopOrLaptop ? 
                                     <MobileDatePicker
                                         inputFormat="MM-DD-YYYY"
                                         value={dob}
@@ -373,7 +376,7 @@ export default function ApplyNowModal(props){
                   </div>
               </div> 
               {
-                window.innerWidth <= 500 ? 
+                !isDesktopOrLaptop ? 
                 <span className='apply-modal-close-icon' onClick={()=>props.closeApplyNowModal()}>
                     <Image src={closeIcon} objectFit='cover' height={20} width={20} />
                 </span>

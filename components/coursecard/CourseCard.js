@@ -15,6 +15,7 @@ import defaultEducator from '../../assets/images/icons/defaultEducator.svg'
 import defaultPlatform from '../../assets/images/icons/defaultPlatform.svg'
 import constant from '../../config/constant';
 import { useRouter } from 'next/router'
+import { useMediaQuery } from 'react-responsive';
 // import theme from '../../scripts/reducers/theme';
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
@@ -31,6 +32,10 @@ export default function CourseCard(props){
   const [upvoted,setUpvoted] = useState(null)
   const [toggleUpvote,setToggleUpvote] = useState(null)
   const [courseName,setCourseName] = useState('')
+
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 500px)",
+  });
 
   const myLoader = ({ src, width, quality }) => {
     if(src && src.length > 0){
@@ -289,7 +294,7 @@ const _handleApplyAction=()=>{
       }
       
     }else{
-      if(window.innerWidth <= 500 && router?.pathname === '/details'){
+      if(!isDesktopOrLaptop && router?.pathname === '/details'){
         router.push({
           pathname: `/`,
         })
@@ -314,9 +319,7 @@ const _handleTrackItem=()=>{
 
  return(
       <>
-      {
-        mounted && 
-        <div className = "card-container" >
+      <div className = "card-container" >
         <div className='card-header'>
           <Image loader={myLoader} src={props?.data?.platform?.logo ? props?.data?.platform?.logo : defaultPlatform} height={36} width={36} alt='courseLogo' style={{borderRadius: '50%'}} objectFit="contain"/>
           {/* <Image loader={myLoader} src={props?.data?.educator[0]?.logo && props?.data?.educator[0]?.logo.length > 0 ? props?.data?.educator[0]?.logo : defaultEducator } objectFit="cover"  height={36} width={36} alt='instituteLogo' style={{borderRadius: '50%'}}/> */}
@@ -384,7 +387,7 @@ const _handleTrackItem=()=>{
           </div>
       </div>
 
-    {  window.innerWidth > 500 ? 
+    {  isDesktopOrLaptop ? 
     <div 
     className='course-button-content'>
 
@@ -418,7 +421,7 @@ const _handleTrackItem=()=>{
            <Image src={ props.theme === 'dark' ? arrowRightDark : arrowRight} objectFit="contain" alt='arrowRight'/>
       </div>
       </div> : 
-      <div className='course-button-content-mobile' style={ window.innerWidth <= 500 ? {padding: '12px 24px'} : null }>
+      <div className='course-button-content-mobile' style={ !isDesktopOrLaptop ? {padding: '12px 24px'} : null }>
               {
                   props?.data?.applied?.course_applied === true ? 
                   <div 
@@ -457,7 +460,6 @@ const _handleTrackItem=()=>{
       </div>}
 
     </div>
-  }
   </>
     )
 }

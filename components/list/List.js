@@ -95,12 +95,10 @@ function List({
     } 
     
     else if(listApiStatus.current.hasFailed()){
-      console.log("list.lenght123")
       return <Error type={ Lists.errorTypes.CRASH } />;
     } 
     
     else {
-      console.log(list,"list.lenght531")
       return <Error type={ Lists.errorTypes.CRASH } />;
     }
   }

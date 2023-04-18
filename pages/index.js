@@ -12,9 +12,13 @@ const Home = (props) => {
   useEffect(() => {
     setMounted(true);
   }, []);
-  // useEffect(()=>{
-  //   _getAuthKey()
-  // },[localStorage.getItem(EdtechToken)])
+
+  useEffect(()=>{
+    if(token){
+      _getAuthKey()
+    }
+  },[props?.token])
+
   const _getAuthKey=()=>{
     let authKey = localStorage.getItem(EdtechToken);
     setToken(authKey)
@@ -34,12 +38,8 @@ const Home = (props) => {
         `}
       </Script>
       <SEO />
-      <h1>
-        Credenc
-      </h1>
     {
     <Dashboard
-      theme={props?.theme}
       filterExpandedStage={props?.filterExpandedStage}
       openFilterExpandedStage={()=>props?.openFilterExpandedStage()}
       subjectDropdownMobile={props?.subjectDropdownMobile}
@@ -84,10 +84,55 @@ const Home = (props) => {
   )
 }
 export const getStaticProps = async () =>{
-  let trendingData = await _getTrendingData();
-  return { props: { trendingData } };
+  let trendingData = getTrendingData();
+  let subCategoryData = getSubCategoryData();
+  let courseData = getCourses();
+
+  return { props: { 
+    trendingData: await trendingData,
+    subCategoryData: await subCategoryData,
+    courseData: await courseData
+  } };
 }
-const _getTrendingData = async () => {
+
+const getSubCategoryData = async () => {
+  const response = await fetch(`${constant.API_URL.DEV}/subsubject/search/`, {
+    method: 'GET',
+    headers: {
+      'key': 'credenc'
+    }
+  })
+
+  const data = await response.json()
+  let totalSubcategoryData = data?.data;
+
+  totalSubcategoryData?.unshift(
+    {
+      "value": "All",
+      "seo_ranks": 0,
+      "label": 0
+    }
+  )
+
+  return totalSubcategoryData;
+}
+
+const getCourses = async () => {
+  return await axios.get(`${constant.API_URL.DEV}/course/search`, {
+    headers: {
+      'key': 'credenc'
+    }
+  })
+    .then(res => {
+      console.log(res)
+      return res.data;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+const getTrendingData = async () => {
   return await axios
     .get(`${constant.API_URL.DEV}/mostliked/`)
     .then((res) => {

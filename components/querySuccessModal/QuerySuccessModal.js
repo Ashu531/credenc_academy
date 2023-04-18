@@ -10,6 +10,7 @@ import chatIcon from '../../assets/images/icons/chatIcon.svg'
 import {ChatWidget} from "@papercups-io/chat-widget";
 import constant from '../../config/constant';
 import credencAcademy from '../../assets/images/icons/credencAcademy.svg'
+import { useMediaQuery } from 'react-responsive';
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
 export default function QuerySuccessModal(props){
@@ -24,6 +25,10 @@ export default function QuerySuccessModal(props){
     let partnerKey = JSON.parse(localStorage.getItem(EdtechPartnerKey));
     setThirdPartyUser(partnerKey)
   }
+
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 500px)",
+  });
 
     return(
         <>
@@ -159,7 +164,7 @@ export default function QuerySuccessModal(props){
              
 
               {
-             window.innerWidth <= 500 ? 
+             !isDesktopOrLaptop ? 
              <span className='success-apply-modal-close-icon' onClick={()=>props.closeApplyNowModal()}>
                  {/* <Image src={closeIcon} objectFit='cover' height={20} width={20} /> */}
              </span>

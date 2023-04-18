@@ -53,7 +53,6 @@ export const apiRequest = async ({
       onDownloadProgress,
       timeout: 3600 * 1000, //3600 seconds
     });
-    console.log(response.data, "response");
     return response.data;
   } catch (error) {
     if (error.response) {

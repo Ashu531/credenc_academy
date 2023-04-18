@@ -170,12 +170,10 @@ const _getReviews = async (id) => {
     .then((res) => {
       // this.coursesApiStatus.current.success();
       // setMounted(true);
-      console.log('response', res?.data)
       return res?.data;
     })
     .catch((err) => {
       // this.coursesApiStatus.current.failed();
-      console.log('error', err)
       console.log(err);
     });
 };

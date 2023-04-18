@@ -27,6 +27,7 @@ import BrowseCategories from "../../components/browseCategory/Categories"
 import CourseTrivia from "../../components/courseTrivia/CourseTrivia"
 import QuerySuccessModal from "../../components/querySuccessModal/QuerySuccessModal"
 import InquiryModal from "../../components/inquiryModal/inquiryModal"
+import { useMediaQuery } from "react-responsive";
 
 const styles = {
   // width: "100%",
@@ -87,7 +88,7 @@ export default function DashboardDesktop(props) {
   const [courseCardData, setCourseCardData] = useState([])
   const [selectedCategory, setSelectedCategory] = useState('');
   const [subjectData, setSubjectData] = useState([])
-  const [subCategory, setSubCategory] = useState([])
+  const [subCategory, setSubCategory] = useState(props?.subCategoryData)
   const [selectedSubject, setSelectedSubject] = useState({})
   const [detailModal, setDetailModal] = useState(false);
   const [detailData, setDetailData] = useState({});
@@ -131,51 +132,59 @@ export default function DashboardDesktop(props) {
     id: 0
   });
   const [pageNumber, setPageNumber] = useState(1);
-  const [mostLikedCourses, setMostLikedCourses] = useState([]);
+  const [mostLikedCourses, setMostLikedCourses] = useState(props.trendingData);
   const [navbarTop, setNavbarTop] = useState(false);
 
-  let observer = useRef(
-    new IntersectionObserver(
-      (entries) => {
-        const first = entries[0];
-        if (first.isIntersecting === true && nextPage === true) {
-          setPageNumber((pn) => pn > 0 ? pn + 1 : pn);
-        }
-      })
-  );
+  // let observer = useRef(
+  //   new IntersectionObserver(
+  //     (entries) => {
+  //       const first = entries[0];
+  //       if (first.isIntersecting === true && nextPage === true) {
+  //         setPageNumber((pn) => pn > 0 ? pn + 1 : pn);
+  //       }
+  //     })
+  // );
+
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 500px)",
+  });
 
 
   useEffect(() => {
-    getSubCategoryData()
-    getMostLikedCourses()
+    // getSubCategoryData()
+    // getMostLikedCourses()
     getExternalUser()
-
+    setMostLikedCourses(props.trendingData)
+    setSubCategory(props.subCategoryData)
+    setCourseCardData(props.courseData.data)
   }, [])
 
   useEffect(() => {
-    if (nextPage === true) {
-      coursesApiStatus.current.start();
-      handleFilteredData(true);
-      if (pageNumber === 1) {
-        applyFilters();
+    if(pageNumber > 1){
+      if (nextPage === true) {
+        coursesApiStatus.current.start();
+        handleFilteredData(true);
+        if (pageNumber === 1) {
+          applyFilters();
+        }
       }
     }
   }, [pageNumber]);
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    const currentElement = lastCourse;
-    const currentObserver = observer.current;
-    if (currentElement) {
-      currentObserver.observe(currentElement);
-    }
+  //   const currentElement = lastCourse;
+  //   const currentObserver = observer.current;
+  //   if (currentElement) {
+  //     currentObserver.observe(currentElement);
+  //   }
 
-    return () => {
-      if (currentElement) {
-        currentObserver.unobserve(currentElement);
-      }
-    };
-  }, [lastCourse]);
+  //   return () => {
+  //     if (currentElement) {
+  //       currentObserver.unobserve(currentElement);
+  //     }
+  //   };
+  // }, [lastCourse]);
 
   const getExternalUser = () => {
     let externalUser = urlService.current.hasEntry("partner_key")
@@ -184,66 +193,6 @@ export default function DashboardDesktop(props) {
         props?.openLoginModal()
       }
     }
-  }
-
-  const getMostLikedCourses = async () => {
-    if (props?.token && props?.token.length > 0) {
-      let response = await axios.get(`${constant.API_URL.DEV}/mostliked/`, {
-        headers: {
-          'Authorization': `Bearer ${props?.token}`
-        }
-      })
-        .then(res => {
-          try {
-            coursesApiStatus.current.success();
-            setMostLikedCourses(res?.data.data)
-            return res.data;
-          } catch (e) {
-            console.log(e);
-          }
-        })
-        .catch(err => {
-          coursesApiStatus.current.failed();
-          console.log(err);
-        });
-    } else {
-      let response = await axios.get(`${constant.API_URL.DEV}/mostliked/`)
-        .then(res => {
-          try {
-            coursesApiStatus.current.success();
-            setMostLikedCourses(res?.data.data)
-            return res.data;
-          } catch (e) {
-            console.log(e);
-          }
-        })
-        .catch(err => {
-          coursesApiStatus.current.failed();
-          console.log(err);
-        });
-    }
-
-  }
-
-  const getSubCategoryData = async () => {
-    const response = await fetch(`${constant.API_URL.DEV}/subsubject/search/`, {
-      method: 'GET',
-      headers: {
-        'key': 'credenc'
-      }
-    })
-
-    const data = await response.json()
-    let totalSubcategoryData = data?.data;
-
-    totalSubcategoryData?.unshift(
-      {
-        "value": "All",
-        "seo_ranks": 0,
-        "label": 0
-      }
-    )
-    setSubCategory(totalSubcategoryData)
   }
 
   const _getSubjectDetails = (item) => {
@@ -535,7 +484,7 @@ export default function DashboardDesktop(props) {
     urlService.current.changeEntry(queries.MIN_PRICE, min);
     urlService.current.changeEntry(queries.MAX_PRICE, max);
 
-    if (window.innerWidth > 500) {
+    if (isDesktopOrLaptop) {
       if (pageNumber > 1) {
         setPageNumber(1)
       } else {
@@ -601,16 +550,16 @@ export default function DashboardDesktop(props) {
       setNextPage(false)
     }
 
-    if (pageNumber <= 1 || updatePageNumber === false) {
-      // setCourses([...res.data]);
-      setCardApiSuccess(true)
-      if (res?.data)
-        setCourseCardData([...res.data])
-    } else {
+    // if (pageNumber <= 1 || updatePageNumber === false) {
+    //   // setCourses([...res.data]);
+    //   setCardApiSuccess(true)
+    //   if (res?.data)
+    //     setCourseCardData([...res.data])
+    // } else {
       // setCourses([...courseCardData, ...res.data]);
       setCardApiSuccess(true)
       setCourseCardData([...courseCardData, ...res.data])
-    }
+    // }
 
     setMaxPrice(Math.floor(parseFloat(res.max_price)));
     setMinPrice(Math.floor(parseFloat(res.min_price)));
@@ -936,7 +885,7 @@ export default function DashboardDesktop(props) {
             </div>
             <div className='course-section'>
               {
-                mostLikedCourses && mostLikedCourses.length > 0 && mostLikedCourses.map((item, index) => {
+                props?.trendingData && props?.trendingData.length > 0 && props?.trendingData.map((item, index) => {
                   return (
                     <div key={index}>
                       <CourseCard
@@ -1118,11 +1067,11 @@ export default function DashboardDesktop(props) {
         size={30}
       >
         <div className='filter-sidebar-content'>
-          {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={window.innerWidth > 500 ? { minHeight: '95vh', overflow: 'scroll' } : null}>
+          {<div className={`${isDesktopOrLaptop ? 'filter-column' : 'filter-mobile'} ${!isDesktopOrLaptop && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={isDesktopOrLaptop ? { minHeight: '95vh', overflow: 'scroll' } : null}>
             <div className="filter-head">
               <span>{appliedFiltersCount.current === 0 ? <span className="no-filter-text">No filters applied</span> : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}</span>
-              {/* {appliedFiltersCount.current !== 0 && <span style={window.innerWidth > 500 ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>} */}
-              {window.innerWidth <= 500 && <span className='cross' onClick={() => setMobileFiltersState(false)}><img src={closeIcon} /></span>}
+              {/* {appliedFiltersCount.current !== 0 && <span style={isDesktopOrLaptop ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>} */}
+              {!isDesktopOrLaptop && <span className='cross' onClick={() => setMobileFiltersState(false)}><img src={closeIcon} /></span>}
             </div>
             <div className='filters'>
 
@@ -1207,7 +1156,7 @@ export default function DashboardDesktop(props) {
             </div>
 
           </div>}
-          {window.innerWidth > 500 ? <div className="detail-modal-footer">
+          {isDesktopOrLaptop ? <div className="detail-modal-footer">
             <div className='modal-container'>
               <div className='reset-button-container'>
                 <Button

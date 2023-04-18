@@ -30,6 +30,7 @@ import LinkedlnLogo from '../../assets/images/icons/linkedin-icon.svg';
 import approvedIcon from '../../assets/images/icons/approvedIcon.svg'
 import stopWatchIcon from '../../assets/images/icons/stopWatchIcon.svg'
 import Link from 'next/link';
+import { useMediaQuery } from 'react-responsive';
 const EdtechTheme = 'EdtechTheme';
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
@@ -70,6 +71,10 @@ export default function DetailModal(props){
 
     const modalRef = useRef();
     const cardRef = useRef();
+
+    const isDesktopOrLaptop = useMediaQuery({
+      query: "(min-width: 500px)",
+    });
 
     const myLoader = ({ src, width, quality }) => {
         if(src && src.length > 0){
@@ -436,8 +441,8 @@ export default function DetailModal(props){
                         >
                         <Image src={ bookmarkVisible === true ? selectedBookmark : theme === 'dark' ? bookmarkIconDark : bookmarkIcon}  
                             objectFit="contain" 
-                            width={ window.innerWidth <= 500 ? 25 : 24 }
-                            height={window.innerWidth <= 500 ? 25 : 24 }
+                            width={ !isDesktopOrLaptop ? 25 : 24 }
+                            height={!isDesktopOrLaptop ? 25 : 24 }
                         />
                         </div>
                     {/* <div 
@@ -446,13 +451,13 @@ export default function DetailModal(props){
                     onClick={()=> _handleUpvoteTrigger(courseData) }
                     >
                         <div className='upvote-container'>
-                            <span className='upvote-text' style={ upvoteVisible ? window.innerWidth <= 500 ?  {marginTop:1,color: '#FFFFFF'} : {color: '#FFFFFF'} : null} >
+                            <span className='upvote-text' style={ upvoteVisible ? !isDesktopOrLaptop ?  {marginTop:1,color: '#FFFFFF'} : {color: '#FFFFFF'} : null} >
                             {upvoteCount}
                             </span>
                             <Image 
                                 src={upvoteVisible ? upvoteLogoDark : upvoteLogo}  
-                                width={ window.innerWidth <= 500 ? 30 : 18 }
-                                height={window.innerWidth <= 500 ? 30 : 18 }
+                                width={ !isDesktopOrLaptop ? 30 : 18 }
+                                height={!isDesktopOrLaptop ? 30 : 18 }
                                 objectFit="cover" 
                             />
                         </div>
@@ -461,8 +466,8 @@ export default function DetailModal(props){
                             <a href={courseData?.course_link} target='_blank' rel="noreferrer">
                                 <Image 
                                     src={globeIcon}  
-                                    width={ window.innerWidth <= 500 ? 25 : 24 }
-                                    height={window.innerWidth <= 500 ? 25 : 24 }
+                                    width={ !isDesktopOrLaptop ? 25 : 24 }
+                                    height={!isDesktopOrLaptop ? 25 : 24 }
                                     objectFit="cover" 
                                 />
                             </a>
@@ -534,7 +539,7 @@ export default function DetailModal(props){
             
 
             {/* <div className='detail-modal-banner'  
-            // style={ window.innerWidth <= 500 ? {width:'100%'} : null }
+            // style={ !isDesktopOrLaptop ? {width:'100%'} : null }
             >
                 { courseData?.enrollment_start_date && courseData?.enrollment_start_date.length > 0 ?
                     <span className='banner-text'>
@@ -614,13 +619,13 @@ export default function DetailModal(props){
                     <Image src={instructorIcon} objectFit='cover' />
                     <span className='instructor-text'>Instructors</span>
                 </div>
-                <div className='avatar-container' style={ window.innerWidth <= 500 ? { gap: 20, width:'100%',overflow: "auto" } : null}>
+                <div className='avatar-container' style={ !isDesktopOrLaptop ? { gap: 20, width:'100%',overflow: "auto" } : null}>
                 {
                    courseData?.instructor && courseData?.instructor.map((item,index)=>{
                        return( 
                        <span key={index} className="avatar-content" >
                          {
-                           window.innerWidth > 500 ? 
+                           isDesktopOrLaptop ? 
                            <div style={{width: 40,height: 40,position:"relative",cursor:"pointer"}} onMouseEnter={()=>_handleIntructorHover(item)} onMouseLeave={()=>_handleIntructorHoverHide()} >
                               <a 
                               href={item?.linkedin_link} 
@@ -681,7 +686,7 @@ export default function DetailModal(props){
             <div className='divider' style={{marginTop: 16,marginBottom: 15}}/>
             <div 
             className='content-footer'
-            style={window.innerWidth <= 500 ? {paddingBottom : '7%'} : {paddingBottom: '6%'}}
+            style={!isDesktopOrLaptop ? {paddingBottom : '7%'} : {paddingBottom: '6%'}}
             >
               <span className='content-date-text' style={{paddingLeft: 24}}>
               Last updated on: <span style={{fontWeight: 600}}>{moment(courseData?.date_modified).format("MMM Do YY")}</span>
@@ -696,7 +701,7 @@ export default function DetailModal(props){
             {
                detailFooter ?  
                 <div className='disclaimer-footer-content' 
-                // style={window.innerWidth <= 500 ? detailFooter ? {marginBottom: '18%'} : null : null}
+                // style={!isDesktopOrLaptop ? detailFooter ? {marginBottom: '18%'} : null : null}
                 >
                     <span className='footer-text'>
                     The information provided on our Platform is for general information purpose only and such informations are not investigated, monitored, or checked for accuracy, validity, and reliability by us. Your use of the Platform is solely at your own risk and we in no way shall have any liability whatsoever.
@@ -723,7 +728,7 @@ export default function DetailModal(props){
              } 
             }
          >
-            <div className='detail-modal-footer-section-left' style={window.innerWidth < 500 ? {width: '51%'} : null}>
+            <div className='detail-modal-footer-section-left' style={!isDesktopOrLaptop ? {width: '51%'} : null}>
                 {
                   courseData?.final_pricing && courseData?.final_pricing.length > 0 ?
                     <span className='price-text'>
@@ -738,7 +743,7 @@ export default function DetailModal(props){
             </div>
 
             <div className='detail-modal-footer-section-right'
-                style={{width:window.innerWidth <= 500 ? '88%' : '', padding: '0 2.4rem 0 0' }} onClick={()=>props?.openQueryModal()}>
+                style={{width:!isDesktopOrLaptop ? '88%' : '', padding: '0 2.4rem 0 0' }} onClick={()=>props?.openQueryModal()}>
                 <span className='apply-now-button' style={{background: 'transparent', border: '1px solid var(--defaultPrimaryColor)'}}>
                     <span className='apply-now-button-text' style={{color: '#000000'}}>
                         Talk to Us
@@ -753,7 +758,7 @@ export default function DetailModal(props){
               courseData?.is_mooc === true ? 
                 <a href={courseData?.course_link} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none'}}>
                   <div className='detail-modal-footer-section-right' 
-                      style={ window.innerWidth <= 500 ? {width:'88%'} : null }>
+                      style={ !isDesktopOrLaptop ? {width:'88%'} : null }>
                       <span className='apply-now-button'>
                           <span className='apply-now-button-text'>
                               Go To Course
@@ -763,7 +768,7 @@ export default function DetailModal(props){
                   </a> :
                   
                   <div className='detail-modal-footer-section-right' 
-                    style={ window.innerWidth <= 500 ? {width:'88%'} : null } onClick={()=>_handleApplyModal()}>
+                    style={ !isDesktopOrLaptop ? {width:'88%'} : null } onClick={()=>_handleApplyModal()}>
                     <span className='apply-now-button'>
                         <span className='apply-now-button-text'>
                             Apply Now
@@ -778,7 +783,7 @@ export default function DetailModal(props){
                 className='detail-modal-close-icon' 
                 onClick={()=>props.closeDetailModal()} 
                 style={
-                   window.innerWidth < 500 ? {
+                   !isDesktopOrLaptop ? {
                     position: 'absolute',
                     top: '1.5%',
                     right: '2.5%'

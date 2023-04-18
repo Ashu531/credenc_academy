@@ -38,7 +38,6 @@ const getUserData = async (url, token) => {
 }
 
 const getUserInitials = (value) => {
-    console.log(value,"value+++")
     return value[0];
 }
 

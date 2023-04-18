@@ -13,6 +13,7 @@ import constant from '../../config/constant';
 import mailIcon from '../../assets/images/icons/mailIcon.svg'
 import mapIcon from '../../assets/images/icons/mapIcon.svg'
 import callIcon from '../../assets/images/icons/callIcon.svg'
+import { useMediaQuery } from 'react-responsive';
 
 export default function FooterModal(props){
     const router = useRouter();
@@ -21,7 +22,9 @@ export default function FooterModal(props){
         router.push('/privacy');
     }
 
-    console.log(router)
+    const isDesktopOrLaptop = useMediaQuery({
+        query: "(min-width: 500px)",
+      });
 
     return(
        <div className='footer-modal'>

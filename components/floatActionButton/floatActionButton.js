@@ -4,6 +4,7 @@ import filterIcon from '../../assets/images/icons/funnelIcon.svg';
 import { Skeleton } from '@mui/material';
 import Image from "next/image";
 import checkIcon from '../../assets/images/icons/checkIcon.svg'
+import { useMediaQuery } from 'react-responsive';
 
 export default function FloatActionButton({
     type = 'course type',
@@ -20,6 +21,9 @@ export default function FloatActionButton({
 }) {
 
     
+    const isDesktopOrLaptop = useMediaQuery({
+        query: "(min-width: 500px)",
+      });
 
     const [displayContent, setDisplayContent] = useState(false);
 
@@ -89,7 +93,7 @@ export default function FloatActionButton({
         return <>
             <div className={`float-sort-action-${floatType}`} style={{marginRight:12}}>
                 <span onClick={() => _handleSorting()} className='sort'><Image src={filterIcon} alt='Sorting' objectFit='contain' /></span>
-                {(window.innerWidth <= 500) &&
+                {(!isDesktopOrLaptop) &&
                     <div
                         className={`dropdown-content-mobile`}
                         style={displayContent ? { bottom: 0} : { bottom: '-100%'}}
@@ -118,7 +122,7 @@ export default function FloatActionButton({
     if (type === 'subject type') {
         return <>
             <div className={`float-sort-action-${floatType}`}>
-                {(window.innerWidth <= 500) &&
+                {(!isDesktopOrLaptop) &&
                     <div
                         className={`dropdown-content-mobile`}
                         style={displayContent ? { bottom: 0,zIndex:9999 } : { bottom: '-100%', }}

@@ -3,6 +3,7 @@ import States from '../../config/states';
 import Input from '../input/Input';
 // import searchIcon from '../../../../assets/search-icon-white.svg';
 import { Skeleton } from '@mui/material';
+import { useMediaQuery } from 'react-responsive';
 
 export default function PrimaryDropdown({
     heading='Pick one',
@@ -68,13 +69,17 @@ export default function PrimaryDropdown({
         }
     }, [selected]);
 
+    const isDesktopOrLaptop = useMediaQuery({
+        query: "(min-width: 500px)",
+      });
+
   return (
     <div className={`dropdown-${dropdownType} ${(isNext || dropdownState.id === dropdownStates.OPEN.id) ? 'small-wrapper-colored' : ''} ${disabled ? 'disable' : ''}`} ref={dropRef} style={{zIndex:99999}}>
         <div className="dropbtn" style={selected.style || dropdownState.style} onClick={() => handleDropdownState(false)}>
             {placeholder}
             <span className={(isNext || dropdownState.id === dropdownStates.OPEN.id) ? 'small-wrapper-colored' : ''} onClick={(e) => {e.stopPropagation(); handleDropdownState(true)}}><img src={selected.icon || dropdownState.icon} /></span>
         </div>
-        {(renderDropdownState(dropdownStates.OPEN.id) && window.innerWidth > 500) && <div className={`dropdown-content ${isTop() ? 'dropdown-content-up' : ''}`}>
+        {(renderDropdownState(dropdownStates.OPEN.id) && isDesktopOrLaptop) && <div className={`dropdown-content ${isTop() ? 'dropdown-content-up' : ''}`}>
             {includeSearchBar && 
             <div className='search-container'>
                 <Input
@@ -91,7 +96,7 @@ export default function PrimaryDropdown({
             {dropList.length === 0 && 
                 Array(3).fill(null).map((it, i) => <Skeleton key={i} variant='text' width='70%' height='2.4rem' sx={{bgcolor: '#303030', margin: '0 2rem'}}/>)}
         </div>}
-        {(window.innerWidth <= 500) && 
+        {(!isDesktopOrLaptop) && 
         <div 
             className={`dropdown-content-mobile`}
             style={renderDropdownState(dropdownStates.OPEN.id) ? {bottom: 0,zIndex: 999} : {bottom: '-100%',zIndex: 999}}
@@ -112,7 +117,7 @@ export default function PrimaryDropdown({
             {dropList.length === 0 && 
                 Array(3).fill(null).map((it, i) => <Skeleton key={i} variant='text' width='70%' height='2.4rem' sx={{bgcolor: '#303030', margin: '0 2rem'}}/>)}
         </div>}
-        {renderDropdownState(dropdownStates.OPEN.id && window.innerWidth <= 500) && <div className='background-blur' onClick={() => handleDropdownState(false)}></div>}
+        {renderDropdownState(dropdownStates.OPEN.id && !isDesktopOrLaptop) && <div className='background-blur' onClick={() => handleDropdownState(false)}></div>}
     </div>
   )
 }

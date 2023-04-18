@@ -10,6 +10,7 @@ import { CircularProgress } from '@mui/material';
 import { validateConfirmPassword, validatePassword } from '../../helper/validationService';
 import ProfileHeader from './ProfileHeader';
 import constant from '../../config/constant';
+import { useMediaQuery } from 'react-responsive';
 
 export default function ResetPassword({token, handleForgotPassword,openForgotPasswordModal,setMobileLoginNavigation}) {
 
@@ -85,7 +86,6 @@ export default function ResetPassword({token, handleForgotPassword,openForgotPas
   }
 
   const showHidePassword = (field) => {
-    console.log(oldPasswordInputState,"field++++")
     switch(field){
       case 'old': 
         if (oldPasswordInputState.hide) {
@@ -147,6 +147,10 @@ export default function ResetPassword({token, handleForgotPassword,openForgotPas
 
   }
   
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 500px)",
+  });
+
   return (
     <div className='reset-password'>
       <ProfileHeader heading='Reset Password' setMobileLoginNavigation={()=>setMobileLoginNavigation()} />
@@ -193,7 +197,7 @@ export default function ResetPassword({token, handleForgotPassword,openForgotPas
         <div className='button-container'>
           <div className='text-button' onClick={()=>openForgotPasswordModal()}>Forgot Password?</div>
           <div className="auth-container">
-            {isApiInProgress() ? <CircularProgress /> : <Button style={{maxHeight: '4rem', maxWidth: `${window.innerWidth > 500 ? '15rem' : 'auto'}`, background: buttonState.color}} linearGradient='green' onClick={handleResetPassword} text={buttonState.text} classes='btn-secondary small-wrapper-colored'/>}
+            {isApiInProgress() ? <CircularProgress /> : <Button style={{maxHeight: '4rem', maxWidth: `${isDesktopOrLaptop ? '15rem' : 'auto'}`, background: buttonState.color}} linearGradient='green' onClick={handleResetPassword} text={buttonState.text} classes='btn-secondary small-wrapper-colored'/>}
           </div>
         </div>
       </div>

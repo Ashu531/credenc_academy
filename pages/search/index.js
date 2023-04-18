@@ -3,7 +3,6 @@ import { useMediaQuery } from "react-responsive";
 import constant from "../../config/constant";
 import { useRouter } from 'next/router'
 import SearchDesktop from "./SearchDesktop";
-import DashboardMobile from "../dashboard/DashboardMobile";
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
 export default function Dashboard(props) {
@@ -58,40 +57,6 @@ export default function Dashboard(props) {
           thirdPartyUser={thirdPartyUser}
           subjectData={props?.subjectData}
         />}
-        {isMobile && 
-          <DashboardMobile
-          openFilterExpandedStage={props?.openFilterExpandedStage}
-          filterExpandedStage={props?.filterExpandedStage}
-          subjectDropdownMobile={props?.subjectDropdownMobile}
-          loginModal={props?.loginModal}
-          closeLoginModal={()=>props?.closeLoginModal()}
-          openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
-          forgotPasswordModal={props?.forgotPasswordModal}
-          handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
-          token={props?.token}
-          selectedSubject= {(item)=>props?.selectedSubject(item)}
-          toggleSubjectDropdown={()=>props?.toggleSubjectDropdown()}
-          toggleFilterVisible={()=>props?.toggleFilterVisible()}
-          filterModalVisible={props?.filterModalVisible}
-          handleLogin={()=>props?.handleLogin()}
-          searchValue={props?.searchValue}
-          handleSearch={(e)=>props?.handleSearch(e)}
-          closeFilterExpandedStage={()=>props?.closeFilterExpandedStage()}
-          openFilterVisible={()=>props?.openFilterVisible()}
-          handleOpenMobileSearch={()=>props?.handleOpenMobileSearch()}
-          clearSearch={()=>props?.clearSearch()}
-          openLoginModal={()=>props?.openLoginModal()}
-          closeFilterVisible={()=>props?.closeFilterVisible()}
-          setScrollUp={()=>props?.setScrollUp()}
-          setScrollDown={()=>props?.setScrollDown()}
-          goingUp={props?.goingUp}
-          addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
-          removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
-          closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
-          selectSearch={(e)=>props?.selectSearch(e)}
-          thirdPartyUser={thirdPartyUser}
-        />
-        }
         </>
       }
       </>

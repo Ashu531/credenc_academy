@@ -390,7 +390,7 @@ class MyApp extends App {
       {
        <div data-theme={this.state.theme} style={this.state.loginModal || this.state.forgotPasswordModal || this.state.footerModal || this.state.coursePrevieModal ? {height: 'calc(var(--vh, 1vh) * 100)',overflow: 'hidden'} : {height: '100%'}}>
           {/* {
-            window.innerWidth > 500 ?  */}
+            isDesktopOrLaptop ?  */}
             <Header 
             toggleTheme={this.toggleTheme} 
             theme={this.state.theme} 
@@ -469,7 +469,7 @@ class MyApp extends App {
             searchPageQuery={this.state.searchPageQuery}
          />
          {/* {
-            window.innerWidth > 500 ?  */}
+            isDesktopOrLaptop ?  */}
             <Footer 
             toggleFooterModal={this.toggleFooterModal} 
             filterExpandedStage={this.state.filterExpandedStage}

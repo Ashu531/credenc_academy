@@ -38,10 +38,6 @@ useEffect(()=>{
     }
  } 
 
- useEffect(() => {
-   console.log(searchString, searchQuery, props?.showSearchBar, location?.query)
- }, [searchString])
-
   const _autocompleteQuery=async(e,results)=>{
     
     props?.handleSearch(e)

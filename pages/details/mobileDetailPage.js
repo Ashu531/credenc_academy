@@ -225,7 +225,7 @@ export default function DetailPageMobile(props){
           
         }
 
-    }, [props?.toolData.curriculum])
+    }, [props?.toolData])
 
     const handleCurriculumDisplay = (event, i, j) => {
 
@@ -306,7 +306,6 @@ export default function DetailPageMobile(props){
           setError('Oh! Looks like you forgot to give us a rating')
         }
       }else{
-        console.log("coming+++")
         props?.openLoginModal()
       }
       
@@ -397,12 +396,12 @@ export default function DetailPageMobile(props){
             </div>
           </div>
 
-          {curriculum.length > 0 && <div className='container' id='syllabus'>
+          {curriculum?.length > 0 && <div className='container' id='syllabus'>
             <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'flex-start', marginBottom: '2rem'}}>
               <div className='heading'>Syllabus</div>
             </div>
             {
-              curriculum.map((item, index) => {
+              curriculum?.map((item, index) => {
                 return(
                   <div className='curriculum-item' onClick={event => handleCurriculumDisplay(event, index, -1)} key={index}>
                     <div style={{padding: '2.1rem 0 0'}}>

@@ -12,6 +12,7 @@ import defaultPlatform from '../../assets/images/icons/defaultPlatform.svg'
 import constant from '../../config/constant';
 import { useRouter } from 'next/router'
 import arrowRightDark from '../../assets/images/icons/arrowRight.svg'
+import { useMediaQuery } from 'react-responsive';
 // import theme from '../../scripts/reducers/theme';
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
@@ -36,6 +37,10 @@ export default function MyCourseCard(props){
         return '..'
     }
   }
+
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 500px)",
+  });
 
   useEffect(() => {
     setMounted(true);
@@ -249,7 +254,7 @@ const _goToDetailPage=(id)=>{
         mounted && 
         <div 
           className="card-container"
-          style={window.innerWidth <= 500 ? {minWidth: 0,padding: 0} : null } 
+          style={!isDesktopOrLaptop ? {minWidth: 0,padding: 0} : null } 
         >
         <div className='card-header'>
           <Image loader={myLoader} src={props?.data?.platform?.logo ? props?.data?.platform?.logo : defaultPlatform} height={36} width={36} alt='courseLogo' style={{borderRadius: '50%'}} objectFit="contain"/>
@@ -296,7 +301,7 @@ const _goToDetailPage=(id)=>{
           </div>
       </div>
 
-    {  window.innerWidth > 500 ? 
+    {  isDesktopOrLaptop ? 
     <div 
     className='course-button-content' 
     // style={{...compareButtonVisible,marginLeft:0}}
@@ -331,7 +336,7 @@ const _goToDetailPage=(id)=>{
            <Image src={arrowRight} objectFit="contain" alt='arrowRight'/>
       </div>
     </div> : 
-    <div className='course-button-content-mobile' style={ window.innerWidth <= 500 ? {padding: '12px 12px',flexDirection: 'row',alignItems:'center'} : null }>
+    <div className='course-button-content-mobile' style={ !isDesktopOrLaptop ? {padding: '12px 12px',flexDirection: 'row',alignItems:'center'} : null }>
               <div className='course-detail-button-mobile' onClick={()=> props?.openDetailModal()} style={{padding: 8,gap: 0,border:'1px solid #00CB9C',borderRadius: 4}}>
                 <span className='course-detail-text'>
                   Track Application

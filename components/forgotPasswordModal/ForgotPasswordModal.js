@@ -16,6 +16,7 @@ import axios from "axios";
 import Image from "next/image";
 import constant from "../../config/constant";
 import { useRouter } from 'next/router'
+import { useMediaQuery } from "react-responsive";
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 const authKey = 'credenc-edtech-authkey';
@@ -50,6 +51,10 @@ export default function ForgotPasswordModal({
   const [otp, setOtp] = useState({
       generated: false,
       values: ['', '', '', '', '', '']
+  });
+
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 500px)",
   });
 
   useEffect(()=>{
@@ -164,7 +169,7 @@ export default function ForgotPasswordModal({
           
       })
       .catch(err => {
-        console.log(err,"error+++")
+        console.log(err)
         setFormError(err.response.data.error);
       });
       if (response?.response === "Successfully LoggedIn") {
@@ -256,7 +261,6 @@ export default function ForgotPasswordModal({
     })
     .then(res => {
       try{
-        console.log(res);
         // dispatchLogin(res.data.tokens);
         setAuthApiStatus(ApiStatus.SUCCESS);
         // setTimeout(() => location.reload(), 100)

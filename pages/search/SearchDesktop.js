@@ -25,6 +25,7 @@ import ForgotPasswordModal from "../../components/forgotPasswordModal/ForgotPass
 import InfiniteScroll from 'react-infinite-scroll-component';
 import QuerySuccessModal from "../../components/querySuccessModal/QuerySuccessModal"
 import InquiryModal from "../../components/inquiryModal/inquiryModal"
+import { useMediaQuery } from "react-responsive";
 
 const queries = {
   PROFESSION: 'profession',
@@ -357,7 +358,7 @@ export default function SearchDesktop(props) {
     urlService.current.changeEntry(queries.MIN_PRICE, min);
     urlService.current.changeEntry(queries.MAX_PRICE, max);
 
-    if (window.innerWidth > 500) {
+    if (isDesktopOrLaptop) {
       if (pageNumber > 1) {
         setPageNumber(1)
       } else {
@@ -655,11 +656,14 @@ export default function SearchDesktop(props) {
   }
 
   const handleScrollData = () => {
-    console.log("coming++")
     // setPageNumber(pageNumber.current+1)
     setPageNumber(pageNumber + 1)
     handleFilteredData()
   }
+
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 500px)",
+  });
 
   useEffect(() => {
     if (!location.isReady) return;
@@ -694,10 +698,10 @@ export default function SearchDesktop(props) {
   return (
     <div>
       <div className="course-page">
-        {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={window.innerWidth > 500 ? { minHeight: '80%' } : null}>
+        {<div className={`${isDesktopOrLaptop ? 'filter-column' : 'filter-mobile'} ${!isDesktopOrLaptop && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={isDesktopOrLaptop ? { minHeight: '80%' } : null}>
           <div className="filter-head">{appliedFiltersCount.current === 0 ? <span className="no-filter-text">No filters applied</span> : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}
-            {appliedFiltersCount.current !== 0 && <span style={window.innerWidth > 500 ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>}
-            {window.innerWidth <= 500 && <span className='cross' onClick={() => setMobileFiltersState(false)}><img src={closeIcon} /></span>}
+            {appliedFiltersCount.current !== 0 && <span style={isDesktopOrLaptop ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>}
+            {!isDesktopOrLaptop && <span className='cross' onClick={() => setMobileFiltersState(false)}><img src={closeIcon} /></span>}
           </div>
           <div className='filters'>
 
@@ -884,7 +888,7 @@ export default function SearchDesktop(props) {
             </InfiniteScroll>
           </div>
         </div>
-        {window.innerWidth <= 500 && <div className='mobile-view-actions'>
+        {!isDesktopOrLaptop && <div className='mobile-view-actions'>
           <span className='filter' onClick={() => setMobileFiltersState(true)}><img src={filterIcon} alt='filters' /></span>
           <FloatActionButton
             type='course type'
@@ -932,11 +936,11 @@ export default function SearchDesktop(props) {
         size={30}
       >
         <div className='filter-sidebar-content'>
-          {<div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={window.innerWidth > 500 ? { minHeight: '95vh', overflow: 'scroll' } : null}>
+          {<div className={`${isDesktopOrLaptop ? 'filter-column' : 'filter-mobile'} ${!isDesktopOrLaptop && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={isDesktopOrLaptop ? { minHeight: '95vh', overflow: 'scroll' } : null}>
             <div className="filter-head">
               <span>{appliedFiltersCount.current === 0 ? <span className="no-filter-text">No filters applied</span> : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}</span>
-              {/* {appliedFiltersCount.current !== 0 && <span style={window.innerWidth > 500 ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>} */}
-              {window.innerWidth <= 500 && <span className='cross' onClick={() => setMobileFiltersState(false)}><img src={closeIcon} /></span>}
+              {/* {appliedFiltersCount.current !== 0 && <span style={isDesktopOrLaptop ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>} */}
+              {!isDesktopOrLaptop && <span className='cross' onClick={() => setMobileFiltersState(false)}><img src={closeIcon} /></span>}
             </div>
             <div className='filters'>
 
@@ -1028,7 +1032,7 @@ export default function SearchDesktop(props) {
             </div>
 
           </div>}
-          {window.innerWidth > 500 ? <div className="detail-modal-footer">
+          {isDesktopOrLaptop ? <div className="detail-modal-footer">
             <div className='modal-container'>
               <div className='reset-button-container'>
                 <Button

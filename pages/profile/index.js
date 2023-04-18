@@ -162,7 +162,7 @@ export default function ProfilePage({
         <>
         
           <div className='profile-page'>
-            <div className='profile-container' style={window.innerWidth > 500 ? {marginTop: '10rem'} : null}>
+            <div className='profile-container' style={isDesktopOrLaptop ? {marginTop: '10rem'} : null}>
               <div className='menu-column'>
                   <div 
                   className='menu-item'
@@ -200,10 +200,10 @@ export default function ProfilePage({
                 <div className='hr'></div>
               </div>
               <div className='content-column' style={profilePages.privacyPolicy === true ? {overflow: 'scroll'} : null}>
-                {window.innerWidth > 500 && profilePages.editProfile === true && <EditProfile token={token} />}
-                {/* {window.innerWidth > 500 && profilePages.resetPassword === true && <ResetPassword token={token} openForgotPasswordModal={()=>openForgotPasswordModal()} />} */}
-                {window.innerWidth > 500 && profilePages.privacyPolicy === true && <PrivacyPolicy profilePage={true} />}
-                {window.innerWidth <= 500 && 
+                {isDesktopOrLaptop && profilePages.editProfile === true && <EditProfile token={token} />}
+                {/* {isDesktopOrLaptop && profilePages.resetPassword === true && <ResetPassword token={token} openForgotPasswordModal={()=>openForgotPasswordModal()} />} */}
+                {isDesktopOrLaptop && profilePages.privacyPolicy === true && <PrivacyPolicy profilePage={true} />}
+                {!isDesktopOrLaptop && 
                 <ProfileMobilePage 
                     token={token} 
                     mobileLoginNavigation={mobileLoginNavigation} 

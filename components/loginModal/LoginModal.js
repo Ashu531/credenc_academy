@@ -24,6 +24,7 @@ import { useRouter } from 'next/router'
 import { useTheme } from "@emotion/react";
 import { GoogleLogin,GoogleOAuthProvider } from '@react-oauth/google';
 import UrlService from "../../helper/urlService";
+import { useMediaQuery } from "react-responsive";
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const authKey = 'credenc-edtech-authkey';
@@ -57,6 +58,10 @@ export default function LoginModal({
   let location = useRouter();
   let nextURL=location?.asPath?.substring(2,location?.asPath?.length)
   let urlService = useRef(new UrlService(nextURL));
+
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 500px)",
+  });
 
   const showHidePassword = () => {
     if (passwordInputState.hide) {
@@ -294,8 +299,7 @@ export default function LoginModal({
     // Mixpanel.track(MixpanelStrings.LINKEDIN_LOGIN);
     
     let { clientId, redirectUrl,  authUrl, scope, state } = constant.LINKEDIN_API;
-    authUrl = `${authUrl}&client_id=${clientId}&scope=${scope}&state=${state}&redirect_uri=${redirectUrl}`; 
-    console.log(authUrl,"auth url+++")
+    authUrl = `${authUrl}&client_id=${clientId}&scope=${scope}&state=${state}&redirect_uri=${redirectUrl}`;
     const width = 450,
       height = 730,
       left = window.screen.width / 2 - width / 2,
@@ -459,7 +463,7 @@ export default function LoginModal({
         </Link>
         {
           externalUser === false ? 
-              <div className="segment-container" style={window.innerWidth <= 500 ? {marginTop: '1rem'} : null}>
+              <div className="segment-container" style={!isDesktopOrLaptop ? {marginTop: '1rem'} : null}>
                 <SegmentedBar
                   items={['Sign In', 'Sign Up']}
                   handleTabNumber={(i) => setFormSegment(i)}
@@ -565,7 +569,7 @@ export default function LoginModal({
           
           {
             externalUser === false ? 
-            <div className="social-icons-container" style={window.innerWidth <= 500 ? {padding: 0} : null }>
+            <div className="social-icons-container" style={!isDesktopOrLaptop ? {padding: 0} : null }>
             <div>
             <GoogleOAuthProvider clientId={constant.GOOGLE_CLIENT_ID}>
               <GoogleLogin

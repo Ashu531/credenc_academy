@@ -15,6 +15,7 @@ import defaultEducator from '../../assets/images/icons/defaultEducator.svg'
 import defaultPlatform from '../../assets/images/icons/defaultPlatform.svg'
 import constant from '../../config/constant';
 import { useRouter } from 'next/router'
+import { useMediaQuery } from 'react-responsive';
 // import theme from '../../scripts/reducers/theme';
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
@@ -37,6 +38,10 @@ export default function CourseCard(props){
         return '..'
     }
   }
+
+  const isDesktopOrLaptop = useMediaQuery({
+    query: "(min-width: 500px)",
+  });
 
   useEffect(() => {
     setMounted(true);
@@ -248,7 +253,7 @@ const removeUpvote = async (item) => {
         mounted && 
         <div 
           className = {!isCardOpen ? "card-container" : "card-container card-container-open"}
-          style={window.innerWidth <= 500 ? {width: "100%",minWidth: 0,padding: 0} : !isCardOpen ? null : {padding:0} }
+          style={!isDesktopOrLaptop ? {width: "100%",minWidth: 0,padding: 0} : !isCardOpen ? null : {padding:0} }
         
           onMouseEnter={e => {
             setCompareButtonVisible({display: 'flex',flexDirection:"row"});
@@ -261,7 +266,7 @@ const removeUpvote = async (item) => {
         >
         <div 
         className='card-header' 
-        style={!isCardOpen && window.innerWidth > 500 ? null : {padding: '12px 12px 0px 12px'}}
+        style={!isCardOpen && isDesktopOrLaptop ? null : {padding: '12px 12px 0px 12px'}}
         >
           <Image loader={myLoader} src={props?.data?.platform?.logo ? props?.data?.platform?.logo : defaultPlatform} height={36} width={36} alt='courseLogo' style={{borderRadius: '30%'}} objectFit="contain"/>
           <div className='card-header-end-content'>
@@ -308,7 +313,7 @@ const removeUpvote = async (item) => {
           </span>
       </div>
 
-    {  window.innerWidth > 500 ? 
+    {  isDesktopOrLaptop ? 
     <div 
     className='course-button-content' style={{...compareButtonVisible,marginLeft:0}}>
       <div 
@@ -325,7 +330,7 @@ const removeUpvote = async (item) => {
           </span>
            <Image src={ props.theme === 'dark' ? arrowRightDark : arrowRight} objectFit="contain" alt='arrowRight'/>
       </div>
-      </div> : <div className='course-button-content-mobile' style={ window.innerWidth <= 500 ? {padding: '12px 24px'} : null }>
+      </div> : <div className='course-button-content-mobile' style={ !isDesktopOrLaptop ? {padding: '12px 24px'} : null }>
               <div className='course-compare-buttton-mobile' onClick={()=> props?.openApplyNowModal() }>
                 <span className='add-to-compare-text-mobile'>
                 Apply now

@@ -86,7 +86,6 @@ export default function EditProfile(props) {
         userApiStatus.current.start();
         let res = await getDataFromUrl(`${constant.API_URL.DEV}/profiles/`, props.token, userApiStatus)
         .then(res => {
-            console.log(res,"response++")
             setEmail(res?.email)
             setName(res?.full_name)
             setInputName(res?.full_name)
