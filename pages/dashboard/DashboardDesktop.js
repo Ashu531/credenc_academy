@@ -206,8 +206,8 @@ export default function DashboardDesktop(props) {
       urlService.current.addEntry('domain', item.value);
     }
 
-
-    getCardData(item)
+    setPageNumber(1)
+    handleCardData()
   }
 
   const _getSubCategoryDetails = (item) => {
@@ -219,9 +219,15 @@ export default function DashboardDesktop(props) {
     } else {
       urlService.current.addEntry('subject', item.value);
     }
-
-    getCardData(item)
+    setPageNumber(1)
+    handleCardData()
   }
+
+  const handleCardData=()=>{
+    coursesApiStatus.current.start();
+    handleFilteredData(true);
+  }
+
 
   const openFilterModal = async () => {
     setFilterModal(true)
