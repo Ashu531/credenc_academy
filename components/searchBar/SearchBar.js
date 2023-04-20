@@ -164,7 +164,7 @@ useEffect(()=>{
       </div>
       <div 
         className="search-icon-web-1" 
-        style={ props.showSearchBar ? {right: 8,top: 16} : null}
+        style={ props.showSearchBar ? {right: 8,top: 12} : null}
         onClick={()=>customSearch()}
       >
         <Image loader={myLoader} src={SearchIcon} className="search-icon-icon" objectFit="cover" height={18} width={18} />
