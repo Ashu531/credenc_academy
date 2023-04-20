@@ -46,20 +46,20 @@ export default function SubjectNavbar(props){
     return(
         <div className='subject-navbar'> 
         {
-            leftScrollView === true ?  <div className="navbar-arrow-container" onClick={() => scroll(-800)} style={{position:'absolute',left:48,zIndex: 999,background: '#FFFFFF'}}>
-            <Image src={caretRight} objectFit="cover" style={{transform: "rotate(180deg)"}} height={14} width={14} alt='caretRight' />
+            leftScrollView === true ? <div className="navbar-arrow-container hideOnMobile" onClick={() => scroll(-800)} style={{zIndex: 999,background: '#FFFFFF'}}>
+            <Image src={caretRight} objectFit="contain" style={{transform: "rotate(180deg)"}} height={14} width={14} alt='caretRight' />
             </div> : null
         }
             <div className='tabs' ref={ref}>
                 <SubjectTab title={props.subCategories} selectedCategory={props?.selectedCategory} setSubCategoriesData={props?.setSubCategoriesData} theme={props.theme}/>
             </div>
         {
-            rightScrollView === true ? <div className="navbar-arrow-container" onClick={() => scroll(800)} style={{position:'absolute',left:'80vw',zIndex: 999,background: '#FFFFFF'}}>
-                <Image src={caretRight} objectFit="cover" height={14} width={14} alt='caretRight'/>
+            rightScrollView === true ? <div className="navbar-arrow-container hideOnMobile" onClick={() => scroll(800)} style={{zIndex: 999,background: '#FFFFFF'}}>
+                <Image src={caretRight} objectFit="contain" height={14} width={14} alt='caretRight'/>
             </div> : null
         }
         
-            <div className='subject-tab' onClick={()=>props.toggleFilterModal()} >
+            <div className='subject-tab hideOnMobile' onClick={()=>props.toggleFilterModal()} >
                 <span className='all-subject-text'>Filters</span>
                 <Image src={props.theme === 'dark' ? filterIconDark : filterIcon} objectFit="cover" alt='filterIcon' />
                 {  props?.appliedFiltersCount > 0 ? 
