@@ -1,5 +1,6 @@
 .trivia-container{
     width: 90%;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -20,15 +21,21 @@
         letter-spacing: 0.01em;
         text-transform: capitalize;
         color: #034FE2;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1rem;
     }
 
     .trivia-content{
+        width: 100%;
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        width: 100%;
-        margin-top: 20px;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        margin-top: 2rem;
+        row-gap: 1rem;
 
         .trivia-section{
             display: flex;
@@ -62,4 +69,33 @@
     }
     
 
+}
+
+@media screen and(max-width: 500px) {
+    .trivia-container{
+        margin: 2.4rem 2rem;
+    
+        .trivia-header{
+            font-size: 2.4rem;
+            line-height: 2.8rem;
+        }
+    
+        .trivia-content{
+           
+    
+            .trivia-section{
+                
+    
+                .trivia-label{
+                    
+                }
+            }
+        }
+    
+        .trivia-button{
+            
+        }
+        
+    
+    }
 }

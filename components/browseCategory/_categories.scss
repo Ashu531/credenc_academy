@@ -1,10 +1,11 @@
 .category-container{
-    width: 95%;
+    width: 100%;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 20px;
-    gap: 30px;
+    padding: 2rem;
+    gap: 3rem;
     isolation: isolate;
 
     .category-header{
@@ -30,19 +31,22 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: flex-start;
-        padding: 0px 40px;
-        gap: 30px;
+        flex-wrap: wrap;
+        padding: 0 4rem;
+        gap: 2rem;
         width: 100%;
+        box-sizing: border-box;
         
         .category-data{
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px 8px;
-            gap: 20px;
+            padding: 2rem;
+            gap: 2rem;
             background: #FFFFFF;
-            border-radius: 24px;
-            width: 20%;
+            border-radius: 2.4rem;
+            box-sizing: border-box;
+            width: 17%;
             cursor: pointer;
 
             &:hover{
@@ -50,15 +54,7 @@
                 // fill: none;
                 // stroke-width: 2px;
                 // stroke: #8F14CC;
-                border-radius: 24px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                padding: 18px 6px;
-                gap: 20px;
-                background: #FFFFFF;
-                width: 20%;
-                cursor: pointer;
+                // cursor: pointer;
             }
         }
 
@@ -73,4 +69,30 @@
             text-align: center;
         }
     }
+}
+
+@media screen and(max-width: 500px) {
+    
+    .category-container {
+
+        .category-header {
+
+            .header-text{
+                font-size: 2.4rem;
+                line-height: 2.9rem;
+            }
+        }
+
+        .category-section {
+            padding: 0;
+            gap: 1rem;
+    
+            .category-data {
+                padding: 2rem;
+                width: 45%;
+            }
+        }
+
+    }
+
 }

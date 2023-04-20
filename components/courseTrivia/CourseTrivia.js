@@ -104,9 +104,14 @@ export default function CourseTrivia(props){
     }
   
     return(
-        <div className='trivia-container'> 
+        <div className='trivia-container'>
             <div className='trivia-header'>
-                Too many options? Let us help!
+                <div>
+                    Too many options?
+                </div>
+                <div>
+                    Let us help!
+                </div>
             </div>
             <div className='trivia-content'>
                 <div className='trivia-section'>

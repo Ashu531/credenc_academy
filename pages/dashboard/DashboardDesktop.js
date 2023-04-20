@@ -841,7 +841,6 @@ export default function DashboardDesktop(props) {
   return (
     <div>
       <div className="dashboard" style={props?.loginModal ? { overflow: 'hidden' } : null} ref={dashboardRef}>
-        <div className="dashboard-upper-section">
           <div className='banner' ref={searchRef} style={styles}>
             <div className='text-content'>
               <h1 className='heading'>From Learners to Leaders</h1>
@@ -851,7 +850,6 @@ export default function DashboardDesktop(props) {
               style={{
                 width: `${searchbarWidth}`,
                 marginTop: 32,
-                marginBottom: 40,
                 zIndex: "1101",
                 visibility: `${props.showSearchBar ? "hidden" : "visible"}`,
                 transition: '10s ease-in ease-out',
@@ -869,7 +867,7 @@ export default function DashboardDesktop(props) {
             </div>
           </div>
 
-          <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', boxSizing: 'border-box' }}>
             <CredencFeatures />
           </div>
 
@@ -1057,7 +1055,6 @@ export default function DashboardDesktop(props) {
 
             </div>
           </div>
-        </div>
       </div>
 
       <SlidingPanel

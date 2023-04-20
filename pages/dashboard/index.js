@@ -8,10 +8,6 @@ const EdtechPartnerKey = 'credenc-edtech-partner-key';
 const Dashboard = (props) => {
   const [mounted, setMounted] = useState(false);
   const [thirdPartyUser,setThirdPartyUser] = useState({})
-  const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 500px)",
-  });
 
   let router = useRouter();
 
@@ -32,8 +28,6 @@ const Dashboard = (props) => {
   }
 
    return(
-      <>
-      {/* {isDesktopOrLaptop &&  */}
       <DashboardDesktop
         // toggleTheme={toggleTheme} 
           newTheme={props?.theme}
@@ -60,8 +54,6 @@ const Dashboard = (props) => {
           thirdPartyUser={thirdPartyUser}
           { ...props }
         />
-        
-        </>
        )
 }
 

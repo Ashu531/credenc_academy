@@ -425,7 +425,7 @@ class MyApp extends App {
             goingUp={this.state.goingUp}
             />
           } */}
-         {/* <Component 
+         <Component 
             {...pageProps} 
             theme={this.state.theme} 
             filterExpandedStage={this.state.filterExpandedStage} 
@@ -469,7 +469,7 @@ class MyApp extends App {
             selectSearch={(e)=>this._selectSearch(e)}
             subjectData={this.state.subjectData}
             searchPageQuery={this.state.searchPageQuery}
-         /> */}
+         />
          {/* {
             isDesktopOrLaptop ?  */}
             <div className='hideOnMobile'>
