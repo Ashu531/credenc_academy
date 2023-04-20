@@ -2,6 +2,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
   // -webkit-tap-highlight-color: white;
 }
 
@@ -70,6 +71,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Work Sans", "Work Sans";
+
+  box-sizing: border-box;
   // background: data-theme='dark'
   // [data-theme='dark']{
   //   background: #0A0A0A;
@@ -86,6 +89,10 @@ body {
     visibility: visible;
   }
 
+  .centerAlign{
+    margin: auto;
+  }
+
   @media screen and(max-width: 500px) {
     .hideOnDesktop {
       visibility: visible;
@@ -93,6 +100,7 @@ body {
 
     .hideOnMobile{
       visibility: hidden;
+      display: none;
     }
   }
 

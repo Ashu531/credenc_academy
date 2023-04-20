@@ -28,6 +28,7 @@ import CourseTrivia from "../../components/courseTrivia/CourseTrivia"
 import QuerySuccessModal from "../../components/querySuccessModal/QuerySuccessModal"
 import InquiryModal from "../../components/inquiryModal/inquiryModal"
 import { useMediaQuery } from "react-responsive";
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const styles = {
   // width: "100%",
@@ -838,6 +839,12 @@ export default function DashboardDesktop(props) {
     }
   }, [dashboardRef?.current?.getBoundingClientRect().y])
 
+  const handleScrollData = () => {
+    // setPageNumber(pageNumber.current+1)
+    setPageNumber(pageNumber + 1)
+    handleFilteredData()
+  }
+
   return (
     <div>
       <div className="dashboard" style={props?.loginModal ? { overflow: 'hidden' } : null} ref={dashboardRef}>
@@ -847,6 +854,7 @@ export default function DashboardDesktop(props) {
               <h2 className='sub-header'>Develop new skills with our hand-picked courses from across the world</h2>
             </div>
             <div
+              className="searchbar"
               style={{
                 width: `${searchbarWidth}`,
                 marginTop: 32,
@@ -1003,8 +1011,8 @@ export default function DashboardDesktop(props) {
 
           </div>
           {/* <FilterModal filterModal={filterModal} toggleFilterModal={closeFilterModal}/> */}
-          <div className="course-content">
-            {/* <CategoryDropdown categories={categories}/> */}
+          {/* <div className="course-content">
+            { <CategoryDropdown categories={categories}/> }
             <div className="card-content">
 
               {
@@ -1042,7 +1050,7 @@ export default function DashboardDesktop(props) {
 
                       })
                     }
-                    {/* <HomeSkeleton /> */}
+                    { <HomeSkeleton /> }
                   </div> :
                   courseCardData.length === 0 && cardApiSuccess ?
                     <Error type={Lists.errorTypes.EMPTY} text={'No Result Found'} /> :
@@ -1054,7 +1062,36 @@ export default function DashboardDesktop(props) {
               }
 
             </div>
+          </div> */}
+          <div className="card-content">
+
+          <InfiniteScroll
+            dataLength={courseCardData.length} //This is important field to render the next data
+            next={handleScrollData}
+            hasMore={nextPage}
+          >
+            {
+              courseCardData?.map((item, i) => {
+                return <div key={`${item.id}:${i}`}>
+                    <CourseCard
+                      key={i}
+                      data={item}
+                      openDetailModal={() => openDetailModal(item)}
+                      openApplyNowModal={() => _openApplyNowModal(item)}
+                      token={props?.token}
+                      openLoginModal={() => props?.openLoginModal()}
+                      addLocalBookmarks={(count) => props?.addLocalBookmarks(count)}
+                      removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
+                      enableTrackStatus={() => _enableTrackStatus()}
+                      applied={applied}
+                    />
+                  </div>
+              })
+            }
+          </InfiniteScroll>
+
           </div>
+          
       </div>
 
       <SlidingPanel

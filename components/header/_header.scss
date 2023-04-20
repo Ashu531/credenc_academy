@@ -23,17 +23,6 @@
         margin-left: auto;
       }
 
-      .hideOnMobile {
-        visibility: visible;
-      }
-
-      @media screen and (max-width: 500px) {
-        .hideOnMobile {
-          display: none;
-          visibility: hidden;
-        }
-      }
-
       .nav-item{
           // position: relative;
           padding: 0 1rem;
