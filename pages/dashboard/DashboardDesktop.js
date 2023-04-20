@@ -985,7 +985,15 @@ export default function DashboardDesktop(props) {
             </div>
           </div>
 
-          <div className="course-navbar" style={navbarTop ? { position: 'fixed', top: '8vh', background: '#FFFFFF', zIndex: 9999, boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.1)', padding: '1rem 5rem 0rem 5rem' } : { padding: '0.8rem 5rem 0rem 5rem' }}>
+          <div className="course-navbar" 
+            style={
+            { position: 'sticky', 
+              top: '8rem', 
+              background: '#FFFFFF', 
+              zIndex: 9999, 
+              boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.1)', 
+              }}
+            >
             {
               subCategory && subCategory.length > 0 ?
                 <Navbar

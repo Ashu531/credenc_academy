@@ -7,11 +7,7 @@ import constant from '../config/constant';
 const EdtechToken = 'credenc-edtech-authkey';
 
 const Home = (props) => {
-  const [mounted, setMounted] = useState(false);
   const [token,setToken] = useState('')
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(()=>{
     if(token){

@@ -3,6 +3,8 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    gap: 2rem;
 
     .tabs{
         display: flex;
@@ -10,7 +12,7 @@
         justify-content: space-between;
         align-items: center;
         overflow-y: auto;
-        max-width: 78vw;
+        max-width: 80%;
         // margin-top: 1rem;
         // overflow: hidden;
        }
@@ -25,8 +27,8 @@
         // gap: 10px;
         border: 1px solid var(--subduedStrokeColor);
         border-radius: 100px;
-        width: 32px;
-        height: 32px;
+        width: 3.2rem;
+        height: 3.2rem;
         cursor: pointer;
        }
 
@@ -93,4 +95,32 @@
         background: transparent; /* make scrollbar transparent */
     }
    
+}
+
+@media screen and(max-width: 500px) {
+    .subject-navbar {
+        gap: 0;
+
+        .tabs{
+            max-width: 100%;
+        }
+    
+           .navbar-arrow-container{}
+    
+        .subject-tab{
+            padding: 0;
+
+            .all-subject-text{}
+    
+            .filter-container{
+                .filter-count{}
+            }
+    
+           
+        }
+    
+        .dashboard-subject-modal{}
+    
+        ::-webkit-scrollbar {}
+    }
 }

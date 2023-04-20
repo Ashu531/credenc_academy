@@ -83,11 +83,7 @@
       gap: 20px;
       width: 95%;
       overflow: scroll;
-      // margin-top: 30px;
-
-      :first-child {
-        margin-left: 3rem;
-      }
+      padding-left: 60px;
     }
   }
 
@@ -103,11 +99,11 @@
     //  align-items: center;
   }
   .course-navbar {
-    width: 93%;
-    padding: 1rem 5rem 1rem 5rem;
+    width: 100%;
+    padding: 0rem 5rem 0rem 5rem;
   }
   .card-content {
-    padding: 0rem 1.5rem 1.5rem 1.5rem;
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
     width: 100%;
 
     .infinite-scroll-component {
@@ -151,44 +147,60 @@
     scrollbar-width: none;
   }
 
+}
+
   @media screen and(max-width: 500px) {
-    .banner {
-      .heading {
-        font-size: 3rem;
-        line-height: 3.6rem;
-        letter-spacing: 0.1rem;
-      }
+    .dashboard {
+      margin: 8rem 0 0 0;
+      min-height: 100vh;
+      box-sizing: border-box;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--defaultBackground);
 
-      .searchbar{
-        width: 30rem !important;
-      }
-    }
+      .banner {
+        .heading {
+          font-size: 3rem;
+          line-height: 3.6rem;
+          letter-spacing: 0.1rem;
+        }
 
-    .dashboard-courses-container {
-      gap: 2rem;
-
-      .header-container {
-        padding-left: 2rem;
-        .header-text {
-          font-size: 2.4rem;
-          line-height: 2.9rem;
+        .searchbar{
+          width: 30rem !important;
         }
       }
 
-      .course-section {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        padding: 0px;
-        // gap: 1rem;
-        width: 100%;
-        overflow: scroll;
-        // margin-top: 30px;
+      .dashboard-courses-container {
+        gap: 2rem;
 
-        :first-child{
-          margin-left: 1rem;
+        .header-container {
+          padding-left: 2rem;
+          .header-text {
+            font-size: 2.4rem;
+            line-height: 2.9rem;
+          }
         }
-      }
+
+        .course-section {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          padding: 0px;
+          // gap: 1rem;
+          width: 100%;
+          overflow: scroll;
+          padding-left: 20px;
+        }
+     }
+
+        .course-navbar{
+          width: 100%;
+          padding: 0rem;
+        }
     }
   }
-}
+

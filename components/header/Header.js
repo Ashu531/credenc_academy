@@ -49,9 +49,9 @@ export default function Header(props){
   const [token,setToken] = useState('')
   const [subjectList,setSubjectList] = useState([])
 
-  // useEffect(()=>{
-  //   _getAuthKey() 
-  // },[localStorage.getItem(EdtechToken),props?.bookmarkCount])
+  useEffect(()=>{
+    _getAuthKey() 
+  },[])
 
   useEffect(()=>{
     _getSubjectData()
