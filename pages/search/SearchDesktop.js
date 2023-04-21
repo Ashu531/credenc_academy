@@ -26,6 +26,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import QuerySuccessModal from "../../components/querySuccessModal/QuerySuccessModal"
 import InquiryModal from "../../components/inquiryModal/inquiryModal"
 import { useMediaQuery } from "react-responsive";
+import Image from "next/image";
+import SearchBar from '../../components/searchBar/SearchBar';
 
 const queries = {
   PROFESSION: 'profession',
@@ -56,6 +58,25 @@ const queries = {
   EDUCATOR: 'educator'
 
 };
+
+const categories = [
+  {
+    id: 1,
+    name: 'Marketing'
+  },
+  {
+    id: 2,
+    name: 'Technology'
+  },
+  {
+    id: 3,
+    name: 'Design'
+  },
+  {
+    id: 4,
+    name: 'Business'
+  },
+]
 
 export const useIsMount = () => {
   const isMountRef = useRef(true);
@@ -119,6 +140,7 @@ export default function SearchDesktop(props) {
     id: 0
   });
   const [pageNumber, setPageNumber] = useState(1);
+  const [emptyState, setEmptyState] = useState(true)
 
 
   const openDetailModal = (data) => {
@@ -412,7 +434,7 @@ export default function SearchDesktop(props) {
     return res ? res : [];
   }
 
-  const handleFilteredData = async (updatePageNumber = true, e) => {
+  const handleFilteredData = async (updatePageNumber = true) => {
     coursesApiStatus.current.start();
     setCardApiSuccess(false)
 
@@ -656,9 +678,8 @@ export default function SearchDesktop(props) {
   }
 
   const handleScrollData = () => {
-    // setPageNumber(pageNumber.current+1)
     setPageNumber(pageNumber + 1)
-    handleFilteredData()
+    handleFilteredData(true)
   }
 
   const isDesktopOrLaptop = useMediaQuery({
@@ -695,252 +716,32 @@ export default function SearchDesktop(props) {
     handleFilteredData()
   }
 
+  const _handleSearch = (event) => {
+    setEmptyState(false)
+    if (event?.course_id) {
+      location.push({
+        pathname: '/details',
+        query: { course_id: event?.course_id },
+      })
+      props?._showSearchBar()
+
+    } else {
+      urlService.current.removeAll()
+      urlService.current.addEntry('search', event)
+      setPageNumber(1)
+      handleFilteredData()
+    }
+    // props?.handleSearch(event)
+  }
+
   return (
     <div>
       <div className="course-page">
-        {<div className={`${isDesktopOrLaptop ? 'filter-column' : 'filter-mobile'} ${!isDesktopOrLaptop && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={isDesktopOrLaptop ? { minHeight: '80%' } : null}>
-          <div className="filter-head">{appliedFiltersCount.current === 0 ? <span className="no-filter-text">No filters applied</span> : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}
-            {appliedFiltersCount.current !== 0 && <span style={isDesktopOrLaptop ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>}
-            {!isDesktopOrLaptop && <span className='cross' onClick={() => setMobileFiltersState(false)}><img src={closeIcon} /></span>}
-          </div>
-          <div className='filters'>
-
-            <Filter
-              item={{ name: 'Class Mode', type: filterList.CLASS_MODE }}
-              filterState={classModeList}
-              updateFilterState={updateFilterState}
-              
-            />
-            <Filter
-              item={{ name: 'Course Pace', type: filterList.COURSE_PACE }}
-              filterState={[...coursePaceList]}
-              updateFilterState={updateFilterState}
-              
-            />
-            <Filter
-              item={{ name: 'Cost', type: filterList.COST }}
-              filterState={costList}
-              updateFilterState={updateFilterState}
-              max={maxPrice}
-              min={minPrice}
-              getRange={handleCostRange}
-              updateCostSlider={updateCostSlider}
-              setIsAppliedCostSlider={() => setIsAppliedCostSlider(true)}
-              isAppliedCostSlider={isAppliedCostSlider}
-              
-            />
-            <Filter
-              item={{ name: 'Difficulty Level', type: filterList.DIFFICULTY_LEVEL }}
-              filterState={difficultyList}
-              updateFilterState={updateFilterState}
-              
-            />
-            {/* <Filter
-            item={{ name: 'Work Experience', type: filterList.WORK_EXPERIENCE }}
-            filterState={workExperienceList}
-            updateFilterState={updateFilterState}
-            
-          /> */}
-            {
-              props?.thirdPartyUser != constant.PARTNER_KEY.NJ ?
-                <Filter
-                  item={{ name: 'Finance Options', type: filterList.FINANCE_OPTIONS }}
-                  filterState={financeOptionList}
-                  updateFilterState={updateFilterState}
-                  
-                /> : null
-            }
-
-            {/* <Filter
-            item={{ name: 'Course Language', type: filterList.COURSE_LANGUAGE }}
-            filterState={languageList}
-            updateFilterState={updateFilterState}
-            
-          /> */}
-            <Filter
-              item={{ name: 'Platform', type: filterList.PLATFORM }}
-              filterState={platformList}
-              updateFilterState={updateFilterState}
-              
-            />
-            <Filter
-              item={{ name: 'Educator', type: filterList.EDUCATOR }}
-              filterState={educatorList}
-              updateFilterState={updateFilterState}
-              
-            />
-          </div>
-          <div className="filter-footer">
-            <a href='/privacy' target='_blank' style={{ textDecoration: 'none' }}><span className='link' >Privacy policy & disclaimer</span></a>
-            <div className='mobile-actions-container'>
-              <div className='btn-container reset-button-wrapper'>
-                <Button
-                  // disabled={true} 
-                  onClick={resetFilters}
-                  mobileButtonText='Reset'
-                  classes='btn-reset'
-                />
-              </div>
-              <div className='btn-container'>
-                <Button
-                  // disabled={true} 
-                  onClick={handleApplyButton}
-                  mobileButtonText='Apply'
-                  classes='btn-apply'
-                />
-              </div>
-            </div>
-          </div>
-        </div>}
-        <div className="list-column">
-          <div className="filter-container" style={{ opacity: 1 }}>
-            <div className="segment-container">
-              <SegmentedBar
-                items={Lists.courseTypes}
-                ref={courseTypeRef}
-                style={{
-                  fontWeight: 600,
-                  ontSize: '1.1rem',
-                  lineHeight: '1.6rem',
-                }}
-                
-                // bgColor='#16181A'
-                handleTabNumber={(i) => {
-                  setPageNumber(1)
-                  setCourseType(i)
-                  // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypes[i])
-                }}
-                selected={courseType}
-              />
-            </div>
-            <SecondaryDropdown
-              heading={Lists.sortByList[sortState]['label']}
-              style={{
-                background: '#F7F7F7',
-                padding: '1.4rem',
-                borderRadius: '0.8rem',
-                fontWeight: 600,
-                fontSize: '1.1rem',
-                lineHeight: '1.6rem',
-                color: '#000000'
-              }}
-              classes={{
-                wrapper: 'no-padding',
-                content: 'content-sort'
-              }}
-              dropList={[...Lists.sortByList]}
-              selected={pageLoadSortState || sortState}
-              onSelect={(item, i) => {
-                setPageNumber(1)
-                setPageLoadSortState(null)
-                setSortState(i)
-                // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
-              }}
-            />
-            <div style={{ flexGrow: 1 }}></div>
-            <div className="text-container">Showing {totalCourses} Course{totalCourses === 1 ? '' : 's'}</div>
-          </div>
-          <div
-            className="list-container"
-            id="scrollableDiv"
-            style={{ padding: '10rem 2.4rem 2rem 0rem', height: 800, overflow: "auto" }}
-          >
-            <InfiniteScroll
-              dataLength={courseCardData.length} //This is important field to render the next data
-              next={handleScrollData}
-              hasMore={true}
-              // loader={<h4>Loading...</h4>}
-              style={{ width: '100%', display: 'flex', flexDirection: 'row', gap: 10, flexWrap: 'wrap', overflow: 'auto' }}
-              // onScroll={handleScroll}
-              scrollableTarget="scrollableDiv"
-              endMessage={
-                <p style={{ textAlign: 'center' }}>
-                  <b>Yay! You have seen it all</b>
-                </p>
-              }
-            // below props only if you need pull down functionality
-            >
-              {
-                courseCardData.length > 0 ?
-                  courseCardData && courseCardData.map((item, index) => {
-                    return (
-                      <div key={index}>
-                        <CourseCard
-                          index={index}
-                          data={item}
-                          openDetailModal={() => openDetailModal(item)}
-                          openApplyNowModal={() => _openApplyNowModal(item)}
-                          token={props?.token}
-                          openLoginModal={() => props?.openLoginModal()}
-                          addLocalBookmarks={(count) => props?.addLocalBookmarks(count)}
-                          removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
-                          enableTrackStatus={() => _enableTrackStatus()}
-                          applied={applied}
-                        />
-                      </div>
-                    )
-                  })
-                  :
-                  courseCardData.length === 0 && cardApiSuccess ?
-                    <Error type={Lists.errorTypes.EMPTY} text={'No Result Found'} />
-                    : null
-              }
-            </InfiniteScroll>
-          </div>
-        </div>
-        {!isDesktopOrLaptop && <div className='mobile-view-actions'>
-          <span className='filter' onClick={() => setMobileFiltersState(true)}><img src={filterIcon} alt='filters' /></span>
-          <FloatActionButton
-            type='course type'
-            heading={Lists.courseTypesFloatList[courseTypesFloatState]['name']}
-            style={{
-              borderRadius: '10rem',
-              fontWeight: 600,
-              fontSize: '1.1rem',
-              lineHeight: '1.6rem',
-              color: '#313235',
-            }}
-            floatList={[...Lists.courseTypesFloatList]}
-            selected={courseTypesFloatState}
-            onSelect={(item, i) => {
-              // setPageLoadSortState(null)
-              setCourseTypesFloatState(i)
-              // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypesFloatList[i].name)
-            }}
-          />
-          <FloatActionButton
-            type='sort type'
-            heading={null}
-            style={{
-              borderRadius: '10rem',
-              fontWeight: 600,
-              fontSize: '1.1rem',
-              lineHeight: '1.6rem',
-              color: '#313235',
-            }}
-            floatList={[...Lists.sortByList]}
-            selected={sortState}
-            onSelect={(item, i) => {
-              setPageLoadSortState(null)
-              setSortState(i)
-              // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
-            }}
-          />
-        </div>}
-      </div>
-
-      <SlidingPanel
-        type={'left'}
-        isOpen={filterModal}
-        backdropClicked={() => setFilterModal(false)}
-        size={30}
-      >
-        <div className='filter-sidebar-content'>
-          {<div className={`${isDesktopOrLaptop ? 'filter-column' : 'filter-mobile'} ${!isDesktopOrLaptop && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={isDesktopOrLaptop ? { minHeight: '95vh', overflow: 'scroll' } : null}>
-            <div className="filter-head">
-              <span>{appliedFiltersCount.current === 0 ? <span className="no-filter-text">No filters applied</span> : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}</span>
-              {/* {appliedFiltersCount.current !== 0 && <span style={isDesktopOrLaptop ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>} */}
-              {!isDesktopOrLaptop && <span className='cross' onClick={() => setMobileFiltersState(false)}><img src={closeIcon} /></span>}
+        {
+          <div className={`${isDesktopOrLaptop ? 'filter-column' : 'filter-mobile'} ${!isDesktopOrLaptop && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={isDesktopOrLaptop ? { minHeight: '80%' } : null}>
+            <div className="filter-head">{appliedFiltersCount.current === 0 ? <span className="no-filter-text">No filters applied</span> : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}
+              {appliedFiltersCount.current !== 0 && <span style={isDesktopOrLaptop ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>}
+              <span className='cross' onClick={() => setMobileFiltersState(false)}><Image src={closeIcon} width={14} height={14} alt='closeIcon' /></span>
             </div>
             <div className='filters'>
 
@@ -948,13 +749,13 @@ export default function SearchDesktop(props) {
                 item={{ name: 'Class Mode', type: filterList.CLASS_MODE }}
                 filterState={classModeList}
                 updateFilterState={updateFilterState}
-                
+
               />
               <Filter
                 item={{ name: 'Course Pace', type: filterList.COURSE_PACE }}
                 filterState={[...coursePaceList]}
                 updateFilterState={updateFilterState}
-                
+
               />
               <Filter
                 item={{ name: 'Cost', type: filterList.COST }}
@@ -966,51 +767,51 @@ export default function SearchDesktop(props) {
                 updateCostSlider={updateCostSlider}
                 setIsAppliedCostSlider={() => setIsAppliedCostSlider(true)}
                 isAppliedCostSlider={isAppliedCostSlider}
-                
+
               />
               <Filter
                 item={{ name: 'Difficulty Level', type: filterList.DIFFICULTY_LEVEL }}
                 filterState={difficultyList}
                 updateFilterState={updateFilterState}
-                
+
               />
               {/* <Filter
-                        item={{ name: 'Work Experience', type: filterList.WORK_EXPERIENCE }}
-                        filterState={workExperienceList}
-                        updateFilterState={updateFilterState}
-                        
-                      /> */}
+            item={{ name: 'Work Experience', type: filterList.WORK_EXPERIENCE }}
+            filterState={workExperienceList}
+            updateFilterState={updateFilterState}
+            
+          /> */}
               {
                 props?.thirdPartyUser != constant.PARTNER_KEY.NJ ?
                   <Filter
                     item={{ name: 'Finance Options', type: filterList.FINANCE_OPTIONS }}
                     filterState={financeOptionList}
                     updateFilterState={updateFilterState}
-                    
+
                   /> : null
               }
 
               {/* <Filter
-                        item={{ name: 'Course Language', type: filterList.COURSE_LANGUAGE }}
-                        filterState={languageList}
-                        updateFilterState={updateFilterState}
-                        
-                      /> */}
+            item={{ name: 'Course Language', type: filterList.COURSE_LANGUAGE }}
+            filterState={languageList}
+            updateFilterState={updateFilterState}
+            
+          /> */}
               <Filter
                 item={{ name: 'Platform', type: filterList.PLATFORM }}
                 filterState={platformList}
                 updateFilterState={updateFilterState}
-                
+
               />
               <Filter
                 item={{ name: 'Educator', type: filterList.EDUCATOR }}
                 filterState={educatorList}
                 updateFilterState={updateFilterState}
-                
+
               />
             </div>
-            <div className="filter-footer" style={{ textAlign: "center", marginTop: 20 }}>
-              {/* <Link className='link' href={`/privacy`} target='_blank' rel='noopener noreferer'>Privacy policy & disclaimer</Link> */}
+            <div className="filter-footer">
+              <a href='/privacy' target='_blank' style={{ textDecoration: 'none' }}><span className='link' >Privacy policy & disclaimer</span></a>
               <div className='mobile-actions-container'>
                 <div className='btn-container reset-button-wrapper'>
                   <Button
@@ -1030,31 +831,178 @@ export default function SearchDesktop(props) {
                 </div>
               </div>
             </div>
-
           </div>}
-          {isDesktopOrLaptop ? <div className="detail-modal-footer">
-            <div className='modal-container'>
-              <div className='reset-button-container'>
-                <Button
-                  disabled={false}
-                  onClick={resetFilters}
-                  classes='btn-reset'
-                  text={appliedFiltersCount.current > 0 ? "Clear All" : "Reset"}
-                />
-              </div>
-              <div className='modal-button-wrapper'>
-                <Button
-                  disabled={false}
-                  onClick={_handleShowAllCourses}
-                  classes='btn-apply'
-                  text={totalCourses ? `Show ${totalCourses} Courses` : `No Courses`}
-                  type="Show"
-                />
+        <div className="searchbar hideOnDesktop">
+          <SearchBar
+            search={props?.searchValue}
+            handleSearch={(e) => _handleSearch(e)}
+            selectSearch={(e) => props?.selectSearch(e)}
+            token={props?.token}
+            showSearchBar={props?.showSearchBar}
+          />
+        </div>
+        {
+          emptyState ?
+            <div className='empty-state'>
+              <div className='category-section'>
+                <div className='category-header'>
+                 Categories
+                </div>
+                <div className='category-container'>
+                  {
+                    categories.length > 0 && categories.map((item,index)=>{
+                      return(
+                        <div className='category-content' onClick={()=>_handleSearch(item.name)} key={index}>
+                          <div className='category-text'>
+                              {item.name}
+                          </div>
+                        </div>
+                      )
+                    })
+                  }
+                 
+                </div>
               </div>
             </div>
-          </div> : null}
-        </div>
-      </SlidingPanel>
+            :
+            <>
+              <div className="list-column">
+                <div className="filter-container hideOnMobile" style={{ opacity: 1 }}>
+                  <div className="segment-container">
+                    <SegmentedBar
+                      items={Lists.courseTypes}
+                      ref={courseTypeRef}
+                      style={{
+                        fontWeight: 600,
+                        ontSize: '1.1rem',
+                        lineHeight: '1.6rem',
+                      }}
+
+                      // bgColor='#16181A'
+                      handleTabNumber={(i) => {
+                        setPageNumber(1)
+                        setCourseType(i)
+                        // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypes[i])
+                      }}
+                      selected={courseType}
+                    />
+                  </div>
+                  <SecondaryDropdown
+                    heading={Lists.sortByList[sortState]['label']}
+                    style={{
+                      background: '#F7F7F7',
+                      padding: '1.4rem',
+                      borderRadius: '0.8rem',
+                      fontWeight: 600,
+                      fontSize: '1.1rem',
+                      lineHeight: '1.6rem',
+                      color: '#000000'
+                    }}
+                    classes={{
+                      wrapper: 'no-padding',
+                      content: 'content-sort'
+                    }}
+                    dropList={[...Lists.sortByList]}
+                    selected={pageLoadSortState || sortState}
+                    onSelect={(item, i) => {
+                      setPageNumber(1)
+                      setPageLoadSortState(null)
+                      setSortState(i)
+                      // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
+                    }}
+                  />
+                  <div style={{ flexGrow: 1 }}></div>
+                  <div className="text-container">Showing {totalCourses} Course{totalCourses === 1 ? '' : 's'}</div>
+                </div>
+                <div
+                  className="list-container"
+                  id="scrollableDiv"
+                >
+                  <InfiniteScroll
+                    dataLength={courseCardData.length} //This is important field to render the next data
+                    next={handleScrollData}
+                    hasMore={true}
+                    // loader={<h4>Loading...</h4>}
+                    style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: 10, flexWrap: 'wrap', overflow: 'auto' }}
+                    // onScroll={handleScroll}
+                    scrollableTarget="scrollableDiv"
+                    endMessage={
+                      <p style={{ textAlign: 'center' }}>
+                        <b>Yay! You have seen it all</b>
+                      </p>
+                    }
+                  // below props only if you need pull down functionality
+                  >
+                    {
+                      courseCardData.length > 0 ?
+                        courseCardData && courseCardData.map((item, index) => {
+                          return (
+                            <div key={index}>
+                              <CourseCard
+                                index={index}
+                                data={item}
+                                openDetailModal={() => openDetailModal(item)}
+                                openApplyNowModal={() => _openApplyNowModal(item)}
+                                token={props?.token}
+                                openLoginModal={() => props?.openLoginModal()}
+                                addLocalBookmarks={(count) => props?.addLocalBookmarks(count)}
+                                removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
+                                enableTrackStatus={() => _enableTrackStatus()}
+                                applied={applied}
+                              />
+                            </div>
+                          )
+                        })
+                        :
+                        courseCardData.length === 0 && cardApiSuccess ?
+                          <Error type={Lists.errorTypes.EMPTY} text={'No Result Found'} />
+                          : null
+                    }
+                  </InfiniteScroll>
+                </div>
+              </div>
+              <div className='mobile-view-actions'>
+                <span className='filter' onClick={() => setMobileFiltersState(true)}><Image src={filterIcon} alt='filters' height={22} width={22} /></span>
+                <FloatActionButton
+                  type='course type'
+                  heading={Lists.courseTypesFloatList[courseTypesFloatState]['name']}
+                  style={{
+                    borderRadius: '10rem',
+                    fontWeight: 600,
+                    fontSize: '1.1rem',
+                    lineHeight: '1.6rem',
+                    color: '#313235',
+                  }}
+                  floatList={[...Lists.courseTypesFloatList]}
+                  selected={courseTypesFloatState}
+                  onSelect={(item, i) => {
+                    // setPageLoadSortState(null)
+                    setCourseTypesFloatState(i)
+                    // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypesFloatList[i].name)
+                  }}
+                />
+                <FloatActionButton
+                  type='sort type'
+                  heading={null}
+                  style={{
+                    borderRadius: '10rem',
+                    fontWeight: 600,
+                    fontSize: '1.1rem',
+                    lineHeight: '1.6rem',
+                    color: '#313235',
+                  }}
+                  floatList={[...Lists.sortByList]}
+                  selected={sortState}
+                  onSelect={(item, i) => {
+                    setPageLoadSortState(null)
+                    setSortState(i)
+                    // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
+                  }}
+                />
+              </div>
+            </>
+        }
+      </div>
 
       <SlidingPanel
         type={'right'}

@@ -26,8 +26,8 @@ export default function FooterMobile(props) {
                     src={profileIcon}
                     alt='user icon'
                     objectFit='cover'
-                    height={18}
-                    width={18}
+                    height={24}
+                    width={24}
                     onClick={() => {
                         openProfilePage();
                         // Mixpanel.track(MixpanelStrings.NAV_SIGNIN_BUTTON_CLICK) 
@@ -58,6 +58,10 @@ export default function FooterMobile(props) {
         location.push('/');
     }
 
+    const navigateToSearchPage=()=>{
+        location.push('/search');
+    }
+
     return (
         <div 
             className='mobile-footer showInMobile' 
@@ -73,7 +77,7 @@ export default function FooterMobile(props) {
                     </span>
                 </div>
 
-                <div className='mobile-footer-element'>
+                <div className='mobile-footer-element' onClick={()=> navigateToSearchPage()}>
                     <div className='imageContainer'>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" style={location.pathname === '/search' && !props?.loginModal ? {color:'#8F14CC'} : null}><rect width="24px" height="24px" fill="none" /><circle cx="128" cy="128" r="96" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="16" /></svg>
                     </div>
@@ -96,12 +100,6 @@ export default function FooterMobile(props) {
                         Bookmark
                     </span>
                 </div>
-                {/* <div className='mobile-footer-element' onClick={()=>props.openLoginModal()}>
-            <Image src={loginIcon} objectFit="contain" alt='loginIcon' />
-            <span className='mobile-footer-text'>
-                Login
-            </span>
-            </div> */}
 
                 <div className='nav-item-container'>
                     {renderProfile()}

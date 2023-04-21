@@ -2,21 +2,15 @@ import React, { useEffect, useState } from "react"
 import { useMediaQuery } from "react-responsive";
 import constant from "../../config/constant";
 import { useRouter } from 'next/router'
-import SearchDesktop from "./SearchDesktop";
+import SearchPage from "./SearchDesktop";
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
 export default function Dashboard(props) {
-  const [mounted, setMounted] = useState(false);
   const [thirdPartyUser,setThirdPartyUser] = useState({})
-  const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 500px)",
-  });
 
   let router = useRouter();
 
   useEffect(() => {
-    setMounted(true);
     _retrieveData()
   }, []);
 
@@ -33,10 +27,7 @@ export default function Dashboard(props) {
 
    return(
       <>
-      {
-        mounted && 
-        <>
-        {isDesktopOrLaptop && <SearchDesktop
+         <SearchPage
         // toggleTheme={toggleTheme} 
           newTheme={props?.theme}
           loginModal={props?.loginModal}
@@ -45,7 +36,6 @@ export default function Dashboard(props) {
           forgotPasswordModal={props?.forgotPasswordModal}
           handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
           token={props?.token}
-          closeFilterExpandedStage={()=>props?.closeFilterExpandedStage()}
           searchData={props?.searchData}
           handleLogin={()=>props?.handleLogin()}
           openLoginModal={()=>props?.openLoginModal()}
@@ -56,9 +46,8 @@ export default function Dashboard(props) {
           closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
           thirdPartyUser={thirdPartyUser}
           subjectData={props?.subjectData}
-        />}
-        </>
-      }
+          handleSearch={(e)=>props?.handleSearch(e)}
+        />
       </>
        )
 }

@@ -16,14 +16,9 @@ export default function FloatActionButton({
     icon,
     selected = 0,
     activeState = true,
-    openFilterVisible,
-    toggleFilterVisible,
+    // openFilterVisible,
+    // toggleFilterVisible,
 }) {
-
-    
-    const isDesktopOrLaptop = useMediaQuery({
-        query: "(min-width: 500px)",
-      });
 
     const [displayContent, setDisplayContent] = useState(false);
 
@@ -41,12 +36,12 @@ export default function FloatActionButton({
     const handleSelect = (item, i) => {
         onSelect(item, i);
         setDisplayContent(false);
-        openFilterVisible()
+        // openFilterVisible()
     }
 
     const _handleSorting=()=>{
         setDisplayContent(true)
-        openFilterVisible()
+        // openFilterVisible()
     }
 
     if (type === 'course type') {
@@ -58,7 +53,7 @@ export default function FloatActionButton({
                     style={style} 
                     onClick={() => {   
                         setDisplayContent(true)
-                        openFilterVisible()
+                        // openFilterVisible()
                     }}
                     >
                         {selected === 0 ? heading : (floatList[selected].name || floatList[selected].value)}
@@ -82,7 +77,7 @@ export default function FloatActionButton({
                 {displayContent && <div 
                 onClick={() => {
                     setDisplayContent(false)
-                    toggleFilterVisible()
+                    // toggleFilterVisible()
                 }} 
                 className='blur'></div>}
             </>
@@ -93,7 +88,6 @@ export default function FloatActionButton({
         return <>
             <div className={`float-sort-action-${floatType}`} style={{marginRight:12}}>
                 <span onClick={() => _handleSorting()} className='sort'><Image src={filterIcon} alt='Sorting' objectFit='contain' /></span>
-                {(!isDesktopOrLaptop) &&
                     <div
                         className={`dropdown-content-mobile`}
                         style={displayContent ? { bottom: 0} : { bottom: '-100%'}}
@@ -109,12 +103,12 @@ export default function FloatActionButton({
                         ))}
                         {floatList.length === 0 &&
                             Array(3).fill(null).map((it, i) => <Skeleton key={i} variant='text' width='70%' height='2.4rem' sx={{ bgcolor: '#303030', margin: '0 2rem' }} />)}
-                    </div>}
+                    </div>
             </div>
             {displayContent && <div 
             onClick={() => {
                 setDisplayContent(false)
-                toggleFilterVisible()
+                // toggleFilterVisible()
             }} 
             className='blur'></div>}
         </>
@@ -122,7 +116,6 @@ export default function FloatActionButton({
     if (type === 'subject type') {
         return <>
             <div className={`float-sort-action-${floatType}`}>
-                {(!isDesktopOrLaptop) &&
                     <div
                         className={`dropdown-content-mobile`}
                         style={displayContent ? { bottom: 0,zIndex:9999 } : { bottom: '-100%', }}
@@ -137,7 +130,7 @@ export default function FloatActionButton({
                         ))}
                         {floatList.length === 0 &&
                             Array(3).fill(null).map((it, i) => <Skeleton key={i} variant='text' width='70%' height='2.4rem' sx={{ bgcolor: '#303030', margin: '0 2rem' }} />)}
-                    </div>}
+                    </div>
             </div>
             {displayContent && <div onClick={() => setDisplayContent(false)} className='blur'></div>}
         </>

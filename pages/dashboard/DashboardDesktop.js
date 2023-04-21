@@ -717,7 +717,6 @@ export default function DashboardDesktop(props) {
         query: { course_id: event?.course_id },
       })
       props?._showSearchBar()
-
     }
     props?.handleSearch(event)
   }
