@@ -13,10 +13,6 @@ const DetailPage = (props) => {
   let location = useRouter();
   const [token, setToken] = useState("");
   const [thirdPartyUser, setThirdPartyUser] = useState({});
-  const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 500px)",
-  });
 
   useEffect(() => {
     _retrieveData();
@@ -40,7 +36,6 @@ const DetailPage = (props) => {
         <title>{props.courseName}</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      {isDesktopOrLaptop && (
             <DetailPageWeb
               id={location.query.courseId}
               detailData={props.detailData}
@@ -69,27 +64,6 @@ const DetailPage = (props) => {
               subjectData={props?.subjectData}
               openFilterExpandedStage={() => props?.openFilterExpandedStage()}
             />
-          )}
-          {isMobile && (
-            <DetailPageMobile
-              id={location.query.courseId}
-              detailData={props.detailData}
-              instructorData={props.instructors}
-              similarCourses={props.similarCourses}
-              priceOptions={props.priceOptions}
-              toolData={props.toolData}
-              reviews={props.reviews}
-              rating={props.ratings}
-              startingCost={props.startingCost}
-              addLocalBookmarks={(count) => props?.addLocalBookmarks(count)}
-              removeLocalBookmarks={(count) =>
-                props?.removeLocalBookmarks(count)
-              }
-              token={token}
-              openLoginModal={() => props?.openLoginModal()}
-              thirdPartyUser={thirdPartyUser}
-            />
-          )}
         </>
   );
 };

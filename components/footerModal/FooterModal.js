@@ -22,10 +22,6 @@ export default function FooterModal(props){
         router.push('/privacy');
     }
 
-    const isDesktopOrLaptop = useMediaQuery({
-        query: "(min-width: 500px)",
-      });
-
     return(
        <div className='footer-modal'>
         <div className='footer-modal-section'>
