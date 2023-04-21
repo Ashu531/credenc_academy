@@ -47,7 +47,7 @@ export default function FloatActionButton({
     if (type === 'course type') {
         return (
             <>
-                <div className={`float-action-${floatType}`}>
+                <div className={`float-action-${floatType} hideOnDesktop`}>
                     {(!icon && !displayContent) && <div 
                     className="dropbtn" 
                     style={style} 

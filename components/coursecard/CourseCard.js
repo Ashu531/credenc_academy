@@ -1,41 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from "next/image";
 import axios from "axios";
-import courseLogo from '../../assets/images/logo/courseLogo.svg';
 import bookmarkIcon from '../../assets/images/icons/bookmark.svg'
-import bookmarkIconDark from '../../assets/images/icons/bookmark-dark.svg'
-import instituteLogo from '../../assets/images/logo/instituteLogo.svg'
-// import upvoteLogo from '../../assets/images/icons/upvote.svg'
-// import upvoteLogoDark from '../../assets/images/icons/thumbs-up-dark.svg'
 import arrowRight from '../../assets/images/icons/arrowRight.svg'
 import arrowRightDark from '../../assets/images/icons/arrow-right-dark.svg'
-import States from '../../values/states';
 import selectedBookmark from '../../assets/images/icons/selectedBookmark.svg'
-import defaultEducator from '../../assets/images/icons/defaultEducator.svg'
 import defaultPlatform from '../../assets/images/icons/defaultPlatform.svg'
 import constant from '../../config/constant';
 import { useRouter } from 'next/router'
-import { useMediaQuery } from 'react-responsive';
-// import theme from '../../scripts/reducers/theme';
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
-const EdtechToken = 'credenc-edtech-authkey';
 
 export default function CourseCard(props) {
 
   let router = useRouter();
-  const [mounted, setMounted] = useState(false);
-  const [compareButtonVisible, setCompareButtonVisible] = useState({ display: 'none' });
   const [courseNameTooltip, setCourseNameTooltip] = useState(false)
-  const [isCardOpen, setIsCardOpen] = useState(false)
   const [bookmarkVisible, setBookmarkVisible] = useState(null)
   const [upvoted, setUpvoted] = useState(null)
   const [toggleUpvote, setToggleUpvote] = useState(null)
   const [courseName, setCourseName] = useState('')
-
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 500px)",
-  });
 
   const myLoader = ({ src, width, quality }) => {
     if (src && src.length > 0) {
@@ -46,7 +29,6 @@ export default function CourseCard(props) {
   }
 
   useEffect(() => {
-    setMounted(true);
     if (props?.token && props?.token?.length > 0) {
       _handleBookmarkData()
     } else {
@@ -275,47 +257,49 @@ export default function CourseCard(props) {
   const _goToDetailPage = (id) => {
     if (props?.detailPage === true) {
       router.replace({
-        pathname: `/details/${id}`,
+        pathname: `/details/`,
+        query: { course_id: id }
       }).then(() => router.reload())
     } else {
       router.push({
-        pathname: `/details/${id}`,
+        pathname: `/details/`,
+        query: { course_id: id }
       })
     }
 
   }
 
-  const _handleApplyAction = () => {
-    let token = localStorage.getItem(EdtechToken)
-    if (props?.data?.is_mooc === false) {
-      if (token && token.length > 0) {
-        if (props?.applied?.id != props?.data?.id) {
-          props?.openApplyNowModal()
-        }
+  // const _handleApplyAction = () => {
+  //   let token = localStorage.getItem(EdtechToken)
+  //   if (props?.data?.is_mooc === false) {
+  //     if (token && token.length > 0) {
+  //       if (props?.applied?.id != props?.data?.id) {
+  //         props?.openApplyNowModal()
+  //       }
 
-      } else {
-        if (!isDesktopOrLaptop && router?.pathname === '/details') {
-          router.push({
-            pathname: `/`,
-          })
-          props?.openLoginModal()
-        } else {
-          props?.openLoginModal()
-        }
+  //     } else {
+  //       if (!isDesktopOrLaptop && router?.pathname === '/details') {
+  //         router.push({
+  //           pathname: `/`,
+  //         })
+  //         props?.openLoginModal()
+  //       } else {
+  //         props?.openLoginModal()
+  //       }
 
-      }
-    }
+  //     }
+  //   }
 
 
-  }
+  // }
 
-  const _handleTrackItem = () => {
-    if (props?.data?.is_mooc === false) {
-      props?.enableTrackStatus()
-      props?.openDetailModal()
-    }
+  // const _handleTrackItem = () => {
+  //   if (props?.data?.is_mooc === false) {
+  //     props?.enableTrackStatus()
+  //     props?.openDetailModal()
+  //   }
 
-  }
+  // }
 
   return (
     <>
@@ -340,11 +324,11 @@ export default function CourseCard(props) {
         </div>
         <div className="card-course-content" onClick={() => _goToDetailPage(props?.data?.id)}>
           <div className='course-name' onMouseEnter={() => setCourseNameTooltip(true)} onMouseLeave={() => setCourseNameTooltip(false)}>
-            {courseName && courseName.length > 44 ? courseName.substring(0, 44) + '...' : courseName}
+            {props?.data?.course_name && props?.data?.course_name.length > 44 ? props?.data?.course_name.substring(0, 44) + '...' : props?.data?.course_name}
           </div>
           {
-            courseNameTooltip && courseName.length > 22 ? <div className="course-name-tooltip">
-              <span className="course-name-tooltiptext">{courseName}</span>
+            courseNameTooltip && props?.data?.course_name.length > 22 ? <div className="course-name-tooltip">
+              <span className="course-name-tooltiptext">{props?.data?.course_name}</span>
             </div> : null
           }
           <div className='course-detail-container'>

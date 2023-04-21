@@ -202,7 +202,7 @@ export default function DashboardDesktop(props) {
     urlService.current.removeEntry('domain')
 
     if (item.name === "All") {
-      // urlService.current.addEntry('subject', 'All');
+      urlService.current.addEntry('subject', 'All');
     } else {
       urlService.current.addEntry('domain', item.value);
     }
@@ -218,7 +218,16 @@ export default function DashboardDesktop(props) {
     if (item.value === "All") {
       urlService.current.removeEntry('subject')
     } else {
-      urlService.current.addEntry('subject', item.value);
+      location.push({
+        pathname: '/',
+        query: {
+          subject: item.value
+        }
+      },
+        undefined,
+        {
+          shallow: true
+        })
     }
     setPageNumber(1)
     handleCardData()
@@ -505,7 +514,16 @@ export default function DashboardDesktop(props) {
 
   const handleSearchClicked = async (forcePageNumber = 0) => {
     const getParams = () => {
-      return `?${urlService.current.getUpdatedUrl()}`;
+      if(appliedFiltersCount.current > 0){
+        return `?${urlService.current.getUpdatedUrl()}`;
+      }else{
+        if(selectedCategory === 'All'){
+          return `?${urlService.current.getUpdatedUrl()}`;
+        }else{
+          return `?${location?.asPath.substring(2,location?.asPath.length)}`;
+        }
+        
+      }
     }
 
     coursesApiStatus.current.makeApiCall();
@@ -558,16 +576,16 @@ export default function DashboardDesktop(props) {
       setNextPage(false)
     }
 
-    // if (pageNumber <= 1 || updatePageNumber === false) {
-    //   // setCourses([...res.data]);
-    //   setCardApiSuccess(true)
-    //   if (res?.data)
-    //     setCourseCardData([...res.data])
-    // } else {
-      // setCourses([...courseCardData, ...res.data]);
+    if (pageNumber <= 1 || updatePageNumber === false) {
+      // setCourses([...res.data]);
       setCardApiSuccess(true)
+      if (res?.data)
+        setCourseCardData([...res.data])
+    } else {
+      // setCourses([...courseCardData, ...res.data]);
+      // setCardApiSuccess(true)
       setCourseCardData([...courseCardData, ...res.data])
-    // }
+    }
 
     setMaxPrice(Math.floor(parseFloat(res.max_price)));
     setMinPrice(Math.floor(parseFloat(res.min_price)));
@@ -994,7 +1012,7 @@ export default function DashboardDesktop(props) {
           <div className="course-navbar" 
             style={
             { position: 'sticky', 
-              top: '8rem', 
+              top: '6rem', 
               background: '#FFFFFF', 
               zIndex: 9999, 
               boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.1)', 

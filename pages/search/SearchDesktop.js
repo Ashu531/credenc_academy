@@ -141,6 +141,7 @@ export default function SearchDesktop(props) {
   });
   const [pageNumber, setPageNumber] = useState(1);
   const [emptyState, setEmptyState] = useState(true)
+  const [mounted, setMounted] = useState(false)
 
 
   const openDetailModal = (data) => {
@@ -372,7 +373,6 @@ export default function SearchDesktop(props) {
     history.replaceState({}, null, '?' + urlService.current.getUpdatedUrl().replaceAll('+', ' '));
     // urlService.current.addEntry(queries.MIN_PRICE, costRange.min);
     // urlService.current.addEntry(queries.MAX_PRICE, costRange.max);
-
   }
 
   const handleCostRange = (min, max) => {
@@ -380,7 +380,7 @@ export default function SearchDesktop(props) {
     urlService.current.changeEntry(queries.MIN_PRICE, min);
     urlService.current.changeEntry(queries.MAX_PRICE, max);
 
-    if (isDesktopOrLaptop) {
+    if (window.innerWidth > 500) {
       if (pageNumber > 1) {
         setPageNumber(1)
       } else {
@@ -393,10 +393,14 @@ export default function SearchDesktop(props) {
   const handleSearchClicked = async (forcePageNumber = 0) => {
 
     const getParams = () => {
-      return `?${urlService.current.getUpdatedUrl()}`;
+      if(appliedFiltersCount.current > 0){
+        return `?${urlService.current.getUpdatedUrl()}`;
+      }else{
+        return `?${location?.asPath.substring(9,location?.asPath.length)}`;
+      }
     }
 
-    coursesApiStatus.current.makeApiCall();
+    coursesApiStatus.current.makeApiCall()
     // await delay(5000);
     let res;
     let token = props?.token;
@@ -441,16 +445,19 @@ export default function SearchDesktop(props) {
     let res = await handleSearchClicked();
     // if (forcePageNumber === 1) setForcePageNumber(0);
 
-    if (pageNumber <= 1 || updatePageNumber === false) {
-      // setCourses([...res.data]);
-      setCardApiSuccess(true)
-      if (res?.data)
-        setCourseCardData([...res.data])
-    } else {
-      // setCourses([...courseCardData, ...res.data]);
-      setCardApiSuccess(true)
-      setCourseCardData([...courseCardData, ...res.data])
-    }
+    // if (pageNumber <= 1 || updatePageNumber === false) {
+    //   // setCourses([...res.data]);
+    //   setCardApiSuccess(true)
+    //   if (res?.data)
+    //     setCourseCardData([...res.data])
+    // } else {
+    //   // setCourses([...courseCardData, ...res.data]);
+    //   setCardApiSuccess(true)
+    //   setCourseCardData([...courseCardData, ...res.data])
+    // }
+
+    setCardApiSuccess(true)
+    setCourseCardData([...courseCardData, ...res.data])
 
     setMaxPrice(Math.floor(parseFloat(res.max_price)));
     setMinPrice(Math.floor(parseFloat(res.min_price)));
@@ -566,6 +573,11 @@ export default function SearchDesktop(props) {
       return 3;
     }
   }
+
+  useEffect(()=>{
+    setMounted(true)
+  },[])
+
   useEffect(() => {
     if (maxPrice !== 0 && costRange.max === 0) {
       setCostRange({ ...costRange, max: maxPrice });
@@ -682,15 +694,15 @@ export default function SearchDesktop(props) {
     handleFilteredData(true)
   }
 
-  const isDesktopOrLaptop = useMediaQuery({
-    query: "(min-width: 500px)",
-  });
-
   useEffect(() => {
     if (!location.isReady) return;
     if (location?.query && Object.keys(location?.query).length > 0) {
       if (location?.query?.search?.length > 0) {
         _handleSearchQuery(location?.query?.search)
+        setEmptyState(false)
+      }
+      if (location?.query?.domain?.length > 0 || location?.query?.course_type?.length) {
+        setEmptyState(false)
       }
     }
   }, [location.isReady])
@@ -699,6 +711,10 @@ export default function SearchDesktop(props) {
     setPageNumber(1)
     handleFilteredData()
   }, [location?.query?.search])
+
+  const handleReload=()=>{
+    setTimeout(() => location.reload(), 100)
+  }
 
   const _handleSearchQuery = (event) => {
 
@@ -735,363 +751,391 @@ export default function SearchDesktop(props) {
   }
 
   return (
-    <div>
-      <div className="course-page">
-        {
-          <div className={`${isDesktopOrLaptop ? 'filter-column' : 'filter-mobile'} ${!isDesktopOrLaptop && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={isDesktopOrLaptop ? { minHeight: '80%' } : null}>
-            <div className="filter-head">{appliedFiltersCount.current === 0 ? <span className="no-filter-text">No filters applied</span> : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}
-              {appliedFiltersCount.current !== 0 && <span style={isDesktopOrLaptop ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>}
-              <span className='cross' onClick={() => setMobileFiltersState(false)}><Image src={closeIcon} width={14} height={14} alt='closeIcon' /></span>
-            </div>
-            <div className='filters'>
+    <>
+      {
+        mounted &&
+        <div>
+          <div className="course-page">
+            {
+              <div className={`${window.innerWidth > 500 ? 'filter-column' : 'filter-mobile'} ${!window.innerWidth <= 500 && mobileFiltersState ? 'show-filter' : 'hide-filters'}`} style={window.innerWidth > 500 ? { minHeight: '80%' } : null}>
+                <div className="filter-head">{appliedFiltersCount.current === 0 ? <span className="no-filter-text">No filters applied</span> : `${appliedFiltersCount.current} filter${appliedFiltersCount.current === 1 ? '' : 's'} applied`}
+                  {appliedFiltersCount.current !== 0 && <span style={window.innerWidth > 500 ? { display: 'block' } : { display: 'none' }}><Button text="Reset" classes="btn-primary" style={{ borderRadius: '4px', padding: '1rem 2rem', fontStyle: 'normal' }} onClick={resetFilters} /></span>}
+                  <span className='cross' onClick={() => setMobileFiltersState(false)}><Image src={closeIcon} width={14} height={14} alt='closeIcon' /></span>
+                </div>
+                <div className='filters'>
 
-              <Filter
-                item={{ name: 'Class Mode', type: filterList.CLASS_MODE }}
-                filterState={classModeList}
-                updateFilterState={updateFilterState}
+                  <Filter
+                    item={{ name: 'Class Mode', type: filterList.CLASS_MODE }}
+                    filterState={classModeList}
+                    updateFilterState={updateFilterState}
 
-              />
-              <Filter
-                item={{ name: 'Course Pace', type: filterList.COURSE_PACE }}
-                filterState={[...coursePaceList]}
-                updateFilterState={updateFilterState}
+                  />
+                  <Filter
+                    item={{ name: 'Course Pace', type: filterList.COURSE_PACE }}
+                    filterState={[...coursePaceList]}
+                    updateFilterState={updateFilterState}
 
-              />
-              <Filter
-                item={{ name: 'Cost', type: filterList.COST }}
-                filterState={costList}
-                updateFilterState={updateFilterState}
-                max={maxPrice}
-                min={minPrice}
-                getRange={handleCostRange}
-                updateCostSlider={updateCostSlider}
-                setIsAppliedCostSlider={() => setIsAppliedCostSlider(true)}
-                isAppliedCostSlider={isAppliedCostSlider}
+                  />
+                  <Filter
+                    item={{ name: 'Cost', type: filterList.COST }}
+                    filterState={costList}
+                    updateFilterState={updateFilterState}
+                    max={maxPrice}
+                    min={minPrice}
+                    getRange={handleCostRange}
+                    updateCostSlider={updateCostSlider}
+                    setIsAppliedCostSlider={() => setIsAppliedCostSlider(true)}
+                    isAppliedCostSlider={isAppliedCostSlider}
 
-              />
-              <Filter
-                item={{ name: 'Difficulty Level', type: filterList.DIFFICULTY_LEVEL }}
-                filterState={difficultyList}
-                updateFilterState={updateFilterState}
+                  />
+                  <Filter
+                    item={{ name: 'Difficulty Level', type: filterList.DIFFICULTY_LEVEL }}
+                    filterState={difficultyList}
+                    updateFilterState={updateFilterState}
 
-              />
-              {/* <Filter
+                  />
+                  {/* <Filter
             item={{ name: 'Work Experience', type: filterList.WORK_EXPERIENCE }}
             filterState={workExperienceList}
             updateFilterState={updateFilterState}
             
           /> */}
-              {
-                props?.thirdPartyUser != constant.PARTNER_KEY.NJ ?
-                  <Filter
-                    item={{ name: 'Finance Options', type: filterList.FINANCE_OPTIONS }}
-                    filterState={financeOptionList}
-                    updateFilterState={updateFilterState}
+                  {
+                    props?.thirdPartyUser != constant.PARTNER_KEY.NJ ?
+                      <Filter
+                        item={{ name: 'Finance Options', type: filterList.FINANCE_OPTIONS }}
+                        filterState={financeOptionList}
+                        updateFilterState={updateFilterState}
 
-                  /> : null
-              }
+                      /> : null
+                  }
 
-              {/* <Filter
+                  {/* <Filter
             item={{ name: 'Course Language', type: filterList.COURSE_LANGUAGE }}
             filterState={languageList}
             updateFilterState={updateFilterState}
             
           /> */}
-              <Filter
-                item={{ name: 'Platform', type: filterList.PLATFORM }}
-                filterState={platformList}
-                updateFilterState={updateFilterState}
+                  <Filter
+                    item={{ name: 'Platform', type: filterList.PLATFORM }}
+                    filterState={platformList}
+                    updateFilterState={updateFilterState}
 
-              />
-              <Filter
-                item={{ name: 'Educator', type: filterList.EDUCATOR }}
-                filterState={educatorList}
-                updateFilterState={updateFilterState}
+                  />
+                  <Filter
+                    item={{ name: 'Educator', type: filterList.EDUCATOR }}
+                    filterState={educatorList}
+                    updateFilterState={updateFilterState}
 
-              />
-            </div>
-            <div className="filter-footer">
-              <a href='/privacy' target='_blank' style={{ textDecoration: 'none' }}><span className='link' >Privacy policy & disclaimer</span></a>
-              <div className='mobile-actions-container'>
-                <div className='btn-container reset-button-wrapper'>
-                  <Button
-                    // disabled={true} 
-                    onClick={resetFilters}
-                    mobileButtonText='Reset'
-                    classes='btn-reset'
                   />
                 </div>
-                <div className='btn-container'>
-                  <Button
-                    // disabled={true} 
-                    onClick={handleApplyButton}
-                    mobileButtonText='Apply'
-                    classes='btn-apply'
-                  />
-                </div>
-              </div>
-            </div>
-          </div>}
-        <div className="searchbar hideOnDesktop">
-          <SearchBar
-            search={props?.searchValue}
-            handleSearch={(e) => _handleSearch(e)}
-            selectSearch={(e) => props?.selectSearch(e)}
-            token={props?.token}
-            showSearchBar={props?.showSearchBar}
-          />
-        </div>
-        {
-          emptyState ?
-            <div className='empty-state'>
-              <div className='category-section'>
-                <div className='category-header'>
-                 Categories
-                </div>
-                <div className='category-container'>
-                  {
-                    categories.length > 0 && categories.map((item,index)=>{
-                      return(
-                        <div className='category-content' onClick={()=>_handleSearch(item.name)} key={index}>
-                          <div className='category-text'>
-                              {item.name}
-                          </div>
-                        </div>
-                      )
-                    })
-                  }
-                 
-                </div>
-              </div>
-            </div>
-            :
-            <>
-              <div className="list-column">
-                <div className="filter-container hideOnMobile" style={{ opacity: 1 }}>
-                  <div className="segment-container">
-                    <SegmentedBar
-                      items={Lists.courseTypes}
-                      ref={courseTypeRef}
-                      style={{
-                        fontWeight: 600,
-                        ontSize: '1.1rem',
-                        lineHeight: '1.6rem',
-                      }}
-
-                      // bgColor='#16181A'
-                      handleTabNumber={(i) => {
-                        setPageNumber(1)
-                        setCourseType(i)
-                        // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypes[i])
-                      }}
-                      selected={courseType}
-                    />
+                <div className="filter-footer">
+                  <a href='/privacy' target='_blank' style={{ textDecoration: 'none' }}><span className='link' >Privacy policy & disclaimer</span></a>
+                  <div className='mobile-actions-container'>
+                    <div className='btn-container reset-button-wrapper'>
+                      <Button
+                        // disabled={true} 
+                        onClick={resetFilters}
+                        mobileButtonText='Reset'
+                        classes='btn-reset'
+                      />
+                    </div>
+                    <div className='btn-container'>
+                      <Button
+                        // disabled={true} 
+                        onClick={handleApplyButton}
+                        mobileButtonText='Apply'
+                        classes='btn-apply'
+                      />
+                    </div>
                   </div>
-                  <SecondaryDropdown
-                    heading={Lists.sortByList[sortState]['label']}
-                    style={{
-                      background: '#F7F7F7',
-                      padding: '1.4rem',
-                      borderRadius: '0.8rem',
-                      fontWeight: 600,
-                      fontSize: '1.1rem',
-                      lineHeight: '1.6rem',
-                      color: '#000000'
-                    }}
-                    classes={{
-                      wrapper: 'no-padding',
-                      content: 'content-sort'
-                    }}
-                    dropList={[...Lists.sortByList]}
-                    selected={pageLoadSortState || sortState}
-                    onSelect={(item, i) => {
-                      setPageNumber(1)
-                      setPageLoadSortState(null)
-                      setSortState(i)
-                      // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
-                    }}
-                  />
-                  <div style={{ flexGrow: 1 }}></div>
-                  <div className="text-container">Showing {totalCourses} Course{totalCourses === 1 ? '' : 's'}</div>
                 </div>
-                <div
-                  className="list-container"
-                  id="scrollableDiv"
-                >
-                  <InfiniteScroll
-                    dataLength={courseCardData.length} //This is important field to render the next data
-                    next={handleScrollData}
-                    hasMore={true}
-                    // loader={<h4>Loading...</h4>}
-                    style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: 10, flexWrap: 'wrap', overflow: 'auto' }}
-                    // onScroll={handleScroll}
-                    scrollableTarget="scrollableDiv"
-                    endMessage={
-                      <p style={{ textAlign: 'center' }}>
-                        <b>Yay! You have seen it all</b>
-                      </p>
-                    }
-                  // below props only if you need pull down functionality
-                  >
-                    {
-                      courseCardData.length > 0 ?
-                        courseCardData && courseCardData.map((item, index) => {
+              </div>}
+            <div className="searchbar hideOnDesktop">
+              <SearchBar
+                search={props?.searchValue}
+                handleSearch={(e) => _handleSearch(e)}
+                selectSearch={(e) => props?.selectSearch(e)}
+                token={props?.token}
+                showSearchBar={props?.showSearchBar}
+              />
+            </div>
+            {
+              emptyState ?
+                <div className='empty-state hideOnDesktop'>
+                  <div className='category-section'>
+                    <div className='category-header'>
+                      Categories
+                    </div>
+                    <div className='category-container'>
+                      {
+                        categories.length > 0 && categories.map((item, index) => {
                           return (
-                            <div key={index}>
-                              <CourseCard
-                                index={index}
-                                data={item}
-                                openDetailModal={() => openDetailModal(item)}
-                                openApplyNowModal={() => _openApplyNowModal(item)}
-                                token={props?.token}
-                                openLoginModal={() => props?.openLoginModal()}
-                                addLocalBookmarks={(count) => props?.addLocalBookmarks(count)}
-                                removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
-                                enableTrackStatus={() => _enableTrackStatus()}
-                                applied={applied}
-                              />
+                            <div className='category-content' onClick={() => _handleSearch(item.name)} key={index}>
+                              <div className='category-text'>
+                                {item.name}
+                              </div>
                             </div>
                           )
                         })
-                        :
-                        courseCardData.length === 0 && cardApiSuccess ?
-                          <Error type={Lists.errorTypes.EMPTY} text={'No Result Found'} />
-                          : null
-                    }
-                  </InfiniteScroll>
+                      }
+
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className='mobile-view-actions'>
-                <span className='filter' onClick={() => setMobileFiltersState(true)}><Image src={filterIcon} alt='filters' height={22} width={22} /></span>
-                <FloatActionButton
-                  type='course type'
-                  heading={Lists.courseTypesFloatList[courseTypesFloatState]['name']}
-                  style={{
-                    borderRadius: '10rem',
-                    fontWeight: 600,
-                    fontSize: '1.1rem',
-                    lineHeight: '1.6rem',
-                    color: '#313235',
-                  }}
-                  floatList={[...Lists.courseTypesFloatList]}
-                  selected={courseTypesFloatState}
-                  onSelect={(item, i) => {
-                    // setPageLoadSortState(null)
-                    setCourseTypesFloatState(i)
-                    // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypesFloatList[i].name)
-                  }}
-                />
-                <FloatActionButton
-                  type='sort type'
-                  heading={null}
-                  style={{
-                    borderRadius: '10rem',
-                    fontWeight: 600,
-                    fontSize: '1.1rem',
-                    lineHeight: '1.6rem',
-                    color: '#313235',
-                  }}
-                  floatList={[...Lists.sortByList]}
-                  selected={sortState}
-                  onSelect={(item, i) => {
-                    setPageLoadSortState(null)
-                    setSortState(i)
-                    // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
-                  }}
-                />
-              </div>
-            </>
-        }
-      </div>
+                :
+                <>
+                  <div className="list-column">
+                    <div className="filter-container" style={{ opacity: 1 }}>
+                      <div className="segment-container">
+                        <SegmentedBar
+                          items={Lists.courseTypes}
+                          ref={courseTypeRef}
+                          style={{
+                            fontWeight: 600,
+                            ontSize: '1.1rem',
+                            lineHeight: '1.6rem',
+                          }}
 
-      <SlidingPanel
-        type={'right'}
-        isOpen={detailModal}
-        backdropClicked={() => closeDetailModal(detailData)}
-        size={30}
-      >
-        <DetailModal
-          detailData={detailData}
-          token={props?.token}
-          openApplyNowModal={() => _openApplyNowModal(detailData)}
-          closeDetailModal={() => closeDetailModal(detailData)}
-          openLoginModal={() => props?.openLoginModal()}
-          handleCardActionTaken={() => _handleCardActionTaken()}
-          openDetailModal={() => openDetailModal()}
-          status={trackStatus}
-          openQueryModal={_openEnquireModal}
-        />
-      </SlidingPanel>
-      <SlidingPanel
-        type={'right'}
-        isOpen={applyNow}
-        backdropClicked={() => setApplyNow(false)}
-        size={30}
-      >
-        <ApplyNowModal
-          openQueryModal={_openEnquireModal}
-          detailData={detailData}
-          closeApplyNowModal={() => _closeApplyNowModal()}
-          openSuccessApplyModal={(courseName) => _openSuccessApplyModal(courseName)}
-          handleAppliedStage={(id) => _handleAppliedStage(id)}
-          courseName={detailData?.course_name}
-        />
-      </SlidingPanel>
-      <SlidingPanel
-        type={'right'}
-        isOpen={successApplyModal}
-        backdropClicked={() => setSuccessApplyModal(false)}
-        size={30}
-      >
-        <SuccessApplyModal closeSuccessApplyModal={() => _closeSuccessApplyModal()} courseName={courseName} />
-      </SlidingPanel>
-      <SlidingPanel
-        type={'right'}
-        isOpen={enquire}
-        backdropClicked={_closeEnquireModal}
-        size={30}
-      >
-        <InquiryModal
-          closeInquiryModal={_closeEnquireModal}
-          detailData={detailData}
-          courseName={detailData?.course_name}
-          openSuccessModal={() => _openQuerySuccessModal()}
-        />
-      </SlidingPanel>
-      <SlidingPanel
-        type={'right'}
-        isOpen={querySuccessModal}
-        backdropClicked={() => setQuerySuccessModal(false)}
-        size={30}
-      >
-        <QuerySuccessModal closeSuccessQueryModal={() => setQuerySuccessModal(false)} courseName={detailData?.course_name} />
-      </SlidingPanel>
-      {
-        props?.loginModal ?
-          <div style={{ width: '100%', height: '100%' }}>
-            <LoginModal
-              closeLoginModal={() => props?.closeLoginModal()}
-              openForgotPasswordModal={() => props?.openForgotPasswordModal()}
-              forgotPasswordModal={props?.forgotPasswordModal}
-              handleLogin={() => props?.handleLogin()}
-              setUserEmail={(data) => _setUserEmail(data)}
-              setUserLoginState={(data) => _setUserLoginState(data)}
-            />
+                          // bgColor='#16181A'
+                          handleTabNumber={(i) => {
+                            setPageNumber(1)
+                            setCourseType(i)
+                            // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypes[i])
+                          }}
+                          selected={courseType}
+                        />
+                      </div>
+                      <SecondaryDropdown
+                        heading={Lists.sortByList[sortState]['label']}
+                        style={{
+                          background: '#F7F7F7',
+                          padding: '1.4rem',
+                          borderRadius: '0.8rem',
+                          fontWeight: 600,
+                          fontSize: '1.1rem',
+                          lineHeight: '1.6rem',
+                          color: '#000000'
+                        }}
+                        classes={{
+                          wrapper: 'no-padding',
+                          content: 'content-sort'
+                        }}
+                        dropList={[...Lists.sortByList]}
+                        selected={pageLoadSortState || sortState}
+                        onSelect={(item, i) => {
+                          setPageNumber(1)
+                          setPageLoadSortState(null)
+                          setSortState(i)
+                          // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
+                        }}
+                      />
+                      <div style={{ flexGrow: 1 }}></div>
+                      {
+                        window.innerWidth > 500 ? 
+                        <div className="text-container">Showing {totalCourses} Course{totalCourses === 1 ? '' : 's'}</div> : null
+                      }
+                      
+                    </div>
+                    <div
+                      className="list-container"
+                      id="scrollableDiv"
+                      style={{height: 950,overflow: 'auto'}}
+                    >
+                      <InfiniteScroll
+                        dataLength={courseCardData.length} //This is important field to render the next data
+                        next={handleScrollData}
+                        hasMore={true}
+                        height={950}
+                        // loader={<h4>Loading...</h4>}
+                        style={
+                          window.innerWidth > 500 ? {
+                            width: '100%', 
+                            display: 'flex', 
+                            flexDirection: 'row', 
+                            justifyContent: 'flex-start', 
+                            gap: 10, 
+                            flexWrap: 'wrap', 
+                            overflow: 'auto',
+                            marginTop: '5rem',
+                          } :
+                          { width: '100%', 
+                            display: 'flex', 
+                            flexDirection: 'row', 
+                            justifyContent: 'center', 
+                            gap: 10, 
+                            flexWrap: 'wrap', 
+                            overflow: 'auto' }
+                          }
+                        scrollableTarget="scrollableDiv"
+                        endMessage={
+                          <p style={{ textAlign: 'center' }}>
+                            <b>Yay! You have seen it all</b>
+                          </p>
+                        }
+                      // below props only if you need pull down functionality
+                      >
+                        {
+                          courseCardData.length > 0 ?
+                            courseCardData && courseCardData.map((item, index) => {
+                              return (
+                                <div key={index}>
+                                  <CourseCard
+                                    index={index}
+                                    data={item}
+                                    openDetailModal={() => openDetailModal(item)}
+                                    openApplyNowModal={() => _openApplyNowModal(item)}
+                                    token={props?.token}
+                                    openLoginModal={() => props?.openLoginModal()}
+                                    addLocalBookmarks={(count) => props?.addLocalBookmarks(count)}
+                                    removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
+                                    enableTrackStatus={() => _enableTrackStatus()}
+                                    applied={applied}
+                                  />
+                                </div>
+                              )
+                            })
+                            :
+                            courseCardData.length === 0 && cardApiSuccess ?
+                              <Error type={Lists.errorTypes.EMPTY} text={'No Result Found'} />
+                              : null
+                        }
+                      </InfiniteScroll>
+                    </div>
+                  </div>
+                  <div className='mobile-view-actions'>
+                    <span className='filter' onClick={() => setMobileFiltersState(true)}><Image src={filterIcon} alt='filters' height={22} width={22} /></span>
+                    <FloatActionButton
+                      type='course type'
+                      heading={Lists.courseTypesFloatList[courseTypesFloatState]['name']}
+                      style={{
+                        borderRadius: '10rem',
+                        fontWeight: 600,
+                        fontSize: '1.1rem',
+                        lineHeight: '1.6rem',
+                        color: '#ffffff',
+                      }}
+                      floatList={[...Lists.courseTypesFloatList]}
+                      selected={courseTypesFloatState}
+                      onSelect={(item, i) => {
+                        // setPageLoadSortState(null)
+                        setCourseTypesFloatState(i)
+                        // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypesFloatList[i].name)
+                      }}
+                    />
+                    <FloatActionButton
+                      type='sort type'
+                      heading={null}
+                      style={{
+                        borderRadius: '10rem',
+                        fontWeight: 600,
+                        fontSize: '1.1rem',
+                        lineHeight: '1.6rem',
+                        color: '#313235',
+                      }}
+                      floatList={[...Lists.sortByList]}
+                      selected={sortState}
+                      onSelect={(item, i) => {
+                        setPageLoadSortState(null)
+                        setSortState(i)
+                        // callMixpanel(MixpanelStrings.SORTING_DROPDOWN_TRIGGERED, Lists.sortByList[i].name)
+                      }}
+                    />
+                  </div>
+                </>
+            }
           </div>
-          : null
-      }
-      {
-        props?.forgotPasswordModal ?
-          <ForgotPasswordModal
-            handleForgotPasswordEnd={() => props?.handleForgotPasswordEnd()}
-            closeForgotPasswordModal={() => props?.closeForgotPasswordModal()}
-            userEmail={userEmail}
-            openLoginModal={() => props?.openLoginModal()}
-            loginState={loginState}
-          />
-          : null
-      }
 
-    </div>
+          <SlidingPanel
+            type={'right'}
+            isOpen={detailModal}
+            backdropClicked={() => closeDetailModal(detailData)}
+            size={30}
+          >
+            <DetailModal
+              detailData={detailData}
+              token={props?.token}
+              openApplyNowModal={() => _openApplyNowModal(detailData)}
+              closeDetailModal={() => closeDetailModal(detailData)}
+              openLoginModal={() => props?.openLoginModal()}
+              handleCardActionTaken={() => _handleCardActionTaken()}
+              openDetailModal={() => openDetailModal()}
+              status={trackStatus}
+              openQueryModal={_openEnquireModal}
+            />
+          </SlidingPanel>
+          <SlidingPanel
+            type={'right'}
+            isOpen={applyNow}
+            backdropClicked={() => setApplyNow(false)}
+            size={30}
+          >
+            <ApplyNowModal
+              openQueryModal={_openEnquireModal}
+              detailData={detailData}
+              closeApplyNowModal={() => _closeApplyNowModal()}
+              openSuccessApplyModal={(courseName) => _openSuccessApplyModal(courseName)}
+              handleAppliedStage={(id) => _handleAppliedStage(id)}
+              courseName={detailData?.course_name}
+            />
+          </SlidingPanel>
+          <SlidingPanel
+            type={'right'}
+            isOpen={successApplyModal}
+            backdropClicked={() => setSuccessApplyModal(false)}
+            size={30}
+          >
+            <SuccessApplyModal closeSuccessApplyModal={() => _closeSuccessApplyModal()} courseName={courseName} />
+          </SlidingPanel>
+          <SlidingPanel
+            type={'right'}
+            isOpen={enquire}
+            backdropClicked={_closeEnquireModal}
+            size={30}
+          >
+            <InquiryModal
+              closeInquiryModal={_closeEnquireModal}
+              detailData={detailData}
+              courseName={detailData?.course_name}
+              openSuccessModal={() => _openQuerySuccessModal()}
+            />
+          </SlidingPanel>
+          <SlidingPanel
+            type={'right'}
+            isOpen={querySuccessModal}
+            backdropClicked={() => setQuerySuccessModal(false)}
+            size={30}
+          >
+            <QuerySuccessModal closeSuccessQueryModal={() => setQuerySuccessModal(false)} courseName={detailData?.course_name} />
+          </SlidingPanel>
+          {
+            props?.loginModal ?
+              <div style={{ width: '100%', height: '100%' }}>
+                <LoginModal
+                  closeLoginModal={() => props?.closeLoginModal()}
+                  openForgotPasswordModal={() => props?.openForgotPasswordModal()}
+                  forgotPasswordModal={props?.forgotPasswordModal}
+                  handleLogin={() => props?.handleLogin()}
+                  setUserEmail={(data) => _setUserEmail(data)}
+                  setUserLoginState={(data) => _setUserLoginState(data)}
+                />
+              </div>
+              : null
+          }
+          {
+            props?.forgotPasswordModal ?
+              <ForgotPasswordModal
+                handleForgotPasswordEnd={() => props?.handleForgotPasswordEnd()}
+                closeForgotPasswordModal={() => props?.closeForgotPasswordModal()}
+                userEmail={userEmail}
+                openLoginModal={() => props?.openLoginModal()}
+                loginState={loginState}
+              />
+              : null
+          }
+
+        </div>
+      }
+    </>
   )
 }
