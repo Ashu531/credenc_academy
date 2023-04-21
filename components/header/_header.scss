@@ -5,10 +5,12 @@
     position: fixed;
     top: 0;
     background-color: var(--subduedBackground);
+    padding: 0;
+    height: 6rem;
   
     .navbar{
     //   width: 100%;
-    height: 8rem;
+      height: 100%;
       padding: 0 3.2rem;
     // padding-left: 6rem;
     // padding-right: 5rem;

@@ -1,1103 +1,10 @@
-.detail-page-mobile{
-    // width: 100%;
-    height: 100%;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    // align-items: center;
-    padding: 5rem 0 0 0;
-
-    .people {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        overflow: scroll;
-        margin-top: 20px;
-
-        .feature {
-            padding: 0.2rem 1.6rem;
-            border-left: 1px solid #034FE2;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: flex-start;
-            min-width: 28rem;
-
-            .key{
-                font-size: 1.4rem;
-                font-weight: 400;
-                line-height: 1.7rem;
-                color: #000;
-            }
-
-            .value{
-                font-size: 2rem;
-                font-weight: 600;
-                line-height: 2.3rem;
-                color: #000;
-                margin: 0.6rem 0;
-            }
-        }
-    }
-
-    .description{
-        font-size: 1.6rem;
-        font-weight: 400;
-        line-height: 2.2rem;
-        color: var(--defaultColor);
-    }
-
-    .heading{
-        color: var(--defaultPrimaryColor);
-        font-size: 2.8rem;
-        line-height: 3.36rem;
-        text-align: left;
-        font-family: 'Gloock';
-    }
-
-    .navbar {
-        background: #FFFFFF;
-        padding: 0 3rem;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        list-style: none;
-        position: sticky;
-        top: 6.31rem;
-        z-index: 999;
-        box-shadow: rgb(0 0 0 / 10%) 0px 1px 0px;
-
-        button{
-            cursor: pointer;
-            background-color: #034FE2;
-            padding: 1rem 2.4rem;
-            border: none;
-            border-radius: 0.5rem;
-            color: #FFFFFF;
-            font-size: 1.4rem;
-            font-weight: 600;
-        }
-
-        .nav-item {
-            margin: 0 0.6rem;
-            padding: 0.6rem 1.2rem;
-            font-size: 1.4rem;
-            font-weight: 500;
-            line-height: 2.1rem;
-            font-family: 'Poppins';
-            border-radius: 0.6rem;
-
-            a {
-                text-decoration: none;
-                color: #B1B1B1;
-            }
-        }
-
-        .active{
-            background: #F8F8F8;
-
-            a {
-                color: #222222;
-            }
-        }
-
-        .nav-item-right {
-            cursor: pointer;
-            margin: 0 0.6rem;
-            padding: 0.6rem 0rem;
-            font-size: 1.4rem;
-            font-weight: 500;
-            line-height: 2.1rem;
-            border-radius: 0.6rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            float: right;
-        }
-    }
-
-    .head-jumbotron{
-        margin-bottom: 4.5rem;
-        padding: 9rem 2.4rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        .title {
-            color: var(--defaultPrimaryColor);
-            font-size: 3rem;
-            line-height: 3.6rem;
-            letter-spacing: 2px;
-            text-align: center;
-            font-family: 'Gloock';
-        }
-
-        .subtitle{
-            margin: 2.4rem 0;
-            padding: 0.4rem 1rem;
-            background-color: #E6EEFF;
-            border-radius: 0.2rem;
-            font-size: 1.4rem;
-            font-weight: 500;
-            line-height: 2.1rem;
-            color: var(--defaultPrimaryColor);
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
-
-        .items{
-            padding: 4rem 0rem;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-
-            .item{
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                padding: 0 1rem;
-
-                div{
-                    margin: 0 0 0 0.4rem;
-                    display: flex;
-                    flex-direction: column;
-
-                    .head {
-                        color: var(--bodyColor);
-                        font-size: 1.2rem;
-                        font-weight: 400;
-                        line-height: 1.4rem;
-                    }
-
-                    .sub {
-                        color: #000000;
-                        font-size: 1.4rem;
-                        font-weight: 600;
-                        line-height: 1.7rem;
-                    }
-                }
-            }
-        }
-    }
-
-    .container{
-        padding: 3rem 2rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-
-        .feature {
-            padding: 0.2rem 1.6rem;
-            border-left: 1px solid #034FE2;
-            display: flex;
-            width: 40%;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: flex-start;
-
-            .key{
-                font-size: 1.4rem;
-                font-weight: 400;
-                line-height: 1.7rem;
-                color: #000;
-            }
-
-            .value{
-                font-size: 2rem;
-                font-weight: 600;
-                line-height: 2.3rem;
-                color: #000;
-                margin: 0.6rem 0;
-            }
-        }
-
-        .confused-container{
-            padding: 3rem 2.4rem;
-            background-color: #F5F8FF;
-            border-radius: 0.8rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-
-            button{
-                margin: 2.4rem 0 0 0;
-                cursor: pointer;
-                background-color: #034FE2;
-                padding: 1.6rem 2.4rem;
-                border: none;
-                border-radius: 0.8rem;
-                color: #FFFFFF;
-                font-size: 1.6rem;
-                font-family: 'Work Sans';
-                text-align: justify;
-            }
-        }
-
-        .leave-review{
-            margin: 1rem 0 0 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem 0;
-            text-align: center;
-            // border: 1px solid #E6E6E6;
-            border-radius: 0.8rem;
-
-            textarea{
-                width: 90%;
-                border: 1px solid #E8E8E8;
-                border-radius: 0.8rem;
-                padding: 1rem;
-                font-family: 'Work Sans';
-            }
-        }
-    }
-
-    .curriculum-item {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: flex-start;
-
-        .item-content {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            border-bottom: 1px solid #F0F0F0;
-            padding: 1.6rem 1.6rem;
-        }
-    }
-
-    .detail-page-header-mobile-container{
-       
-        padding: 10px 24px 24px 24px;
-        // margin-top: 3rem;
-
-        .detail-page-mobile-header{
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            // padding: 0px;
-            // gap: 158px;
-        }
-
-        .detail-page-mobile-platform{
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            margin-left: 12px;
-            // align-items: center;
-            // gap: 20px;
-
-            .detail-page-mobile-platform-heading{
-                font-family: 'Poppins';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 12px;
-                line-height: 18px;
-                color: var(--bodyColor);
-            }
-
-            .detail-page-mobile-platform-subHeading{
-                font-family: 'Poppins';
-                font-style: normal;
-                font-weight: 600;
-                font-size: 14px;
-                line-height: 21px;
-                text-transform: uppercase;
-                color: var(--inverseBackground);
-            }
-        }
-
-        .detail-page-mobile-banner{
-            width: 100%;
-        }
-    }
-
-    .detail-page-content-mobile{
-        margin: 24px;
-
-        .detail-page-content-heading{
-            font-family: 'Poppins';
-            font-style: normal;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 21px;
-            display: flex;
-            align-items: center;
-            color: var(--inverseBackground);
-        }
-
-        .detail-page-content-course-name{
-            font-family: 'Poppins';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 32px;
-            line-height: 120%;
-            color: #000000;
-        }
-
-        .detail-page-content-one-liner{
-            font-family: 'Poppins';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 15px;
-            line-height: 170%;
-            color: var(--primaryColor);
-        }
-
-        .detail-page-content-educator-heading{
-            font-family: 'Poppins';
-            font-style: normal;
-            font-weight: 600;
-            font-size: 13px;
-            line-height: 20px;
-            text-align: center;
-            text-transform: uppercase;
-            color: var(--bodyColor);
-        }
-
-        .detail-page-content-educator-container{
-            display: flex;
-            flex-direction: row;
-            
-
-            .detail-page-content-educator-list{
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-start;
-                align-items: center;
-                flex-wrap: wrap;
-
-                .detail-page-content-educator-name{
-                    font-family: 'Poppins';
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 15px;
-                    line-height: 22px;
-                    text-align: center;
-                    color: var(--inverseBackground);
-                }
-            }
-           
-        }
-        .detail-page-content-educator-details{
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-    
-            .detail-page-content-educator-info{
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-start;
-                align-items: center;
-            }
-
-            .detail-page-content-educator-info-header{
-                font-family: 'Poppins';
-                font-style: normal;
-                font-weight: 500;
-                font-size: 14px;
-                line-height: 21px;
-                text-transform: uppercase;
-                color: var(--primaryColor);
-                margin-left: 12px;
-            }
-
-            .detail-page-content-educator-info-subheader{
-                font-family: 'Poppins';
-                font-style: normal;
-                font-weight: 600;
-                font-size: 14px;
-                line-height: 21px;
-                text-transform: uppercase;
-                color: #8F14CC;
-            }
-        }
-
-        .divider{
-            border: 0.5px solid #EBEBEB;
-            margin: 6px 0px;
-        }
-
-    }
-
-    .detail-page-mobile-intro{
-        background: var(--subduedBackground);
-        padding: 44px 24px 44px 24px;
-
-        .detail-page-mobile-intro-header{
-            font-family: 'Work Sans';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 28px;
-            line-height: 140%;
-            text-transform: capitalize;
-            color: var(--inverseBackground);
-            display: flex;
-        }
-
-        .detail-page-mobile-intro-subHeader{
-            font-family: 'Work Sans';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 15px;
-            line-height: 170%;
-            color: var(--primaryColor);
-            // margin-top: 16px;
-        }
-
-        .detail-page-mobile-intro-content{
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: flex-start;
-        }
-        .detail-page-mobile-skill-container{
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            
-    
-            .detail-page-mobile-skill-content{
-                font-family: 'Work Sans';
-                font-style: normal;
-                font-weight: 500;
-                font-size: 14px;
-                line-height: 21px;
-                color: var(--inverseBackground);
-                background: #FFFFFF;
-                border-radius: 3px;
-                padding: 6px 10px;
-                width: max-content;
-
-            }
-        }    }
-
-    .detail-page-mobile-instructor-card-container{
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        overflow: auto;
-        margin-top: 20px;
-       
-
-        .detail-page-mobile-instructor-card{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 25px 15px;
-            gap: 15px;
-            isolation: isolate;
-            background: var(--defaultBackground);
-            border-radius: 6px;
-            min-width: 238px;
-            position: relative;
-
-            .detail-page-mobile-instructor-card-name{
-                font-family: 'Work Sans';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 18px;
-                line-height: 33px;
-                display: flex;
-                align-items: center;
-                text-transform: capitalize;
-            }
-
-            .detail-page-mobile-instructor-card-designation{
-                font-family: 'Work Sans';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 12px;
-                line-height: 18px;
-                color: var(--inverseBackground);
-            }
-
-            .linkedlinLogoMobile{
-                position: absolute;
-                top: 12px;
-                right: 12px;
-            }
-    
-        }
-    }
-
-    .detail-page-mobile-emi-content{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-
-        .detail-page-mobile-emi-section{
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-
-            .detail-page-mobile-emi-section-header{
-                font-family: 'Work Sans';
-                font-style: normal;
-                font-weight: 600;
-                font-size: 16px;
-                line-height: 24px;
-                text-transform: uppercase;
-                color: #222222;
-            }
-
-            .detail-page-mobile-emi-section-nj-text{
-                font-family: 'Work Sans';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 12px;
-                line-height: 18px;
-                color: #8F14CC;
-            }
-
-            .detail-page-mobile-emi-section-start-text{
-                font-family: 'Work Sans';
-                font-style: normal;
-                font-weight: 500;
-                font-size: 12px;
-                line-height: 18px;
-                text-align: center;
-                color: #222222;
-            }
-
-            .detail-page-mobile-emi-section-price-text{
-                font-family: 'Work Sans';
-                font-style: normal;
-                font-weight: 700;
-                font-size: 20px;
-                line-height: 30px;
-                text-align: center;
-                color: #8F14CC;
-            }
-        }
-    }
-
-    .detail-page-mobile-nj-section{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding: 6px;
-        gap: 12px;
-        background: rgba(0, 203, 156, 0.1);
-        border-radius: 4px;
-        margin-top: 20px;
-
-        .detail-page-mobile-nj-section-text{
-            font-family: 'Work Sans';
-            font-style: normal;
-            font-weight: 500;
-            font-size: 12px;
-            line-height: 18px;
-             color: #009572;
-        }
-    }
-
-
-    .detail-page-mobile-price-options-container{
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        overflow: auto;
-        margin-top: 24px;
-        gap: 12px;
-
-        .detail-page-mobile-price-options-card{
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 24px;
-            gap: 12px;
-            background: var(--defaultBackground);
-            border: 1px solid #DDDDDD;
-            box-shadow: 6px 6px 0px #F7F7F7;
-            min-width: 260px;
-            border-radius: 6px;
-
-            .detail-page-mobile-price-options-card-header{
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                width: 100%;
-            
-
-            .detail-page-mobile-price-options-card-plan{
-                font-family: 'Work Sans';
-                font-style: normal;
-                font-weight: 600;
-                font-size: 15px;
-                line-height: 22px;
-                text-transform: uppercase;
-                color: var(--inverseBackground);
-            }
-
-            .detail-page-mobile-price-options-card-recommendation{
-                display: flex;
-                flex-direction: row;
-                align-items: flex-start;
-                padding: 5px 6px;
-                gap: 10px;
-                background: #FAF1FE;
-                border-radius: 3px;
-
-                .detail-page-mobile-price-options-card-recommendation-text{
-                    font-family: 'Work Sans';
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 10px;
-                    line-height: 15px;
-                    color: #8F14CC;
-                }
-            }
-        }
-                .detail-page-mobile-price-options-card-description{
-                    font-family: 'Work Sans';
-                    font-style: normal;
-                    font-weight: 400;
-                    font-size: 12px;
-                    line-height: 18px;
-                    color: var(--bodyColor);
-            }
-
-            .detail-page-mobile-price-options-card-info{
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                width: 100%;
-
-                .detail-page-mobile-price-options-card-info-heading{
-                    font-family: 'Work Sans';
-                    font-style: normal;
-                    font-weight: 400;
-                    font-size: 14px;
-                    line-height: 21px;
-                    color: var(--inverseBackground);
-                }
-
-                .detail-page-mobile-price-options-card-info-subheading{
-                    font-family: 'Work Sans';
-                    font-style: normal;
-                    font-weight: 600;
-                    font-size: 14px;
-                    line-height: 21px;
-                    color: var(--inverseBackground);
-                }
-
-                .detail-page-mobile-price-options-card-nocost-emi{
-                    display: flex;
-                    flex-direction: row;
-                    align-items: flex-start;
-                    padding: 5px 6px;
-                    gap: 10px;
-                    background: #EDF7E8;
-                    border-radius: 3px;
-
-                    .detail-page-mobile-price-options-card-nocost-emi-text{
-                        font-family: 'Work Sans';
-                        font-style: normal;
-                        font-weight: 500;
-                        font-size: 11px;
-                        line-height: 16px;
-                        color: #5FAE3A;
-                    }
-                }
-
-                .detail-page-mobile-price-options-card-info-amount-header{
-                    font-family: 'Work Sans';
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 12px;
-                    line-height: 18px;
-                    text-transform: capitalize;
-                    color: var(--inverseBackground);
-                }
-
-                .detail-page-mobile-price-options-card-info-amount-text{
-                    font-family: 'Work Sans';
-                    font-style: normal;
-                    font-weight: 600;
-                    font-size: 18px;
-                    line-height: 27px;
-                    color: #8F14CC;
-                }
-            }
-        }
-
-        .detail-page-mobile-lumpsum-content{
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            // padding: 24px;
-            gap: 16px;
-            background: var(--defaultBackground);
-
-            .detail-page-mobile-lumpsum-header{
-                font-family: 'Work Sans';
-                font-style: normal;
-                font-weight: 600;
-                font-size: 16px;
-                line-height: 24px;
-                text-transform: uppercase;
-                color: #222222;
-            }
-
-            .detail-page-mobile-lumpsum-card{
-                box-sizing: border-box;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 24px;
-                gap: 32px;
-                background: #FFFFFF;
-                border: 1px solid #DDDDDD;
-                box-shadow: 6px 6px 0px #F7F7F7;
-
-                .detail-page-mobile-lumpsum-card-header{
-                    font-family: 'Work Sans';
-                    font-style: normal;
-                    font-weight: 400;
-                    font-size: 12px;
-                    line-height: 18px;
-                    color: #717171;
-                }
-
-                .detail-page-mobile-lumpsum-card-detail{
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
-                    align-items: flex-start;
-                    padding: 0px;
-                    gap: 63px;
-
-                    .detail-page-mobile-lumpsum-card-detail-label{
-                        font-family: 'Work Sans';
-                        font-style: normal;
-                        font-weight: 400;
-                        font-size: 14px;
-                        line-height: 21px;
-                        color: #000000;
-                    }
-
-                    .detail-page-mobile-lumpsum-card-detail-amount{
-                        font-family: 'Work Sans';
-                        font-style: normal;
-                        font-weight: 600;
-                        font-size: 14px;
-                        line-height: 21px;
-                        color: #000000;
-                    }
-
-                   
-                }
-                .detail-page-mobile-lumpsum-total-amount-header{
-                    font-family: 'Work Sans';
-                    font-style: normal;
-                    font-weight: 700;
-                    font-size: 12px;
-                    line-height: 18px;
-                    text-align: center;
-                    color: #222222;
-                    margin-top: 16px;
-                }
-                .detail-page-mobile-lumpsum-total-amount{
-                    font-family: 'Work Sans';
-                    font-style: normal;
-                    font-weight: 700;
-                    font-size: 20px;
-                    line-height: 30px;
-                    text-align: center;
-                    color: #8F14CC;
-                    margin-top: -25px;
-                }
-            }
-        }
-        
-    }
-
-    .detail-page-mobile-batch-card-container{
-       display: flex;
-       flex-direction: column;
-       justify-content: flex-start;
-
-       .detail-page-mobile-batch-card{
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 16px;
-            gap: 24px;
-            background: #FFFFFF;
-            border-radius: 6px;
-            margin-top: 24px;
-            // width: 100%;
-
-        .detail-page-mobile-batch-card-heading{
-            font-family: 'Work Sans';
-            font-style: normal;
-            font-weight: 600;
-            font-size: 16px;
-            line-height: 24px;
-            display: flex;
-            align-items: center;
-            text-transform: uppercase;
-            color: var(--primaryColor);
-        }
-
-        .detail-page-mobile-batch-card-info{
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-
-            .detail-page-mobile-batch-card-info-header{
-                font-family: 'Work Sans';
-                font-style: normal;
-                font-weight: 500;
-                font-size: 15px;
-                line-height: 22px;
-                text-align: center;
-                color: var(--bodyColor);
-            }
-
-            .detail-page-mobile-batch-card-info-subheader{
-                font-family: 'Work Sans';
-                font-style: normal;
-                font-weight: 600;
-                font-size: 15px;
-                line-height: 22px;
-                text-align: center;
-                color: #000000;
-            }
-        }
-
-            .detail-page-mobile-batch-card-content{
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 0px;
-                gap: 8px;
-                width: 100%;
-        }
-      }
-
-      .detail-page-mobile-batch-card-close{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 16px;
-        gap: 24px;
-        background: #FFFFFF;
-        border-radius: 6px;
-      }
-
-      .detail-page-mobile-batch-card-heading{
-        font-family: 'Poppins';
-        font-style: normal;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 24px;
-        display: flex;
-        align-items: center;
-        text-transform: uppercase;
-        color: var(--primaryColor);
-    }
-    }
-
-    .detail-page-mobile-card-container{
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        overflow: auto;
-        margin-top: 20px;
-    }
-
-    .detail-page-mobile-benefit-section{
-        // position: absolute;
-        // top: 0px;
-        // left: 0px;
-
-        .detail-page-mobile-benefit-content{
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 44px 24px;
-            gap: 40px;
-            isolation: isolate;
-            // background: var(--defaultBackground);
-
-            .detail-page-mobile-benefit-content-header{
-                font-family: 'Poppins';
-                font-style: normal;
-                font-weight: 400;
-                font-size: 28px;
-                line-height: 140%;
-                text-transform: capitalize;
-                color: var(--inverseBackground);
-            }
-
-            .detail-page-mobile-benefit-info{
-
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-start;
-
-                .detail-page-mobile-benefit-info-header{
-                    font-family: 'Poppins';
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 15px;
-                    line-height: 22px;
-                    margin-left: 12px;
-                    // color: var(--defaultBackground);
-                }
-
-            }
-
-           
-        }
-    }
-
-    .detail-page-mobile-intro-tool-container{
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-
-        .detail-page-mobile-intro-tool-content{
-            background: var(--defaultBackground);
-            // width: 50px;
-            height: 50px;
-            border-radius: 40%;
-
-            .detail-page-mobile-intro-tool-content-text{
-                font-family: 'Poppins';
-                font-style: normal;
-                font-weight: 500;
-                font-size: 15px;
-                line-height: 22px;
-                color: var(--inverseBackground);
-            }
-        }
-    }
-
-    .detail-page-mobile-module-content{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        padding: 16px 0px;
-        gap: 24px;
-
-        .detail-page-mobile-module-content-header{
-            font-family: 'Poppins';
-            font-style: normal;
-            font-weight: 600;
-            font-size: 15px;
-            line-height: 22px;
-            color: var(--inverseBackground);
-        }
-
-        .detail-page-mobile-module-content-subheader{
-            font-family: 'Poppins';
-            font-style: normal;
-            font-weight: 500;
-            font-size: 13px;
-            line-height: 20px;
-            letter-spacing: 0.02em;
-            color: var(--bodyColor);
-        }
-
-       
-    }
-    .detail-page-mobile-module-bullet-section{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        margin-left: 5%;
-
-        .detail-page-mobile-module-bullet-section-header{
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: center;
-        }
-
-        .detail-page-mobile-module-bullet-section-header-text{
-            font-family: 'Poppins';
-            font-style: normal;
-            font-weight: 600;
-            font-size: 15px;
-            line-height: 22px;
-            color: var(--primaryColor);
-            margin-left: 12px;
-        }
-
-
-        
-    }
-
-    .detail-page-mobile-module-topic-section{
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        margin-left: 16%;
-
-        .detail-page-mobile-module-bullet-section-header-text{
-            font-family: 'Poppins';
-            font-style: normal;
-            font-weight: 600;
-            font-size: 15px;
-            line-height: 22px;
-            color: var(--primaryColor);
-            margin-left: 12px;
-        }
-
-       
-    }
-    .detail-page-mobile-module-bullet-section-topic-text{
-        font-family: 'Poppins';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 21px;
-        color: var(--bodyColor);
-        margin-left: 15%;
-        margin-top: 5px;
-    }
-
-  
-}
-
-
-
 .detail-page-web{
     width: 100%;
-    height: 100%;
     flex: 1;
     display: flex;
+    padding-bottom: 6rem;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 6.31rem 0 24px 0px; 
     font-family: 'Work Sans';
 
     .description{
@@ -1124,7 +31,7 @@
         align-items: center;
         list-style: none;
         position: sticky;
-        top: 6.31rem;
+        top: 6rem;
         z-index: 999;
         box-shadow: rgb(0 0 0 / 10%) 0px 1px 0px;
 
@@ -1178,6 +85,7 @@
     }
 
     .head-jumbotron{
+        width: 100%;
         margin-bottom: 4.5rem;
         padding: 9rem 12rem;
         display: flex;
@@ -1208,6 +116,10 @@
             display: flex;
             flex-direction: row;
             align-items: center;
+        }
+
+        .description {
+            padding: 0 20rem;
         }
 
         .items{
@@ -1246,12 +158,12 @@
     }
 
     .container{
+        width: 100%;
         padding: 4.5rem 20rem;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        width: 88rem;
         overflow: scroll;
         margin: 0 auto;
 
@@ -1287,6 +199,8 @@
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            flex-wrap: wrap;
+            row-gap: 1.6rem;
             align-items: center;
 
             button{
@@ -1298,6 +212,7 @@
                 color: #FFFFFF;
                 font-size: 1.6rem;
                 font-family: 'Work Sans';
+                width: 21%;
             }
         }
 
@@ -1320,6 +235,10 @@
                 font-family: 'Work Sans';
             }
         }
+    }
+
+    .similar-courses-header {
+        padding: 0 0 0.9rem 3rem
     }
 
     .curriculum-item {
@@ -1563,5 +482,101 @@
                 }
             }
         }
+    }
+
+    .detail-page-mobile-card-container{
+        padding: 0 0 0 3rem;
+    }
+}
+
+@media screen and(max-width: 500px) {
+    .detail-page-web {
+
+        .navbar {
+            display: none;
+        }
+
+        .heading{
+            font-size: 2.8rem;
+            line-height: 3.2rem;
+        }
+
+        .head-jumbotron {
+            margin-top: 6rem;
+            padding: 6rem 2.4rem;
+
+            .title {
+                padding: 0;
+            }
+
+            .subtitle{
+                margin: 2.4rem 0;
+            }
+
+            .description {
+                padding: 0;
+                text-align: center;
+            }
+    
+            .items{
+                padding: 4rem 0rem;
+    
+                .item{
+    
+                    div{
+    
+                        .head {
+                        }
+    
+                        .sub {
+                        }
+                    }
+                }
+            }
+        }
+
+        .container{
+            padding: 4.5rem 2rem;
+            display: flex;
+    
+            .feature {
+
+                width: 50%;
+    
+                .key{
+                }
+    
+                .value{
+                }
+            }
+    
+            .confused-container{
+    
+                div{
+                    width: 100%;
+                }
+
+                button{
+                    width: auto;
+                }
+            }
+    
+            .leave-review{
+    
+                textarea{
+                    width: 100%;
+                }
+            }
+        }
+
+        .similar-courses-header {
+            padding: 0 0 0.9rem 2rem;
+        }
+
+        .detail-page-mobile-card-container{
+            padding: 0 0 0 2rem;
+            gap: 0;
+        }
+
     }
 }

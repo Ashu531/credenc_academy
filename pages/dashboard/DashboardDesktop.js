@@ -29,6 +29,7 @@ import QuerySuccessModal from "../../components/querySuccessModal/QuerySuccessMo
 import InquiryModal from "../../components/inquiryModal/inquiryModal"
 import { useMediaQuery } from "react-responsive";
 import InfiniteScroll from 'react-infinite-scroll-component';
+import FooterModal from "../../components/footerModal/FooterModal";
 
 const styles = {
   // width: "100%",
@@ -1016,7 +1017,6 @@ export default function DashboardDesktop(props) {
                   })}
                 </div>
             }
-
           </div>
           {/* <FilterModal filterModal={filterModal} toggleFilterModal={closeFilterModal}/> */}
           {/* <div className="course-content">

@@ -83,6 +83,7 @@ body {
 
   .hideOnDesktop{
     visibility: hidden;
+    display: none;
   }
 
   .hideOnMobile{
@@ -96,11 +97,12 @@ body {
   @media screen and(max-width: 500px) {
     .hideOnDesktop {
       visibility: visible;
+      display: block;
     }
 
     .hideOnMobile{
-      visibility: hidden !important;
-      display: none !important;
+      visibility: hidden;
+      display: none;
     }
   }
 

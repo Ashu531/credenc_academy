@@ -694,7 +694,7 @@ export default function WebDetailPage(props){
             // mounted && 
 
         <div className='detail-page-web'>
-          <ul className='navbar'>
+          <ul className='navbar hideOnMobile'>
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
               <li className={`nav-item ${!isSyllabusIntersecting && !isInstructorIntersecting && !isPricingIntersecting && !isReviewsIntersecting  ? 'active': ''}`} ><Link href="#" scroll={true}>Overview</Link></li>
               {curriculum.length > 0 && <li className={`nav-item ${isSyllabusIntersecting ? 'active': ''}`} ><Link href="#syllabus" scroll={true}>Syllabus</Link></li>}
@@ -726,7 +726,7 @@ export default function WebDetailPage(props){
               <Image src={certificateIcon} width={20} height={20} objectFit='contain' />
               <span>&ensp;{props?.detailData?.program_type}</span>
             </div>}
-            <div className='description' style={{textAlign: 'center', padding: '0 20rem'}}>
+            <div className='description'>
             {props?.detailData?.one_liner || props?.detailData?.description}
             </div>
             <div className='items'>
@@ -749,7 +749,6 @@ export default function WebDetailPage(props){
             </div>
             <div style={{fontWeight: '400', fontSize: '1.2rem', lineHeight: '1.4rem', color: '#717171'}}>
               {props?.startingCost?.starting_cost?.length > 0 && 'Starting Cost'}
-              {props?.startingCost?.starting_cost && 'Starting Cost'}
             </div>
           </div>
 
@@ -795,7 +794,7 @@ export default function WebDetailPage(props){
                 <div className='heading' style={{marginBottom: '1.2rem'}}>Still Confused?</div>
                 <div className='description' style={{width: '80%'}}>Our team of experts is here to help you. Contact us today and we&apos;re here to help you find clarity and move forward with confidence.</div>
               </div>
-              <button style={{width: '21%'}} onClick={() => setEnquire(true)}>Talk to an Expert!</button>
+              <button onClick={() => setEnquire(true)}>Talk to an Expert!</button>
             </div>
           </div>
 
@@ -1072,11 +1071,11 @@ export default function WebDetailPage(props){
           </div>
 
           <div style={{padding: '2rem 0 3rem 0', marginRight: 'auto', width: '100%'}}>
-            <div className='heading' style={{paddingBottom: '0.9rem', padding: '0 0 0.9rem 3rem'}}>You Might Be Interested In</div>
+            <div className='heading similar-courses-header'>You Might Be Interested In</div>
             <div className='detail-page-mobile-card-container' style={{display:'flex',marginTop: 20,gap: 20,overflow:'auto'}}>
               {props?.similarCourses?.length > 0 && props?.similarCourses.map((item,index)=>{
                   return(
-                    <div key={index} style={{margin: index === 0 ? '0 0 0 3rem' : index === props?.similarCourses?.length - 1 ? '0 3rem 0 0' : 'none'}}>
+                    <div key={index} style={{margin: index === 0 ? '0 3rem 0 0' : index === props?.similarCourses?.length - 1 ? '0 3rem 0 0' : 'none'}}>
                       <CourseCard 
                         index={index}
                         data={item} 
