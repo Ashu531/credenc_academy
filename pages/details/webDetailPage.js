@@ -468,10 +468,10 @@ export default function WebDetailPage(props){
     const [rating, setRating] = useState({})
     let [error, setError] = useState('')
 
-    useEffect(() => {
-      setReviews([...props?.reviews])
-      setRating(props?.rating)
-    }, [props?.reviews, props?.rating])
+    // useEffect(() => {
+    //   setReviews([...props?.reviews])
+    //   setRating(props?.rating)
+    // }, [props?.reviews, props?.rating])
 
     useEffect(() => {
       
@@ -681,12 +681,12 @@ export default function WebDetailPage(props){
     //   }
     // }, [scrollY])
     
-    useEffect(()=>{
-      if(props?.subjectData.search === true){
-        router.push('/')
-        props?.openFilterExpandedStage()  
-      }
-    },[props?.subjectData?.searchValue])
+    // useEffect(()=>{
+    //   if(props?.subjectData.search === true){
+    //     router.push('/')
+    //     props?.openFilterExpandedStage()  
+    //   }
+    // },[props?.subjectData?.searchValue])
 
     return(
         <>
