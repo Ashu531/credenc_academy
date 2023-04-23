@@ -712,16 +712,16 @@ export default function WebDetailPage(props){
                 (props?.detailData?.applied === true || (applied?.state === true && applied?.id === props?.detailData?.id))  && <li className='nav-item-right'><button onClick={() => _openDetailModal(props?.detailData)}>Track Application</button></li>
               }
               {
-                props?.detailData?.course_link  && <a href={props?.detailData?.course_link} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none'}}><li className='nav-item-right'><button>Go To Course</button></li></a>
+                (props?.detailData?.course_link || !props?.detailData.is_mooc) && <a href={props?.detailData?.course_link} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none'}}><li className='nav-item-right'><button>Go To Course</button></li></a>
               }
-              {
+              {/* {
                 !props?.detailData.is_mooc  && <a href={props?.detailData?.course_link} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none'}}><li className='nav-item-right'><button>Go To Course</button></li></a>
-              }
+              } */}
               
             </div>
           </ul>
           <div className='head-jumbotron' style={{background: 'rgba(235,241,255, 0.9)', backgroundImage: `url(${backgroundImage.src})`, backgroundSize: 'cover'}}>
-            <div className='title'>{props?.courseName}</div>
+            <div className='title'>{props?.detailData?.course_name}</div>
             {props?.detailData?.program_type && <div className='subtitle'>
               <Image src={certificateIcon} width={20} height={20} objectFit='contain' />
               <span>&ensp;{props?.detailData?.program_type}</span>

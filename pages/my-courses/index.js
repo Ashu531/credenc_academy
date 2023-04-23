@@ -4,7 +4,6 @@ import States from '../../config/states';
 import List from '../../components/list/List';
 import Image from "next/image";
 import axios from 'axios';
-import SearchMobile from '../../components/searchBarMobile/SearchBar';
 import { useRouter } from 'next/router';
 import constant from '../../config/constant';
 import LoginModal from '../../components/loginModal/LoginModal'

@@ -51,6 +51,7 @@
           .icon-element{
             padding: 0 1.2rem;
             cursor: pointer;
+            position: relative;
           }
           .bookmark-count-container{
             width: 14px;
@@ -59,7 +60,7 @@
             background: var(--inverseBackground);
             position: absolute;
             top: -3px;
-            right: 15px;
+            right: 5px;
             display: flex;
             justify-content: center;
             align-items: center;

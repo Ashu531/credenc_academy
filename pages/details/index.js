@@ -231,7 +231,7 @@ export default function DetailPage(props){
     {
         mounted && 
         <>
-        {isDesktopOrLaptop && 
+        {/* {isDesktopOrLaptop &&  */}
           <DetailPageWeb
             detailData={detailData} 
             instructorData={instructorData} 
@@ -252,7 +252,7 @@ export default function DetailPage(props){
             loginModal={props?.loginModal}
             thirdPartyUser={thirdPartyUser}
           />
-        }
+        {/* }
         {isMobile && 
           <DetailPageMobile 
                 detailData={detailData} 
@@ -267,7 +267,7 @@ export default function DetailPage(props){
                 openLoginModal={()=>props?.openLoginModal()}
                 thirdPartyUser={thirdPartyUser}
            />
-        }
+        } */}
         </>
     }
        

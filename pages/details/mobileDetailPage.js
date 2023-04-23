@@ -199,10 +199,10 @@ export default function DetailPageMobile(props){
     const [rating, setRating] = useState({})
     let [error, setError] = useState('')
 
-    useEffect(() => {
-      setReviews([...props?.reviews])
-      setRating(props?.rating)
-    }, [props?.reviews, props?.rating])
+    // useEffect(() => {
+    //   setReviews([...props?.reviews])
+    //   setRating(props?.rating)
+    // }, [props?.reviews, props?.rating])
 
     useEffect(() => {
       

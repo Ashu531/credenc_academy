@@ -201,7 +201,7 @@ export default function Header(props) {
     {mounted && 
     <div className='navbar-wrapper' style={ router.pathname === '/search' && window.innerWidth <= 500 ?  {display: 'none',visibility:'hidden'} : {}}> 
       <div className='navbar'>
-        <Image src={credencAcademy} objectFit="contain" alt='credencLogo' onClick={() => _goToHome()} />
+        <Image src={credencAcademy} objectFit="contain" alt='credencLogo' onClick={() => _goToHome()} style={{cursor: 'pointer'}}/>
         <FormControl fullWidth style={{
           width: 180,
           marginLeft: 20,

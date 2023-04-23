@@ -337,7 +337,7 @@ export default function MyCourseCard(props) {
               {
                 props?.data?.final_pricing && props?.data?.final_pricing.length > 0 ?
                   <div className='price-amount'>
-                    {props?.data?.final_pricing > 0 ? `₹${props?.data?.final_pricing}*` : 'Free'}
+                    {props?.data?.final_pricing.length > 0 ? `₹${props?.data?.final_pricing}*` : 'Free'}
                   </div> :
                   <div className='price-amount'>
                     {props?.data?.finance_display[0] > 0 ? `₹${props?.data?.finance_display[0]}*` : 'Free'}
