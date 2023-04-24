@@ -957,7 +957,7 @@ export default function SearchDesktop(props) {
                             gap: 10, 
                             flexWrap: 'wrap', 
                             overflow: 'auto',
-                            marginTop: '5rem',
+                            marginTop: '8rem',
                           } :
                           { width: '100%', 
                             display: 'flex', 

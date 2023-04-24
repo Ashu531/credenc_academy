@@ -1014,7 +1014,7 @@ export default function DashboardDesktop(props) {
             { position: 'sticky', 
               top: '6rem', 
               background: '#FFFFFF', 
-              zIndex: 9999, 
+              zIndex: 99, 
               boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.1)', 
               }}
             >

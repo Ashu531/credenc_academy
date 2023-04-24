@@ -17,6 +17,7 @@ import Image from "next/image";
 import constant from "../../config/constant";
 import { useRouter } from 'next/router'
 import { useMediaQuery } from "react-responsive";
+import SuccessAlert from "../successAlert/SuccessAlert";
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 const authKey = 'credenc-edtech-authkey';
@@ -255,6 +256,8 @@ export default function ForgotPasswordModal({
   }, [location.isReady])
 
   const resendOtp = async () => {
+    setOtp({generated: false,
+      values: ['', '', '', '', '', '']})
     const response = await axios.post(`${constant.API_URL.DEV}/login_otp/`, {
       // password: passwordInputState.value.trim(),
       email: emailInputState.toLowerCase().trim()
@@ -357,6 +360,22 @@ export default function ForgotPasswordModal({
           <Button text="Log In" linearGradient='green' classes="btn-secondary success-button" onClick={goToLogin} /> : null
         }
       </div>
+      <SuccessAlert
+        title="OTP Resent"
+        style={{ 
+          zIndex: 99,
+          position:'fixed',
+          bottom:30,
+          right: 30,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+        titleStyle={{
+          fontSize: 14,
+          fontFamily: 'Work Sans',
+        }}
+      />
     </div>
   );
 }
