@@ -459,7 +459,11 @@ export default function SearchDesktop(props) {
     setCardApiSuccess(true)
 
     if(res.data){
-      setCourseCardData([...courseCardData, ...res.data])
+      if(pageNumber === 1){
+        setCourseCardData([...res.data])
+      } else {
+        setCourseCardData([...courseCardData, ...res.data])
+      }
     }
 
     setMaxPrice(Math.floor(parseFloat(res.max_price)));
@@ -960,7 +964,8 @@ export default function SearchDesktop(props) {
                             gap: 10, 
                             flexWrap: 'wrap', 
                             overflow: 'auto',
-                            marginTop: '8rem',
+                            marginTop: '2rem',
+                            marginBottom: '6rem'
                           } :
                           { width: '100%', 
                             display: 'flex', 
