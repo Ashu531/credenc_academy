@@ -190,8 +190,9 @@ export default function WebDetailPage(props){
           if(bookmarkItem && bookmarkItem.length > 0){
             bookmarkArray =  bookmarkItem.filter(data => data !== item.code )
           }
-          props?.removeLocalBookmarks(bookmarkArray.length)
+          
           localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+          props?.removeLocalBookmarks(bookmarkArray.length)
     
           if(router.pathname === "/bookmarks"){
             setTimeout(() => location.reload(), 100)
@@ -212,8 +213,9 @@ export default function WebDetailPage(props){
             bookmarkArray.push(...bookmarkItem)
           }
           bookmarkArray.push(item.code)
-          props?.addLocalBookmarks(bookmarkArray.length)
+
           localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+          props?.addLocalBookmarks(bookmarkArray.length)
         }
         
       }
@@ -464,14 +466,22 @@ export default function WebDetailPage(props){
     let [curriculum, setCurriculum] = useState([]);
     let [userRating, setUserRating] = useState(0)
     let [reviewText, setReviewText] = useState('')
-    const [reviews, setReviews] = useState([])
-    const [rating, setRating] = useState({})
+    const [reviews, setReviews] = useState([...props.reviews])
+    const [rating, setRating] = useState(props.rating)
     let [error, setError] = useState('')
 
     // useEffect(() => {
     //   setReviews([...props?.reviews])
     //   setRating(props?.rating)
     // }, [props?.reviews, props?.rating])
+
+    const handleRating = (el) => {
+      if(userRating == el){
+        setUserRating(el - 1)
+      } else {
+        setUserRating(el)
+      }
+    }
 
     useEffect(() => {
       
@@ -515,7 +525,7 @@ export default function WebDetailPage(props){
     }
 
     const _getReviews = async(id) => {
-        let res = await axios.get(`${constant.API_URL.DEV}/course/reviews/${props?.id}/`)
+        let res = await axios.get(`${constant.API_URL.DEV}/course/reviews/${router?.query?.course_id}/`)
           .then(res => {
             // this.coursesApiStatus.current.success();
             setReviews(res.data)
@@ -529,7 +539,7 @@ export default function WebDetailPage(props){
     }
 
     const _getRating = async(id) => {
-        let res = await axios.get(`${constant.API_URL.DEV}/course/ratingsavg/${props?.id}/`)
+        let res = await axios.get(`${constant.API_URL.DEV}/course/ratingsavg/${router?.query?.course_id}/`)
           .then(res => {
             // this.coursesApiStatus.current.success();
             console.log(res)
@@ -552,8 +562,9 @@ export default function WebDetailPage(props){
     const submitReview = async () => {
       if(props?.token && props?.token.length > 0){
         if(userRating > 0){
+          console.log("course_id", props?.id)
           let res = await axios.post(`${constant.API_URL.DEV}/course/review/`, {
-            "course_id": props?.id,
+            "course_id": router.query.course_id,
             "review" : reviewText,
             "rating" : userRating
         }, {
@@ -612,74 +623,94 @@ export default function WebDetailPage(props){
     const [isPricingIntersecting, setPricingIntersecting] = useState(false)
     const [isReviewsIntersecting, setReviewsIntersecting] = useState(false)
 
-    // const syllabusObserver = useMemo(() => new IntersectionObserver(
-    //   ([entry]) => {
-    //     setSyllabusIntersecting(entry.isIntersecting)
-    //     if(entry.isIntersecting === true){
-    //       setInstructorIntersecting(false)
-    //       setPricingIntersecting(false)
-    //       setReviewsIntersecting(false)
-    //     }
-    //   }
-    // ), [syllabusRef])
+    const syllabusObserver = useMemo(() => new IntersectionObserver(
+      ([entry]) => {
+        setSyllabusIntersecting(entry.isIntersecting)
+        if(entry.isIntersecting === true){
+          setInstructorIntersecting(false)
+          setPricingIntersecting(false)
+          setReviewsIntersecting(false)
+        }
+      }
+    ), [syllabusRef])
 
-    // const instructorObserver = useMemo(() => new IntersectionObserver(
-    //   ([entry]) => {
-    //     setInstructorIntersecting(entry.isIntersecting)
-    //     if(entry.isIntersecting === true){
-    //       setSyllabusIntersecting(false)
-    //       setPricingIntersecting(false)
-    //       setReviewsIntersecting(false)
-    //     }
-    //   }
-    // ), [instructorRef])
+    const instructorObserver = useMemo(() => new IntersectionObserver(
+      ([entry]) => {
+        setInstructorIntersecting(entry.isIntersecting)
+        if(entry.isIntersecting === true){
+          setSyllabusIntersecting(false)
+          setPricingIntersecting(false)
+          setReviewsIntersecting(false)
+        }
+      }
+    ), [instructorRef])
 
-    // const pricingObserver = useMemo(() => new IntersectionObserver(
-    //   ([entry]) => {
-    //     setPricingIntersecting(entry.isIntersecting)
-    //     if(entry.isIntersecting === true){
-    //       setInstructorIntersecting(false)
-    //       setSyllabusIntersecting(false)
-    //       setReviewsIntersecting(false)
-    //     }
-    //   }
-    // ), [pricingRef])
+    const pricingObserver = useMemo(() => new IntersectionObserver(
+      ([entry]) => {
+        setPricingIntersecting(entry.isIntersecting)
+        if(entry.isIntersecting === true){
+          setInstructorIntersecting(false)
+          setSyllabusIntersecting(false)
+          setReviewsIntersecting(false)
+        }
+      }
+    ), [pricingRef])
 
-    // const reviewsObserver = useMemo(() => new IntersectionObserver(
-    //   ([entry]) => {
-    //     setReviewsIntersecting(entry.isIntersecting)
-    //     if(entry.isIntersecting === true){
-    //       setInstructorIntersecting(false)
-    //       setPricingIntersecting(false)
-    //       setSyllabusIntersecting(false)
-    //     }
-    //   }
-    // ), [reviewsRef])
+    const reviewsObserver = useMemo(() => new IntersectionObserver(
+      ([entry]) => {
+        setReviewsIntersecting(entry.isIntersecting)
+        if(entry.isIntersecting === true){
+          setInstructorIntersecting(false)
+          setPricingIntersecting(false)
+          setSyllabusIntersecting(false)
+        }
+      }
+    ), [reviewsRef])
 
-    // useEffect(() => {
-    //   if(syllabusRef.current){
-    //     syllabusObserver.observe(syllabusRef.current)
-    //   }
+    useEffect(() => {
+      if(syllabusRef.current){
+        syllabusObserver.observe(syllabusRef.current)
+      }
 
-    //   if(instructorRef.current){
-    //     instructorObserver.observe(instructorRef.current)
-    //   }
+      if(instructorRef.current){
+        instructorObserver.observe(instructorRef.current)
+      }
 
-    //   if(pricingRef.current){
-    //     pricingObserver.observe(pricingRef.current)
-    //   }
+      if(pricingRef.current){
+        pricingObserver.observe(pricingRef.current)
+      }
 
-    //   if(reviewsRef.current){
-    //     reviewsObserver.observe(reviewsRef.current)
-    //   }
+      if(reviewsRef.current){
+        reviewsObserver.observe(reviewsRef.current)
+      }
 
-    //   return () => {
-    //     syllabusRef.current && syllabusObserver.disconnect()
-    //     instructorRef.current && instructorObserver.disconnect()
-    //     pricingRef.current && pricingObserver.disconnect()
-    //     reviewsRef.current && reviewsObserver.disconnect()
-    //   }
-    // }, [scrollY])
+      return () => {
+        syllabusRef.current && syllabusObserver.disconnect()
+        instructorRef.current && instructorObserver.disconnect()
+        pricingRef.current && pricingObserver.disconnect()
+        reviewsRef.current && reviewsObserver.disconnect()
+      }
+    }, [scrollY])
+
+    const scrollToTargetAdjusted = (elementId) => {
+      if(elementId === ''){
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+        return;
+      }
+
+      var element = document.getElementById(elementId);
+      var headerOffset = 150;
+      var elementPosition = element.getBoundingClientRect().top;
+      var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    
+      window.scrollTo({
+           top: offsetPosition,
+           behavior: "smooth"
+      });
+    }
     
     // useEffect(()=>{
     //   if(props?.subjectData.search === true){
@@ -696,11 +727,14 @@ export default function WebDetailPage(props){
         <div className='detail-page-web'>
           <ul className='navbar hideOnMobile'>
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
-              <li className={`nav-item ${!isSyllabusIntersecting && !isInstructorIntersecting && !isPricingIntersecting && !isReviewsIntersecting  ? 'active': ''}`} ><Link href="#" scroll={true}>Overview</Link></li>
-              {curriculum.length > 0 && <li className={`nav-item ${isSyllabusIntersecting ? 'active': ''}`} ><Link href="#syllabus" scroll={true}>Syllabus</Link></li>}
-              {props?.instructorData?.instructor?.length > 0 && <li className={`nav-item ${isInstructorIntersecting ? 'active': ''}`} ><Link href="#instructor" scroll={true}>Instructor</Link></li>}
-              <li className={`nav-item ${isPricingIntersecting ? 'active': ''}`} ><Link href="#pricing" scroll={true}>Pricing</Link></li>
-              <li className={`nav-item ${isReviewsIntersecting ? 'active': ''}`} ><Link href="#reviews" scroll={true}>Reviews</Link></li>
+              <li 
+                className={`nav-item ${!isSyllabusIntersecting && !isInstructorIntersecting && !isPricingIntersecting && !isReviewsIntersecting  ? 'active': ''}`}
+                onClick={() => scrollToTargetAdjusted('')}
+              > Overview </li>
+              {curriculum.length > 0 && <li className={`nav-item ${isSyllabusIntersecting ? 'active': ''}`} onClick={() => scrollToTargetAdjusted('syllabus')} >Syllabus</li>}
+              {props?.instructorData?.instructor?.length > 0 && <li className={`nav-item ${isInstructorIntersecting ? 'active': ''}`} onClick={() => scrollToTargetAdjusted('instructor')} >Instructor</li>}
+              <li className={`nav-item ${isPricingIntersecting ? 'active': ''}`} onClick={() => scrollToTargetAdjusted('pricing')} >Pricing</li>
+              <li className={`nav-item ${isReviewsIntersecting ? 'active': ''}`} onClick={() => scrollToTargetAdjusted('reviews')} >Reviews</li>
             </div>
             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
               <li className='nav-item-right' style={{margin: '0 1rem 0 0'}} onClick={()=>_handleCardBookmark(props?.detailData)}><Image src={ bookmarkVisible ? selectedBookmarkIcon : bookmarkIcon} width={20} height={20} objectFit='contain' /></li>
@@ -714,9 +748,6 @@ export default function WebDetailPage(props){
               {
                 (props?.detailData?.course_link || !props?.detailData.is_mooc) && <a href={props?.detailData?.course_link} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none'}}><li className='nav-item-right'><button>Go To Course</button></li></a>
               }
-              {/* {
-                !props?.detailData.is_mooc  && <a href={props?.detailData?.course_link} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none'}}><li className='nav-item-right'><button>Go To Course</button></li></a>
-              } */}
               
             </div>
           </ul>
@@ -754,7 +785,7 @@ export default function WebDetailPage(props){
 
           <div className='container' style={{rowGap: '3.6rem', flexDirection: 'row', flexWrap: 'wrap'}}>
             {
-              props?.detailData?.grid.map(
+              props?.detailData?.grid?.map(
                 (feature, index) => {
                     return (<div className='feature' key={index}>
                       <Image src={feature?.icon} width={20} height={20} objectFit='contain' loader={myLoader} />
@@ -792,7 +823,7 @@ export default function WebDetailPage(props){
             <div className='confused-container'>
               <div>
                 <div className='heading' style={{marginBottom: '1.2rem'}}>Still Confused?</div>
-                <div className='description' style={{width: '80%'}}>Our team of experts is here to help you. Contact us today and we&apos;re here to help you find clarity and move forward with confidence.</div>
+                <div className='description'>Our team of experts is here to help you. Contact us today and we&apos;re here to help you find clarity and move forward with confidence.</div>
               </div>
               <button onClick={() => setEnquire(true)}>Talk to an Expert!</button>
             </div>
@@ -1023,7 +1054,7 @@ export default function WebDetailPage(props){
            <div className='container' id='reviews'>
             <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
               <div className='heading'>Reviews</div>
-              { rating['avg'] && !isNaN(rating['avg']) && <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
+              { rating && rating['avg'] && !isNaN(rating['avg']) && <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
                 {
                   [1, 2, 3, 4, 5].map(el => <Image key={el} src={rating['avg'] / el >= 1 ? filledStar : (el - rating['avg']) >= 1 ? emptyStar : halfStar} width={20} height={20} objectFit='contain' />)
                 }
@@ -1054,7 +1085,7 @@ export default function WebDetailPage(props){
               <div style={{fontSize: '1.4rem', fontWeight: '400', lineHeight: '1.6rem', color: '#000000', margin: '1rem 0 2rem 0'}}>Leave a review and help others in their learning journey!</div>
               <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
                 {
-                  [1, 2, 3, 4, 5].map(el => <Image key={el} src={userRating / el >= 1 ? filledStar : (el - userRating) >= 1 ? emptyStar : halfStar} width={30} height={30} objectFit='contain' onClick={() => setUserRating(el)}/>)
+                  [1, 2, 3, 4, 5].map(el => <Image key={el} src={userRating / el >= 1 ? filledStar : (el - userRating) >= 1 ? emptyStar : halfStar} width={30} height={30} objectFit='contain' onClick={() => handleRating(el)}/>)
                 }
               </div> 
               <div style={{color: 'var(--errorPrimaryColor)', margin: '1rem 0 2rem 0', fontSize: '1.3rem'}}>{error}</div>
@@ -1070,30 +1101,32 @@ export default function WebDetailPage(props){
             </div>
           </div>
 
-          <div style={{padding: '2rem 0 3rem 0', marginRight: 'auto', width: '100%'}}>
-            <div className='heading similar-courses-header'>You Might Be Interested In</div>
-            <div className='detail-page-mobile-card-container' style={{display:'flex',marginTop: 20,gap: 20,overflow:'auto'}}>
-              {props?.similarCourses?.length > 0 && props?.similarCourses.map((item,index)=>{
-                  return(
-                    <div key={index} style={{margin: index === 0 ? '0 3rem 0 0' : index === props?.similarCourses?.length - 1 ? '0 3rem 0 0' : 'none'}}>
-                      <CourseCard 
-                        index={index}
-                        data={item} 
-                        openDetailModal={()=>_openDetailModal(item)}
-                        openApplyNowModal={()=> _openApplyNowModal(item)}
-                        token={props?.token}
-                        openLoginModal={()=>props?.openLoginModal()}
-                        addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
-                        removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
-                        applied={applied}
-                        detailPage={true}
-                      />
-                    </div>
-                  )
-              })}
+          { props?.similarCourses?.length > 0 &&
+            <div style={{padding: '2rem 0 3rem 0', marginRight: 'auto', width: '100%'}}>
+              <div className='heading similar-courses-header'>You Might Be Interested In</div>
+              <div className='detail-page-mobile-card-container' style={{display:'flex',marginTop: 20,gap: 20,overflow:'auto'}}>
+                {props?.similarCourses?.length > 0 && props?.similarCourses.map((item,index)=>{
+                    return(
+                      <div key={index} style={{margin: index === 0 ? '0 3rem 0 0' : index === props?.similarCourses?.length - 1 ? '0 3rem 0 0' : 'none'}}>
+                        <CourseCard 
+                          index={index}
+                          data={item} 
+                          openDetailModal={()=>_openDetailModal(item)}
+                          openApplyNowModal={()=> _openApplyNowModal(item)}
+                          token={props?.token}
+                          openLoginModal={()=>props?.openLoginModal()}
+                          addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+                          removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                          applied={applied}
+                          detailPage={true}
+                          bookmarkCodes={props?.bookmarkCodes}
+                        />
+                      </div>
+                    )
+                })}
+              </div>
             </div>
-          </div>
-          
+          }
 
           {/* <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'flex-start',padding: '0px 24px 0px 24px'}}>
            <div className='detail-page-web-breadcrumb'>

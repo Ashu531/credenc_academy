@@ -173,7 +173,9 @@ export default function Bookmarks(props){
                       detailData={detailData} 
                       token={token}
                       openLoginModal={()=>props?.openLoginModal()} 
-                      removeLocalBookmarks={()=>props?.removeLocalBookmarks()}
+                      removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                      addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+                      bookmarkCodes={props?.bookmarkCodes}
                   />
                 </div>
             </div>
