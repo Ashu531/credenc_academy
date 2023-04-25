@@ -553,12 +553,12 @@ export default function DetailModal(props){
             <div className='detail-modal-middle-section'>
               <div className='detail-modal-course-content' style={props?.status === true ? null : {marginTop: '11rem'}}>
                 <div className='detail-modal-course-container'>
-                    <span className='heading1'>
+                    <div className='heading1'>
                       {courseName}
-                    </span>
-                    <span className='heading2'>
+                    </div>
+                    <div className='heading2'>
                       {courseData?.description}
-                    </span>
+                    </div>
                 </div>
                 <div className='detail-modal-course-overview'>
                     <Image loader={myLoader} src={courseData?.platform?.logo && courseData?.platform?.logo.length > 0 ? courseData?.platform?.logo : defaultPlatform} height={30} width={30} objectFit="cover" style={{borderRadius: '50%'}}/>
@@ -685,9 +685,7 @@ export default function DetailModal(props){
             
             <div className='divider' style={{marginTop: 16,marginBottom: 15}}/>
             <div 
-            className='content-footer'
-            style={!isDesktopOrLaptop ? {paddingBottom : '7%'} : {paddingBottom: '6%'}}
-            >
+            className='content-footer'>
               <span className='content-date-text' style={{paddingLeft: 24}}>
               Last updated on: <span style={{fontWeight: 600}}>{moment(courseData?.date_modified).format("MMM Do YY")}</span>
               </span>

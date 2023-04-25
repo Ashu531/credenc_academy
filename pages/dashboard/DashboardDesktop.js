@@ -88,7 +88,7 @@ export default function DashboardDesktop(props) {
 
   const [filterModal, setFilterModal] = useState(false);
   const [courseCardData, setCourseCardData] = useState([])
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const [subjectData, setSubjectData] = useState([])
   const [subCategory, setSubCategory] = useState(props?.subCategoryData)
   const [selectedSubject, setSelectedSubject] = useState({})
@@ -170,6 +170,8 @@ export default function DashboardDesktop(props) {
           applyFilters();
         }
       }
+    } else {
+      handleFilteredData();
     }
   }, [pageNumber]);
 
@@ -213,10 +215,14 @@ export default function DashboardDesktop(props) {
 
   const _getSubCategoryDetails = (item) => {
 
-    urlService.current.removeEntry('subject')
-
-    if (item.value === "All") {
-      urlService.current.removeEntry('subject')
+    if (item.value.toLowerCase() == "all") {
+      location.push({
+        pathname: '/'
+      },
+        undefined,
+        {
+          shallow: true
+        })
     } else {
       location.push({
         pathname: '/',
@@ -229,8 +235,6 @@ export default function DashboardDesktop(props) {
           shallow: true
         })
     }
-    setPageNumber(1)
-    handleCardData()
   }
 
   const handleCardData=()=>{
@@ -514,6 +518,9 @@ export default function DashboardDesktop(props) {
 
   const handleSearchClicked = async (forcePageNumber = 0) => {
     const getParams = () => {
+      console.log(location?.query)
+      console.log(urlService.current.getUpdatedUrl())
+      console.log(appliedFiltersCount.current)
       if(appliedFiltersCount.current > 0){
         return `?${urlService.current.getUpdatedUrl()}`;
       }else{
@@ -576,15 +583,13 @@ export default function DashboardDesktop(props) {
       setNextPage(false)
     }
 
-    if (pageNumber <= 1 || updatePageNumber === false) {
-      // setCourses([...res.data]);
-      setCardApiSuccess(true)
-      if (res?.data)
+    setCardApiSuccess(true)
+
+
+    if(res.data){
+      if(pageNumber === 1){
         setCourseCardData([...res.data])
-    } else {
-      // setCourses([...courseCardData, ...res.data]);
-      // setCardApiSuccess(true)
-      if(res.data !== null && res.data !== undefined){
+      } else {
         setCourseCardData([...courseCardData, ...res.data])
       }
     }
@@ -870,6 +875,15 @@ export default function DashboardDesktop(props) {
     setPageNumber(pageNumber + 1)
     handleFilteredData()
   }
+
+  useEffect(() => {
+    if(pageNumber === 1){
+      handleFilteredData()
+    } else {
+      setPageNumber(1)
+    }
+    
+  }, [location.query])
 
   return (
     <div>
