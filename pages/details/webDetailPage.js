@@ -104,6 +104,12 @@ export default function WebDetailPage(props){
       id: 0
     });
     const [loader,setLoader] = useState(true)
+    const [reviews, setReviews] = useState(props?.reviews?.length > 0 ? [...props?.reviews] : [])
+    const [rating, setRating] = useState(props?.rating)
+    let [error, setError] = useState('')
+    let [curriculum, setCurriculum] = useState([]);
+    let [userRating, setUserRating] = useState(0)
+    let [reviewText, setReviewText] = useState('')
 
 
     useEffect(() => {
@@ -167,6 +173,7 @@ export default function WebDetailPage(props){
           }else{
             setBookmarkVisible(false)
           }
+          setMounted(true)
        }
     
        const _handleCardBookmark=(item)=>{
@@ -462,19 +469,6 @@ export default function WebDetailPage(props){
       })
     }
 
-
-    let [curriculum, setCurriculum] = useState([]);
-    let [userRating, setUserRating] = useState(0)
-    let [reviewText, setReviewText] = useState('')
-    const [reviews, setReviews] = useState([...props.reviews])
-    const [rating, setRating] = useState(props.rating)
-    let [error, setError] = useState('')
-
-    // useEffect(() => {
-    //   setReviews([...props?.reviews])
-    //   setRating(props?.rating)
-    // }, [props?.reviews, props?.rating])
-
     const handleRating = (el) => {
       if(userRating == el){
         setUserRating(el - 1)
@@ -623,74 +617,74 @@ export default function WebDetailPage(props){
     const [isPricingIntersecting, setPricingIntersecting] = useState(false)
     const [isReviewsIntersecting, setReviewsIntersecting] = useState(false)
 
-    const syllabusObserver = useMemo(() => new IntersectionObserver(
-      ([entry]) => {
-        setSyllabusIntersecting(entry.isIntersecting)
-        if(entry.isIntersecting === true){
-          setInstructorIntersecting(false)
-          setPricingIntersecting(false)
-          setReviewsIntersecting(false)
-        }
-      }
-    ), [syllabusRef])
+    // const syllabusObserver = useMemo(() => new IntersectionObserver(
+    //   ([entry]) => {
+    //     setSyllabusIntersecting(entry.isIntersecting)
+    //     if(entry.isIntersecting === true){
+    //       setInstructorIntersecting(false)
+    //       setPricingIntersecting(false)
+    //       setReviewsIntersecting(false)
+    //     }
+    //   }
+    // ), [syllabusRef])
 
-    const instructorObserver = useMemo(() => new IntersectionObserver(
-      ([entry]) => {
-        setInstructorIntersecting(entry.isIntersecting)
-        if(entry.isIntersecting === true){
-          setSyllabusIntersecting(false)
-          setPricingIntersecting(false)
-          setReviewsIntersecting(false)
-        }
-      }
-    ), [instructorRef])
+    // const instructorObserver = useMemo(() => new IntersectionObserver(
+    //   ([entry]) => {
+    //     setInstructorIntersecting(entry.isIntersecting)
+    //     if(entry.isIntersecting === true){
+    //       setSyllabusIntersecting(false)
+    //       setPricingIntersecting(false)
+    //       setReviewsIntersecting(false)
+    //     }
+    //   }
+    // ), [instructorRef])
 
-    const pricingObserver = useMemo(() => new IntersectionObserver(
-      ([entry]) => {
-        setPricingIntersecting(entry.isIntersecting)
-        if(entry.isIntersecting === true){
-          setInstructorIntersecting(false)
-          setSyllabusIntersecting(false)
-          setReviewsIntersecting(false)
-        }
-      }
-    ), [pricingRef])
+    // const pricingObserver = useMemo(() => new IntersectionObserver(
+    //   ([entry]) => {
+    //     setPricingIntersecting(entry.isIntersecting)
+    //     if(entry.isIntersecting === true){
+    //       setInstructorIntersecting(false)
+    //       setSyllabusIntersecting(false)
+    //       setReviewsIntersecting(false)
+    //     }
+    //   }
+    // ), [pricingRef])
 
-    const reviewsObserver = useMemo(() => new IntersectionObserver(
-      ([entry]) => {
-        setReviewsIntersecting(entry.isIntersecting)
-        if(entry.isIntersecting === true){
-          setInstructorIntersecting(false)
-          setPricingIntersecting(false)
-          setSyllabusIntersecting(false)
-        }
-      }
-    ), [reviewsRef])
+    // const reviewsObserver = useMemo(() => new IntersectionObserver(
+    //   ([entry]) => {
+    //     setReviewsIntersecting(entry.isIntersecting)
+    //     if(entry.isIntersecting === true){
+    //       setInstructorIntersecting(false)
+    //       setPricingIntersecting(false)
+    //       setSyllabusIntersecting(false)
+    //     }
+    //   }
+    // ), [reviewsRef])
 
-    useEffect(() => {
-      if(syllabusRef.current){
-        syllabusObserver.observe(syllabusRef.current)
-      }
+    // useEffect(() => {
+    //   if(syllabusRef.current){
+    //     syllabusObserver.observe(syllabusRef.current)
+    //   }
 
-      if(instructorRef.current){
-        instructorObserver.observe(instructorRef.current)
-      }
+    //   if(instructorRef.current){
+    //     instructorObserver.observe(instructorRef.current)
+    //   }
 
-      if(pricingRef.current){
-        pricingObserver.observe(pricingRef.current)
-      }
+    //   if(pricingRef.current){
+    //     pricingObserver.observe(pricingRef.current)
+    //   }
 
-      if(reviewsRef.current){
-        reviewsObserver.observe(reviewsRef.current)
-      }
+    //   if(reviewsRef.current){
+    //     reviewsObserver.observe(reviewsRef.current)
+    //   }
 
-      return () => {
-        syllabusRef.current && syllabusObserver.disconnect()
-        instructorRef.current && instructorObserver.disconnect()
-        pricingRef.current && pricingObserver.disconnect()
-        reviewsRef.current && reviewsObserver.disconnect()
-      }
-    }, [scrollY])
+    //   return () => {
+    //     syllabusRef.current && syllabusObserver.disconnect()
+    //     instructorRef.current && instructorObserver.disconnect()
+    //     pricingRef.current && pricingObserver.disconnect()
+    //     reviewsRef.current && reviewsObserver.disconnect()
+    //   }
+    // }, [scrollY])
 
     const scrollToTargetAdjusted = (elementId) => {
       if(elementId === ''){
@@ -711,6 +705,8 @@ export default function WebDetailPage(props){
            behavior: "smooth"
       });
     }
+
+    console.log(mounted,"mounted")
     
     // useEffect(()=>{
     //   if(props?.subjectData.search === true){
@@ -721,7 +717,8 @@ export default function WebDetailPage(props){
 
     return(
         <>
-        { props?.detailData && props?.detailData != null &&
+        {
+          mounted && props?.detailData && props?.detailData != null &&
             // mounted && 
 
         <div className='detail-page-web'>
@@ -1960,8 +1957,9 @@ export default function WebDetailPage(props){
           
         </div>
         }
-        
+    
         </>
+        
     )
 }
 

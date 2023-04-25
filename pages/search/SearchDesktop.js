@@ -1069,6 +1069,8 @@ export default function SearchDesktop(props) {
               handleCardActionTaken={() => _handleCardActionTaken()}
               openDetailModal={() => openDetailModal()}
               status={trackStatus}
+              addLocalBookmarks={(count) => props?.addLocalBookmarks(count)}
+              removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
               openQueryModal={_openEnquireModal}
             />
           </SlidingPanel>

@@ -213,6 +213,7 @@ export default function DetailModal(props){
 
       if(props?.token && props?.token.length > 0){
           removeBookmarkFromBackend(item.code)
+          props?.removeLocalBookmarks()
         }else{
           let bookmarkArray = [];
           let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
@@ -220,6 +221,7 @@ export default function DetailModal(props){
             bookmarkArray =  bookmarkItem.filter(data => data !== item.code )
           }
           localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+          props?.removeLocalBookmarks(bookmarkArray.length)
           props?.handleCardActionTaken()
         }
     
@@ -230,6 +232,7 @@ export default function DetailModal(props){
       
         if(props?.token && props?.token.length > 0){
           addBookmarkToBackend(item.code)
+          props?.addLocalBookmarks()
         }else{
           let bookmarkArray = [];
           let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
@@ -238,6 +241,7 @@ export default function DetailModal(props){
           }
           bookmarkArray.push(item.code)
           localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+          props?.addLocalBookmarks(bookmarkArray.length)
           props?.handleCardActionTaken()
         }
       
@@ -553,7 +557,9 @@ export default function DetailModal(props){
 
             
             <div className='detail-modal-middle-section'>
-              <div className='detail-modal-course-content' style={props?.status === true ? null : {marginTop: '6rem'}}>
+              <div className='detail-modal-course-content' 
+                // style={props?.status === true ? null : {marginTop: '6rem'}}
+                >
                 <div className='detail-modal-course-container'>
                     <div className='heading1'>
                       {courseName}

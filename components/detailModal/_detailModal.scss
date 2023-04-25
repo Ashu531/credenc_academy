@@ -5,6 +5,9 @@
     background-color: var(--defaultBackground);
     position: absolute;
     right: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     
 
     .detail-modal-content{
@@ -22,6 +25,7 @@
            background: var(--defaultBackground);
            width: 100%;
            z-index: 999;
+           border-bottom: 1px solid #efefef;
        }
    
 
@@ -103,7 +107,7 @@
             background: linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%);
             text-align: center;
             border: 1px solid red;
-            margin-top: 9rem;
+            // margin-top: 9rem;
        }
 
        .banner-text{
@@ -124,6 +128,12 @@
            padding: 24px 24px 0px 24px;
            gap: 12px;
         //    margin-top: 11rem;
+       }
+
+       .detail-modal-middle-section {
+            overflow-y: scroll;
+            height: 100%;
+            padding: 0 0 9rem 0;
        }
 
        .detail-modal-course-container{
@@ -560,6 +570,7 @@
         align-items: center;
         border: 1px solid var(--insignificantStrokeColor);
         background: var(--defaultBackground);
+        z-index: 9;
 
         .detail-modal-footer-section-left{
             display: flex;

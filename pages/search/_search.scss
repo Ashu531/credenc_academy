@@ -106,6 +106,7 @@
       background: var(--defaultBackground);
       border-radius: 0.6rem;
       overflow: scroll;
+      width: 72%;
       
       &::-webkit-scrollbar{
         display: none;

@@ -25,7 +25,7 @@ export default function DetailPage(props){
     const [token,setToken] = useState('')
     const [startingCost,setStartingCost] = useState({})
     const [thirdPartyUser,setThirdPartyUser] = useState({})
-    const [rating, setRating] = useState()
+    const [rating, setRating] = useState({})
     const [reviews, setReviews] = useState([])
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const isDesktopOrLaptop = useMediaQuery({
