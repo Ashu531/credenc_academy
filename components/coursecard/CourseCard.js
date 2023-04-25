@@ -15,7 +15,7 @@ export default function CourseCard(props) {
 
   let router = useRouter();
   const [courseNameTooltip, setCourseNameTooltip] = useState(false)
-  const [bookmarkVisible, setBookmarkVisible] = useState(null)
+  const [bookmarkVisible, setBookmarkVisible] = useState(false)
   const [upvoted, setUpvoted] = useState(null)
   const [toggleUpvote, setToggleUpvote] = useState(null)
   const [courseName, setCourseName] = useState('')
@@ -59,10 +59,8 @@ export default function CourseCard(props) {
     let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
     if (tempBookmarkData && tempBookmarkData.length > 0) {
       if (tempBookmarkData.includes(props?.data?.code)) {
-        setBookmarkVisible(true)
+        props?.addLocalBookmarks(tempBookmarkData.length)
       }
-      else
-        setBookmarkVisible(false)
     }
   }
 
@@ -75,7 +73,7 @@ export default function CourseCard(props) {
   }
 
   const _handleCardBookmark = (item) => {
-    if (bookmarkVisible === true) {
+    if (props?.bookmarkCodes?.includes(props?.data.code)) {
       _onremoveToBookmark(item)
     } else {
       _onAddToBookmark(item)
@@ -95,8 +93,9 @@ export default function CourseCard(props) {
       if (bookmarkItem && bookmarkItem.length > 0) {
         bookmarkArray = bookmarkItem.filter(data => data !== item.code)
       }
-      props?.removeLocalBookmarks(bookmarkArray.length)
+      
       localStorage.setItem(bookmarkKey, JSON.stringify(bookmarkArray));
+      props?.removeLocalBookmarks(bookmarkArray.length)
 
       if (router.pathname === "/bookmarks") {
         setTimeout(() => location.reload(), 100)
@@ -114,11 +113,11 @@ export default function CourseCard(props) {
       let bookmarkArray = [];
       let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey))
       if (bookmarkItem && bookmarkItem.length > 0) {
-        bookmarkArray.push(...bookmarkItem)
+        bookmarkArray = [...bookmarkItem]
       }
       bookmarkArray.push(item.code)
-      props?.addLocalBookmarks(bookmarkArray.length)
       localStorage.setItem(bookmarkKey, JSON.stringify(bookmarkArray));
+      props?.addLocalBookmarks(bookmarkArray.length)
     }
 
   }
@@ -310,7 +309,7 @@ export default function CourseCard(props) {
             <div className='grey-container'
               onClick={() => _handleCardBookmark(props?.data)}
             >
-              <Image src={bookmarkVisible === true ? selectedBookmark : bookmarkIcon} objectFit="contain" alt='selectedBookmark' height={24} width={24} />
+              <Image src={bookmarkVisible || props?.bookmarkCodes?.includes(props?.data.code) ? selectedBookmark : bookmarkIcon} objectFit="contain" alt='selectedBookmark' height={24} width={24} />
             </div>
             {/* <div 
               className='grey-container' 

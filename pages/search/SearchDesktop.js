@@ -457,7 +457,10 @@ export default function SearchDesktop(props) {
     // }
 
     setCardApiSuccess(true)
-    setCourseCardData([...courseCardData, ...res.data])
+
+    if(res.data){
+      setCourseCardData([...courseCardData, ...res.data])
+    }
 
     setMaxPrice(Math.floor(parseFloat(res.max_price)));
     setMinPrice(Math.floor(parseFloat(res.min_price)));

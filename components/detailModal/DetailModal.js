@@ -201,7 +201,7 @@ export default function DetailModal(props){
     }
 
     const _handleBookmarksTrigger=(item)=>{
-        if(bookmarkVisible === true){
+        if(bookmarkVisible || props?.bookmarkCodes?.includes(props?.detailData.code)){
             _onremoveToBookmark(item)
            }else{
             _onAddToBookmark(item)
@@ -419,7 +419,7 @@ export default function DetailModal(props){
            
          <div className='detail-modal-content'>
           <div style={{display:"flex",flexDirection:'row',width:'100%'}}>
-            <div className='detail-modal-header' style={window.innerWidth<=500 ? {width: '90%'} : {width: '90%'}}>
+            <div className='detail-modal-header'>
                 <div className='header-school-content'>
                   <Image 
                   loader={myLoader}
@@ -439,7 +439,7 @@ export default function DetailModal(props){
                             onClick={()=> _handleBookmarksTrigger(courseData)} 
                             style={{cursor:"pointer"}}
                         >
-                        <Image src={ bookmarkVisible === true ? selectedBookmark : theme === 'dark' ? bookmarkIconDark : bookmarkIcon}  
+                        <Image src={ bookmarkVisible || props?.bookmarkCodes?.includes(props?.detailData.code) ? selectedBookmark : theme === 'dark' ? bookmarkIconDark : bookmarkIcon}  
                             objectFit="contain" 
                             width={ !isDesktopOrLaptop ? 25 : 24 }
                             height={!isDesktopOrLaptop ? 25 : 24 }

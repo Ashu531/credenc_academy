@@ -54,19 +54,13 @@
             line-height: 2.1rem;
             font-family: 'Poppins';
             border-radius: 0.6rem;
-
-            a {
-                text-decoration: none;
-                color: #B1B1B1;
-            }
+            color: #B1B1B1;
+            cursor: pointer;
         }
 
         .active{
             background: #F8F8F8;
-
-            a {
-                color: #222222;
-            }
+            color: #222222;
         }
 
         .nav-item-right {
@@ -159,13 +153,13 @@
 
     .container{
         width: 100%;
-        padding: 4.5rem 20rem;
+        padding: 0 20rem;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
         overflow: scroll;
-        margin: 0 auto;
+        margin: 4.5rem auto;
 
         .feature {
             padding: 0.2rem 1.6rem;
@@ -203,6 +197,10 @@
             row-gap: 1.6rem;
             align-items: center;
 
+            div {
+                width: 80%
+            }
+
             button{
                 cursor: pointer;
                 background-color: #034FE2;
@@ -212,7 +210,7 @@
                 color: #FFFFFF;
                 font-size: 1.6rem;
                 font-family: 'Work Sans';
-                width: 21%;
+                width: 20%;
             }
         }
 

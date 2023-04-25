@@ -30,7 +30,8 @@ function List({
     removeLocalBookmarks,
     addLocalBookmarks,
     enableTrackStatus,
-    applied
+    applied,
+    bookmarkCodes
 }) {
 
   const listTypes = States.listTypes;
@@ -73,6 +74,7 @@ function List({
                 removeLocalBookmarks={()=>removeLocalBookmarks()}
                 enableTrackStatus={()=>enableTrackStatus()}
                 applied={applied}
+                bookmarkCodes={bookmarkCodes}
               />
             </div> : 
                <CourseCard 
@@ -86,6 +88,7 @@ function List({
                 removeLocalBookmarks={()=>removeLocalBookmarks()}
                 enableTrackStatus={()=>enableTrackStatus()}
                 applied={applied}
+                bookmarkCodes={bookmarkCodes}
                />
           })
         );
@@ -127,9 +130,11 @@ function List({
              openApplyNowModal={(item)=> openApplyNowModal(item)}
              token={token}
              openLoginModal={()=>openLoginModal()}
-             removeLocalBookmarks={()=>removeLocalBookmarks()}
+             removeLocalBookmarks={(count)=>removeLocalBookmarks(count)}
+             addLocalBookmarks={(count)=>addLocalBookmarks(count)}
              enableTrackStatus={()=>enableTrackStatus()}
              applied={applied}
+             bookmarkCodes={bookmarkCodes}
             />
           })
         );

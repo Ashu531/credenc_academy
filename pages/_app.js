@@ -46,6 +46,7 @@ class MyApp extends App {
      goingUp: false,
      coursePrevieModal: false,
      bookmarkCount: 0,
+     bookmarkCodes: [],
      subjectData: {},
     };
     this.coursesApiStatus = React.createRef(new ApiStatus());
@@ -56,6 +57,7 @@ class MyApp extends App {
     this._retrieveData();
     this._mountComponent();
     this._handleBookmarkCount();
+    this._handleBookmarkCodes();
   }
 
   _mountComponent=()=>{
@@ -334,6 +336,13 @@ class MyApp extends App {
      }
   }
 
+  _handleBookmarkCodes = () => {
+    const codes = JSON.parse(localStorage.getItem(bookmarkKey));
+    this.setState({
+      bookmarkCodes: codes ? codes : []
+    })
+  }
+
   _fetchLocalBookmarks=()=>{
     let bookmarkArray = [];
     let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
@@ -358,6 +367,8 @@ class MyApp extends App {
         bookmarkCount: count
       })
     }
+
+    this._handleBookmarkCodes()
    
   }
 
@@ -372,6 +383,8 @@ class MyApp extends App {
         bookmarkCount: count
       })
     }
+
+    this._handleBookmarkCodes()
     
   }
 
@@ -469,6 +482,7 @@ class MyApp extends App {
             selectSearch={(e)=>this._selectSearch(e)}
             subjectData={this.state.subjectData}
             searchPageQuery={this.state.searchPageQuery}
+            bookmarkCodes={this.state.bookmarkCodes}
          />
          {/* {
             isDesktopOrLaptop ?  */}

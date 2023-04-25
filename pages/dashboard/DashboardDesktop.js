@@ -584,7 +584,9 @@ export default function DashboardDesktop(props) {
     } else {
       // setCourses([...courseCardData, ...res.data]);
       // setCardApiSuccess(true)
-      setCourseCardData([...courseCardData, ...res.data])
+      if(res.data !== null && res.data !== undefined){
+        setCourseCardData([...courseCardData, ...res.data])
+      }
     }
 
     setMaxPrice(Math.floor(parseFloat(res.max_price)));
@@ -929,6 +931,7 @@ export default function DashboardDesktop(props) {
                         removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
                         enableTrackStatus={() => _enableTrackStatus()}
                         applied={applied}
+                        bookmarkCodes={props?.bookmarkCodes}
                       />
                     </div>
                   )
@@ -966,6 +969,7 @@ export default function DashboardDesktop(props) {
                         removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
                         enableTrackStatus={() => _enableTrackStatus()}
                         applied={applied}
+                        bookmarkCodes={props?.bookmarkCodes}
                       />
                     </div>
                   )
@@ -1001,6 +1005,7 @@ export default function DashboardDesktop(props) {
                         removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
                         enableTrackStatus={() => _enableTrackStatus()}
                         applied={applied}
+                        bookmarkCodes={props?.bookmarkCodes}
                       />
                     </div>
                   )
@@ -1115,6 +1120,7 @@ export default function DashboardDesktop(props) {
                       removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
                       enableTrackStatus={() => _enableTrackStatus()}
                       applied={applied}
+                      bookmarkCodes={props?.bookmarkCodes}
                     />
                   </div>
               })
@@ -1261,6 +1267,9 @@ export default function DashboardDesktop(props) {
           openDetailModal={() => openDetailModal()}
           status={trackStatus}
           openQueryModal={_openEnquireModal}
+          addLocalBookmarks={(count) => props?.addLocalBookmarks(count)}
+          removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
+          bookmarkCodes={props?.bookmarkCodes}
         />
       </SlidingPanel>
       <SlidingPanel

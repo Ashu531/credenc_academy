@@ -25,6 +25,8 @@ export default function DetailPage(props){
     const [token,setToken] = useState('')
     const [startingCost,setStartingCost] = useState({})
     const [thirdPartyUser,setThirdPartyUser] = useState({})
+    const [rating, setRating] = useState()
+    const [reviews, setReviews] = useState([])
     const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
     const isDesktopOrLaptop = useMediaQuery({
       query: "(min-width: 500px)",
@@ -55,7 +57,9 @@ export default function DetailPage(props){
             _getpaymentDetails(id)
             _getToolData(id)
             _getCardData(id,localToken)
-            _getStartingCost(id)
+            _getStartingCost(id,localToken)
+            _getRating(id)
+            _getReviews(id)
     }  
 
     const _getDetailData=async(id,localToken)=>{
@@ -187,12 +191,12 @@ export default function DetailPage(props){
       }
         
 
-    const _getStartingCost=async(id)=>{
-      if(token && token.length > 0){
+    const _getStartingCost=async(id,localToken)=>{
+      if(localToken && localToken.length > 0){
 
         let res = await axios.get(`${constant.API_URL.DEV}/course/starting_cost/${id}/`,{
           headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${localToken}`
           }
         })
           .then(res => {
@@ -222,6 +226,35 @@ export default function DetailPage(props){
      
   }
 
+  const _getReviews = async(id) => {
+      let res = await axios.get(`${constant.API_URL.DEV}/course/reviews/${id}/`)
+        .then(res => {
+          // this.coursesApiStatus.current.success();
+          setReviews(res.data)
+          // setMounted(true);
+          return res.data;
+        })
+        .catch(err => {
+          // this.coursesApiStatus.current.failed();
+          console.log(err);
+        }); 
+  }
+
+  const _getRating = async(id) => {
+      let res = await axios.get(`${constant.API_URL.DEV}/course/ratingsavg/${id}/`)
+        .then(res => {
+          // this.coursesApiStatus.current.success();
+          console.log(res)
+          setRating(res.data)
+          // setMounted(true);
+          return res.data;
+        })
+        .catch(err => {
+          // this.coursesApiStatus.current.failed();
+          console.log(err);
+        }); 
+  }
+
     return(
     <>
     <Head>
@@ -233,6 +266,8 @@ export default function DetailPage(props){
         <>
         {/* {isDesktopOrLaptop &&  */}
           <DetailPageWeb
+            rating={rating}
+            reviews={reviews}
             detailData={detailData} 
             instructorData={instructorData} 
             similarCourses={similarCourses} 
@@ -251,6 +286,7 @@ export default function DetailPage(props){
             closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
             loginModal={props?.loginModal}
             thirdPartyUser={thirdPartyUser}
+            {...props}
           />
         {/* }
         {isMobile && 
