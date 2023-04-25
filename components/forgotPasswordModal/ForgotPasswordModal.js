@@ -48,6 +48,7 @@ export default function ForgotPasswordModal({
   const passwordInputInitialState = States.passwordInputInitialState;
   const [passwordInputState, setPasswordInputState] = useState({ ...passwordInputInitialState });
   const [confirmPassInputState, setConfirmPassInputState] = useState({ ...passwordInputInitialState });
+  const [showOtpAlert,setShowOtpAlert] = useState(false)
   let location = useRouter();
   const [otp, setOtp] = useState({
       generated: false,
@@ -256,6 +257,8 @@ export default function ForgotPasswordModal({
   }, [location.isReady])
 
   const resendOtp = async () => {
+    setShowOtpAlert(true)
+   
     setOtp({generated: false,
       values: ['', '', '', '', '', '']})
     const response = await axios.post(`${constant.API_URL.DEV}/login_otp/`, {
@@ -277,6 +280,8 @@ export default function ForgotPasswordModal({
       setAuthApiStatus(ApiStatus.FAILED)
       setFormError(err?.response?.data?.message || '')
     })
+
+    setTimeout(()=>setShowOtpAlert(false),7000)
   }
 
   return (
@@ -360,22 +365,26 @@ export default function ForgotPasswordModal({
           <Button text="Log In" linearGradient='green' classes="btn-secondary success-button" onClick={goToLogin} /> : null
         }
       </div>
-      <SuccessAlert
-        title="OTP Resent"
-        style={{ 
-          zIndex: 99,
-          position:'fixed',
-          bottom:30,
-          right: 30,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-        titleStyle={{
-          fontSize: 14,
-          fontFamily: 'Work Sans',
-        }}
-      />
+      {
+        showOtpAlert &&
+        <SuccessAlert
+          title="OTP Sent"
+          style={{ 
+            zIndex: 99,
+            position:'fixed',
+            bottom:30,
+            right: 30,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+          titleStyle={{
+            fontSize: 14,
+            fontFamily: 'Work Sans',
+          }}
+       />
+      }
+      
     </div>
   );
 }
