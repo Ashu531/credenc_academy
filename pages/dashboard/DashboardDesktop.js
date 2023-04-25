@@ -814,45 +814,18 @@ export default function DashboardDesktop(props) {
   }
 
   const _handleTrivia = (data) => {
-    if (data.courseType.length > 0 && data.subject.length > 0) {
-      location.push({
+    Object.keys(data).forEach(
+      key => (data[key] == null || data[key] == '') && delete data[key],
+    );
+    
+    location.push({
         pathname: '/search',
-        query: {
-          course_type: data.courseType,
-          subject: data.subject,
-        }
+        query: data
       },
       undefined,
       {
         shallow: true
       })
-    }
-    else if (data.courseType && data.courseType.length > 0) {
-
-      location.push({
-        pathname: '/search',
-        query: {
-          course_type: data.courseType,
-        }
-      },
-      undefined,
-      {
-        shallow: true
-      })
-
-    } else if (data.subject && data.subject.length > 0) {
-      
-      location.push({
-        pathname: '/search',
-        query: {
-          subject: data.subject,
-        }
-      },
-      undefined,
-      {
-        shallow: true
-      })
-    }
   }
 
   useEffect(() => {

@@ -833,7 +833,7 @@ export default function SearchDesktop(props) {
                   />
                 </div>
                 <div className="filter-footer">
-                  <a href='/privacy' target='_blank' style={{ textDecoration: 'none' }}><span className='link' >Privacy policy & disclaimer</span></a>
+                  {/* <a href='/privacy' target='_blank' style={{ textDecoration: 'none' }}><span className='link' >Privacy policy & disclaimer</span></a> */}
                   <div className='mobile-actions-container'>
                     <div className='btn-container reset-button-wrapper'>
                       <Button

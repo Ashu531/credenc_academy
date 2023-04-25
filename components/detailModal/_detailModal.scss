@@ -104,11 +104,9 @@
             padding: 8px 5px;
             gap: 12px;
             background: linear-gradient(94.29deg, #3399CC 0%, #00CB9C 100%);
-            position: absolute;
-            top: 9rem;
-            z-index: 999;
             text-align: center;
-            // margin-top: 9rem;
+            border: 1px solid red;
+            margin-top: 9rem;
        }
 
        .banner-text{
@@ -146,6 +144,8 @@
             line-height: 24px;
             color: var(--primaryColor);
             text-transform: capitalize !important;
+            display: inline-block;
+            word-wrap: break-word;
         }
 
         .heading2{
@@ -155,6 +155,8 @@
             font-size: 14px;
             line-height: 21px;
             color: var(--bodyColor);
+            display: inline-block;
+            word-break: break-word;
         }
        }
 

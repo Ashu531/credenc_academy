@@ -536,10 +536,9 @@ export default function DetailModal(props){
             null
             }
 
-            
-
-            {/* <div className='detail-modal-banner'  
-            // style={ !isDesktopOrLaptop ? {width:'100%'} : null }
+            {
+              courseData?.next_batch && 
+              <div className='detail-modal-banner'
             >
                 { courseData?.enrollment_start_date && courseData?.enrollment_start_date.length > 0 ?
                     <span className='banner-text'>
@@ -549,9 +548,12 @@ export default function DetailModal(props){
                     Next batch starts on soon
                   </span>
                 } 
-            </div> */}
+            </div>
+            }
+
+            
             <div className='detail-modal-middle-section'>
-              <div className='detail-modal-course-content' style={props?.status === true ? null : {marginTop: '11rem'}}>
+              <div className='detail-modal-course-content' style={props?.status === true ? null : {marginTop: '6rem'}}>
                 <div className='detail-modal-course-container'>
                     <span className='heading1'>
                       {courseName}
