@@ -125,8 +125,6 @@ export default function Header(props) {
 
   const handleProfileDropdownItemSelect = (item, i) => {
     if (window !== undefined) {
-
-
       if (item.id === 0) {
         // Mixpanel.track(MixpanelStrings.PROFILE_SETTINGS_TRIGGERED);
         navigateToProfilePage('edit');
@@ -139,7 +137,7 @@ export default function Header(props) {
         if (router.pathname === '/profile') {
           router.push({
             pathname: '/'
-          })
+          }).then(()=>router.reload())
         } else {
           router.reload();
         }

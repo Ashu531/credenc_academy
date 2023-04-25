@@ -4,7 +4,7 @@ import Navbar from '../../components/navbar/Navbar'
 import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import constant from '../../config/constant.js'
-import { useRouter } from 'next/router'
+import { Router, useRouter } from 'next/router'
 import DetailModal from '../../components/detailModal/DetailModal'
 import Error from "../../components/error/Error"
 import Lists from "../../config/list";
@@ -870,6 +870,14 @@ export default function DashboardDesktop(props) {
     setPageNumber(pageNumber + 1)
     handleFilteredData()
   }
+
+  useEffect(() => { 
+    if (location.asPath === '/') {
+      window.onpopstate = () => { 
+        history.go(1);
+      };
+    }
+  }, [location]);
 
   return (
     <div>
