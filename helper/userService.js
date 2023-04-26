@@ -39,7 +39,12 @@ const getUserData = async (url, token) => {
 }
 
 const getUserInitials = (value) => {
-    return value[0];
+    if(value && value[0].lenght > 0){
+        return value[0];
+    }else{
+        return 'YN'
+    }
+    
 }
 
 

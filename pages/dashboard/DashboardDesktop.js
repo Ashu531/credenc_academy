@@ -4,7 +4,7 @@ import Navbar from '../../components/navbar/Navbar'
 import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import constant from '../../config/constant.js'
-import { useRouter } from 'next/router'
+import { Router, useRouter } from 'next/router'
 import DetailModal from '../../components/detailModal/DetailModal'
 import Error from "../../components/error/Error"
 import Lists from "../../config/list";
@@ -280,6 +280,10 @@ export default function DashboardDesktop(props) {
     }
   }
 
+  const toggleDetailModal=()=>{
+    setDetailModal(!detailModal)
+  }
+
 
   const updateQueryString = (i, filter, list) => {
 
@@ -518,9 +522,6 @@ export default function DashboardDesktop(props) {
 
   const handleSearchClicked = async (forcePageNumber = 0) => {
     const getParams = () => {
-      console.log(location?.query)
-      console.log(urlService.current.getUpdatedUrl())
-      console.log(appliedFiltersCount.current)
       if(appliedFiltersCount.current > 0){
         return `?${urlService.current.getUpdatedUrl()}`;
       }else{
@@ -819,45 +820,18 @@ export default function DashboardDesktop(props) {
   }
 
   const _handleTrivia = (data) => {
-    if (data.courseType.length > 0 && data.subject.length > 0) {
-      location.push({
+    Object.keys(data).forEach(
+      key => (data[key] == null || data[key] == '') && delete data[key],
+    );
+    
+    location.push({
         pathname: '/search',
-        query: {
-          course_type: data.courseType,
-          subject: data.subject,
-        }
+        query: data
       },
       undefined,
       {
         shallow: true
       })
-    }
-    else if (data.courseType && data.courseType.length > 0) {
-
-      location.push({
-        pathname: '/search',
-        query: {
-          course_type: data.courseType,
-        }
-      },
-      undefined,
-      {
-        shallow: true
-      })
-
-    } else if (data.subject && data.subject.length > 0) {
-      
-      location.push({
-        pathname: '/search',
-        query: {
-          subject: data.subject,
-        }
-      },
-      undefined,
-      {
-        shallow: true
-      })
-    }
   }
 
   useEffect(() => {
@@ -875,6 +849,14 @@ export default function DashboardDesktop(props) {
     setPageNumber(pageNumber + 1)
     handleFilteredData()
   }
+
+  useEffect(() => { 
+    if (location.asPath === '/') {
+      window.onpopstate = () => { 
+        history.go(1);
+      };
+    }
+  }, [location]);
 
   useEffect(() => {
     if(pageNumber === 1){
@@ -1033,7 +1015,7 @@ export default function DashboardDesktop(props) {
             { position: 'sticky', 
               top: '6rem', 
               background: '#FFFFFF', 
-              zIndex: 9999, 
+              zIndex: 99, 
               boxShadow: '0px 1px 0px rgba(0, 0, 0, 0.1)', 
               }}
             >
@@ -1284,6 +1266,7 @@ export default function DashboardDesktop(props) {
           addLocalBookmarks={(count) => props?.addLocalBookmarks(count)}
           removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
           bookmarkCodes={props?.bookmarkCodes}
+          toggleDetailModal={()=>toggleDetailModal()}
         />
       </SlidingPanel>
       <SlidingPanel

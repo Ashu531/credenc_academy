@@ -18,6 +18,8 @@ export default function SearchBar(props) {
   let nextURL = location?.asPath?.substring(2, location?.asPath?.length)
   let urlService = useRef(new UrlService(nextURL));
 
+  let coursedata = {}
+
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -70,21 +72,32 @@ export default function SearchBar(props) {
     setSearchQuery(data)
   }
 
-
   const handleOnSelect = (item) => {
     // the item selected
     // console.log("enter detected",item);
+    coursedata=item;
     props?.handleSearch(item?.name)
-    location.push({
-      pathname: '/search',
-      query: {
-        search: item?.name
-      }
-    },
-      undefined,
-      {
-        shallow: true
+    if(item?.course_id){
+      location.push({
+        pathname: '/details',
+        query: {
+          course_id: item?.course_id
+        }
       })
+    }else{
+      location.push({
+        pathname: '/search',
+        query: {
+          search: item?.name
+        }
+      },
+        undefined,
+        {
+          shallow: true
+        })
+    }
+   
+    
   };
 
   const formatResult = (item) => {
@@ -114,16 +127,26 @@ export default function SearchBar(props) {
   }
 
   const handleLocationQuery = () => {
-    location.push({
-      pathname: '/search',
-      query: {
-        search: searchString
-      }
-    },
-      undefined,
-      {
-        shallow: true
+    if(coursedata?.course_id){
+      location.push({
+        pathname: '/details',
+        query: {
+          course_id: coursedata?.course_id
+        }
       })
+    }else{
+      location.push({
+        pathname: '/search',
+        query: {
+          search: searchString
+        }
+      },
+        undefined,
+        {
+          shallow: true
+        })
+    }
+    
   }
 
   return (

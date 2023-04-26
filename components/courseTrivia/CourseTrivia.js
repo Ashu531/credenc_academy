@@ -65,7 +65,7 @@ export default function CourseTrivia(props){
     }
 
     const handleSubjectChange=(data)=>{
-        let key = data.target.name
+        let key = data.target.value
         setSelectedSubject(key)
         // _getSpecialisation()
     }
@@ -97,7 +97,8 @@ export default function CourseTrivia(props){
 
     const handleSubmit = () =>{
         let data = {
-            courseType : selectedCourseType,
+            course_type : selectedCourseType,
+            domain: selectedSubject,
             subject: selectedSpecialisation
         }
         props?.handleTrivia(data);

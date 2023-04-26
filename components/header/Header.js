@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     minWidth: 120
   },
   selectEmpty: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   menuPaper: {
     maxHeight: '30% !important',
@@ -47,6 +47,7 @@ export default function Header(props) {
   const [token, setToken] = useState('')
   const [subjectList, setSubjectList] = useState([])
   const [mounted,setMounted] = useState(false)
+  const [dropdownOpen,setDropdownOpen]=useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -79,6 +80,7 @@ export default function Header(props) {
   }
 
   const handleChange = (e) => {
+    setDropdownOpen(true)
     let value = e.target.value
     router.push({
       pathname: '/search',
@@ -123,8 +125,6 @@ export default function Header(props) {
 
   const handleProfileDropdownItemSelect = (item, i) => {
     if (window !== undefined) {
-
-
       if (item.id === 0) {
         // Mixpanel.track(MixpanelStrings.PROFILE_SETTINGS_TRIGGERED);
         navigateToProfilePage('edit');
@@ -137,7 +137,7 @@ export default function Header(props) {
         if (router.pathname === '/profile') {
           router.push({
             pathname: '/'
-          })
+          }).then(()=>router.reload())
         } else {
           router.reload();
         }
@@ -208,12 +208,21 @@ export default function Header(props) {
           // background: '#034FE2',
           borderRadius: 8,
         }}>
-          <InputLabel style={{
+          <InputLabel
+          // shrink={false}
+          style={dropdownOpen ? {
             fontFamily: 'Work Sans',
             fontStyle: 'normal',
             fontWeight: 500,
-            fontSize: 12,
-            marginTop: -5,
+            fontSize: 11,
+            marginTop: 2,
+            // color: '#FFFFFF',
+          } : {
+            fontFamily: 'Work Sans',
+            fontStyle: 'normal',
+            fontWeight: 500,
+            fontSize: 11,
+            marginTop: -3,
             // color: '#FFFFFF',
           }}>Subject</InputLabel>
           <Select
@@ -221,6 +230,9 @@ export default function Header(props) {
             id="demo-simple-select"
             placeholder='Subject'
             label="Subject"
+            variant="outlined"
+            onOpen={()=>setDropdownOpen(true)}
+            onClose={()=>setDropdownOpen(false)}
             style={{ borderRadius: 8, height: 40 }}
             onChange={handleChange}
             MenuProps={{ classes: { paper: classes.menuPaper } }}

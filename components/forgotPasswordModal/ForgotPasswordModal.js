@@ -17,6 +17,7 @@ import Image from "next/image";
 import constant from "../../config/constant";
 import { useRouter } from 'next/router'
 import { useMediaQuery } from "react-responsive";
+import SuccessAlert from "../successAlert/SuccessAlert";
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 const authKey = 'credenc-edtech-authkey';
@@ -47,6 +48,7 @@ export default function ForgotPasswordModal({
   const passwordInputInitialState = States.passwordInputInitialState;
   const [passwordInputState, setPasswordInputState] = useState({ ...passwordInputInitialState });
   const [confirmPassInputState, setConfirmPassInputState] = useState({ ...passwordInputInitialState });
+  const [showOtpAlert,setShowOtpAlert] = useState(false)
   let location = useRouter();
   const [otp, setOtp] = useState({
       generated: false,
@@ -255,6 +257,10 @@ export default function ForgotPasswordModal({
   }, [location.isReady])
 
   const resendOtp = async () => {
+    setShowOtpAlert(true)
+   
+    setOtp({generated: false,
+      values: ['', '', '', '', '', '']})
     const response = await axios.post(`${constant.API_URL.DEV}/login_otp/`, {
       // password: passwordInputState.value.trim(),
       email: emailInputState.toLowerCase().trim()
@@ -271,9 +277,11 @@ export default function ForgotPasswordModal({
       }
     })
     .catch(err => {
-      setAuthApiStatus(ApiStatus.FAILED)
+      // setAuthApiStatus(ApiStatus.FAILED)
       setFormError(err?.response?.data?.message || '')
     })
+
+    setTimeout(()=>setShowOtpAlert(false),7000)
   }
 
   return (
@@ -357,6 +365,34 @@ export default function ForgotPasswordModal({
           <Button text="Log In" linearGradient='green' classes="btn-secondary success-button" onClick={goToLogin} /> : null
         }
       </div>
+      {
+        showOtpAlert &&
+        <SuccessAlert
+          title="OTP Sent"
+          style={window.innerWidth > 500 ? { 
+            zIndex: 99,
+            position:'fixed',
+            bottom:30,
+            right: 30,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          } : {
+            zIndex: 99,
+            position:'fixed',
+            bottom:80,
+            right: 30,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+          titleStyle={{
+            fontSize: 14,
+            fontFamily: 'Work Sans',
+          }}
+       />
+      }
+      
     </div>
   );
 }

@@ -757,6 +757,10 @@ export default function SearchDesktop(props) {
     // props?.handleSearch(event)
   }
 
+  const toggleDetailModal=()=>{
+    setDetailModal(!detailModal)
+  }
+
   return (
     <>
       {
@@ -837,7 +841,7 @@ export default function SearchDesktop(props) {
                   />
                 </div>
                 <div className="filter-footer">
-                  <a href='/privacy' target='_blank' style={{ textDecoration: 'none' }}><span className='link' >Privacy policy & disclaimer</span></a>
+                  {/* <a href='/privacy' target='_blank' style={{ textDecoration: 'none' }}><span className='link' >Privacy policy & disclaimer</span></a> */}
                   <div className='mobile-actions-container'>
                     <div className='btn-container reset-button-wrapper'>
                       <Button
@@ -1068,7 +1072,10 @@ export default function SearchDesktop(props) {
               handleCardActionTaken={() => _handleCardActionTaken()}
               openDetailModal={() => openDetailModal()}
               status={trackStatus}
+              addLocalBookmarks={(count) => props?.addLocalBookmarks(count)}
+              removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
               openQueryModal={_openEnquireModal}
+              toggleDetailModal={()=>toggleDetailModal()}
             />
           </SlidingPanel>
           <SlidingPanel

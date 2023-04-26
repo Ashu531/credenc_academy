@@ -35,6 +35,7 @@ const EdtechTheme = 'EdtechTheme';
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
+const EdtechToken = 'credenc-edtech-authkey';
 
 const spinnerCSS = {
     display: "block",
@@ -67,7 +68,7 @@ export default function DetailModal(props){
     const [thirdPartyUser,setThirdPartyUser] = useState(false);
     let [loading, setLoading] = useState(true);
     const [courseName,setCourseName] = useState('');
-  
+    const [token,setToken] = useState('')
 
     const modalRef = useRef();
     const cardRef = useRef();
@@ -97,6 +98,12 @@ export default function DetailModal(props){
       if(partnerKey && partnerKey.length > 0){
        setThirdPartyUser(partnerKey)
       }
+
+      const localToken = localStorage.getItem(EdtechToken)
+      if(localToken && localToken.length > 0){
+        setToken(localToken)
+      }
+      _handlePreviewData(props?.detailData,localToken )
       setMounted(true);
       
      }
@@ -105,11 +112,11 @@ export default function DetailModal(props){
       _handlePreviewData(props?.detailData)
     },[])
 
-    const _handlePreviewData=async(item)=>{
-        if(props?.token && props?.token.length > 0){
+    const _handlePreviewData=async(item,token)=>{
+        if(token && token.length > 0){
             let res = await axios.get(`${constant.API_URL.DEV}/course/preview/${item?.id}/`,{
                 headers: {
-                  'Authorization': `Bearer ${props?.token}`
+                  'Authorization': `Bearer ${token}`
                 },
               })
                 .then(res => {
@@ -189,7 +196,7 @@ export default function DetailModal(props){
     }
 
     const getBookmarks=(item)=>{
-        if(props?.token && props?.token?.length > 0){
+        if(token && token?.length > 0){
             if(item?.bookmarked === true){
                 setBookmarkVisible(true)
               }else{
@@ -211,8 +218,9 @@ export default function DetailModal(props){
     const _onremoveToBookmark=(item)=>{
       setBookmarkVisible(false)
 
-      if(props?.token && props?.token.length > 0){
+      if(token && token.length > 0){
           removeBookmarkFromBackend(item.code)
+          props?.removeLocalBookmarks()
         }else{
           let bookmarkArray = [];
           let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
@@ -220,6 +228,7 @@ export default function DetailModal(props){
             bookmarkArray =  bookmarkItem.filter(data => data !== item.code )
           }
           localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+          props?.removeLocalBookmarks(bookmarkArray.length)
           props?.handleCardActionTaken()
         }
     
@@ -228,8 +237,9 @@ export default function DetailModal(props){
       const _onAddToBookmark=(item)=>{
         setBookmarkVisible(true)
       
-        if(props?.token && props?.token.length > 0){
+        if(token && token.length > 0){
           addBookmarkToBackend(item.code)
+          props?.addLocalBookmarks()
         }else{
           let bookmarkArray = [];
           let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
@@ -238,6 +248,7 @@ export default function DetailModal(props){
           }
           bookmarkArray.push(item.code)
           localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+          props?.addLocalBookmarks(bookmarkArray.length)
           props?.handleCardActionTaken()
         }
       
@@ -248,7 +259,7 @@ export default function DetailModal(props){
           "id": [`${id}`],
         }, {
           headers: {
-            'Authorization': `Bearer ${props?.token}`
+            'Authorization': `Bearer ${token}`
           },
         })
           .then(res => {
@@ -269,7 +280,7 @@ export default function DetailModal(props){
           "id": `${id}`,
         }, {
           headers: {
-            'Authorization': `Bearer ${props?.token}`
+            'Authorization': `Bearer ${token}`
           },
         })
           .then(res => {
@@ -286,7 +297,7 @@ export default function DetailModal(props){
       }
 
     const _handleUpvoteTrigger=(item)=>{
-        if(props?.token && props?.token?.length > 0){
+        if(token && token?.length > 0){
             if(upvoteVisible === true){
               _onRemoveToUpvote(item)
              }else{
@@ -332,7 +343,7 @@ export default function DetailModal(props){
             "is_up_vote": "true"
         }, {
             headers: {
-                'Authorization': `Bearer ${props?.token}`
+                'Authorization': `Bearer ${token}`
             },
         })
         .then(res => {
@@ -355,7 +366,7 @@ export default function DetailModal(props){
           "is_up_vote": "false"
       }, {
           headers: {
-              'Authorization': `Bearer ${props?.token}`
+              'Authorization': `Bearer ${token}`
           },
       })
       .then(res => {
@@ -372,11 +383,23 @@ export default function DetailModal(props){
     }
 
     const _handleApplyModal=()=>{
-      if(props?.token && props?.token?.length > 0){
-        // props?.openDetailModal()
-        props?.openApplyNowModal()
+      console.log(token)
+      if(token && token?.length > 0){
+        if(isDesktopOrLaptop){
+          props?.openApplyNowModal()
+        }else{
+          props?.toggleDetailModal()
+          props?.openApplyNowModal()
+        }
+        
       }else{
-        props?.openLoginModal()
+        if(isDesktopOrLaptop){
+          props?.openLoginModal()
+        }else{
+          props?.toggleDetailModal()
+          props?.openLoginModal()
+        }
+        
       }
         
     }
@@ -536,10 +559,9 @@ export default function DetailModal(props){
             null
             }
 
-            
-
-            {/* <div className='detail-modal-banner'  
-            // style={ !isDesktopOrLaptop ? {width:'100%'} : null }
+            {
+              courseData?.next_batch && 
+              <div className='detail-modal-banner'
             >
                 { courseData?.enrollment_start_date && courseData?.enrollment_start_date.length > 0 ?
                     <span className='banner-text'>
@@ -549,9 +571,14 @@ export default function DetailModal(props){
                     Next batch starts on soon
                   </span>
                 } 
-            </div> */}
+            </div>
+            }
+
+            
             <div className='detail-modal-middle-section'>
-              <div className='detail-modal-course-content' style={props?.status === true ? null : {marginTop: '11rem'}}>
+              <div className='detail-modal-course-content' 
+                // style={props?.status === true ? null : {marginTop: '6rem'}}
+                >
                 <div className='detail-modal-course-container'>
                     <div className='heading1'>
                       {courseName}

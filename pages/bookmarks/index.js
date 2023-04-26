@@ -132,6 +132,10 @@ export default function Bookmarks(props){
     setLoginState(data)
   }
 
+  const toggleDetailModal=()=>{
+    setDetailModal(!detailModal)
+  }
+
     return(
       <> 
       <Head>
@@ -192,6 +196,7 @@ export default function Bookmarks(props){
                 theme={props.theme}
                 closeDetailModal={()=>closeDetailModal(detailData)}
                 handleCardActionTaken={()=>_handleCardActionTaken()}
+                toggleDetailModal={()=>toggleDetailModal()}
               />
             </SlidingPanel>
             <SlidingPanel
