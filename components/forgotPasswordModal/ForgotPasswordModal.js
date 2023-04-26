@@ -277,7 +277,7 @@ export default function ForgotPasswordModal({
       }
     })
     .catch(err => {
-      setAuthApiStatus(ApiStatus.FAILED)
+      // setAuthApiStatus(ApiStatus.FAILED)
       setFormError(err?.response?.data?.message || '')
     })
 
@@ -369,10 +369,18 @@ export default function ForgotPasswordModal({
         showOtpAlert &&
         <SuccessAlert
           title="OTP Sent"
-          style={{ 
+          style={window.innerWidth > 500 ? { 
             zIndex: 99,
             position:'fixed',
             bottom:30,
+            right: 30,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          } : {
+            zIndex: 99,
+            position:'fixed',
+            bottom:80,
             right: 30,
             display: 'flex',
             justifyContent: 'center',

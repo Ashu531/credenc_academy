@@ -280,6 +280,10 @@ export default function DashboardDesktop(props) {
     }
   }
 
+  const toggleDetailModal=()=>{
+    setDetailModal(!detailModal)
+  }
+
 
   const updateQueryString = (i, filter, list) => {
 
@@ -518,9 +522,6 @@ export default function DashboardDesktop(props) {
 
   const handleSearchClicked = async (forcePageNumber = 0) => {
     const getParams = () => {
-      console.log(location?.query)
-      console.log(urlService.current.getUpdatedUrl())
-      console.log(appliedFiltersCount.current)
       if(appliedFiltersCount.current > 0){
         return `?${urlService.current.getUpdatedUrl()}`;
       }else{
@@ -856,7 +857,7 @@ export default function DashboardDesktop(props) {
       };
     }
   }, [location]);
-  
+
   useEffect(() => {
     if(pageNumber === 1){
       handleFilteredData()
@@ -1265,6 +1266,7 @@ export default function DashboardDesktop(props) {
           addLocalBookmarks={(count) => props?.addLocalBookmarks(count)}
           removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
           bookmarkCodes={props?.bookmarkCodes}
+          toggleDetailModal={()=>toggleDetailModal()}
         />
       </SlidingPanel>
       <SlidingPanel

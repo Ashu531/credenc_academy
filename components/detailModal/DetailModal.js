@@ -35,6 +35,7 @@ const EdtechTheme = 'EdtechTheme';
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
+const EdtechToken = 'credenc-edtech-authkey';
 
 const spinnerCSS = {
     display: "block",
@@ -67,7 +68,7 @@ export default function DetailModal(props){
     const [thirdPartyUser,setThirdPartyUser] = useState(false);
     let [loading, setLoading] = useState(true);
     const [courseName,setCourseName] = useState('');
-  
+    const [token,setToken] = useState('')
 
     const modalRef = useRef();
     const cardRef = useRef();
@@ -97,6 +98,12 @@ export default function DetailModal(props){
       if(partnerKey && partnerKey.length > 0){
        setThirdPartyUser(partnerKey)
       }
+
+      const localToken = localStorage.getItem(EdtechToken)
+      if(localToken && localToken.length > 0){
+        setToken(localToken)
+      }
+      _handlePreviewData(props?.detailData,localToken )
       setMounted(true);
       
      }
@@ -105,11 +112,11 @@ export default function DetailModal(props){
       _handlePreviewData(props?.detailData)
     },[])
 
-    const _handlePreviewData=async(item)=>{
-        if(props?.token && props?.token.length > 0){
+    const _handlePreviewData=async(item,token)=>{
+        if(token && token.length > 0){
             let res = await axios.get(`${constant.API_URL.DEV}/course/preview/${item?.id}/`,{
                 headers: {
-                  'Authorization': `Bearer ${props?.token}`
+                  'Authorization': `Bearer ${token}`
                 },
               })
                 .then(res => {
@@ -189,7 +196,7 @@ export default function DetailModal(props){
     }
 
     const getBookmarks=(item)=>{
-        if(props?.token && props?.token?.length > 0){
+        if(token && token?.length > 0){
             if(item?.bookmarked === true){
                 setBookmarkVisible(true)
               }else{
@@ -211,7 +218,7 @@ export default function DetailModal(props){
     const _onremoveToBookmark=(item)=>{
       setBookmarkVisible(false)
 
-      if(props?.token && props?.token.length > 0){
+      if(token && token.length > 0){
           removeBookmarkFromBackend(item.code)
           props?.removeLocalBookmarks()
         }else{
@@ -230,7 +237,7 @@ export default function DetailModal(props){
       const _onAddToBookmark=(item)=>{
         setBookmarkVisible(true)
       
-        if(props?.token && props?.token.length > 0){
+        if(token && token.length > 0){
           addBookmarkToBackend(item.code)
           props?.addLocalBookmarks()
         }else{
@@ -252,7 +259,7 @@ export default function DetailModal(props){
           "id": [`${id}`],
         }, {
           headers: {
-            'Authorization': `Bearer ${props?.token}`
+            'Authorization': `Bearer ${token}`
           },
         })
           .then(res => {
@@ -273,7 +280,7 @@ export default function DetailModal(props){
           "id": `${id}`,
         }, {
           headers: {
-            'Authorization': `Bearer ${props?.token}`
+            'Authorization': `Bearer ${token}`
           },
         })
           .then(res => {
@@ -290,7 +297,7 @@ export default function DetailModal(props){
       }
 
     const _handleUpvoteTrigger=(item)=>{
-        if(props?.token && props?.token?.length > 0){
+        if(token && token?.length > 0){
             if(upvoteVisible === true){
               _onRemoveToUpvote(item)
              }else{
@@ -336,7 +343,7 @@ export default function DetailModal(props){
             "is_up_vote": "true"
         }, {
             headers: {
-                'Authorization': `Bearer ${props?.token}`
+                'Authorization': `Bearer ${token}`
             },
         })
         .then(res => {
@@ -359,7 +366,7 @@ export default function DetailModal(props){
           "is_up_vote": "false"
       }, {
           headers: {
-              'Authorization': `Bearer ${props?.token}`
+              'Authorization': `Bearer ${token}`
           },
       })
       .then(res => {
@@ -376,11 +383,23 @@ export default function DetailModal(props){
     }
 
     const _handleApplyModal=()=>{
-      if(props?.token && props?.token?.length > 0){
-        // props?.openDetailModal()
-        props?.openApplyNowModal()
+      console.log(token)
+      if(token && token?.length > 0){
+        if(isDesktopOrLaptop){
+          props?.openApplyNowModal()
+        }else{
+          props?.toggleDetailModal()
+          props?.openApplyNowModal()
+        }
+        
       }else{
-        props?.openLoginModal()
+        if(isDesktopOrLaptop){
+          props?.openLoginModal()
+        }else{
+          props?.toggleDetailModal()
+          props?.openLoginModal()
+        }
+        
       }
         
     }

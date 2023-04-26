@@ -1898,6 +1898,8 @@ export default function WebDetailPage(props){
                     openLoginModal={()=>props?.openLoginModal()}
                     token={props?.token}
                     openQueryModal={() => setEnquire(true)}
+                    addLocalBookmarks={(count) => props?.addLocalBookmarks(count)}
+                    removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
                     status={((props?.detailData?.applied === true) || (applied?.state === true && applied?.id === props?.detailData?.id)) ? true : false}
                 />
             </SlidingPanel>

@@ -757,6 +757,10 @@ export default function SearchDesktop(props) {
     // props?.handleSearch(event)
   }
 
+  const toggleDetailModal=()=>{
+    setDetailModal(!detailModal)
+  }
+
   return (
     <>
       {
@@ -1072,6 +1076,7 @@ export default function SearchDesktop(props) {
               addLocalBookmarks={(count) => props?.addLocalBookmarks(count)}
               removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
               openQueryModal={_openEnquireModal}
+              toggleDetailModal={()=>toggleDetailModal()}
             />
           </SlidingPanel>
           <SlidingPanel
