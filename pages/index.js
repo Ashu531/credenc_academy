@@ -7,18 +7,7 @@ import constant from '../config/constant';
 const EdtechToken = 'credenc-edtech-authkey';
 
 const Home = (props) => {
-  const [token,setToken] = useState('')
 
-  useEffect(()=>{
-    if(token){
-      _getAuthKey()
-    }
-  },[props?.token])
-
-  const _getAuthKey=()=>{
-    let authKey = localStorage.getItem(EdtechToken);
-    setToken(authKey)
-  }
   return (
     <>
       <Script
@@ -44,7 +33,6 @@ const Home = (props) => {
       openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
       forgotPasswordModal={props?.forgotPasswordModal}
       handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
-      token={token}
       selectedSubject= {(item)=>props?.selectedSubject(item)}
       toggleSubjectDropdown={()=>props?.toggleSubjectDropdown()}
       toggleFilterVisible={()=>props?.toggleFilterVisible()}

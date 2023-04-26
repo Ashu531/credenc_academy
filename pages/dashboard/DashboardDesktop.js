@@ -928,6 +928,7 @@ export default function DashboardDesktop(props) {
                         enableTrackStatus={() => _enableTrackStatus()}
                         applied={applied}
                         bookmarkCodes={props?.bookmarkCodes}
+                        bookmarkCount={props?.bookmarkCount}
                       />
                     </div>
                   )
@@ -966,6 +967,7 @@ export default function DashboardDesktop(props) {
                         enableTrackStatus={() => _enableTrackStatus()}
                         applied={applied}
                         bookmarkCodes={props?.bookmarkCodes}
+                        bookmarkCount={props?.bookmarkCount}
                       />
                     </div>
                   )
@@ -1002,6 +1004,7 @@ export default function DashboardDesktop(props) {
                         enableTrackStatus={() => _enableTrackStatus()}
                         applied={applied}
                         bookmarkCodes={props?.bookmarkCodes}
+                        bookmarkCount={props?.bookmarkCount}
                       />
                     </div>
                   )
@@ -1117,6 +1120,7 @@ export default function DashboardDesktop(props) {
                       enableTrackStatus={() => _enableTrackStatus()}
                       applied={applied}
                       bookmarkCodes={props?.bookmarkCodes}
+                      bookmarkCount={props?.bookmarkCount}
                     />
                   </div>
               })

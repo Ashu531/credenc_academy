@@ -154,11 +154,80 @@ export default function WebDetailPage(props) {
   }
 
 
+<<<<<<< HEAD
   const _retrieveBookmarks = () => {
     let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
     if (tempBookmarkData && tempBookmarkData.length > 0) {
       if (tempBookmarkData.includes(props?.detailData?.code)) {
 
+=======
+      const _handleLocalItems = ()=>{
+        if(props?.token && props?.token?.length > 0){
+            _handleBookmarkData()
+          }else{
+            _retrieveBookmarks()
+          }
+          
+          _handleUpvoteData()
+      }
+    
+    
+       const _retrieveBookmarks=()=>{
+        let tempBookmarkData = JSON.parse(localStorage.getItem(bookmarkKey));
+        if(tempBookmarkData && tempBookmarkData.length > 0){
+          if (tempBookmarkData.includes(props?.detailData?.code)){
+           
+            setBookmarkVisible(true)
+          }
+          else
+            setBookmarkVisible(false)
+          }
+          setMounted(true)
+        }  
+    
+       const _handleBookmarkData=()=>{
+          if(props?.detailData?.bookmarked === true){
+            setBookmarkVisible(true)
+          }else{
+            setBookmarkVisible(false)
+          }
+          setMounted(true)
+       }
+    
+       const _handleCardBookmark=(item)=>{
+         if(bookmarkVisible === true || props?.bookmarkCodes?.includes(props?.detailData.code)){
+          _onremoveToBookmark(item)
+         }else{
+          _onAddToBookmark(item)
+         }
+        }
+    
+       const _onremoveToBookmark=(item)=>{
+       
+        setBookmarkVisible(false)
+        
+        if(props?.token && props?.token.length > 0){
+          removeBookmarkFromBackend(item.code)
+          props?.removeLocalBookmarks()
+        }else{
+          let bookmarkArray = [];
+          let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
+          if(bookmarkItem && bookmarkItem.length > 0){
+            bookmarkArray =  bookmarkItem.filter(data => data !== item.code )
+          }
+          
+          localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+          props?.removeLocalBookmarks(bookmarkArray.length)
+    
+          if(router.pathname === "/bookmarks"){
+            setTimeout(() => location.reload(), 100)
+          }
+        }
+        
+      }
+      
+      const _onAddToBookmark=(item)=>{
+>>>>>>> bugsv2
         setBookmarkVisible(true)
       }
       else
@@ -510,6 +579,7 @@ export default function WebDetailPage(props) {
       newCurriculumState[i]['sub_module'][j]['display'] = !newCurriculumState[i]['sub_module'][j]['display']
     }
 
+<<<<<<< HEAD
     else if (i >= 0) {
       newCurriculumState[i]['display'] = !newCurriculumState[i]['display']
     }
@@ -529,6 +599,94 @@ export default function WebDetailPage(props) {
       .catch(err => {
         // this.coursesApiStatus.current.failed();
         console.log(err);
+=======
+    // const syllabusObserver = useMemo(() => new IntersectionObserver(
+    //   ([entry]) => {
+    //     setSyllabusIntersecting(entry.isIntersecting)
+    //     if(entry.isIntersecting === true){
+    //       setInstructorIntersecting(false)
+    //       setPricingIntersecting(false)
+    //       setReviewsIntersecting(false)
+    //     }
+    //   }
+    // ), [syllabusRef])
+
+    // const instructorObserver = useMemo(() => new IntersectionObserver(
+    //   ([entry]) => {
+    //     setInstructorIntersecting(entry.isIntersecting)
+    //     if(entry.isIntersecting === true){
+    //       setSyllabusIntersecting(false)
+    //       setPricingIntersecting(false)
+    //       setReviewsIntersecting(false)
+    //     }
+    //   }
+    // ), [instructorRef])
+
+    // const pricingObserver = useMemo(() => new IntersectionObserver(
+    //   ([entry]) => {
+    //     setPricingIntersecting(entry.isIntersecting)
+    //     if(entry.isIntersecting === true){
+    //       setInstructorIntersecting(false)
+    //       setSyllabusIntersecting(false)
+    //       setReviewsIntersecting(false)
+    //     }
+    //   }
+    // ), [pricingRef])
+
+    // const reviewsObserver = useMemo(() => new IntersectionObserver(
+    //   ([entry]) => {
+    //     setReviewsIntersecting(entry.isIntersecting)
+    //     if(entry.isIntersecting === true){
+    //       setInstructorIntersecting(false)
+    //       setPricingIntersecting(false)
+    //       setSyllabusIntersecting(false)
+    //     }
+    //   }
+    // ), [reviewsRef])
+
+    // useEffect(() => {
+    //   if(syllabusRef.current){
+    //     syllabusObserver.observe(syllabusRef.current)
+    //   }
+
+    //   if(instructorRef.current){
+    //     instructorObserver.observe(instructorRef.current)
+    //   }
+
+    //   if(pricingRef.current){
+    //     pricingObserver.observe(pricingRef.current)
+    //   }
+
+    //   if(reviewsRef.current){
+    //     reviewsObserver.observe(reviewsRef.current)
+    //   }
+
+    //   return () => {
+    //     syllabusRef.current && syllabusObserver.disconnect()
+    //     instructorRef.current && instructorObserver.disconnect()
+    //     pricingRef.current && pricingObserver.disconnect()
+    //     reviewsRef.current && reviewsObserver.disconnect()
+    //   }
+    // }, [scrollY])
+
+    const scrollToTargetAdjusted = (elementId) => {
+      if(elementId === ''){
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+        return;
+      }
+
+      var element = document.getElementById(elementId);
+      var headerOffset = 150;
+      var elementPosition = element.getBoundingClientRect().top;
+      var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    
+      window.scrollTo({
+           top: offsetPosition,
+           behavior: "smooth"
+>>>>>>> bugsv2
       });
   }
 
@@ -723,9 +881,15 @@ export default function WebDetailPage(props) {
               <li className={`nav-item ${isPricingIntersecting ? 'active' : ''}`} onClick={() => scrollToTargetAdjusted('pricing')} >Pricing</li>
               <li className={`nav-item ${isReviewsIntersecting ? 'active' : ''}`} onClick={() => scrollToTargetAdjusted('reviews')} >Reviews</li>
             </div>
+<<<<<<< HEAD
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
               <li className='nav-item-right' style={{ margin: '0 1rem 0 0' }} onClick={() => _handleCardBookmark(props?.detailData)}><Image src={bookmarkVisible ? selectedBookmarkIcon : bookmarkIcon} width={20} height={20} objectFit='contain' /></li>
               <li className='nav-item-right'><button style={{ backgroundColor: 'transparent', color: '#000000', border: '1px solid #034FE2' }} onClick={() => setEnquire(true)}>Talk to Us</button></li>
+=======
+            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
+              <li className='nav-item-right' style={{margin: '0 1rem 0 0'}} onClick={()=>_handleCardBookmark(props?.detailData)}><Image src={ bookmarkVisible || props?.bookmarkCodes?.includes(props?.detailData.code) ? selectedBookmarkIcon : bookmarkIcon} width={20} height={20} objectFit='contain' /></li>
+              <li className='nav-item-right'><button style={{backgroundColor: 'transparent', color: '#000000', border: '1px solid #034FE2'}} onClick={() => setEnquire(true)}>Talk to Us</button></li>
+>>>>>>> bugsv2
               {
                 (props?.detailData.can_apply && !(props?.detailData?.applied === true || (applied?.state === true && applied?.id === props?.detailData?.id))) && <li className='nav-item-right'><button onClick={() => handleButtonClick()}>{'Apply Now'}</button></li>
               }
@@ -1091,6 +1255,7 @@ export default function WebDetailPage(props) {
           {props?.similarCourses?.length > 0 &&
             <div style={{ padding: '2rem 0 3rem 0', marginRight: 'auto', width: '100%' }}>
               <div className='heading similar-courses-header'>You Might Be Interested In</div>
+<<<<<<< HEAD
               <div className='detail-page-mobile-card-container' style={{ display: 'flex', marginTop: 20, gap: 20, overflow: 'auto' }}>
                 {props?.similarCourses?.length > 0 && props?.similarCourses.map((item, index) => {
                   return (
@@ -1110,6 +1275,28 @@ export default function WebDetailPage(props) {
                       />
                     </div>
                   )
+=======
+              <div className='detail-page-mobile-card-container' style={{display:'flex',marginTop: 20,gap: 20,overflow:'auto'}}>
+                {props?.similarCourses?.length > 0 && props?.similarCourses.map((item,index)=>{
+                    return(
+                      <div key={index} style={{margin: index === 0 ? '0 3rem 0 0' : index === props?.similarCourses?.length - 1 ? '0 3rem 0 0' : 'none'}}>
+                        <CourseCard 
+                          index={index}
+                          data={item} 
+                          openDetailModal={()=>_openDetailModal(item)}
+                          openApplyNowModal={()=> _openApplyNowModal(item)}
+                          token={props?.token}
+                          openLoginModal={()=>props?.openLoginModal()}
+                          addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
+                          removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                          applied={applied}
+                          detailPage={true}
+                          bookmarkCodes={props?.bookmarkCodes}
+                          bookmarkCount={props?.bookmarkCount}
+                        />
+                      </div>
+                    )
+>>>>>>> bugsv2
                 })}
               </div>
             </div>

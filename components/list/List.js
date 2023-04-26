@@ -31,7 +31,8 @@ function List({
     addLocalBookmarks,
     enableTrackStatus,
     applied,
-    bookmarkCodes
+    bookmarkCodes,
+    bookmarkCount
 }) {
 
   const listTypes = States.listTypes;
@@ -75,6 +76,7 @@ function List({
                 enableTrackStatus={()=>enableTrackStatus()}
                 applied={applied}
                 bookmarkCodes={bookmarkCodes}
+                bookmarkCount={bookmarkCount}
               />
             </div> : 
                <CourseCard 
@@ -89,6 +91,7 @@ function List({
                 enableTrackStatus={()=>enableTrackStatus()}
                 applied={applied}
                 bookmarkCodes={bookmarkCodes}
+                bookmarkCount={bookmarkCount}
                />
           })
         );
@@ -135,6 +138,7 @@ function List({
              enableTrackStatus={()=>enableTrackStatus()}
              applied={applied}
              bookmarkCodes={bookmarkCodes}
+             bookmarkCount={bookmarkCount}
             />
           })
         );
