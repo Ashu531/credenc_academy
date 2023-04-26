@@ -617,74 +617,74 @@ export default function WebDetailPage(props){
     const [isPricingIntersecting, setPricingIntersecting] = useState(false)
     const [isReviewsIntersecting, setReviewsIntersecting] = useState(false)
 
-    // const syllabusObserver = useMemo(() => new IntersectionObserver(
-    //   ([entry]) => {
-    //     setSyllabusIntersecting(entry.isIntersecting)
-    //     if(entry.isIntersecting === true){
-    //       setInstructorIntersecting(false)
-    //       setPricingIntersecting(false)
-    //       setReviewsIntersecting(false)
-    //     }
-    //   }
-    // ), [syllabusRef])
+    const syllabusObserver = useMemo(() => new IntersectionObserver(
+      ([entry]) => {
+        setSyllabusIntersecting(entry.isIntersecting)
+        if(entry.isIntersecting === true){
+          setInstructorIntersecting(false)
+          setPricingIntersecting(false)
+          setReviewsIntersecting(false)
+        }
+      }
+    ), [syllabusRef])
 
-    // const instructorObserver = useMemo(() => new IntersectionObserver(
-    //   ([entry]) => {
-    //     setInstructorIntersecting(entry.isIntersecting)
-    //     if(entry.isIntersecting === true){
-    //       setSyllabusIntersecting(false)
-    //       setPricingIntersecting(false)
-    //       setReviewsIntersecting(false)
-    //     }
-    //   }
-    // ), [instructorRef])
+    const instructorObserver = useMemo(() => new IntersectionObserver(
+      ([entry]) => {
+        setInstructorIntersecting(entry.isIntersecting)
+        if(entry.isIntersecting === true){
+          setSyllabusIntersecting(false)
+          setPricingIntersecting(false)
+          setReviewsIntersecting(false)
+        }
+      }
+    ), [instructorRef])
 
-    // const pricingObserver = useMemo(() => new IntersectionObserver(
-    //   ([entry]) => {
-    //     setPricingIntersecting(entry.isIntersecting)
-    //     if(entry.isIntersecting === true){
-    //       setInstructorIntersecting(false)
-    //       setSyllabusIntersecting(false)
-    //       setReviewsIntersecting(false)
-    //     }
-    //   }
-    // ), [pricingRef])
+    const pricingObserver = useMemo(() => new IntersectionObserver(
+      ([entry]) => {
+        setPricingIntersecting(entry.isIntersecting)
+        if(entry.isIntersecting === true){
+          setInstructorIntersecting(false)
+          setSyllabusIntersecting(false)
+          setReviewsIntersecting(false)
+        }
+      }
+    ), [pricingRef])
 
-    // const reviewsObserver = useMemo(() => new IntersectionObserver(
-    //   ([entry]) => {
-    //     setReviewsIntersecting(entry.isIntersecting)
-    //     if(entry.isIntersecting === true){
-    //       setInstructorIntersecting(false)
-    //       setPricingIntersecting(false)
-    //       setSyllabusIntersecting(false)
-    //     }
-    //   }
-    // ), [reviewsRef])
+    const reviewsObserver = useMemo(() => new IntersectionObserver(
+      ([entry]) => {
+        setReviewsIntersecting(entry.isIntersecting)
+        if(entry.isIntersecting === true){
+          setInstructorIntersecting(false)
+          setPricingIntersecting(false)
+          setSyllabusIntersecting(false)
+        }
+      }
+    ), [reviewsRef])
 
-    // useEffect(() => {
-    //   if(syllabusRef.current){
-    //     syllabusObserver.observe(syllabusRef.current)
-    //   }
+    useEffect(() => {
+      if(syllabusRef.current){
+        syllabusObserver.observe(syllabusRef.current)
+      }
 
-    //   if(instructorRef.current){
-    //     instructorObserver.observe(instructorRef.current)
-    //   }
+      if(instructorRef.current){
+        instructorObserver.observe(instructorRef.current)
+      }
 
-    //   if(pricingRef.current){
-    //     pricingObserver.observe(pricingRef.current)
-    //   }
+      if(pricingRef.current){
+        pricingObserver.observe(pricingRef.current)
+      }
 
-    //   if(reviewsRef.current){
-    //     reviewsObserver.observe(reviewsRef.current)
-    //   }
+      if(reviewsRef.current){
+        reviewsObserver.observe(reviewsRef.current)
+      }
 
-    //   return () => {
-    //     syllabusRef.current && syllabusObserver.disconnect()
-    //     instructorRef.current && instructorObserver.disconnect()
-    //     pricingRef.current && pricingObserver.disconnect()
-    //     reviewsRef.current && reviewsObserver.disconnect()
-    //   }
-    // }, [scrollY])
+      return () => {
+        syllabusRef.current && syllabusObserver.disconnect()
+        instructorRef.current && instructorObserver.disconnect()
+        pricingRef.current && pricingObserver.disconnect()
+        reviewsRef.current && reviewsObserver.disconnect()
+      }
+    }, [scrollY])
 
     const scrollToTargetAdjusted = (elementId) => {
       if(elementId === ''){

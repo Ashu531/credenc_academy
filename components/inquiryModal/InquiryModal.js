@@ -24,6 +24,7 @@ import applyNowSchema from '../../helper/models/applyNowModel';
 import { Alert } from 'antd';
 import DotLoader from "react-spinners/DotLoader";
 import { useMediaQuery } from 'react-responsive';
+import { set } from 'react-ga';
 const EdtechAuthKey = 'credenc-edtech-authkey';
 const EdtechPartnerKey = 'credenc-edtech-partner-key';
 
@@ -117,6 +118,7 @@ export default function InquiryModal(props){
 
         if(query.trim().length < 10){
             setError("Query is too short. Please Provide more information")
+            setLoader(true)
             return
         }
 
