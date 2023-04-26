@@ -101,7 +101,10 @@ export default function CourseTrivia(props){
             domain: selectedSubject,
             subject: selectedSpecialisation
         }
-        props?.handleTrivia(data);
+        if(selectedCourseType || selectedSubject){
+            props?.handleTrivia(data);
+        }
+        
     }
   
     return(

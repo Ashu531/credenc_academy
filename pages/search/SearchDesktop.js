@@ -391,9 +391,8 @@ export default function SearchDesktop(props) {
   }
 
   const handleSearchClicked = async (forcePageNumber = 0) => {
-
     const getParams = () => {
-      if(appliedFiltersCount.current > 0){
+      if(appliedFiltersCount.current > 0 || courseType > 0){
         return `?${urlService.current.getUpdatedUrl()}`;
       }else{
         return `?${location?.asPath.substring(9,location?.asPath.length)}`;
