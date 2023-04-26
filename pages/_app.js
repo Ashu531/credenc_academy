@@ -1,442 +1,470 @@
-import '../styles/globals.scss'
+import "../styles/globals.scss";
 import { useRouter } from "next/router";
-import App, { Container } from 'next/app'
-import React from 'react';
-import 'react-sliding-side-panel/lib/index.css';
+import App, { Container } from "next/app";
+import React from "react";
+import "react-sliding-side-panel/lib/index.css";
 // import HomeHeader from '../components/homeHeader/NavbarContainer'
-import HeaderMobile from '../components/headerMobile/HeaderMobile';
-import Footer from '../components/footer/Footer';
-import FooterModal from '../components/footerModal/FooterModal';
-import SlidingPanel from 'react-sliding-side-panel';
-import FooterMobile from '../components/footerMobile/FooterMobile'
-import Header from '../components/header/Header';
-import constant from '../config/constant';
+import HeaderMobile from "../components/headerMobile/HeaderMobile";
+import Footer from "../components/footer/Footer";
+import FooterModal from "../components/footerModal/FooterModal";
+import SlidingPanel from "react-sliding-side-panel";
+import FooterMobile from "../components/footerMobile/FooterMobile";
+import Header from "../components/header/Header";
+import constant from "../config/constant";
 import axios from "axios";
 import ApiStatus from "../config/apiStatus";
-import ReactGA from 'react-ga';
-const EdtechTheme = 'credenc-edtech-theme';
-const EdtechToken = 'credenc-edtech-authkey';
-const UpvoteKey = 'credenc-edtech-upvote'
-const bookmarkKey = 'credenc-edtech-bookmarks';
-const EdtechPartnerKey = 'credenc-edtech-partner-key';
+import ReactGA from "react-ga";
+const EdtechTheme = "credenc-edtech-theme";
+const EdtechToken = "credenc-edtech-authkey";
+const UpvoteKey = "credenc-edtech-upvote";
+const bookmarkKey = "credenc-edtech-bookmarks";
+const EdtechPartnerKey = "credenc-edtech-partner-key";
 
-const TRACKING_ID = "UA-260405117-1"
+const TRACKING_ID = "UA-260405117-1";
 ReactGA.initialize(TRACKING_ID);
 
 class MyApp extends App {
-
   constructor(props) {
     super(props);
     this.state = {
-     theme: "",
-     footerModal: false,
-     mounted: false,
-     filterExpandedStage: false,
-     subjectDropdownMobile: false,
-     subjectName: 'All Subjects',
-     loggedIn: false,
-     loginModal: false,
-     forgotPasswordModal:false,
-     navigation: false,
-     filterModalVisible: false,
-     showSearchBar: false,
-     search: '',
-     searchData: [],
-     openMobileSearch: false,
-     goingUp: false,
-     coursePrevieModal: false,
-     bookmarkCount: 0,
-     bookmarkCodes: [],
-     subjectData: {},
-     token: ""
+      theme: "",
+      footerModal: false,
+      mounted: false,
+      filterExpandedStage: false,
+      subjectDropdownMobile: false,
+      subjectName: "All Subjects",
+      loggedIn: false,
+      loginModal: false,
+      forgotPasswordModal: false,
+      navigation: false,
+      filterModalVisible: false,
+      showSearchBar: false,
+      search: "",
+      searchData: [],
+      openMobileSearch: false,
+      goingUp: false,
+      coursePrevieModal: false,
+      bookmarkCount: 0,
+      bookmarkCodes: [],
+      subjectData: {},
+      token: "",
     };
     this.coursesApiStatus = React.createRef(new ApiStatus());
   }
 
   componentDidMount() {
     this.setState({
-      token: localStorage.getItem(EdtechToken) ?? ""
-    })
-    this._clearUpvoteData()
+      token: localStorage.getItem(EdtechToken),
+    });
+    this._clearUpvoteData();
     this._retrieveData();
     this._mountComponent();
     this._handleBookmarkCount();
+    this.getProfileData();
+  }
+
+  getProfileData = async () => {
+    let res = await axios
+      .get(`${constant.API_URL.DEV}/profiles/`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(EdtechToken) ?? ""}`,
+        },
+      })
+      .then((res) => {
+        if (res.status == 200) {
+          localStorage.setItem(
+            bookmarkKey,
+            JSON.stringify(res.data?.bookmarks)
+          );
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     this._handleBookmarkCodes();
-  }
+  };
 
-  _mountComponent=()=>{
+  _mountComponent = () => {
     this.setState({
-      mounted: true
-    })
-  }
+      mounted: true,
+    });
+  };
 
-  _setScrollUp=()=>{
+  _setScrollUp = () => {
     this.setState({
-      goingUp: true
-    })
-  }
+      goingUp: true,
+    });
+  };
 
-  _setScrollDown=()=>{
+  _setScrollDown = () => {
     this.setState({
-      goingUp: false
-    })
-  }
+      goingUp: false,
+    });
+  };
 
-  _clearUpvoteData=()=>{
+  _clearUpvoteData = () => {
     let upvoteData = localStorage.getItem(UpvoteKey);
-    if(upvoteData && upvoteData.length > 0){
-      upvoteData = []
-      localStorage.setItem(UpvoteKey,JSON.stringify(upvoteData))
+    if (upvoteData && upvoteData.length > 0) {
+      upvoteData = [];
+      localStorage.setItem(UpvoteKey, JSON.stringify(upvoteData));
     }
-  }
+  };
 
-   _clearBookmarkData=()=>{
+  _clearBookmarkData = () => {
     let bookmarkData = localStorage.getItem(UpvoteKey);
-    if(bookmarkData && bookmarkData.length > 0){
-      bookmarkData = []
-      localStorage.setItem(UpvoteKey,JSON.stringify(bookmarkData))
+    if (bookmarkData && bookmarkData.length > 0) {
+      bookmarkData = [];
+      localStorage.setItem(UpvoteKey, JSON.stringify(bookmarkData));
     }
-  }
+  };
 
-  _retrieveData=()=>{
+  _retrieveData = () => {
     let localTheme = localStorage.getItem("EdtechTheme");
-    if(localTheme && localTheme.length > 0){
+    if (localTheme && localTheme.length > 0) {
       this.setState({
-      theme: localTheme
-      })
-    }else{
+        theme: localTheme,
+      });
+    } else {
       this.setState({
-        theme: "light"
-      })
+        theme: "light",
+      });
     }
 
-    let token = localStorage.getItem(EdtechToken)
-    if(token && token.length > 0){
+    let token = localStorage.getItem(EdtechToken);
+    if (token && token.length > 0) {
       this.setState({
-        loggedIn: true
-      })
+        loggedIn: true,
+      });
     }
-  }
+  };
 
-  _handleLogout=()=>{
+  _handleLogout = () => {
     this.setState({
-      loggedIn: false
-    })
-    localStorage.removeItem(bookmarkKey)
-    localStorage.removeItem(UpvoteKey)
-  }
+      loggedIn: false,
+    });
+    localStorage.removeItem(bookmarkKey);
+    localStorage.removeItem(UpvoteKey);
+  };
 
-  _handleLogin=()=>{
+  _handleLogin = () => {
     this.setState({
-      loggedIn: true
-    })
-  }
+      loggedIn: true,
+    });
+  };
 
-
-  toggleTheme=()=>{
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !this.state.theme) {
+  toggleTheme = () => {
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches &&
+      !this.state.theme
+    ) {
       // dark mode
-      this.setState({
-        theme: "dark"
-      },()=>{
-        localStorage.setItem("EdtechTheme",this.state.theme)
-      })
-     
-  }else{
-    let newTheme = this.state.theme === "light" ? "dark" : "light";
-    this.setState({
-      theme: newTheme
-    },()=>{
-      localStorage.setItem("EdtechTheme",newTheme)
-    })
-   }
-  }
+      this.setState(
+        {
+          theme: "dark",
+        },
+        () => {
+          localStorage.setItem("EdtechTheme", this.state.theme);
+        }
+      );
+    } else {
+      let newTheme = this.state.theme === "light" ? "dark" : "light";
+      this.setState(
+        {
+          theme: newTheme,
+        },
+        () => {
+          localStorage.setItem("EdtechTheme", newTheme);
+        }
+      );
+    }
+  };
 
-  toggleFooterModal = ()=>{
+  toggleFooterModal = () => {
     this.setState({
-      footerModal: !this.state.footerModal
-    })
-  }
+      footerModal: !this.state.footerModal,
+    });
+  };
 
-  closeFooterModal = ()=>{
+  closeFooterModal = () => {
     this.setState({
-      footerModal: false
-    })
-  }
+      footerModal: false,
+    });
+  };
 
-  toggleFilterExpandedStage=()=>{
+  toggleFilterExpandedStage = () => {
     this.setState({
-      filterExpandedStage: !this.state.filterExpandedStage
-    })
-  }
+      filterExpandedStage: !this.state.filterExpandedStage,
+    });
+  };
 
-  openFilterExpandedStage=()=>{
+  openFilterExpandedStage = () => {
     this.setState({
-      filterExpandedStage: true
-    })
-  }
+      filterExpandedStage: true,
+    });
+  };
 
-  closeFilterExpandedStage=()=>{
+  closeFilterExpandedStage = () => {
     this.setState({
-      filterExpandedStage: false
-    })
-  }
+      filterExpandedStage: false,
+    });
+  };
 
-  toggleSubjectDropdown=()=>{
+  toggleSubjectDropdown = () => {
     this.setState({
-      subjectDropdownMobile: !this.state.subjectDropdownMobile
-    })
-  }
+      subjectDropdownMobile: !this.state.subjectDropdownMobile,
+    });
+  };
 
-  openLoginModal=()=>{
+  openLoginModal = () => {
     this.setState({
-      loginModal: true
-    })
-  }
+      loginModal: true,
+    });
+  };
 
-  closeLoginModal=()=>{
-    this.setState({
-      loginModal: false
-    })
-  }
-
-  openForgotPasswordModal=()=>{
+  closeLoginModal = () => {
     this.setState({
       loginModal: false,
-      forgotPasswordModal: true
-    })
-  }
+    });
+  };
 
-  handleForgotPasswordEnd=()=>{
+  openForgotPasswordModal = () => {
+    this.setState({
+      loginModal: false,
+      forgotPasswordModal: true,
+    });
+  };
+
+  handleForgotPasswordEnd = () => {
     this.setState({
       forgotPasswordModal: false,
       loginModal: true,
-    })
-  }
+    });
+  };
 
-  closeForgotPasswordModal=()=>{
+  closeForgotPasswordModal = () => {
     this.setState({
       forgotPasswordModal: false,
-    })
-  }
+    });
+  };
 
-  setMobileLoginNaviagtion=()=>{
+  setMobileLoginNaviagtion = () => {
     this.setState({
-      navigation: !this.state.navigation
-    })
-  }
+      navigation: !this.state.navigation,
+    });
+  };
 
-  openMobileLoginNaviagtion=()=>{
+  openMobileLoginNaviagtion = () => {
     this.setState({
-      navigation: true
-    })
-  }
+      navigation: true,
+    });
+  };
 
-  logoutUser=()=>{
+  logoutUser = () => {
     localStorage.removeItem(EdtechToken);
-    this._clearUpvoteData()
-    this._clearBookmarkData()
-    localStorage.removeItem(EdtechPartnerKey)
+    this._clearUpvoteData();
+    this._clearBookmarkData();
+    localStorage.removeItem(EdtechPartnerKey);
     // setTimeout(() => location.reload(), 100)
-  }
+  };
 
-  selectedSubject=(item)=>{
+  selectedSubject = (item) => {
     this.setState({
-      subjectName: item.name
-    })
-  }
+      subjectName: item.name,
+    });
+  };
 
-  toggleFilterVisible=()=>{
+  toggleFilterVisible = () => {
     this.setState({
-      filterModalVisible: !this.state.filterModalVisible
-    })
-  }
+      filterModalVisible: !this.state.filterModalVisible,
+    });
+  };
 
-  openFilterVisible=()=>{
+  openFilterVisible = () => {
     this.setState({
-      filterModalVisible: true
-    })
-  }
+      filterModalVisible: true,
+    });
+  };
 
-  closeFilterVisible=()=>{
+  closeFilterVisible = () => {
     this.setState({
-      filterModalVisible: false
-    })
-  }
+      filterModalVisible: false,
+    });
+  };
 
-  _showSearchBar=()=>{
+  _showSearchBar = () => {
     this.setState({
-     showSearchBar: true
-    })
-  }
+      showSearchBar: true,
+    });
+  };
 
-  hideSearchBar=()=>{
+  hideSearchBar = () => {
     this.setState({
-     showSearchBar: false
-    })
-  }
+      showSearchBar: false,
+    });
+  };
 
-  _handleSubjectTab=(e)=>{
+  _handleSubjectTab = (e) => {
     let data = {
       searchValue: e,
-      search: true
-    }
+      search: true,
+    };
     this.setState({
-      subjectData: data
-    })
-  }
+      subjectData: data,
+    });
+  };
 
-  _handleSearch=(e)=>{
+  _handleSearch = (e) => {
     this.setState({
       search: e,
-    })
-  }
+    });
+  };
 
-  _clearSearch=()=>{
+  _clearSearch = () => {
     this.setState({
-      search: ''
-    })
-  }
+      search: "",
+    });
+  };
 
-  _openMobileSearch=()=>{
-     this.setState({
-       openMobileSearch: true
-     })
-  }
-
-  _openCoursePreviewModal=()=>{
+  _openMobileSearch = () => {
     this.setState({
-      coursePrevieModal: true
-    })
-  }
+      openMobileSearch: true,
+    });
+  };
 
-  _closeCoursePreviewModal=()=>{
+  _openCoursePreviewModal = () => {
     this.setState({
-      coursePrevieModal: false
-    })
-  }
+      coursePrevieModal: true,
+    });
+  };
 
-  _handleBookmarkCount=async()=>{
-    let token = localStorage.getItem(EdtechToken)
-     if(token && token.length > 0){
-      let res = await axios.get(`${constant.API_URL.DEV}/bookmark/list/`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      .then(res => {
-        // this.coursesApiStatus.current.success();
-        this.setState({
-          bookmarkCount: res.data.count
+  _closeCoursePreviewModal = () => {
+    this.setState({
+      coursePrevieModal: false,
+    });
+  };
+
+  _handleBookmarkCount = async () => {
+    let token = localStorage.getItem(EdtechToken);
+    if (token && token.length > 0) {
+      let res = await axios
+        .get(`${constant.API_URL.DEV}/bookmark/list/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         })
-        return res.data;
-      })
-      .catch(err => {
-        // this.coursesApiStatus.current.failed();
-        console.log(err);
-      });
-     }else{
-        this._fetchLocalBookmarks()
-     }
-  }
+        .then((res) => {
+          // this.coursesApiStatus.current.success();
+          this.setState({
+            bookmarkCount: res.data.count,
+          });
+          return res.data;
+        })
+        .catch((err) => {
+          // this.coursesApiStatus.current.failed();
+          console.log(err);
+        });
+    } else {
+      this._fetchLocalBookmarks();
+    }
+  };
 
   _handleBookmarkCodes = () => {
-    let token = localStorage.getItem(EdtechToken)
-    if(token && token.length > 0){
-      this.setState({
-        bookmarkCodes: []
-      })
-
-      return;
-    }
     const codes = JSON.parse(localStorage.getItem(bookmarkKey));
     this.setState({
-      bookmarkCodes: codes ? codes : []
-    })
-  }
+      bookmarkCodes: codes ? codes : [],
+    });
+  };
 
-  _fetchLocalBookmarks=()=>{
+  _fetchLocalBookmarks = () => {
     let bookmarkArray = [];
-    let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
-   
-    if(bookmarkItem && bookmarkItem.length > 0){
+    let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey));
+
+    if (bookmarkItem && bookmarkItem.length > 0) {
       this.setState({
-        bookmarkCount: bookmarkItem.length
-      })
+        bookmarkCount: bookmarkItem.length,
+      });
+    }
+  };
+
+  _addLocalBookmarks = (count) => {
+    let token = localStorage.getItem(EdtechToken);
+    if (token && token.length > 0) {
+      this.setState({
+        bookmarkCount: this.state.bookmarkCount + 1,
+      });
+    } else {
+      this.setState({
+        bookmarkCount: count,
+      });
     }
 
-   
-  }
+    this._handleBookmarkCodes();
+  };
 
-  _addLocalBookmarks=(count)=>{
-    let token = localStorage.getItem(EdtechToken)
-    if(token && token.length > 0){
+  _removeLocalBookmarks = (count) => {
+    let token = localStorage.getItem(EdtechToken);
+    if (token && token.length > 0) {
       this.setState({
-        bookmarkCount: this.state.bookmarkCount+1
-      })
-    }else{
+        bookmarkCount: this.state.bookmarkCount - 1,
+      });
+    } else {
       this.setState({
-        bookmarkCount: count
-      })
+        bookmarkCount: count,
+      });
     }
 
-    this._handleBookmarkCodes()
-   
-  }
+    this._handleBookmarkCodes();
+  };
 
-  _removeLocalBookmarks=(count)=>{
-    let token = localStorage.getItem(EdtechToken)
-    if(token && token.length > 0){
-      this.setState({
-        bookmarkCount: this.state.bookmarkCount-1
-      })
-    }else{
-      this.setState({
-        bookmarkCount: count
-      })
+  _selectSearch = (e) => {
+    if (e && e.length > 0) {
+      this.openFilterExpandedStage();
+      this._showSearchBar();
+      this._handleSearch(e);
     }
+  };
 
-    this._handleBookmarkCodes()
-    
-  }
-
-   _selectSearch=(e)=>{
-    if(e && e.length > 0){
-      this.openFilterExpandedStage()
-      this._showSearchBar()
-      this._handleSearch(e)
-    }
-  }
- 
-  render(){
-    const {Component, pageProps} = this.props;
+  render() {
+    const { Component, pageProps } = this.props;
     return (
-    <>
-      {
-       <div data-theme={this.state.theme} style={this.state.loginModal || this.state.forgotPasswordModal || this.state.footerModal || this.state.coursePrevieModal ? {height: 'calc(var(--vh, 1vh) * 100)',overflow: 'hidden'} : {height: '100%'}}>
-          {/* {
+      <>
+        {
+          <div
+            data-theme={this.state.theme}
+            style={
+              this.state.loginModal ||
+              this.state.forgotPasswordModal ||
+              this.state.footerModal ||
+              this.state.coursePrevieModal
+                ? { height: "calc(var(--vh, 1vh) * 100)", overflow: "hidden" }
+                : { height: "100%" }
+            }
+          >
+            {/* {
             isDesktopOrLaptop ?  */}
-            
-            <Header 
-            toggleTheme={this.toggleTheme} 
-            theme={this.state.theme} 
-            toggleFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
-            openFilterExpandedStage={()=>this.openFilterExpandedStage()}
-            loggedIn={this.state.loggedIn}
-            openLoginModal={()=>this.openLoginModal()}
-            logoutUser={()=>this.logoutUser()}
-            showSearchBar={this.state.showSearchBar}
-            searchValue={this.state.search}
-            handleSearch={(e)=>this._handleSearch(e)}
-            closeFilterExpandedStage={()=>this.closeFilterExpandedStage()}
-            // openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
-            hideSearchBar={this.hideSearchBar}
-            bookmarkCount={this.state.bookmarkCount}
-            selectSearch={(e)=>this._selectSearch(e)}
-            handleSubjectTab={this._handleSubjectTab}
-           /> 
-            
-           {/* : 
+
+            <Header
+              toggleTheme={this.toggleTheme}
+              theme={this.state.theme}
+              toggleFilterExpandedStage={() => this.toggleFilterExpandedStage()}
+              openFilterExpandedStage={() => this.openFilterExpandedStage()}
+              loggedIn={this.state.loggedIn}
+              openLoginModal={() => this.openLoginModal()}
+              logoutUser={() => this.logoutUser()}
+              showSearchBar={this.state.showSearchBar}
+              searchValue={this.state.search}
+              handleSearch={(e) => this._handleSearch(e)}
+              closeFilterExpandedStage={() => this.closeFilterExpandedStage()}
+              // openFilterExpandedStage={()=>this.toggleFilterExpandedStage()}
+              hideSearchBar={this.hideSearchBar}
+              bookmarkCount={this.state.bookmarkCount}
+              selectSearch={(e) => this._selectSearch(e)}
+              handleSubjectTab={this._handleSubjectTab}
+            />
+
+            {/* : 
             <HeaderMobile
             // toggleTheme={this.toggleTheme} 
             theme={this.state.theme} 
@@ -450,94 +478,100 @@ class MyApp extends App {
             goingUp={this.state.goingUp}
             />
           } */}
-         <Component 
-            {...pageProps} 
-            theme={this.state.theme} 
-            filterExpandedStage={this.state.filterExpandedStage} 
-            openFilterExpandedStage={()=>this.toggleFilterExpandedStage()} 
-            subjectDropdownMobile={this.state.subjectDropdownMobile}
-            loginModal={this.state.loginModal}
-            closeLoginModal={()=>this.closeLoginModal()}
-            openForgotPasswordModal={()=>this.openForgotPasswordModal()}
-            forgotPasswordModal={this.state.forgotPasswordModal}
-            handleForgotPasswordEnd={()=>this.handleForgotPasswordEnd()}
-            mobileLoginNavigation={this.state.navigation}
-            setMobileLoginNaviagtion={()=>this.setMobileLoginNaviagtion()}
-            logoutUser={()=>this.logoutUser()}
-            selectedSubject= {(item)=>this.selectedSubject(item)}
-            toggleSubjectDropdown={()=>this.toggleSubjectDropdown()}
-            filterModalVisible={this.state.filterModalVisible}
-            toggleFilterVisible={()=>this.toggleFilterVisible()}
-            showSearchBar={this.state.showSearchBar}
-            _showSearchBar={this._showSearchBar}
-            hideSearchBar={this.hideSearchBar}
-            searchValue={this.state.search}
-            handleSearch={(e)=>this._handleSearch(e)}
-            closeFilterExpandedStage={()=>this.closeFilterExpandedStage()}
-            searchData={this.state.searchData}
-            handleLogout={()=>this._handleLogout()}
-            handleLogin={()=>this._handleLogin()}
-            openLoginModal={()=>this.openLoginModal()}
-            openFilterVisible={()=>this.openFilterVisible()}
-            handleOpenMobileSearch = {() => this._openMobileSearch()}
-            openMobileSearch={this.state.openMobileSearch}
-            clearSearch={()=>this._clearSearch()}
-            closeFilterVisible={()=>this.closeFilterVisible()}
-            setScrollUp={()=>this._setScrollUp()}
-            setScrollDown={()=>this._setScrollDown()}
-            goingUp={this.state.goingUp}
-            openCoursePreviewModal={()=>this._openCoursePreviewModal()}
-            closeCoursePreviewModal={()=>this._closeCoursePreviewModal()}
-            addLocalBookmarks={(count)=>this._addLocalBookmarks(count)}
-            removeLocalBookmarks={(count)=>this._removeLocalBookmarks(count)}
-            closeForgotPasswordModal={()=>this.closeForgotPasswordModal()}
-            selectSearch={(e)=>this._selectSearch(e)}
-            subjectData={this.state.subjectData}
-            searchPageQuery={this.state.searchPageQuery}
-            bookmarkCodes={this.state.bookmarkCodes}
-            bookmarkCount={this.state.bookmarkCount}
-            token={this.state.token}
-         />
-         {/* {
-            isDesktopOrLaptop ?  */}
-            <div className='hideOnMobile'>
-              <Footer 
-              toggleFooterModal={this.toggleFooterModal} 
+            <Component
+              {...pageProps}
+              theme={this.state.theme}
               filterExpandedStage={this.state.filterExpandedStage}
-              closeFooterModal={this.closeFooterModal}
-              title="©Credenc2022"/>
-            </div>
-
-            <div className='hideOnDesktop'>
-              <FooterMobile
-              openLoginModal={()=>this.openLoginModal()}
-              setMobileLoginNaviagtion={()=>this.openMobileLoginNaviagtion()}
-              theme={this.state.theme} 
-              filterModalVisible={this.state.filterModalVisible}
-              loggedIn={this.state.loggedIn}
-              goingUp={this.state.goingUp}
-              closeLoginModal={()=>this.closeLoginModal()}
+              openFilterExpandedStage={() => this.toggleFilterExpandedStage()}
+              subjectDropdownMobile={this.state.subjectDropdownMobile}
               loginModal={this.state.loginModal}
+              closeLoginModal={() => this.closeLoginModal()}
+              openForgotPasswordModal={() => this.openForgotPasswordModal()}
+              forgotPasswordModal={this.state.forgotPasswordModal}
+              handleForgotPasswordEnd={() => this.handleForgotPasswordEnd()}
+              mobileLoginNavigation={this.state.navigation}
+              setMobileLoginNaviagtion={() => this.setMobileLoginNaviagtion()}
+              logoutUser={() => this.logoutUser()}
+              selectedSubject={(item) => this.selectedSubject(item)}
+              toggleSubjectDropdown={() => this.toggleSubjectDropdown()}
+              filterModalVisible={this.state.filterModalVisible}
+              toggleFilterVisible={() => this.toggleFilterVisible()}
+              showSearchBar={this.state.showSearchBar}
+              _showSearchBar={this._showSearchBar}
+              hideSearchBar={this.hideSearchBar}
+              searchValue={this.state.search}
+              handleSearch={(e) => this._handleSearch(e)}
+              closeFilterExpandedStage={() => this.closeFilterExpandedStage()}
+              searchData={this.state.searchData}
+              handleLogout={() => this._handleLogout()}
+              handleLogin={() => this._handleLogin()}
+              openLoginModal={() => this.openLoginModal()}
+              openFilterVisible={() => this.openFilterVisible()}
+              handleOpenMobileSearch={() => this._openMobileSearch()}
+              openMobileSearch={this.state.openMobileSearch}
+              clearSearch={() => this._clearSearch()}
+              closeFilterVisible={() => this.closeFilterVisible()}
+              setScrollUp={() => this._setScrollUp()}
+              setScrollDown={() => this._setScrollDown()}
+              goingUp={this.state.goingUp}
+              openCoursePreviewModal={() => this._openCoursePreviewModal()}
+              closeCoursePreviewModal={() => this._closeCoursePreviewModal()}
+              addLocalBookmarks={(count) => this._addLocalBookmarks(count)}
+              removeLocalBookmarks={(count) =>
+                this._removeLocalBookmarks(count)
+              }
+              closeForgotPasswordModal={() => this.closeForgotPasswordModal()}
+              selectSearch={(e) => this._selectSearch(e)}
+              subjectData={this.state.subjectData}
+              searchPageQuery={this.state.searchPageQuery}
+              bookmarkCodes={this.state.bookmarkCodes}
               bookmarkCount={this.state.bookmarkCount}
-              closeFilterVisible={()=>this.closeFilterVisible()}
+              token={this.state.token}
+            />
+            {/* {
+            isDesktopOrLaptop ?  */}
+            <div className="hideOnMobile">
+              <Footer
+                toggleFooterModal={this.toggleFooterModal}
+                filterExpandedStage={this.state.filterExpandedStage}
+                closeFooterModal={this.closeFooterModal}
+                title="©Credenc2022"
               />
             </div>
-        <SlidingPanel
-             type={'bottom'}
-             isOpen={this.state.footerModal}
-             backdropClicked={() => this.setState({
-              footerModal:false
-             })}
-             size={30}
-           >
-            <FooterModal toggleFooterModal={this.toggleFooterModal}/> 
-           </SlidingPanel>
-         </div>
-      }
+
+            <div className="hideOnDesktop">
+              <FooterMobile
+                openLoginModal={() => this.openLoginModal()}
+                setMobileLoginNaviagtion={() =>
+                  this.openMobileLoginNaviagtion()
+                }
+                theme={this.state.theme}
+                filterModalVisible={this.state.filterModalVisible}
+                loggedIn={this.state.loggedIn}
+                goingUp={this.state.goingUp}
+                closeLoginModal={() => this.closeLoginModal()}
+                loginModal={this.state.loginModal}
+                bookmarkCount={this.state.bookmarkCount}
+                closeFilterVisible={() => this.closeFilterVisible()}
+              />
+            </div>
+            <SlidingPanel
+              type={"bottom"}
+              isOpen={this.state.footerModal}
+              backdropClicked={() =>
+                this.setState({
+                  footerModal: false,
+                })
+              }
+              size={30}
+            >
+              <FooterModal toggleFooterModal={this.toggleFooterModal} />
+            </SlidingPanel>
+          </div>
+        }
       </>
-   )
+    );
   }
- 
 }
 
-export default MyApp
+export default MyApp;

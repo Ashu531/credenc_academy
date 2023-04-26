@@ -29,7 +29,6 @@ export default function CourseCard(props) {
   }
 
   useEffect(() => {
-    console.log("props", props)
     if (props?.token && props?.token?.length > 0) {
       _handleBookmarkData()
     } else {
@@ -73,7 +72,7 @@ export default function CourseCard(props) {
   }
 
   const _handleCardBookmark = (item) => {
-    if (bookmarkVisible || props?.bookmarkCodes?.includes(props?.data.code)) {
+    if (props?.bookmarkCodes?.includes(props?.data.id)) {
       _onremoveToBookmark(item)
     } else {
       _onAddToBookmark(item)
@@ -85,13 +84,24 @@ export default function CourseCard(props) {
     setBookmarkVisible(false)
 
     if (props?.token && props?.token.length > 0) {
-      removeBookmarkFromBackend(item.code)
-      props?.removeLocalBookmarks()
+      removeBookmarkFromBackend(item.id)
+      let bookmarkArray = [];
+      let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey))
+      if (bookmarkItem && bookmarkItem.length > 0) {
+        bookmarkArray = bookmarkItem.filter(data => data !== item.id)
+      }
+      
+      localStorage.setItem(bookmarkKey, JSON.stringify(bookmarkArray));
+      props?.removeLocalBookmarks(bookmarkArray.length)
+
+      if (router.pathname === "/bookmarks") {
+        setTimeout(() => location.reload(), 100)
+      }
     } else {
       let bookmarkArray = [];
       let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey))
       if (bookmarkItem && bookmarkItem.length > 0) {
-        bookmarkArray = bookmarkItem.filter(data => data !== item.code)
+        bookmarkArray = bookmarkItem.filter(data => data !== item.id)
       }
       
       localStorage.setItem(bookmarkKey, JSON.stringify(bookmarkArray));
@@ -106,16 +116,24 @@ export default function CourseCard(props) {
 
   const _onAddToBookmark = (item) => {
     setBookmarkVisible(true)
+    console.log(item)
     if (props?.token && props?.token.length > 0) {
-      addBookmarkToBackend(item.code)
-      props?.addLocalBookmarks()
+      addBookmarkToBackend(item.id)
+      let bookmarkArray = [];
+      let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey))
+      if (bookmarkItem && bookmarkItem.length > 0) {
+        bookmarkArray = [...bookmarkItem]
+      }
+      bookmarkArray.push(item.id)
+      localStorage.setItem(bookmarkKey, JSON.stringify(bookmarkArray));
+      props?.addLocalBookmarks(bookmarkArray.length)
     } else {
       let bookmarkArray = [];
       let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey))
       if (bookmarkItem && bookmarkItem.length > 0) {
         bookmarkArray = [...bookmarkItem]
       }
-      bookmarkArray.push(item.code)
+      bookmarkArray.push(item.id)
       localStorage.setItem(bookmarkKey, JSON.stringify(bookmarkArray));
       props?.addLocalBookmarks(bookmarkArray.length)
     }
@@ -309,7 +327,7 @@ export default function CourseCard(props) {
             <div className='grey-container'
               onClick={() => _handleCardBookmark(props?.data)}
             >
-              <Image src={bookmarkVisible || props?.bookmarkCodes?.includes(props?.data.code) ? selectedBookmark : bookmarkIcon} objectFit="contain" alt='selectedBookmark' height={24} width={24} />
+              <Image src={props?.bookmarkCodes?.includes(props?.data.id) ? selectedBookmark : bookmarkIcon} objectFit="contain" alt='selectedBookmark' height={24} width={24} />
             </div>
             {/* <div 
               className='grey-container' 
