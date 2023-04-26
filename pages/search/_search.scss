@@ -4,7 +4,6 @@
     // left: 9.2rem;
     // min-width: 100vw;
     flex-grow: 1;
-    overflow: scroll;
     background: var(--defaultBackground);
     padding: 1.2rem 2.5rem 1.2rem 2.5rem;
     z-index: 99;
@@ -101,11 +100,10 @@
       left: 26vw;
       top: 3.2rem;
       margin: 0 1rem;
-      min-height: 100%;
-      max-height: 60vh;
+      max-height: 85vh;
       background: var(--defaultBackground);
       border-radius: 0.6rem;
-      overflow: scroll;
+      overflow: auto;
       
       &::-webkit-scrollbar{
         display: none;
