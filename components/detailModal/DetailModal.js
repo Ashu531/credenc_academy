@@ -780,7 +780,7 @@ export default function DetailModal(props){
               props?.status === true || courseData?.applied === true ? 
               <div /> :
               
-              courseData?.is_mooc === true ? 
+              courseData?.can_apply !== true ? 
                 <a href={courseData?.course_link} target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none'}}>
                   <div className='detail-modal-footer-section-right' 
                       style={ !isDesktopOrLaptop ? {width:'88%'} : null }>

@@ -950,13 +950,12 @@ export default function SearchDesktop(props) {
                     <div
                       className="list-container"
                       id="scrollableDiv"
-                      style={{height: 950,overflow: 'auto'}}
                     >
                       <InfiniteScroll
                         dataLength={courseCardData.length} //This is important field to render the next data
                         next={handleScrollData}
                         hasMore={true}
-                        height={950}
+                        height={'90rem'}
                         // loader={<h4>Loading...</h4>}
                         style={
                           window.innerWidth > 500 ? {
@@ -968,7 +967,7 @@ export default function SearchDesktop(props) {
                             flexWrap: 'wrap', 
                             overflow: 'auto',
                             marginTop: '2rem',
-                            marginBottom: '6rem'
+                            paddingBottom: '6rem'
                           } :
                           { width: '100%', 
                             display: 'flex', 
