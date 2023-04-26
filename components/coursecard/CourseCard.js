@@ -29,6 +29,7 @@ export default function CourseCard(props) {
   }
 
   useEffect(() => {
+    console.log("props", props)
     if (props?.token && props?.token?.length > 0) {
       _handleBookmarkData()
     } else {
@@ -38,7 +39,6 @@ export default function CourseCard(props) {
     _handleUpvoteData()
     _handleCourseName()
   }, []);
-
 
   const _handleCourseName = () => {
     let str = props?.data?.course_name.replace(
@@ -73,7 +73,7 @@ export default function CourseCard(props) {
   }
 
   const _handleCardBookmark = (item) => {
-    if (props?.bookmarkCodes?.includes(props?.data.code)) {
+    if (bookmarkVisible || props?.bookmarkCodes?.includes(props?.data.code)) {
       _onremoveToBookmark(item)
     } else {
       _onAddToBookmark(item)

@@ -11,11 +11,6 @@ const Dashboard = (props) => {
 
   let router = useRouter();
 
-  useEffect(() => {
-    setMounted(true);
-    _retrieveData()
-  }, []);
-
   const _retrieveData=()=>{
     let partnerKey = JSON.parse(localStorage.getItem(EdtechPartnerKey));
      if(partnerKey && partnerKey.length > 0){
@@ -26,6 +21,11 @@ const Dashboard = (props) => {
         router.push(`https://nj.credencacademy.com${router.asPath}`)
      }
   }
+
+  useEffect(() => {
+    setMounted(true);
+    _retrieveData()
+  }, []);
 
    return(
       <DashboardDesktop

@@ -177,7 +177,7 @@ export default function WebDetailPage(props){
        }
     
        const _handleCardBookmark=(item)=>{
-         if(bookmarkVisible === true){
+         if(bookmarkVisible === true || props?.bookmarkCodes?.includes(props?.detailData.code)){
           _onremoveToBookmark(item)
          }else{
           _onAddToBookmark(item)
@@ -617,74 +617,74 @@ export default function WebDetailPage(props){
     const [isPricingIntersecting, setPricingIntersecting] = useState(false)
     const [isReviewsIntersecting, setReviewsIntersecting] = useState(false)
 
-    const syllabusObserver = useMemo(() => new IntersectionObserver(
-      ([entry]) => {
-        setSyllabusIntersecting(entry.isIntersecting)
-        if(entry.isIntersecting === true){
-          setInstructorIntersecting(false)
-          setPricingIntersecting(false)
-          setReviewsIntersecting(false)
-        }
-      }
-    ), [syllabusRef])
+    // const syllabusObserver = useMemo(() => new IntersectionObserver(
+    //   ([entry]) => {
+    //     setSyllabusIntersecting(entry.isIntersecting)
+    //     if(entry.isIntersecting === true){
+    //       setInstructorIntersecting(false)
+    //       setPricingIntersecting(false)
+    //       setReviewsIntersecting(false)
+    //     }
+    //   }
+    // ), [syllabusRef])
 
-    const instructorObserver = useMemo(() => new IntersectionObserver(
-      ([entry]) => {
-        setInstructorIntersecting(entry.isIntersecting)
-        if(entry.isIntersecting === true){
-          setSyllabusIntersecting(false)
-          setPricingIntersecting(false)
-          setReviewsIntersecting(false)
-        }
-      }
-    ), [instructorRef])
+    // const instructorObserver = useMemo(() => new IntersectionObserver(
+    //   ([entry]) => {
+    //     setInstructorIntersecting(entry.isIntersecting)
+    //     if(entry.isIntersecting === true){
+    //       setSyllabusIntersecting(false)
+    //       setPricingIntersecting(false)
+    //       setReviewsIntersecting(false)
+    //     }
+    //   }
+    // ), [instructorRef])
 
-    const pricingObserver = useMemo(() => new IntersectionObserver(
-      ([entry]) => {
-        setPricingIntersecting(entry.isIntersecting)
-        if(entry.isIntersecting === true){
-          setInstructorIntersecting(false)
-          setSyllabusIntersecting(false)
-          setReviewsIntersecting(false)
-        }
-      }
-    ), [pricingRef])
+    // const pricingObserver = useMemo(() => new IntersectionObserver(
+    //   ([entry]) => {
+    //     setPricingIntersecting(entry.isIntersecting)
+    //     if(entry.isIntersecting === true){
+    //       setInstructorIntersecting(false)
+    //       setSyllabusIntersecting(false)
+    //       setReviewsIntersecting(false)
+    //     }
+    //   }
+    // ), [pricingRef])
 
-    const reviewsObserver = useMemo(() => new IntersectionObserver(
-      ([entry]) => {
-        setReviewsIntersecting(entry.isIntersecting)
-        if(entry.isIntersecting === true){
-          setInstructorIntersecting(false)
-          setPricingIntersecting(false)
-          setSyllabusIntersecting(false)
-        }
-      }
-    ), [reviewsRef])
+    // const reviewsObserver = useMemo(() => new IntersectionObserver(
+    //   ([entry]) => {
+    //     setReviewsIntersecting(entry.isIntersecting)
+    //     if(entry.isIntersecting === true){
+    //       setInstructorIntersecting(false)
+    //       setPricingIntersecting(false)
+    //       setSyllabusIntersecting(false)
+    //     }
+    //   }
+    // ), [reviewsRef])
 
-    useEffect(() => {
-      if(syllabusRef.current){
-        syllabusObserver.observe(syllabusRef.current)
-      }
+    // useEffect(() => {
+    //   if(syllabusRef.current){
+    //     syllabusObserver.observe(syllabusRef.current)
+    //   }
 
-      if(instructorRef.current){
-        instructorObserver.observe(instructorRef.current)
-      }
+    //   if(instructorRef.current){
+    //     instructorObserver.observe(instructorRef.current)
+    //   }
 
-      if(pricingRef.current){
-        pricingObserver.observe(pricingRef.current)
-      }
+    //   if(pricingRef.current){
+    //     pricingObserver.observe(pricingRef.current)
+    //   }
 
-      if(reviewsRef.current){
-        reviewsObserver.observe(reviewsRef.current)
-      }
+    //   if(reviewsRef.current){
+    //     reviewsObserver.observe(reviewsRef.current)
+    //   }
 
-      return () => {
-        syllabusRef.current && syllabusObserver.disconnect()
-        instructorRef.current && instructorObserver.disconnect()
-        pricingRef.current && pricingObserver.disconnect()
-        reviewsRef.current && reviewsObserver.disconnect()
-      }
-    }, [scrollY])
+    //   return () => {
+    //     syllabusRef.current && syllabusObserver.disconnect()
+    //     instructorRef.current && instructorObserver.disconnect()
+    //     pricingRef.current && pricingObserver.disconnect()
+    //     reviewsRef.current && reviewsObserver.disconnect()
+    //   }
+    // }, [scrollY])
 
     const scrollToTargetAdjusted = (elementId) => {
       if(elementId === ''){
@@ -705,8 +705,6 @@ export default function WebDetailPage(props){
            behavior: "smooth"
       });
     }
-
-    console.log(mounted,"mounted")
     
     // useEffect(()=>{
     //   if(props?.subjectData.search === true){
@@ -734,7 +732,7 @@ export default function WebDetailPage(props){
               <li className={`nav-item ${isReviewsIntersecting ? 'active': ''}`} onClick={() => scrollToTargetAdjusted('reviews')} >Reviews</li>
             </div>
             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-              <li className='nav-item-right' style={{margin: '0 1rem 0 0'}} onClick={()=>_handleCardBookmark(props?.detailData)}><Image src={ bookmarkVisible ? selectedBookmarkIcon : bookmarkIcon} width={20} height={20} objectFit='contain' /></li>
+              <li className='nav-item-right' style={{margin: '0 1rem 0 0'}} onClick={()=>_handleCardBookmark(props?.detailData)}><Image src={ bookmarkVisible || props?.bookmarkCodes?.includes(props?.detailData.code) ? selectedBookmarkIcon : bookmarkIcon} width={20} height={20} objectFit='contain' /></li>
               <li className='nav-item-right'><button style={{backgroundColor: 'transparent', color: '#000000', border: '1px solid #034FE2'}} onClick={() => setEnquire(true)}>Talk to Us</button></li>
               {
                 (props?.detailData.can_apply && !(props?.detailData?.applied === true || (applied?.state === true && applied?.id === props?.detailData?.id)))  && <li className='nav-item-right'><button onClick={()=> handleButtonClick()}>{'Apply Now'}</button></li>
@@ -1117,6 +1115,7 @@ export default function WebDetailPage(props){
                           applied={applied}
                           detailPage={true}
                           bookmarkCodes={props?.bookmarkCodes}
+                          bookmarkCount={props?.bookmarkCount}
                         />
                       </div>
                     )

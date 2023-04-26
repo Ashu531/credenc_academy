@@ -48,11 +48,15 @@ class MyApp extends App {
      bookmarkCount: 0,
      bookmarkCodes: [],
      subjectData: {},
+     token: ""
     };
     this.coursesApiStatus = React.createRef(new ApiStatus());
   }
 
   componentDidMount() {
+    this.setState({
+      token: localStorage.getItem(EdtechToken) ?? ""
+    })
     this._clearUpvoteData()
     this._retrieveData();
     this._mountComponent();
@@ -337,6 +341,14 @@ class MyApp extends App {
   }
 
   _handleBookmarkCodes = () => {
+    let token = localStorage.getItem(EdtechToken)
+    if(token && token.length > 0){
+      this.setState({
+        bookmarkCodes: []
+      })
+
+      return;
+    }
     const codes = JSON.parse(localStorage.getItem(bookmarkKey));
     this.setState({
       bookmarkCodes: codes ? codes : []
@@ -483,6 +495,8 @@ class MyApp extends App {
             subjectData={this.state.subjectData}
             searchPageQuery={this.state.searchPageQuery}
             bookmarkCodes={this.state.bookmarkCodes}
+            bookmarkCount={this.state.bookmarkCount}
+            token={this.state.token}
          />
          {/* {
             isDesktopOrLaptop ?  */}
