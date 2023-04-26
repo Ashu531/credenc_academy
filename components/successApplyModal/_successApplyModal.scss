@@ -14,10 +14,10 @@
         
 
         .success-apply-modal-section{
-            width: 85%;
+            // width: 85%;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center;
             padding: 40px;
             gap: 30px;
 
@@ -148,13 +148,8 @@
         align-items: center;
         padding: 4px 12px;
         gap: 20px;
-
-        width: 476px;
-        height: 71.67px;
-
         background: #F5F8FF;
         border-radius: 8px;
-        width: 84%;
 
         .njText{
             font-family: 'Work Sans';
@@ -195,7 +190,7 @@
         border: 1px solid var(--insignificantStrokeColor);
         position: fixed;
         bottom: 0px;
-        width: 39%;
+        width: 42%;
 
         .footer-content{
             display: flex;

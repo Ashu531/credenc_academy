@@ -94,7 +94,6 @@ export default function PrivacyPolicy(props) {
     <>
     <Head>
         <title>Privacy Policy</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head> 
     <div className='privacy-policy' style={props.profilePage === true ? {display: 'block', paddingTop:'2rem'} : {display: 'block'}} >
         <h3 className='heading' style={{textAlign:"center"}}>Privacy Policy</h3>

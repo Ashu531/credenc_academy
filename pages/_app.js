@@ -401,7 +401,7 @@ class MyApp extends App {
     return (
     <>
       {
-       <div data-theme={this.state.theme} style={this.state.loginModal || this.state.forgotPasswordModal || this.state.footerModal || this.state.coursePrevieModal ? {height: 'calc(var(--vh, 1vh) * 100)',overflow: 'hidden'} : {height: '100%'}}>
+       <div data-theme={this.state.theme} style={this.state.loginModal || this.state.forgotPasswordModal || this.state.footerModal || this.state.coursePrevieModal ? {height: 'calc(var(--vh, 1vh) * 100)',overflow: 'hidden'} : {height: '100%',width: '100%'}}>
           {/* {
             isDesktopOrLaptop ?  */}
             

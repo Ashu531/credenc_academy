@@ -438,7 +438,7 @@ export default function DetailModal(props){
         <>
         {
             mounted && !loading ?
-       <div className='detail-modal-container' style={ window.innerWidth<=500 ? {width:'100%',height:'90vh'} : null } ref={modalRef}>
+       <div className='detail-modal-container' style={ window.innerWidth<=500 ? {width:'100%'} : null } ref={modalRef}>
            
          <div className='detail-modal-content'>
           <div style={{display:"flex",flexDirection:'row',width:'100%'}}>

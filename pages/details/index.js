@@ -259,7 +259,6 @@ export default function DetailPage(props){
     <>
     <Head>
       <title>Detail Page</title>
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
     {
         mounted && 

@@ -100,7 +100,6 @@ export default function MyCourses(props){
       <>
       <Head>
         <title>Course Page</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head> 
       {
         mounted && 

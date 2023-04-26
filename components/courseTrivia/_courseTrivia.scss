@@ -81,13 +81,30 @@
         }
     
         .trivia-content{
-           
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            row-gap: 1rem;
     
             .trivia-section{
-                
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
     
                 .trivia-label{
-                    
+                    font-family: 'Work Sans';
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 18px;
+                    line-height: 26px;
+                    color: var(--inverseBackground);
+                    margin-top: 5px;
                 }
             }
         }

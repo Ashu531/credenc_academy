@@ -200,7 +200,7 @@ export default function InquiryModal(props){
                     <span className='header-1'>Inquiring about</span>
                     <span className='header-2'>{props?.courseName}</span>
                   </div>
-                  <div className='apply-modal-banner'  style={ !isDesktopOrLaptop ? {width:'88%'} : null }>
+                  <div className='apply-modal-banner'>
                     <span className='banner-text'>
                         Have any questions for us? Ask us here!
                     </span>

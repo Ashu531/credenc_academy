@@ -352,7 +352,7 @@ export default function ApplyNowModal(props){
                         </div>
                     </div>
 
-                   <div className='button-content' onClick={()=>handleSubmit()} style={{cursor:'pointer',paddingRight: '5rem'}}>
+                   <div className='button-content' onClick={()=>handleSubmit()} style={{cursor:'pointer'}}>
                        <div 
                          className='button-container'
                          style={{

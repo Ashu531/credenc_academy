@@ -140,12 +140,11 @@ export default function Bookmarks(props){
       <> 
       <Head>
         <title>Bookmark Page</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       {
         mounted && 
         <div className='bookmark-container'>
-            <div className='bookmark-content'>
+            <div className='bookmark-content' style={!isDesktopOrLaptop ? {marginTop: '8rem'} : null}>
               {
                 !isDesktopOrLaptop ?
                 <div className='bookmark-header-mobile'>
@@ -165,7 +164,7 @@ export default function Bookmarks(props){
               }
                 
                 <div className='card-list-content' 
-                style={ !isDesktopOrLaptop ? {marginTop: '6rem',gap: 10,padding: '0rem 0rem 8rem 0rem',display:'block'} : courses && courses.length > 0 ? {gap: 10, position: "absolute", top: '14rem', left: '60px', paddingBottom: '6rem'} : {gap: 10}}
+                style={ !isDesktopOrLaptop ? {marginTop: '2rem',gap: 10,padding: '0rem 1.6rem 8rem 1.6rem',display:'block'} : courses && courses.length > 0 ? {gap: 10, position: "absolute", top: '14rem', left: '60px', paddingBottom: '6rem'} : {gap: 10}}
                 >
                   <List
                       type={States.listTypes.BOOKMARK_CARDS}
