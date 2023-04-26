@@ -208,7 +208,7 @@ export default function DetailModal(props){
     }
 
     const _handleBookmarksTrigger=(item)=>{
-        if(bookmarkVisible || props?.bookmarkCodes?.includes(props?.detailData.code)){
+        if(bookmarkVisible || props?.bookmarkCodes?.includes(props?.detailData.id)){
             _onremoveToBookmark(item)
            }else{
             _onAddToBookmark(item)
@@ -219,13 +219,19 @@ export default function DetailModal(props){
       setBookmarkVisible(false)
 
       if(token && token.length > 0){
-          removeBookmarkFromBackend(item.code)
-          props?.removeLocalBookmarks()
+          removeBookmarkFromBackend(item.id)
+          let bookmarkArray = [];
+          let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
+          if(bookmarkItem && bookmarkItem.length > 0){
+            bookmarkArray =  bookmarkItem.filter(data => data !== item.id )
+          }
+          localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+          props?.removeLocalBookmarks(bookmarkArray.length)
         }else{
           let bookmarkArray = [];
           let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
           if(bookmarkItem && bookmarkItem.length > 0){
-            bookmarkArray =  bookmarkItem.filter(data => data !== item.code )
+            bookmarkArray =  bookmarkItem.filter(data => data !== item.id )
           }
           localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
           props?.removeLocalBookmarks(bookmarkArray.length)
@@ -238,15 +244,22 @@ export default function DetailModal(props){
         setBookmarkVisible(true)
       
         if(token && token.length > 0){
-          addBookmarkToBackend(item.code)
-          props?.addLocalBookmarks()
+          addBookmarkToBackend(item.id)
+          let bookmarkArray = [];
+          let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
+          if(bookmarkItem && bookmarkItem.length > 0){
+            bookmarkArray.push(...bookmarkItem)
+          }
+          bookmarkArray.push(item.id)
+          localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+          props?.addLocalBookmarks(bookmarkArray.length)
         }else{
           let bookmarkArray = [];
           let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
           if(bookmarkItem && bookmarkItem.length > 0){
             bookmarkArray.push(...bookmarkItem)
           }
-          bookmarkArray.push(item.code)
+          bookmarkArray.push(item.id)
           localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
           props?.addLocalBookmarks(bookmarkArray.length)
           props?.handleCardActionTaken()
@@ -462,7 +475,7 @@ export default function DetailModal(props){
                             onClick={()=> _handleBookmarksTrigger(courseData)} 
                             style={{cursor:"pointer"}}
                         >
-                        <Image src={ bookmarkVisible || props?.bookmarkCodes?.includes(props?.detailData.code) ? selectedBookmark : theme === 'dark' ? bookmarkIconDark : bookmarkIcon}  
+                        <Image src={ bookmarkVisible || props?.bookmarkCodes?.includes(props?.detailData.id) ? selectedBookmark : theme === 'dark' ? bookmarkIconDark : bookmarkIcon}  
                             objectFit="contain" 
                             width={ !isDesktopOrLaptop ? 25 : 24 }
                             height={!isDesktopOrLaptop ? 25 : 24 }

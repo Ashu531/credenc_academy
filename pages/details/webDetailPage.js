@@ -177,7 +177,7 @@ export default function WebDetailPage(props){
        }
     
        const _handleCardBookmark=(item)=>{
-         if(bookmarkVisible === true || props?.bookmarkCodes?.includes(props?.detailData.code)){
+         if(props?.token && props?.token.length > 0 ? bookmarkVisible : props?.bookmarkCodes?.includes(props?.detailData.id)){
           _onremoveToBookmark(item)
          }else{
           _onAddToBookmark(item)
@@ -189,13 +189,24 @@ export default function WebDetailPage(props){
         setBookmarkVisible(false)
         
         if(props?.token && props?.token.length > 0){
-          removeBookmarkFromBackend(item.code)
-          props?.removeLocalBookmarks()
+          removeBookmarkFromBackend(item.id)
+          let bookmarkArray = [];
+          let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
+          if(bookmarkItem && bookmarkItem.length > 0){
+            bookmarkArray =  bookmarkItem.filter(data => data !== item.id)
+          }
+          
+          localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+          props?.removeLocalBookmarks(bookmarkArray.length)
+    
+          if(router.pathname === "/bookmarks"){
+            setTimeout(() => location.reload(), 100)
+          }
         }else{
           let bookmarkArray = [];
           let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
           if(bookmarkItem && bookmarkItem.length > 0){
-            bookmarkArray =  bookmarkItem.filter(data => data !== item.code )
+            bookmarkArray =  bookmarkItem.filter(data => data !== item.id)
           }
           
           localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
@@ -211,15 +222,23 @@ export default function WebDetailPage(props){
       const _onAddToBookmark=(item)=>{
         setBookmarkVisible(true)
         if(props?.token && props?.token.length > 0){
-          addBookmarkToBackend(item.code)
-          props?.addLocalBookmarks()
+          addBookmarkToBackend(item.id)
+          let bookmarkArray = [];
+          let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
+          if(bookmarkItem && bookmarkItem.length > 0){
+            bookmarkArray.push(...bookmarkItem)
+          }
+          bookmarkArray.push(item.id)
+
+          localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
+          props?.addLocalBookmarks(bookmarkArray.length)
         }else{
           let bookmarkArray = [];
           let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey)) 
           if(bookmarkItem && bookmarkItem.length > 0){
             bookmarkArray.push(...bookmarkItem)
           }
-          bookmarkArray.push(item.code)
+          bookmarkArray.push(item.id)
 
           localStorage.setItem(bookmarkKey,JSON.stringify(bookmarkArray));
           props?.addLocalBookmarks(bookmarkArray.length)
@@ -732,7 +751,7 @@ export default function WebDetailPage(props){
               <li className={`nav-item ${isReviewsIntersecting ? 'active': ''}`} onClick={() => scrollToTargetAdjusted('reviews')} >Reviews</li>
             </div>
             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-              <li className='nav-item-right' style={{margin: '0 1rem 0 0'}} onClick={()=>_handleCardBookmark(props?.detailData)}><Image src={ bookmarkVisible || props?.bookmarkCodes?.includes(props?.detailData.code) ? selectedBookmarkIcon : bookmarkIcon} width={20} height={20} objectFit='contain' /></li>
+              <li className='nav-item-right' style={{margin: '0 1rem 0 0'}} onClick={()=>_handleCardBookmark(props?.detailData)}><Image src={ (props?.token && props?.token.length > 0 ? bookmarkVisible : props?.bookmarkCodes?.includes(props?.detailData.id)) ? selectedBookmarkIcon : bookmarkIcon} width={20} height={20} objectFit='contain' /></li>
               <li className='nav-item-right'><button style={{backgroundColor: 'transparent', color: '#000000', border: '1px solid #034FE2'}} onClick={() => setEnquire(true)}>Talk to Us</button></li>
               {
                 (props?.detailData.can_apply && !(props?.detailData?.applied === true || (applied?.state === true && applied?.id === props?.detailData?.id)))  && <li className='nav-item-right'><button onClick={()=> handleButtonClick()}>{'Apply Now'}</button></li>
