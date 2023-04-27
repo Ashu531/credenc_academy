@@ -213,7 +213,7 @@ export default function InquiryModal(props){
                         </div> : null
                     }
                  
-                  <div className='form-content' style={error && error.length > 0 ? {marginTop: -10} : {marginTop: '15rem'}}>
+                  <div className='form-content' style={error && error.length > 0 ? {marginTop: '-10rem'} : {marginTop: '15rem'}}>
                       {/* <div className='label-section'>
                           <div className='label-header'>
                           Student Details
@@ -247,7 +247,7 @@ export default function InquiryModal(props){
                         Inquire about anything!
                     </span>
                     <span style={{width: '100%'}}>
-                    <textarea rows={8} placeholder="I want to know that..." onChange={(e) => handleQuery(e.target.value)} value={query}></textarea>
+                    <textarea rows={3} placeholder="I want to know that..." onChange={(e) => handleQuery(e.target.value)} value={query}></textarea>
                     </span>
                    </div>
                    
