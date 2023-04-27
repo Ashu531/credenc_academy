@@ -213,7 +213,7 @@ export default function InquiryModal(props){
                         </div> : null
                     }
                  
-                  <div className='form-content' style={error && error.length > 0 ? {marginTop: '-10rem'} : {marginTop: '15rem'}}>
+                  <div className='form-content' style={error && error.length > 0 ? {marginTop: '-5rem'} : {marginTop: '15rem'}}>
                       {/* <div className='label-section'>
                           <div className='label-header'>
                           Student Details
