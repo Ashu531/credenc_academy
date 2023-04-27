@@ -390,10 +390,10 @@ export default function SearchDesktop(props) {
 
     }
   }
-
+console.log(sortState)
   const handleSearchClicked = async (forcePageNumber = 0) => {
     const getParams = () => {
-      if(appliedFiltersCount.current > 0 || courseType > 0){
+      if(appliedFiltersCount.current > 0 || courseType > 0 || sortState){
         return `?${urlService.current.getUpdatedUrl()}`;
       }else{
         return `?${location?.asPath.substring(9,location?.asPath.length)}`;
