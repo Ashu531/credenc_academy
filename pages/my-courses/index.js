@@ -45,7 +45,8 @@ export default function MyCourses(props){
 
          const res = await axios.get(`${constant.API_URL.DEV}/my_courses/`, {
             headers: {
-              'Authorization': `Bearer ${authToken}`
+              'Authorization': `Bearer ${authToken}`,
+              'key': 'credenc'
             }
           })
             .then(res => {

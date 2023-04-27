@@ -64,25 +64,28 @@ class MyApp extends App {
   }
 
   getProfileData = async () => {
+   let auth_key = localStorage.getItem(EdtechToken);
+   if(auth_key && auth_key?.length > 0){
     let res = await axios
-      .get(`${constant.API_URL.DEV}/profiles/`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(EdtechToken) ?? ""}`,
-        },
-      })
-      .then((res) => {
-        if (res.status == 200) {
-          localStorage.setItem(
-            bookmarkKey,
-            JSON.stringify(res.data?.bookmarks)
-          );
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    this._handleBookmarkCodes();
+    .get(`${constant.API_URL.DEV}/profiles/`, {
+      headers: {
+        Authorization: `Bearer ${auth_key}`,
+      },
+    })
+    .then((res) => {
+      if (res.status == 200) {
+        localStorage.setItem(
+          bookmarkKey,
+          JSON.stringify(res.data?.bookmarks)
+        );
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+   }
+   
+   this._handleBookmarkCodes();
   };
 
   _mountComponent = () => {
@@ -392,7 +395,7 @@ class MyApp extends App {
     let token = localStorage.getItem(EdtechToken);
     if (token && token.length > 0) {
       this.setState({
-        bookmarkCount: this.state.bookmarkCount + 1,
+        bookmarkCount: count,
       });
     } else {
       this.setState({
@@ -407,7 +410,7 @@ class MyApp extends App {
     let token = localStorage.getItem(EdtechToken);
     if (token && token.length > 0) {
       this.setState({
-        bookmarkCount: this.state.bookmarkCount - 1,
+        bookmarkCount: count,
       });
     } else {
       this.setState({
