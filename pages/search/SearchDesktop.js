@@ -142,6 +142,7 @@ export default function SearchDesktop(props) {
   const [pageNumber, setPageNumber] = useState(1);
   const [emptyState, setEmptyState] = useState(true)
   const [mounted, setMounted] = useState(false)
+  const [nextPage, setNextPage] = useState(true)
 
 
   const openDetailModal = (data) => {
@@ -442,18 +443,12 @@ export default function SearchDesktop(props) {
     setCardApiSuccess(false)
 
     let res = await handleSearchClicked();
-    // if (forcePageNumber === 1) setForcePageNumber(0);
 
-    // if (pageNumber <= 1 || updatePageNumber === false) {
-    //   // setCourses([...res.data]);
-    //   setCardApiSuccess(true)
-    //   if (res?.data)
-    //     setCourseCardData([...res.data])
-    // } else {
-    //   // setCourses([...courseCardData, ...res.data]);
-    //   setCardApiSuccess(true)
-    //   setCourseCardData([...courseCardData, ...res.data])
-    // }
+    if (res?.next === true) {
+      setNextPage(true)
+    } else {
+      setNextPage(false)
+    }
 
     setCardApiSuccess(true)
 
@@ -637,6 +632,20 @@ export default function SearchDesktop(props) {
     // courseTypeRef?.current?.changeTab(tabNumber);
   }, []);
 
+  useEffect(() => {
+    if(pageNumber > 1){
+      if (nextPage === true) {
+        coursesApiStatus.current.start();
+        handleFilteredData(true);
+        if (pageNumber === 1) {
+          applyFilters();
+        }
+      }
+    } else {
+      handleFilteredData();
+    }
+  }, [pageNumber]);
+
   const _openApplyNowModal = (data) => {
     setApplyNow(true)
     setDetailData(data)
@@ -697,7 +706,7 @@ export default function SearchDesktop(props) {
 
   const handleScrollData = () => {
     setPageNumber(pageNumber + 1)
-    handleFilteredData(true)
+    handleFilteredData()
   }
 
   useEffect(() => {
@@ -1001,6 +1010,8 @@ export default function SearchDesktop(props) {
                                     removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
                                     enableTrackStatus={() => _enableTrackStatus()}
                                     applied={applied}
+                                    bookmarkCodes={props?.bookmarkCodes}
+                                    bookmarkCount={props?.bookmarkCount}
                                   />
                                 </div>
                               )

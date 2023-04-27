@@ -47,6 +47,7 @@ export default function Dashboard(props) {
           thirdPartyUser={thirdPartyUser}
           subjectData={props?.subjectData}
           handleSearch={(e)=>props?.handleSearch(e)}
+          { ...props }
         />
       </>
        )
