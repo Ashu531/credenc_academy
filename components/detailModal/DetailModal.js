@@ -116,7 +116,8 @@ export default function DetailModal(props){
         if(token && token.length > 0){
             let res = await axios.get(`${constant.API_URL.DEV}/course/preview/${item?.id}/`,{
                 headers: {
-                  'Authorization': `Bearer ${token}`
+                  'Authorization': `Bearer ${token}`,
+                  'key': 'credenc'
                 },
               })
                 .then(res => {
@@ -133,7 +134,11 @@ export default function DetailModal(props){
                   // dispatchRemoveBookmark(id, bookmarks);
                 })
         }else{
-            let res = await axios.get(`${constant.API_URL.DEV}/course/preview/${item?.id}/`)
+            let res = await axios.get(`${constant.API_URL.DEV}/course/preview/${item?.id}/`,{
+              headers: {
+                'key': 'credenc'
+              },
+            })
                 .then(res => {
                   setCourseData(res.data.data)
                   _handleCourseName(res.data.data.course_name)

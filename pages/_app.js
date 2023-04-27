@@ -355,6 +355,7 @@ class MyApp extends App {
         .get(`${constant.API_URL.DEV}/bookmark/list/`, {
           headers: {
             Authorization: `Bearer ${token}`,
+            'key':'credenc',
           },
         })
         .then((res) => {
@@ -381,7 +382,6 @@ class MyApp extends App {
   };
 
   _fetchLocalBookmarks = () => {
-    let bookmarkArray = [];
     let bookmarkItem = JSON.parse(localStorage.getItem(bookmarkKey));
 
     if (bookmarkItem && bookmarkItem.length > 0) {
@@ -404,8 +404,7 @@ class MyApp extends App {
     }
 
     this._handleBookmarkCodes();
-  };
-
+  }
   _removeLocalBookmarks = (count) => {
     let token = localStorage.getItem(EdtechToken);
     if (token && token.length > 0) {
