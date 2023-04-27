@@ -112,10 +112,10 @@ class MyApp extends App {
   };
 
   _clearBookmarkData = () => {
-    let bookmarkData = localStorage.getItem(UpvoteKey);
+    let bookmarkData = localStorage.getItem(bookmarkKey);
     if (bookmarkData && bookmarkData.length > 0) {
       bookmarkData = [];
-      localStorage.setItem(UpvoteKey, JSON.stringify(bookmarkData));
+      localStorage.setItem(bookmarkKey, JSON.stringify(bookmarkData));
     }
   };
 

@@ -141,7 +141,6 @@ export default function ApplyNowModal(props){
             'gender': gender.toString(),
             'dob': dob,
             'course_id': props?.detailData?.id,
-            'key': 'credenc'
         }, {
             headers: {
               'Authorization': `Bearer ${token}`,

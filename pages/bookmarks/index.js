@@ -57,7 +57,11 @@ export default function Bookmarks(props){
 
         if (!authToken) {
 
-          const res = await axios.get(`${constant.API_URL.DEV}/bookmark/list/?${getIds()}`)
+          const res = await axios.get(`${constant.API_URL.DEV}/bookmark/list/?${getIds()}`,{
+            headers: {
+              'key': 'credenc'
+            }
+          })
             .then(res => {
               bookmarkApiStatus.current.success();
               setCourses(res.data.data);
@@ -72,7 +76,8 @@ export default function Bookmarks(props){
         } else {
           const res = await axios.get(`${constant.API_URL.DEV}/bookmark/list/`, {
             headers: {
-              'Authorization': `Bearer ${authToken}`
+              'Authorization': `Bearer ${authToken}`,
+              'key': 'credenc'
             }
           })
             .then(res => {
@@ -196,6 +201,7 @@ export default function Bookmarks(props){
                 closeDetailModal={()=>closeDetailModal(detailData)}
                 handleCardActionTaken={()=>_handleCardActionTaken()}
                 toggleDetailModal={()=>toggleDetailModal()}
+                bookmarkCodes={props?.bookmarkCodes}
               />
             </SlidingPanel>
             <SlidingPanel
