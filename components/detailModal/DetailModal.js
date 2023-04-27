@@ -593,7 +593,7 @@ export default function DetailModal(props){
             }
 
             
-            <div className='detail-modal-middle-section'>
+            <div className='detail-modal-middle-section' style={props?.status ? {height: '70%'} : null}>
               <div className='detail-modal-course-content' 
                 // style={props?.status === true ? null : {marginTop: '6rem'}}
                 >

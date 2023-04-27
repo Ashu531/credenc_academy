@@ -964,7 +964,7 @@ export default function SearchDesktop(props) {
                         dataLength={courseCardData.length} //This is important field to render the next data
                         next={handleScrollData}
                         hasMore={true}
-                        height={'90rem'}
+                        height={courseCardData.length > 2 ? '90rem' : '50rem'}
                         // loader={<h4>Loading...</h4>}
                         style={
                           window.innerWidth > 500 ? {
@@ -972,6 +972,8 @@ export default function SearchDesktop(props) {
                             display: 'flex', 
                             flexDirection: 'row', 
                             justifyContent: 'flex-start', 
+                            alignItems:'flex-start',
+                            alignContent: 'baseline',
                             gap: 10, 
                             flexWrap: 'wrap', 
                             overflow: 'auto',
@@ -998,8 +1000,8 @@ export default function SearchDesktop(props) {
                           courseCardData.length > 0 ?
                             courseCardData && courseCardData.map((item, index) => {
                               return (
-                                <div key={index}>
                                   <CourseCard
+                                    key={index}
                                     index={index}
                                     data={item}
                                     openDetailModal={() => openDetailModal(item)}
@@ -1013,7 +1015,6 @@ export default function SearchDesktop(props) {
                                     bookmarkCodes={props?.bookmarkCodes}
                                     bookmarkCount={props?.bookmarkCount}
                                   />
-                                </div>
                               )
                             })
                             :
