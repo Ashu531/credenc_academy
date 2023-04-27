@@ -12,9 +12,9 @@ import DetailModal from '../../components/detailModal/DetailModal'
 import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 import ApplyNowModal from '../../components/applyNowModal/ApplyNowModal'
-import MyCourseCard from '../../components/my-courses-card/My-Courses-Card'
 import Head from 'next/head'
 import { useMediaQuery } from 'react-responsive';
+import CourseCard from '../../components/coursecard/CourseCard';
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 const EdtechAuthKey = 'credenc-edtech-authkey';
@@ -141,7 +141,7 @@ export default function MyCourses(props){
                    {courses && courses.map((item,index)=>{
                     return(
                       <div key={index}>
-                        <MyCourseCard 
+                        <CourseCard 
                           index={index}
                           data={item} 
                           openDetailModal={()=>_openDetailModal(item)}
@@ -150,6 +150,8 @@ export default function MyCourses(props){
                           openLoginModal={()=>props?.openLoginModal()}
                           addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
                           removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
+                          bookmarkCodes={props?.bookmarkCodes}
+                          bookmarkCount={props?.bookmarkCount}
                         />
                       </div>
                     )
