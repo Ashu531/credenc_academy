@@ -150,7 +150,11 @@ export default function DetailPage(props){
     }
 
     const _getToolData=async(id)=>{
-        let res = await axios.get(`${constant.API_URL.DEV}/course/detail_two/${id}/`)
+        let res = await axios.get(`${constant.API_URL.DEV}/course/detail_two/${id}/`, {
+          headers: {
+            'key': 'credenc'
+          }
+        })
           .then(res => {
             // this.coursesApiStatus.current.success();
             setToolData(res.data.data)
