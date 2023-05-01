@@ -8,20 +8,24 @@ import queryIcon from '../../assets/images/icons/queryIcon.svg'
 import searchImage from '../../assets/images/icons/searchIcon.svg';
 import { useRouter } from 'next/router';
 import UrlService from "../../helper/urlService";
+const EdtechAuthKey = 'credenc-edtech-authkey';
 
 export default function SearchBar(props) {
 
   const [searchQuery, setSearchQuery] = useState([])
   const [searchString, setSearchString] = useState('')
   const [mounted, setMounted] = useState(false)
+  const [token,setToken] = useState('')
   let location = useRouter();
   let nextURL = location?.asPath?.substring(2, location?.asPath?.length)
   let urlService = useRef(new UrlService(nextURL));
 
+  const query = useRef('');
+
   let coursedata = {}
 
   useEffect(() => {
-    setMounted(true)
+    retrieveData()
   }, [])
 
   useEffect(() => {
@@ -37,6 +41,12 @@ export default function SearchBar(props) {
     }
   }, [props?.showSearchBar])
 
+  const retrieveData=()=>{
+    let authToken = localStorage.getItem(EdtechAuthKey);
+    setToken(authToken)
+    setMounted(true)
+  }
+
   const myLoader = ({ src, width, quality }) => {
     if (src && src.length > 0) {
       return `${src}?w=${width}&q=${quality || 75}`
@@ -46,12 +56,13 @@ export default function SearchBar(props) {
   }
 
   const _autocompleteQuery = async (e, results) => {
-
+    query.current = e;
     props?.handleSearch(e)
-    if (props?.token && props?.token.length > 0) {
+    if (token?.length > 0) {
       await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`, {
         headers: {
-          'Authorization': `Bearer ${props?.token}`
+          'Authorization': `Bearer ${token}`,
+          "key": 'credenc'
         }
       })
         .then(response => response.data.data)
@@ -59,13 +70,18 @@ export default function SearchBar(props) {
           _fuseData(data, e)
         })
     } else {
-      await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`)
+      await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`, {
+        headers: {
+          "key": 'credenc'
+        }
+      })
         .then(response => response.data.data)
         .then(data => {
           _fuseData(data, e)
         })
     }
     setSearchString(e)
+    
   }
 
   const _fuseData = (data, e) => {
@@ -77,26 +93,7 @@ export default function SearchBar(props) {
     // console.log("enter detected",item);
     coursedata=item;
     props?.handleSearch(item?.name)
-    if(item?.course_id){
-      location.push({
-        pathname: '/details',
-        query: {
-          course_id: item?.course_id
-        }
-      })
-    }else{
-      location.push({
-        pathname: '/search',
-        query: {
-          search: item?.name
-        }
-      },
-        undefined,
-        {
-          shallow: true
-        })
-    }
-   
+    handleLocationQuery()
     
   };
 
@@ -122,7 +119,8 @@ export default function SearchBar(props) {
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      customSearch()
+      setTimeout(()=>customSearch(), 300)
+      
     }
   }
 
@@ -138,7 +136,7 @@ export default function SearchBar(props) {
       location.push({
         pathname: '/search',
         query: {
-          search: searchString
+          search: query.current
         }
       },
         undefined,
@@ -162,7 +160,7 @@ export default function SearchBar(props) {
               items={searchQuery}
               onSearch={_autocompleteQuery}
               onSelect={handleOnSelect}
-              inputDebounce={500}
+              inputDebounce={200}
               fuseOptions={{ threshold: 1, shouldSort: false }}
               inputSearchString={searchString}
               autoFocus

@@ -1342,7 +1342,9 @@ export default function DashboardDesktop(props) {
           />
           : null
       }
-
+      <div className='element-invisible'>
+        <FooterModal {...props} />
+      </div>
     </div>
   )
 }
