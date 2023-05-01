@@ -865,7 +865,7 @@ export default function WebDetailPage(props){
                           return(
                             <div className='curriculum-item' onClick={event => handleCurriculumDisplay(event, index, moduleIndex)} key={moduleIndex}>
                               <div style={{padding: '2rem 2rem 2rem'}}>
-                                {module['sub_module'].length > 0 && <Image src={caretRight} width={15} height={15} objectFit='contain' style={{rotate: module.display === true ? '90deg' : '0deg'}} />}
+                                {module['sub_module'] && module['sub_module'].length > 0 && <Image src={caretRight} width={15} height={15} objectFit='contain' style={{rotate: module.display === true ? '90deg' : '0deg'}} />}
                               </div>
                               <div style={{width: '96%'}}>
                                 <div className='item-content'>
