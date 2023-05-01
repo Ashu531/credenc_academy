@@ -852,12 +852,12 @@ export default function WebDetailPage(props){
                 return(
                   <div className='curriculum-item' onClick={event => handleCurriculumDisplay(event, index, -1)} key={index}>
                     <div style={{padding: '2.1rem 0 0'}}>
-                      <Image src={caretRight} width={15} height={15} objectFit='contain' style={{rotate: item.display === true ? '90deg' : '0deg'}} />
+                      {item['sub_module'].length > 0 && <Image src={caretRight} width={15} height={15} objectFit='contain' style={{rotate: item.display === true ? '90deg' : '0deg'}} />}
                     </div>
                     <div style={{width: '96%'}}>
                       <div className='item-content'>
                         <div>
-                          <div style={{fontSize: '1.8rem', fontWeight: '600', lineHeight: '2.1rem', color: '#000000', padding: '0 0 0.4rem'}}>{item['title_sub'] === '' ? item['heading'] : item['heading'] === '' ? item['title_sub'] : item['title_sub'] + " | " + item['heading']}</div>
+                          <div style={{fontSize: '1.8rem', fontWeight: '600', lineHeight: '2.1rem', color: '#000000', padding: '0 0 0.4rem'}}>{item['title']}</div>
                         </div>
                       </div>
                       {
@@ -865,19 +865,19 @@ export default function WebDetailPage(props){
                           return(
                             <div className='curriculum-item' onClick={event => handleCurriculumDisplay(event, index, moduleIndex)} key={moduleIndex}>
                               <div style={{padding: '2rem 2rem 2rem'}}>
-                                <Image src={caretRight} width={15} height={15} objectFit='contain' style={{rotate: module.display === true ? '90deg' : '0deg'}} />
+                                {module['sub_module'].length > 0 && <Image src={caretRight} width={15} height={15} objectFit='contain' style={{rotate: module.display === true ? '90deg' : '0deg'}} />}
                               </div>
                               <div style={{width: '96%'}}>
                                 <div className='item-content'>
                                   <div style={{fontSize: '1.7rem', fontWeight: '500', lineHeight: '2rem', color: '#000000'}}>{module.title}</div>
                                 </div>
                                 {
-                                  module.display && module['sub_topics']?.map((topic, topicIndex) => {
+                                  module.display && module['sub_module']?.map((topic, topicIndex) => {
                                     return(
                                       <div className='curriculum-item' key={topicIndex}>
                                         <div style={{width: '96%'}}>
                                           <div className='item-content'>
-                                              <div style={{fontSize: '1.5rem', fontWeight: '400', lineHeight: '1.76rem', color: '#000000'}}>{topic}</div>
+                                              <div style={{fontSize: '1.5rem', fontWeight: '400', lineHeight: '1.76rem', color: '#000000'}}>{topic.title}</div>
                                           </div>
                                         </div>
                                       </div>
@@ -1418,7 +1418,7 @@ export default function WebDetailPage(props){
                                         </div>
                                         <div style={{display:'flex',flexDirection: 'column', justifyContent:'flex-start',alignItems:'flex-start',marginLeft: 16}}>
                                             <div className='detail-page-mobile-module-content-header'>
-                                                {item.title_sub} | {item.heading}
+                                                {item.title} | {item.heading}
                                             </div>
                                             {
                                               item.sub_module.length > 0 ? 
