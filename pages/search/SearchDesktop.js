@@ -393,14 +393,13 @@ export default function SearchDesktop(props) {
 
   const handleSearchClicked = async (forcePageNumber = 0) => {
     const getParams = () => {
-      if(appliedFiltersCount.current > 0 || courseType > 0 || sortState){
+      if(appliedFiltersCount.current > 0 || courseType || sortState){
         return `?${urlService.current.getUpdatedUrl()}`;
       }else{
         return `?${location?.asPath.substring(9,location?.asPath.length)}`;
       }
     }
-
-    coursesApiStatus.current.makeApiCall()
+    // coursesApiStatus.current.makeApiCall()
     // await delay(5000);
     let res;
     let token = props?.token;
@@ -589,7 +588,7 @@ export default function SearchDesktop(props) {
   useEffect(() => {
     if (!isMount) {
 
-      urlService.current.removeEntry('course_type_sub');
+      // urlService.current.removeEntry('course_type_sub');
       urlService.current.changeEntry(queries.COURSE_TYPE, Lists.courseTypes[courseType]);
       updateBrowserUrl();
 

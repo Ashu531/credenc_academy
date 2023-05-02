@@ -33,7 +33,7 @@ export default function SearchBar(props) {
     if (location?.query && Object.keys(location?.query).length > 0) {
       setSearchString(location?.query?.search)
     }
-  }, [location.isReady])
+  }, [location?.query?.search])
 
   useEffect(() => {
     if (props?.search?.length > 0) {
@@ -113,14 +113,15 @@ export default function SearchBar(props) {
   };
 
   const customSearch = () => {
-    props?.handleSearch(searchString)
-    handleLocationQuery()
+    if(query.current && query.current.length > 0){
+      props?.handleSearch(searchString)
+      handleLocationQuery()
+    }
   }
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       setTimeout(()=>customSearch(), 300)
-      
     }
   }
 

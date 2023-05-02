@@ -82,16 +82,13 @@ export default function Header(props) {
   const handleChange = (e) => {
     setDropdownOpen(true)
     let value = e.target.value
+    props?.handleSearch(value)
     router.push({
       pathname: '/search',
       query: {
         search: value
       }
-    },
-      undefined,
-      {
-        shallow: true
-      })
+    }).then(()=>router.reload())
     // props?.handleSubjectTab(value)
   }
 
@@ -255,9 +252,6 @@ export default function Header(props) {
                 showSearchBar={props?.showSearchBar}
                 search={props?.searchValue}
                 handleSearch={(e) => _handleSearch(e)}
-                handleSearchQuery={() => props?.handleSearchQuery()}
-                selectSearch={(e) => props?.selectSearch(e)}
-                openFilterExpandedStage={() => props?.openFilterExpandedStage()}
               />
             </div>
             : null
