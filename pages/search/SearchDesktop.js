@@ -349,7 +349,7 @@ export default function SearchDesktop(props) {
     if (mobileFiltersState) return;
 
     if (pageNumber > 1) {
-
+      
       setPageNumber(1)
     } else {
       coursesApiStatus.current.start();
@@ -359,7 +359,7 @@ export default function SearchDesktop(props) {
 
   const handleApplyButton = () => {
     if (pageNumber > 1) {
-
+      
       setPageNumber(1)
     } else {
       coursesApiStatus.current.start();
@@ -383,6 +383,7 @@ export default function SearchDesktop(props) {
 
     if (window.innerWidth > 500) {
       if (pageNumber > 1) {
+        
         setPageNumber(1)
       } else {
         handleFilteredData();
@@ -437,7 +438,7 @@ export default function SearchDesktop(props) {
     return res ? res : [];
   }
 
-  const handleFilteredData = async (updatePageNumber = true) => {
+  const handleFilteredData = async () => {
     coursesApiStatus.current.start();
     setCardApiSuccess(false)
 
@@ -452,7 +453,6 @@ export default function SearchDesktop(props) {
     setCardApiSuccess(true)
 
     if(res.data){
-      console.log(pageNumber,"pagenumber")
       if(pageNumber <= 1 && res?.next === true){
         setCourseCardData([...res.data])
       } else {
@@ -465,7 +465,7 @@ export default function SearchDesktop(props) {
     setTotalCourses(res.count);
     // handlePageNumber(res);
   }
-console.log(courseCardData,"coursecard")
+
   const setFiltersFromQuery = (indices, filterState, setFilter, reset) => {
     let newState = [...filterState];
     newState.forEach(filter => {
@@ -534,6 +534,7 @@ console.log(courseCardData,"coursecard")
     urlService.current.removeAll();
     updateBrowserUrl();
     if (pageNumber !== 1) {
+      
       setPageNumber(1)
     }
 
@@ -592,10 +593,13 @@ console.log(courseCardData,"coursecard")
       // urlService.current.removeEntry('course_type_sub');
       urlService.current.changeEntry(queries.COURSE_TYPE, Lists.courseTypes[courseType]);
       updateBrowserUrl();
-
-      setPageNumber(1)
-      coursesApiStatus.current.start();
-      handleFilteredData(false);
+      if(pageNumber > 1){
+        setPageNumber(1)
+        handleFilteredData();
+      }else{
+        handleFilteredData();
+      }
+      
     }
   }, [courseType]);
 
@@ -607,9 +611,13 @@ console.log(courseCardData,"coursecard")
       urlService.current.changeEntry(Lists.sortByList[sortState]['filterValue'], 'true');
       coursesApiStatus.current.start();
       updateBrowserUrl();
-
-      setPageNumber(1)
-      handleFilteredData(false);
+      
+      if(pageNumber > 1){
+        setPageNumber(1)
+        handleFilteredData();
+      }else{
+        handleFilteredData();
+      }
     }
   }, [sortState]);
 
@@ -632,18 +640,21 @@ console.log(courseCardData,"coursecard")
     // courseTypeRef?.current?.changeTab(tabNumber);
   }, []);
 
-  useEffect(() => {
-    if(pageNumber > 1){
-      if (nextPage === true) {
-        coursesApiStatus.current.start();
-        handleFilteredData(true);
-        if (pageNumber === 1) {
-          applyFilters();
+  useEffect(() => { 
+      if(pageNumber > 1){
+        if (nextPage === true) {
+          coursesApiStatus.current.start();
+          handleFilteredData(true);
+          if (pageNumber === 1) {
+            applyFilters();
+          }
         }
+      } 
+      else {
+        setPageNumber(1)
+        handleFilteredData();
       }
-    } else {
-      handleFilteredData();
-    }
+    
   }, [pageNumber]);
 
   const _openApplyNowModal = (data) => {
@@ -734,7 +745,6 @@ console.log(courseCardData,"coursecard")
   }
 
   const _handleSearchQuery = (event) => {
-
     location.push({
       pathname: '/search',
       query: {
@@ -745,6 +755,7 @@ console.log(courseCardData,"coursecard")
       {
         shallow: true
       })
+      
     setPageNumber(1)
     handleFilteredData()
   }
@@ -761,6 +772,7 @@ console.log(courseCardData,"coursecard")
     } else {
       urlService.current.removeAll()
       urlService.current.addEntry('search', event)
+      
       setPageNumber(1)
       handleFilteredData()
     }
@@ -920,6 +932,7 @@ console.log(courseCardData,"coursecard")
 
                           // bgColor='#16181A'
                           handleTabNumber={(i) => {
+                            
                             setPageNumber(1)
                             setCourseType(i)
                             // callMixpanel(MixpanelStrings.COURSE_TYPE_SEGEMENT_TRIGGERED, Lists.courseTypes[i])
@@ -945,6 +958,7 @@ console.log(courseCardData,"coursecard")
                         dropList={[...Lists.sortByList]}
                         selected={pageLoadSortState || sortState}
                         onSelect={(item, i) => {
+                          
                           setPageNumber(1)
                           setPageLoadSortState(null)
                           setSortState(i)

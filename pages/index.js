@@ -71,11 +71,13 @@ export const getStaticProps = async () =>{
   let trendingData = getTrendingData();
   let subCategoryData = getSubCategoryData();
   let courseData = getCourses();
+  let platformData = getPlatformData()
 
   return { props: { 
     trendingData: await trendingData,
     subCategoryData: await subCategoryData,
-    courseData: await courseData
+    courseData: await courseData,
+    platformData: await platformData,
   } };
 }
 
@@ -118,6 +120,18 @@ const getCourses = async () => {
 const getTrendingData = async () => {
   return await axios
     .get(`${constant.API_URL.DEV}/mostliked/`)
+    .then((res) => {
+      return res?.data?.data;
+    })
+    .catch((err) => {
+      // this.coursesApiStatus.current.failed();
+      console.log(err);
+    });
+};
+
+const getPlatformData = async () => {
+  return await axios
+    .get(`${constant.API_URL.DEV}/platfroms/`)
     .then((res) => {
       return res?.data?.data;
     })

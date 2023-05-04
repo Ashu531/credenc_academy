@@ -1197,6 +1197,7 @@ export default function DashboardDesktop(props) {
                 item={{ name: 'Platform', type: filterList.PLATFORM }}
                 filterState={platformList}
                 updateFilterState={updateFilterState}
+                platformData={props?.platformData}
               />
               <Filter
                 item={{ name: 'Educator', type: filterList.EDUCATOR }}
