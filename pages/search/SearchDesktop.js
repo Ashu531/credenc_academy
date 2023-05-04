@@ -452,7 +452,8 @@ export default function SearchDesktop(props) {
     setCardApiSuccess(true)
 
     if(res.data){
-      if(pageNumber === 1){
+      console.log(pageNumber,"pagenumber")
+      if(pageNumber <= 1 && res?.next === true){
         setCourseCardData([...res.data])
       } else {
         setCourseCardData([...courseCardData, ...res.data])
@@ -464,7 +465,7 @@ export default function SearchDesktop(props) {
     setTotalCourses(res.count);
     // handlePageNumber(res);
   }
-
+console.log(courseCardData,"coursecard")
   const setFiltersFromQuery = (indices, filterState, setFilter, reset) => {
     let newState = [...filterState];
     newState.forEach(filter => {
@@ -704,8 +705,10 @@ export default function SearchDesktop(props) {
   }
 
   const handleScrollData = () => {
-    setPageNumber(pageNumber + 1)
-    handleFilteredData()
+    if (nextPage === true) {
+      setPageNumber(pageNumber + 1)
+      handleFilteredData()
+    }
   }
 
   useEffect(() => {

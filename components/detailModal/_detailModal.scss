@@ -12,7 +12,7 @@
 
     .detail-modal-content{
        width: 100%;
-       height: 93vh;
+       height: 92vh;
        background: var(--defaultBackground);
 
        .detail-modal-header{
@@ -570,6 +570,7 @@
         border: 1px solid var(--insignificantStrokeColor);
         background: var(--defaultBackground);
         z-index: 9;
+        height: 7rem;
 
         .detail-modal-footer-section-left{
             display: flex;

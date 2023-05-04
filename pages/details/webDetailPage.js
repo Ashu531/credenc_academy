@@ -914,7 +914,7 @@ export default function WebDetailPage(props){
 
           <div className='container' id='pricing' ref={pricingRef}>
             {(props?.thirdPartyUser === constant.PARTNER_KEY.NJ || props?.priceOptions?.credenc_loan) && <div className='heading' style={{paddingBottom: '0.9rem'}}>Pricing</div>}
-            {props?.thirdPartyUser === constant.PARTNER_KEY.NJ && <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+            {/* {props?.thirdPartyUser === constant.PARTNER_KEY.NJ && <div style={{width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
              <div>
                 <div style={{fontSize: '1.4rem', fontWeight: '600', lineHeight: '1.6rem', color: '#222222'}}>EMI PLANS</div>
                 <div style={{fontSize: '1.2rem', fontWeight: '400', lineHeight: '1.4rem', color: '#8F14CC'}}>Powered by NJ Capital</div>
@@ -923,13 +923,13 @@ export default function WebDetailPage(props){
                 <div style={{fontSize: '1.2rem', fontWeight: '500', lineHeight: '1.4rem', color: '#717171'}}>Starts from</div>
                 <div style={{fontSize: '2rem', fontWeight: '700', lineHeight: '2.3rem', color: '#034FE2'}}>₹{props?.startingCost.starting_cost}*</div>
               </div>
-            </div>}
+            </div>} */}
 
-            {props?.thirdPartyUser === constant.PARTNER_KEY.NJ && <div className='confused-container' style={{width: '100%', justifyContent: 'flex-start', alignItems: 'center', padding: '1rem', margin: '1rem 0'}}>
+            {/* {props?.thirdPartyUser === constant.PARTNER_KEY.NJ && <div className='confused-container' style={{width: '100%', justifyContent: 'flex-start', alignItems: 'center', padding: '1rem', margin: '1rem 0'}}>
                 <Image src={njIcon} width={20} height={20} objectFit='contain' />
                 &emsp;
                 <div style={{fontSize: '1.2rem', fontWeight: '500', lineHeight: '1.4rem', color: '#000000'}}>You have a Pre-Approved Loan of Rs. 20 lacs from NJ Capital</div>
-            </div>}
+            </div>} */}
 
             {props?.priceOptions?.credenc_loan && <div className='confused-container' style={{width: '100%'}}>
               <div>
