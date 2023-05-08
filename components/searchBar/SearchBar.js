@@ -140,10 +140,11 @@ export default function SearchBar(props) {
           search: query.current
         }
       },
-        undefined,
-        {
-          shallow: true
-        })
+      undefined,
+      {
+        shallow: false
+      }
+      )
     }
     
   }

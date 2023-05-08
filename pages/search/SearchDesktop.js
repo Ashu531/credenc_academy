@@ -597,6 +597,7 @@ console.log(courseCardData)
         setPageNumber(1)
         // handleFilteredData();
       }else{
+        
         handleFilteredData();
       }
       
@@ -616,6 +617,7 @@ console.log(courseCardData)
         setPageNumber(1)
         // handleFilteredData();
       }else{
+        
         handleFilteredData();
       }
     }
@@ -651,6 +653,7 @@ console.log(courseCardData)
         }
       } 
       else {
+        
         handleFilteredData();
       }
     
@@ -735,13 +738,11 @@ console.log(courseCardData)
   }, [location.isReady])
 
   useEffect(() => {
-    setPageNumber(1)
-    handleFilteredData()
-  }, [location?.query?.search])
-
-  const handleReload=()=>{
-    setTimeout(() => location.reload(), 100)
-  }
+    if(location?.query?.search && location?.query?.search.length > 0){
+      setPageNumber(1)
+      // handleFilteredData()
+    }
+  }, [location?.query])
 
   const _handleSearchQuery = (event) => {
     location.push({
@@ -754,9 +755,6 @@ console.log(courseCardData)
       {
         shallow: true
       })
-      
-    // setPageNumber(1)
-    // handleFilteredData()
   }
 
   const _handleSearch = (event) => {
@@ -774,7 +772,6 @@ console.log(courseCardData)
       
       setPageNumber(1)
     }
-    // props?.handleSearch(event)
   }
 
   const toggleDetailModal=()=>{
@@ -972,7 +969,7 @@ console.log(courseCardData)
                     </div>
                     <div
                       className="list-container"
-                      id="scrollableDiv"
+                      // id="scrollableDiv"
                     >
                       <InfiniteScroll
                         dataLength={courseCardData.length} //This is important field to render the next data
@@ -1002,7 +999,7 @@ console.log(courseCardData)
                             flexWrap: 'wrap', 
                             overflow: 'auto' }
                           }
-                        scrollableTarget="scrollableDiv"
+                        // scrollableTarget="scrollableDiv"
                         endMessage={
                           <p style={{ textAlign: 'center' }}>
                             <b>Yay! You have seen it all</b>
