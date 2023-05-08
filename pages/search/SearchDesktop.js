@@ -349,7 +349,6 @@ export default function SearchDesktop(props) {
     if (mobileFiltersState) return;
 
     if (pageNumber > 1) {
-      
       setPageNumber(1)
     } else {
       coursesApiStatus.current.start();
@@ -451,11 +450,12 @@ export default function SearchDesktop(props) {
     }
 
     setCardApiSuccess(true)
-
+console.log(pageNumber,res.data,"data++")
     if(res.data){
-      if(pageNumber <= 1 && res?.next === true){
+      if(pageNumber === 1){
         setCourseCardData([...res.data])
-      } else {
+      } 
+      else  {
         setCourseCardData([...courseCardData, ...res.data])
       }
     }
@@ -465,7 +465,7 @@ export default function SearchDesktop(props) {
     setTotalCourses(res.count);
     // handlePageNumber(res);
   }
-
+console.log(courseCardData)
   const setFiltersFromQuery = (indices, filterState, setFilter, reset) => {
     let newState = [...filterState];
     newState.forEach(filter => {
@@ -595,7 +595,7 @@ export default function SearchDesktop(props) {
       updateBrowserUrl();
       if(pageNumber > 1){
         setPageNumber(1)
-        handleFilteredData();
+        // handleFilteredData();
       }else{
         handleFilteredData();
       }
@@ -614,7 +614,7 @@ export default function SearchDesktop(props) {
       
       if(pageNumber > 1){
         setPageNumber(1)
-        handleFilteredData();
+        // handleFilteredData();
       }else{
         handleFilteredData();
       }
@@ -644,14 +644,13 @@ export default function SearchDesktop(props) {
       if(pageNumber > 1){
         if (nextPage === true) {
           coursesApiStatus.current.start();
-          handleFilteredData(true);
+          handleFilteredData();
           if (pageNumber === 1) {
             applyFilters();
           }
         }
       } 
       else {
-        setPageNumber(1)
         handleFilteredData();
       }
     
@@ -718,7 +717,7 @@ export default function SearchDesktop(props) {
   const handleScrollData = () => {
     if (nextPage === true) {
       setPageNumber(pageNumber + 1)
-      handleFilteredData()
+      // handleFilteredData()
     }
   }
 
@@ -756,8 +755,8 @@ export default function SearchDesktop(props) {
         shallow: true
       })
       
-    setPageNumber(1)
-    handleFilteredData()
+    // setPageNumber(1)
+    // handleFilteredData()
   }
 
   const _handleSearch = (event) => {
@@ -774,7 +773,6 @@ export default function SearchDesktop(props) {
       urlService.current.addEntry('search', event)
       
       setPageNumber(1)
-      handleFilteredData()
     }
     // props?.handleSearch(event)
   }
