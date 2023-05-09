@@ -1121,7 +1121,7 @@ export default function WebDetailPage(props){
               <div className='detail-page-mobile-card-container' style={{display:'flex',marginTop: 20,gap: 20,overflow:'auto'}}>
                 {props?.similarCourses?.length > 0 && props?.similarCourses.map((item,index)=>{
                     return(
-                      <div key={index} style={{margin: index === 0 ? '0 3rem 0 0' : index === props?.similarCourses?.length - 1 ? '0 3rem 0 0' : 'none'}}>
+                      <div key={index}>
                         <CourseCard 
                           index={index}
                           data={item} 
