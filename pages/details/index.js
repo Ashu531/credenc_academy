@@ -1,7 +1,6 @@
 import React,{useEffect,useState,useRef} from 'react';
 import { useRouter } from 'next/router';
 import { useMediaQuery } from "react-responsive";
-import DetailPageMobile from './mobileDetailPage'
 import DetailPageWeb from './webDetailPage'
 import axios from 'axios';
 import constant from '../../config/constant';
