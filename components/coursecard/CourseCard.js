@@ -340,11 +340,11 @@ export default function CourseCard(props) {
           </div>
         </div>
         <div className="card-course-content" onClick={() => _goToDetailPage(props?.data?.id)}>
-          <div className='course-name' onMouseEnter={() => setCourseNameTooltip(true)} onMouseLeave={() => setCourseNameTooltip(false)}>
+          <div className='course-name'>
             {props?.data?.course_name && props?.data?.course_name.length > 44 ? props?.data?.course_name.substring(0, 44) + '...' : props?.data?.course_name}
           </div>
           {
-            courseNameTooltip && props?.data?.course_name.length > 22 ? <div className="course-name-tooltip">
+            props?.data?.course_name.length > 22 ? <div className="course-name-tooltip">
               <span className="course-name-tooltiptext">{props?.data?.course_name}</span>
             </div> : null
           }

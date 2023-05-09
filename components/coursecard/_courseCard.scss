@@ -105,9 +105,11 @@
         position: absolute;
         display: inline-block;
         border-bottom: 1px dotted var(--primaryColor);
-      }
+        visibility: hidden;
+        display: none;
+    }
 
-       .course-name-tooltiptext {
+    .course-name-tooltiptext {
         // visibility: hidden;
         min-width: 20em;
         background-color: var(--primaryColor);
@@ -118,6 +120,13 @@
         border-radius: 6px;
         position: absolute;
         z-index: 999;
+        visibility: hidden;
+        display: none;
+      } 
+
+      .course-name:hover .course-name-tooltip .course-name-tooltiptext{
+        visibility: visible !important;
+        display: block !important; 
       }
       
       .course-detail-container{

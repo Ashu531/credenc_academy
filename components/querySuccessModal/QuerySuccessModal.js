@@ -45,7 +45,7 @@ export default function QuerySuccessModal(props){
                   </div>
                 }
 
-                {
+                {/* {
                   thirdPartyUser === constant.PARTNER_KEY.NJ ? 
                     <div className='success-apply-modal-section' style={{width: '100%'}}>
                       <div className='reserved-header-content'>
@@ -68,7 +68,7 @@ export default function QuerySuccessModal(props){
                         </div>
                       </div>
                   </div> 
-                  : 
+                  :  */}
                   <div className='success-apply-modal-section' style={{width: '100%'}}>
                   <div className='reserved-header-content'>
                       <div className='reserved-header'>
@@ -91,7 +91,7 @@ export default function QuerySuccessModal(props){
                   </div>
               </div>
 
-                } 
+                {/* }  */}
                   
                 <div className='success-apply-now-footer'  
                        style={ 
@@ -117,7 +117,7 @@ export default function QuerySuccessModal(props){
                         </div>
                      </div>
                      <div className='button-content' style={{cursor:'pointer'}}>
-                       {
+                       {/* {
                          thirdPartyUser === 'NJCRED0' ? 
                             <div className='button-container' 
                             style={{
@@ -134,7 +134,7 @@ export default function QuerySuccessModal(props){
                                 <Image src={chatIcon} width={20} height={20} objectFit="contain" />
                                 <span className='submit-footer-text' style={{color: '#000000'}}>Chat with us</span>
                             </div>
-                        : 
+                        :  */}
                         <div 
                           onClick={() => props.closeSuccessQueryModal()}
                           className='button-container'
@@ -153,7 +153,7 @@ export default function QuerySuccessModal(props){
                                   Keep Browsing
                               </span>
                         </div>
-                       }
+                       {/* } */}
                        
                        
                     </div>

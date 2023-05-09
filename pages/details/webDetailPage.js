@@ -810,13 +810,16 @@ export default function WebDetailPage(props){
                 )
             }
           </div>
-
-          <div className='container'>
-            <div className='heading' style={{margin: '0 0 1.6rem 0'}}>Introduction</div>
-            <div className='description'>{props?.detailData?.description}</div>
-          </div>
-
-          {props?.detailData?.eligibility?.length > 0 && <div className='container'>
+        {
+          props?.detailData?.description && props?.detailData?.description.length > 0 &&
+                  <div className='container'>
+                    <div className='heading' style={{margin: '0 0 1.6rem 0'}}>Introduction</div>
+                    <div className='description'>{props?.detailData?.description}</div>
+                  </div>
+        }
+          
+        {
+          props?.detailData?.eligibility?.length > 0 && <div className='container'>
             <div className='heading' style={{margin: '0 0 1.6rem 0'}}>Pre-Requisites</div>
             {
               props?.detailData?.eligibility.map(

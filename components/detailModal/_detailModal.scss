@@ -156,16 +156,28 @@
             word-wrap: break-word;
         }
 
-        .heading2{
-            font-family: 'Work Sans';
-            font-style: normal;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 21px;
-            color: var(--bodyColor);
-            display: inline-block;
-            word-break: break-word;
-        }
+            .heading2{
+                font-family: 'Work Sans';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 21px;
+                color: var(--bodyColor);
+                display: inline-block;
+                word-break: break-word;
+            }
+
+            .see-more{
+                font-family: 'Work Sans';
+                font-style: normal;
+                font-weight: 500;
+                font-size: 12px;
+                line-height: 21px;
+                color: #034FE2;
+                cursor: pointer;
+                font-weight: 700;
+            }
+        
        }
 
        .detail-modal-course-overview{
@@ -565,7 +577,7 @@
         padding: 0 2.4rem;
         display: flex;
         flex-direction: row;
-        justify-content: flex-end;
+        justify-content: flex-start;
         align-items: center;
         border: 1px solid var(--insignificantStrokeColor);
         background: var(--defaultBackground);
