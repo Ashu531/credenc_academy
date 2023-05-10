@@ -450,7 +450,7 @@ export default function SearchDesktop(props) {
     }
 
     setCardApiSuccess(true)
-console.log(pageNumber,res.data,"data++")
+
     if(res.data){
       if(pageNumber === 1){
         setCourseCardData([...res.data])
@@ -465,7 +465,7 @@ console.log(pageNumber,res.data,"data++")
     setTotalCourses(res.count);
     // handlePageNumber(res);
   }
-console.log(courseCardData)
+
   const setFiltersFromQuery = (indices, filterState, setFilter, reset) => {
     let newState = [...filterState];
     newState.forEach(filter => {
@@ -642,23 +642,6 @@ console.log(courseCardData)
     // courseTypeRef?.current?.changeTab(tabNumber);
   }, []);
 
-  useEffect(() => { 
-      if(pageNumber > 1){
-        if (nextPage === true) {
-          coursesApiStatus.current.start();
-          handleFilteredData();
-          if (pageNumber === 1) {
-            applyFilters();
-          }
-        }
-      } 
-      else {
-        
-        handleFilteredData();
-      }
-    
-  }, [pageNumber]);
-
   const _openApplyNowModal = (data) => {
     setApplyNow(true)
     setDetailData(data)
@@ -739,10 +722,29 @@ console.log(courseCardData)
 
   useEffect(() => {
     if(location?.query?.search && location?.query?.search.length > 0){
-      setPageNumber(1)
-      // handleFilteredData()
+      if(pageNumber > 1){
+        setPageNumber(1)
+      }else{
+        handleFilteredData()
+      }
     }
-  }, [location?.query])
+  }, [location?.query?.search])
+
+  useEffect(() => { 
+    if(pageNumber > 1){
+      if (nextPage === true) {
+        coursesApiStatus.current.start();
+        handleFilteredData();
+        if (pageNumber === 1) {
+          applyFilters();
+        }
+      }
+    } 
+    else {
+      handleFilteredData();
+    }
+  
+}, [pageNumber]);
 
   const _handleSearchQuery = (event) => {
     location.push({

@@ -134,6 +134,7 @@ export default function SearchBar(props) {
         }
       })
     }else{
+      console.log(query,"query")
       location.push({
         pathname: '/search',
         query: {

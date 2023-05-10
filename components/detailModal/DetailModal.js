@@ -606,7 +606,7 @@ export default function DetailModal(props) {
                       {courseName}
                     </div>
                     {
-                      seeMore ? 
+                      !seeMore ? 
                         <div className='heading2'>
                           {courseData?.description?.substring(0,250)+'...'}
                           <span className='see-more' onClick={()=>_toggleSeeMore()}> Show More</span>

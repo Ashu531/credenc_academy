@@ -1,5 +1,5 @@
 import Dashboard from './dashboard'
-import React,{useState,useEffect} from "react"
+import React, { useState, useEffect } from "react"
 import Script from 'next/script';
 import SEO from '../config/seo';
 import axios from 'axios';
@@ -23,64 +23,66 @@ const Home = (props) => {
         `}
       </Script>
       <SEO />
-    {
-    <Dashboard
-      filterExpandedStage={props?.filterExpandedStage}
-      openFilterExpandedStage={()=>props?.openFilterExpandedStage()}
-      subjectDropdownMobile={props?.subjectDropdownMobile}
-      loginModal={props?.loginModal}
-      closeLoginModal={()=>props?.closeLoginModal()}
-      openForgotPasswordModal={()=>props?.openForgotPasswordModal()}
-      forgotPasswordModal={props?.forgotPasswordModal}
-      handleForgotPasswordEnd={()=>props?.handleForgotPasswordEnd()}
-      selectedSubject= {(item)=>props?.selectedSubject(item)}
-      toggleSubjectDropdown={()=>props?.toggleSubjectDropdown()}
-      toggleFilterVisible={()=>props?.toggleFilterVisible()}
-      filterModalVisible={props?.filterModalVisible}
-      showSearchBar={props?.showSearchBar}
-      _showSearchBar={props?._showSearchBar}
-      hideSearchBar={props?.hideSearchBar}
-      searchValue={props?.searchValue}
-      handleSearch={(e)=>props?.handleSearch(e)}
-      closeFilterExpandedStage={()=>props?.closeFilterExpandedStage()}
-      searchData={props?.searchData}
-      handleLogout={()=>props?.handleLogout()}
-      handleLogin={()=>props?.handleLogin()}
-      openLoginModal={()=>props?.openLoginModal()}
-      openFilterVisible={()=>props?.openFilterVisible()}
-      handleOpenMobileSearch={()=>props?.handleOpenMobileSearch()}
-      clearSearch={()=>props?.clearSearch()}
-      closeFilterVisible={()=>props?.closeFilterVisible()}
-      setScrollUp={()=>props?.setScrollUp()}
-      setScrollDown={()=>props?.setScrollDown()}
-      goingUp={props?.goingUp}
-      openCoursePreviewModal={()=>props?.openCoursePreviewModal()}
-      closeCoursePreviewModal={()=>props?.closeCoursePreviewModal()}
-      addLocalBookmarks={(count)=>props?.addLocalBookmarks(count)}
-      removeLocalBookmarks={(count)=>props?.removeLocalBookmarks(count)}
-      closeForgotPasswordModal={()=>props?.closeForgotPasswordModal()}
-      selectSearch={(e)=>props?.selectSearch(e)}
-      subjectData={props?.subjectData}
-      {...props}
-    />
-    }
-   </>
+      {
+        <Dashboard
+          filterExpandedStage={props?.filterExpandedStage}
+          openFilterExpandedStage={() => props?.openFilterExpandedStage()}
+          subjectDropdownMobile={props?.subjectDropdownMobile}
+          loginModal={props?.loginModal}
+          closeLoginModal={() => props?.closeLoginModal()}
+          openForgotPasswordModal={() => props?.openForgotPasswordModal()}
+          forgotPasswordModal={props?.forgotPasswordModal}
+          handleForgotPasswordEnd={() => props?.handleForgotPasswordEnd()}
+          selectedSubject={(item) => props?.selectedSubject(item)}
+          toggleSubjectDropdown={() => props?.toggleSubjectDropdown()}
+          toggleFilterVisible={() => props?.toggleFilterVisible()}
+          filterModalVisible={props?.filterModalVisible}
+          showSearchBar={props?.showSearchBar}
+          _showSearchBar={props?._showSearchBar}
+          hideSearchBar={props?.hideSearchBar}
+          searchValue={props?.searchValue}
+          handleSearch={(e) => props?.handleSearch(e)}
+          closeFilterExpandedStage={() => props?.closeFilterExpandedStage()}
+          searchData={props?.searchData}
+          handleLogout={() => props?.handleLogout()}
+          handleLogin={() => props?.handleLogin()}
+          openLoginModal={() => props?.openLoginModal()}
+          openFilterVisible={() => props?.openFilterVisible()}
+          handleOpenMobileSearch={() => props?.handleOpenMobileSearch()}
+          clearSearch={() => props?.clearSearch()}
+          closeFilterVisible={() => props?.closeFilterVisible()}
+          setScrollUp={() => props?.setScrollUp()}
+          setScrollDown={() => props?.setScrollDown()}
+          goingUp={props?.goingUp}
+          openCoursePreviewModal={() => props?.openCoursePreviewModal()}
+          closeCoursePreviewModal={() => props?.closeCoursePreviewModal()}
+          addLocalBookmarks={(count) => props?.addLocalBookmarks(count)}
+          removeLocalBookmarks={(count) => props?.removeLocalBookmarks(count)}
+          closeForgotPasswordModal={() => props?.closeForgotPasswordModal()}
+          selectSearch={(e) => props?.selectSearch(e)}
+          subjectData={props?.subjectData}
+          {...props}
+        />
+      }
+    </>
   )
 }
-export const getStaticProps = async () =>{
+export const getStaticProps = async () => {
   let trendingData = getTrendingData();
   let subCategoryData = getSubCategoryData();
   let courseData = getCourses();
   let platformData = getPlatformData()
   let educatorData = getEducatorData()
 
-  return { props: { 
-    trendingData: await trendingData,
-    subCategoryData: await subCategoryData,
-    courseData: await courseData,
-    platformData: await platformData,
-    educatorData: await educatorData,
-  } };
+  return {
+    props: {
+      trendingData: await trendingData,
+      subCategoryData: await subCategoryData,
+      courseData: await courseData,
+      platformData: await platformData,
+      educatorData: await educatorData,
+    }
+  };
 }
 
 const getSubCategoryData = async () => {
