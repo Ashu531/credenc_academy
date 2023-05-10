@@ -184,7 +184,7 @@ export default function SearchBar(props) {
     <>
       {
         mounted &&
-        <div className="autocomplete">
+        <div className="autocomplete" style={suggestionsActive ? {borderRadius: 25} : {borderRadius: 40}}>
           <div className='query-bar'>
               <input
                   type="text"
