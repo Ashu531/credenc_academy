@@ -36,14 +36,14 @@ const Dashboard = (props) => {
               zIndex: 9999,position: 'relative'
             }}
             ></div>
-           <Script>
+           <Script id="magicform-chatbot">
             {`(function (w, d, s, o, f, js, fjs) {
                 w["Simple-Widget"] = o; w[o] = w[o] || function () { (w[o].q = w[o].q || []).push(arguments) };
                 js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];
                 js.id = o; js.src = f; js.async = 1; fjs.parentNode.insertBefore(js, fjs);
                 }(window, document, "script", "w1", 'https://magicform-widget-assets.s3.us-west-2.amazonaws.com/widget.js'));
                 w1("init",
-                {"popUpTimer":3000,"imageUrl":null,"widgetType":"bubble","chatHeight":630,"chatWidth":370,"placeholder":"What's on your mind?","stackId":"stack_3f86d24b-e2e3-4951-ad68-f10137c9a7cb","userId":"13533a96-8929-4315-be2f-7800bc6d0cec","colors":{"main":"#D91212","userMessageBubble":"#D91212"}});
+                {"popUpTimer":3000,"imageUrl":null,"widgetType":"bubble","chatHeight":630,"chatWidth":370,"placeholder":"What's on your mind?","stackId":"stack_3f86d24b-e2e3-4951-ad68-f10137c9a7cb","userId":"13533a96-8929-4315-be2f-7800bc6d0cec","colors":{"main":"#034FE2","userMessageBubble":"#034FE2"}});
             `}
             </Script>
             <DashboardDesktop
