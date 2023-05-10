@@ -247,7 +247,7 @@ export default function Header(props) {
 
         {
           (router?.pathname === '/search') || props?.showSearchBar ?
-            <div className='hideOnMobile centerAlign' style={(router?.pathname === '/search') || (props?.showSearchBar) ? { width: '25%', zIndex: 99999, marginRight: 30 } : null} >
+            <div className='hideOnMobile centerAlign' style={(router?.pathname === '/search') || (props?.showSearchBar) ? { width: '25%', zIndex: 99999, marginRight: 30,position: 'relative',top: -25 } : null} >
               <SearchBar
                 showSearchBar={props?.showSearchBar}
                 search={props?.searchValue}

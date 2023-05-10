@@ -1,28 +1,86 @@
-import React, { useEffect, useState, useRef } from "react";
-import { ReactSearchAutocomplete } from "react-search-autocomplete";
+import React, { useEffect, useState } from "react";
 import SearchIcon from "../../assets/images/icons/search-icon-white.svg";
 import Image from "next/image";
 import axios from "axios";
 import constant from "../../config/constant";
 import queryIcon from '../../assets/images/icons/queryIcon.svg'
-import searchImage from '../../assets/images/icons/searchIcon.svg';
 import { useRouter } from 'next/router';
-import UrlService from "../../helper/urlService";
+import { padding } from "@mui/system";
 const EdtechAuthKey = 'credenc-edtech-authkey';
 
 export default function SearchBar(props) {
 
   const [searchQuery, setSearchQuery] = useState([])
-  const [searchString, setSearchString] = useState('')
   const [mounted, setMounted] = useState(false)
   const [token,setToken] = useState('')
+  const [suggestionIndex, setSuggestionIndex] = useState(0);
+  const [suggestionsActive, setSuggestionsActive] = useState(false);
+  const [value, setValue] = useState("");
+  const [cursor,setCursor] = useState(false)
   let location = useRouter();
-  let nextURL = location?.asPath?.substring(2, location?.asPath?.length)
-  let urlService = useRef(new UrlService(nextURL));
-
-  const query = useRef('');
-
   let coursedata = {}
+
+  const _autocompleteQuery = async (e) => {
+    const query = e.target.value.toLowerCase();
+    setValue(query);
+    props?.handleSearch(query)
+    if (token?.length > 0) {
+      await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${query}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          "key": 'credenc'
+        }
+      })
+        .then(response => response.data.data)
+        .then(data => {
+          _fuseData(data, query)
+        })
+    } else {
+      await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${query}`, {
+        headers: {
+          "key": 'credenc'
+        }
+      })
+        .then(response => response.data.data)
+        .then(data => {
+          _fuseData(data, query)
+        })
+    }
+    
+  }
+
+  const handleKeyDown = (e) => {
+    // UP ARROW
+    if (e.keyCode === 38) {
+      if (suggestionIndex === 0) {
+        setSuggestionIndex(searchQuery.length);
+        return;
+      }
+      setSuggestionIndex(suggestionIndex - 1);
+      setCursor(true)
+    }
+    // DOWN ARROW
+    else if (e.keyCode === 40) {
+      if (suggestionIndex - 1 === searchQuery.length) {
+        setSuggestionIndex(0);
+        return
+      }
+      setSuggestionIndex(suggestionIndex + 1);
+      setCursor(true)
+    }
+    // ENTER
+    else if (e.keyCode === 13) {
+      if(value && value.length > 0){
+        let selectedData = cursor ? searchQuery[suggestionIndex-1] : searchQuery[suggestionIndex]
+        setValue(selectedData.name);
+        coursedata=selectedData;
+        setSuggestionIndex(0);
+        setSuggestionsActive(false);
+        customSearch()
+        setCursor(false)
+      }
+    }
+  };
 
   useEffect(() => {
     retrieveData()
@@ -31,13 +89,13 @@ export default function SearchBar(props) {
   useEffect(() => {
     if (!location.isReady) return;
     if (location?.query && Object.keys(location?.query).length > 0) {
-      setSearchString(location?.query?.search)
+      setValue(location?.query?.search)
     }
   }, [location?.query?.search])
 
   useEffect(() => {
     if (props?.search?.length > 0) {
-      setSearchString(props?.search)
+      setValue(props?.search)
     }
   }, [props?.showSearchBar])
 
@@ -55,73 +113,24 @@ export default function SearchBar(props) {
     }
   }
 
-  const _autocompleteQuery = async (e, results) => {
-    query.current = e;
-    props?.handleSearch(e)
-    if (token?.length > 0) {
-      await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          "key": 'credenc'
-        }
-      })
-        .then(response => response.data.data)
-        .then(data => {
-          _fuseData(data, e)
-        })
-    } else {
-      await axios.get(`${constant.API_URL.DEV}/autocompletenew/?type=${e}`, {
-        headers: {
-          "key": 'credenc'
-        }
-      })
-        .then(response => response.data.data)
-        .then(data => {
-          _fuseData(data, e)
-        })
-    }
-    setSearchString(e)
-    
-  }
-
   const _fuseData = (data, e) => {
     setSearchQuery(data)
+    setSuggestionsActive(true)
   }
 
   const handleOnSelect = (item) => {
-    // the item selected
-    // console.log("enter detected",item);
+    setValue(item?.name);
+    setSuggestionsActive(false);
     coursedata=item;
     props?.handleSearch(item?.name)
     handleLocationQuery()
     
   };
 
-  const formatResult = (item) => {
-    return <div style={queryContainer}>
-      <span style={queryContent}>
-        <Image loader={myLoader} src={item.logo ? item.logo : queryIcon} objectFit="contain" height={20} width={20} alt='query icon' />
-        <span style={queryName}>
-          {item?.name.length > 20 ? item?.name.substring(0, 20) + '...' : item?.name}
-        </span>
-      </span>
-      <span style={queryCategory}>
-        {item?.category}
-      </span>
-    </div>
-    // return (<p dangerouslySetInnerHTML={{__html: '<strong>'+item+'</strong>'}}></p>); //To format result as html
-  };
-
   const customSearch = () => {
-    if(query.current && query.current.length > 0){
-      props?.handleSearch(searchString)
+    if(value && value.length > 0){
+      props?.handleSearch(value)
       handleLocationQuery()
-    }
-  }
-
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      setTimeout(()=>customSearch(), 300)
     }
   }
 
@@ -134,11 +143,10 @@ export default function SearchBar(props) {
         }
       })
     }else{
-      console.log(query,"query")
       location.push({
         pathname: '/search',
         query: {
-          search: query.current
+          search: value
         }
       },
       undefined,
@@ -150,73 +158,48 @@ export default function SearchBar(props) {
     
   }
 
+  const Suggestions = () => {
+    return (
+      <div className="suggestions">
+        {searchQuery && searchQuery.map((item, index) => {
+          return (
+            <div style={queryContainer} key={index} className={index+1 === suggestionIndex ? "active-item" : ""} onClick={()=>handleOnSelect(item)}>
+                <span style={queryContent}>
+                    <Image loader={myLoader} src={item.logo ? item.logo : queryIcon} objectFit="contain" height={20} width={20} alt='query icon' />
+                    <span style={queryName}>
+                    {item?.name.length > 20 ? item?.name.substring(0, 20) + '...' : item?.name}
+                    </span>
+                </span>
+                <span style={queryCategory}>
+                    {item?.category}
+                </span>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
     <>
       {
         mounted &&
-        <div className="search-model">
-          <div
-            className="search"
-            onKeyDown={handleKeyDown}
-          >
-            <ReactSearchAutocomplete
-              items={searchQuery}
-              onSearch={_autocompleteQuery}
-              onSelect={handleOnSelect}
-              inputDebounce={500}
-              fuseOptions={{ threshold: 1, shouldSort: false }}
-              inputSearchString={searchString}
-              autoFocus
-              showNoResults={false}
-              formatResult={formatResult}
-              placeholder="Search here!"
-              styling={window.innerWidth <= 500 && location.pathname === '/search' ? {
-                height: '46px',
-                fontFamily: 'Work Sans',
-                fontStyle: 'normal',
-                fontWeight: '500px',
-                fontSize: '14px',
-                lineHeight: '21px',
-                backgroundColor: "#FFFFFF",
-                // boxShadow: "none",
-                clearIconMargin: "3px 124px 0 0",
-                hoverBackgroundColor: "#F7F7F7",
-                color: "#000000",
-                lineColor: "#FFFFFF",
-                width: '100%',
-                searchIconMargin: '0 0 0 0px',
-                borderRadius: 0,
-                //   iconColor: "#313235"
-              } : {
-                height: '46px',
-                fontFamily: 'Work Sans',
-                fontStyle: 'normal',
-                fontWeight: '500px',
-                fontSize: '14px',
-                lineHeight: '21px',
-                backgroundColor: "#FFFFFF",
-                borderRadius: "25px",
-                // boxShadow: "none",
-                clearIconMargin: "3px 124px 0 0",
-                border: '1px solid #034FE2',
-                hoverBackgroundColor: "#F7F7F7",
-                color: "#000000",
-                lineColor: "#FFFFFF",
-                width: '90%',
-                searchIconMargin: '0 0 0 0px',
-                //   iconColor: "#313235"
-              }}
-              showIcon={false}
-              showClear={false}
-            />
+        <div className="autocomplete">
+          <div className='query-bar'>
+              <input
+                  type="text"
+                  value={value}
+                  onChange={_autocompleteQuery}
+                  onKeyDown={handleKeyDown}
+                  style={{minHeight: 48}}
+                  autoFocus
+              />
+              <div className='icon-content' onClick={()=>customSearch()}>
+                  <Image loader={myLoader} src={SearchIcon} className="search-icon-icon" objectFit="cover" height={18} width={18} />
+              </div>
           </div>
-          <div
-            className="search-icon-web-1"
-            style={props.showSearchBar ? { right: 8, top: 12 } : null}
-            onClick={() => customSearch()}
-          >
-            <Image loader={myLoader} src={SearchIcon} className="search-icon-icon" objectFit="cover" height={18} width={18} />
-          </div>
+     
+          {suggestionsActive && searchQuery.length > 0 && <Suggestions />}
         </div>
       }
     </>
@@ -225,12 +208,13 @@ export default function SearchBar(props) {
 
 
 const queryContainer = {
-  width: '98%',
+  width: '100%',
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  padding: '6px 24px'
 }
 
 const queryName = {

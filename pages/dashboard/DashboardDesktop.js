@@ -33,7 +33,7 @@ import FooterModal from "../../components/footerModal/FooterModal";
 
 const styles = {
   // width: "100%",
-  height: "60%",
+  minHeight: "25rem",
   backgroundImage: `url(${bannerImage.src})`,
 };
 

@@ -19,6 +19,7 @@
     align-items: center;
     background: #ebf1ff;
     padding: 3.3rem 1.6rem;
+    position: relative;
 
     .text-content {
       text-align: center;
@@ -162,6 +163,7 @@
       background: var(--defaultBackground);
 
       .banner {
+        max-height: 224px;
         .heading {
           font-size: 3rem;
           line-height: 3.6rem;
