@@ -33,7 +33,7 @@ const Dashboard = (props) => {
           <div 
             id="magicform-root" 
             style={{
-              zIndex: 9999,position: 'relative'
+              zIndex: 99999,position: 'relative'
             }}
             ></div>
            <Script id="magicform-chatbot">

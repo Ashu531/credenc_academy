@@ -35,6 +35,9 @@
       text-transform: capitalize;
       color: #034fe2;
     }
+    .searchbar{
+      margin-top: 32px !important;
+    }
     .sub-header {
       font-family: "Work Sans";
       font-style: normal;
@@ -172,6 +175,7 @@
 
         .searchbar{
           width: 30rem !important;
+          margin-top: 8px !important;
         }
       }
 
