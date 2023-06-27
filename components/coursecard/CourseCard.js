@@ -11,7 +11,7 @@ import { useRouter } from 'next/router'
 const bookmarkKey = 'credenc-edtech-bookmarks';
 const UpvoteKey = 'credenc-edtech-upvote'
 
-export default function CourseCard(props) {
+export default function CourseCard (props) {
 
   let router = useRouter();
   const [courseNameTooltip, setCourseNameTooltip] = useState(false)
@@ -355,9 +355,9 @@ export default function CourseCard(props) {
                   {
                     props?.data?.class_modes?.length > 0 ? props?.data?.class_modes.map((item, index) => {
                       return (
-                        <>
+                        <span key={index}>
                           {item}&nbsp;
-                        </>
+                        </span>
                       )
                     }) : props?.data?.class_modes
                   }

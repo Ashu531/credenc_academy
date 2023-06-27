@@ -1104,6 +1104,7 @@ export default function DashboardDesktop(props) {
             dataLength={courseCardData.length} //This is important field to render the next data
             next={handleScrollData}
             hasMore={nextPage}
+            style={{width: '100%'}}
           >
             {
               courseCardData?.map((item, i) => {

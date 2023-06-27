@@ -72,7 +72,7 @@ export default function SearchBar(props) {
     else if (e.keyCode === 13) {
       if(value && value.length > 0){
         let selectedData = cursor ? searchQuery[suggestionIndex-1] : searchQuery[suggestionIndex]
-        setValue(selectedData.name);
+        setValue(selectedData?.name);
         coursedata=selectedData;
         setSuggestionIndex(0);
         setSuggestionsActive(false);

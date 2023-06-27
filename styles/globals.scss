@@ -94,6 +94,16 @@ body {
     margin: auto;
   }
 
+  .home{
+    width: 100%;
+    height: 100%;
+    #magicform-root{
+      #magicform-widget-container{
+        bottom: 6rem !important;
+      }
+    }
+  }
+
   @media screen and(max-width: 500px) {
     .hideOnDesktop {
       visibility: visible;
@@ -103,6 +113,13 @@ body {
     .hideOnMobile{
       visibility: hidden;
       display: none;
+    }
+
+    .magicform-root{
+      .magicform-widget-container{
+        position: fixed;
+        bottom: 6rem !important;
+      }
     }
   }
 

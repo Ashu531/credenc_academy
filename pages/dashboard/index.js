@@ -29,7 +29,7 @@ const Dashboard = (props) => {
   }, []);
 
    return(
-     <>
+     <div className='home'>
           <div 
             id="magicform-root" 
             style={{
@@ -72,7 +72,7 @@ const Dashboard = (props) => {
                 thirdPartyUser={thirdPartyUser}
                 { ...props }
               />
-      </>  
+      </div>  
     )
 }
 
